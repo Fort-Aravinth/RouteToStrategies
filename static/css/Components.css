@@ -168,7 +168,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px;
+  height: 24px;
+  padding: 0 8px;
   border: 1px solid var(--dml-border);
   border-radius: var(--dml-radius);
   background: #fff;

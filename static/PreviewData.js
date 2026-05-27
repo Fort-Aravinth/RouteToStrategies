@@ -6,7 +6,7 @@ function PD_showToast(message, type = 'success') {
   if (!container) {
     container = document.createElement('div');
     container.id = 'LD_ToastContainer';
-    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
+    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:8px;';
     document.body.appendChild(container);
   }
   const toast = document.createElement('div');
@@ -61,13 +61,56 @@ document.addEventListener('click', e => {
   }
 });
 
+// ── PD lock helpers ───────────────────────────────────────────────────────────
+function PD_lock(id)   { const el = document.getElementById(id); if (el) el.classList.add('ld-locked'); }
+function PD_unlock(id) { const el = document.getElementById(id); if (el) el.classList.remove('ld-locked'); }
+
+function PD_toggleCustomSelect(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // close all PD dropdowns
+  document.querySelectorAll('#PreDatView .custom-select.open').forEach(s => s.classList.remove('open'));
+  if (!isOpen) {
+    el.classList.add('open');
+    setTimeout(() => {
+      const trigger = el.querySelector('.cs-trigger');
+      const options = el.querySelector('.cs-options');
+      if (!trigger || !options) return;
+      const rect = el.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownHeight = Math.min(200, options.scrollHeight + 8);
+      options.style.left  = rect.left + 'px';
+      options.style.width = rect.width + 'px';
+      if (spaceBelow < dropdownHeight && spaceAbove > dropdownHeight) {
+        options.style.top = (rect.top - dropdownHeight - 2) + 'px';
+      } else {
+        options.style.top = (rect.bottom + 2) + 'px';
+        if (spaceBelow < 200) options.style.maxHeight = (spaceBelow - 20) + 'px';
+      }
+    }, 0);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Default: lock everything except Upload File and Save Column Selection > View tab
+  PD_lock('PD_DelimCard');
+  PD_lock('PD_HeaderCard');
+  PD_lock('PD_SelectorCard');
+  PD_lock('PD_PreviewCard');
+  PD_lock('PD_Tab_Save');
+  PD_lock('PD_Tab_Delete');
+  PD_lock('PD_Tab_Load');
+});
+
 // ── State ─────────────────────────────────────────────────────────────────────
 let PD_AllColumns     = [];
 let PD_Selected       = new Set();
 let PD_PreviewData    = { columns: [], data: [] };
-let PD_HasHeader      = true;
+let PD_HasHeader      = false;
 let PD_UploadedFile   = null;
-let PD_Delimiter      = 'auto';
+let PD_Delimiter      = null;
 let PD_RegisteredName = null;
 
 // ── Open view ─────────────────────────────────────────────────────────────────
@@ -93,8 +136,30 @@ function PD_onFilePicked(event) {
   const file = event.target.files[0];
   if (!file) return;
   PD_UploadedFile = file;
-  document.getElementById('PD_FilePath').value = file.name;
+  PD_RegisteredName = null;
+  _PD_setFileLabel(file);
+  PD_unlock('PD_DelimCard');
   event.target.value = '';
+}
+
+function _PD_setFileLabel(file) {
+  const nameEl = document.getElementById('PD_FileName');
+  const sizeEl = document.getElementById('PD_FileSize');
+  if (nameEl) nameEl.textContent = file.name + ' · ';
+  if (sizeEl) sizeEl.textContent = (file.size / 1024).toFixed(1) + ' KB';
+}
+
+function PD_HandleDragOver(e)  { e.preventDefault(); document.getElementById('PD_DropZone').classList.add('drag-over'); }
+function PD_HandleDragLeave(e) { document.getElementById('PD_DropZone').classList.remove('drag-over'); }
+function PD_HandleFileDrop(e) {
+  e.preventDefault();
+  document.getElementById('PD_DropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  PD_UploadedFile = file;
+  PD_RegisteredName = null;
+  _PD_setFileLabel(file);
+  PD_unlock('PD_DelimCard');
 }
 
 // ── Delimiter toggle ──────────────────────────────────────────────────────────
@@ -102,8 +167,7 @@ function PD_setDelim(val, btn) {
   PD_Delimiter = val;
   document.querySelectorAll('[id^="PD_Delim_"]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const badge = document.getElementById('PD_DelimBadge');
-  if (badge) badge.textContent = btn.textContent;
+  PD_unlock('PD_HeaderCard');
   if (PD_UploadedFile) PD_loadFile();
 }
 
@@ -112,8 +176,11 @@ function PD_setHeader(val) {
   PD_HasHeader = val;
   document.getElementById('PD_BtnHeader').classList.toggle('active', val);
   document.getElementById('PD_BtnNoHeader').classList.toggle('active', !val);
-  const badge = document.getElementById('PD_HeaderBadge');
-  if (badge) badge.textContent = val ? 'Has Header' : 'No Header';
+  PD_unlock('PD_SelectorCard');
+  PD_unlock('PD_PreviewCard');
+  PD_unlock('PD_Tab_Save');
+  PD_unlock('PD_Tab_Delete');
+  PD_unlock('PD_Tab_Load');
   if (PD_UploadedFile) PD_loadFile();
 }
 
@@ -126,12 +193,14 @@ async function PD_loadFile() {
   try {
     const conn  = await PD_getDB();
     const fname = 'pd_' + PD_UploadedFile.name.replace(/[^a-zA-Z0-9._]/g, '_');
-    await _db.registerFileHandle(fname, PD_UploadedFile, window.duckdb.DuckDBDataProtocol.BROWSER_FILEREADER, true);
-    PD_RegisteredName = fname;
+    if (fname !== PD_RegisteredName) {
+      await _db.registerFileHandle(fname, PD_UploadedFile, window.duckdb.DuckDBDataProtocol.BROWSER_FILEREADER, true);
+      PD_RegisteredName = fname;
+    }
 
-    const delim  = PD_Delimiter === 'auto' ? '' : `, delim='${PD_Delimiter}'`;
+    const delim  = (!PD_Delimiter || PD_Delimiter === 'auto') ? '' : `, delim='${PD_Delimiter}'`;
     const header = PD_HasHeader ? '' : ', header=false';
-    const src    = `read_csv_auto('${fname}'${delim}${header})`;
+    const src    = `read_csv_auto('${fname}'${delim}${header}, ignore_errors=true)`;
 
     // Step 1: get columns + preview rows fast (no full scan)
     const schema  = await conn.query(`DESCRIBE SELECT * FROM ${src} LIMIT 0`);
@@ -143,8 +212,6 @@ async function PD_loadFile() {
     PD_PreviewData = { columns: cols, data: rows };
 
     // Show table immediately
-    const badge = document.getElementById('PD_StatsBadge');
-    if (badge) badge.textContent = `${cols.length} cols · counting…`;
     const statsRow = document.getElementById('PD_StatsRow');
     if (statsRow) statsRow.innerHTML = `
       <div style="display:flex;flex-direction:column;gap:2px;">
@@ -163,13 +230,12 @@ async function PD_loadFile() {
     // Step 2: count rows in background — doesn't block the UI
     conn.query(`SELECT COUNT(*) AS n FROM ${src}`).then(res => {
       const rowCount = Number(res.toArray()[0].n);
-      if (badge) badge.textContent = `${rowCount.toLocaleString()} rows · ${cols.length} cols`;
       const el = document.getElementById('PD_RowCount');
       if (el) el.textContent = rowCount.toLocaleString();
     });
 
   } catch (e) {
-    PD_showToast('Load failed: ' + e.message, 'error');
+    PD_showToast('Unable to read file — try a different separator or check the file format.', 'error');
     if (tableEl) tableEl.innerHTML = '';
   }
 }
@@ -189,11 +255,11 @@ async function PD_previewSelected() {
 
   try {
     const conn    = await PD_getDB();
-    const delim   = PD_Delimiter === 'auto' ? '' : `, delim='${PD_Delimiter}'`;
+    const delim   = (!PD_Delimiter || PD_Delimiter === 'auto') ? '' : `, delim='${PD_Delimiter}'`;
     const header  = PD_HasHeader ? '' : ', header=false';
     const colList = ordered.map(c => `"${c.replace(/"/g,'""')}"`).join(', ');
     const res     = await conn.query(
-      `SELECT ${colList} FROM read_csv_auto('${PD_RegisteredName}'${delim}${header}) LIMIT ${nrows}`
+      `SELECT ${colList} FROM read_csv_auto('${PD_RegisteredName}'${delim}${header}, ignore_errors=true) LIMIT ${nrows}`
     );
     const rows = res.toArray().map(r => { const o = {}; ordered.forEach(c => o[c] = r[c] ?? ''); return o; });
     if (container) container.innerHTML = PD_buildTable(ordered, rows);
@@ -239,13 +305,36 @@ function PD_toggleCol(col, el) {
 function PD_selectAll() { PD_Selected = new Set(PD_AllColumns); PD_renderChips(); PD_renderPreviewTable(); }
 function PD_clearAll()   { PD_Selected = new Set(); PD_renderChips(); PD_renderPreviewTable(); }
 
+let PD_SearchPattern = null; // compiled RegExp or null
+
+function PD_searchColumns(raw) {
+  const term = raw.trim();
+  if (!term) {
+    PD_SearchPattern = null;
+  } else {
+    // Convert glob wildcard (*) to regex .*; escape everything else
+    const escaped = term.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*');
+    try { PD_SearchPattern = new RegExp(escaped, 'i'); } catch { PD_SearchPattern = null; }
+  }
+  PD_renderChips();
+}
+
+function PD_clearSearch() {
+  const inp = document.getElementById('PD_ColSearch');
+  if (inp) inp.value = '';
+  PD_SearchPattern = null;
+  PD_renderChips();
+}
+
 function PD_renderChips() {
   const grid = document.getElementById('PD_ChipGrid');
   if (!grid) return;
   grid.innerHTML = PD_AllColumns.map(col => {
-    const active  = PD_Selected.has(col);
-    const safeCol = col.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return `<button type="button" class="pg-chip-sq${active?' active':''}" onclick="PD_toggleCol('${safeCol}',this)">${col}</button>`;
+    const active    = PD_Selected.has(col);
+    const safeCol   = col.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const highlight = PD_SearchPattern && PD_SearchPattern.test(col);
+    const cls = ['pg-chip-sq', active ? 'active' : '', highlight ? 'pd-match' : ''].filter(Boolean).join(' ');
+    return `<button type="button" class="${cls}" onclick="PD_toggleCol('${safeCol}',this)">${col}</button>`;
   }).join('');
   const badge = document.getElementById('PD_SelCount');
   if (badge) badge.textContent = `${PD_Selected.size} selected`;
@@ -258,10 +347,72 @@ function PD_getLists() {
   try { return JSON.parse(localStorage.getItem(PD_STORAGE_KEY) || '{}'); } catch { return {}; }
 }
 
+function PD_switchTab(tab) {
+  ['view','save','delete','load'].forEach(t => {
+    const btn   = document.getElementById('PD_Tab_' + t.charAt(0).toUpperCase() + t.slice(1));
+    const panel = document.getElementById('PD_Panel_' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (btn)   btn.classList.toggle('active', t === tab);
+    if (panel) panel.style.display = t === tab ? 'flex' : 'none';
+  });
+}
+
+function PD_applyTemplate() {
+  const name = document.getElementById('PD_ApplySelect')?.dataset.value || '';
+  if (!name) { PD_showToast('Select a template', 'error'); return; }
+  const data = PD_getLists()[name];
+  if (!data) { PD_showToast('Template not found', 'error'); return; }
+  PD_PendingLoad = data;
+
+  const savedNames = data.column_names || [];
+  if (!savedNames.length) {
+    // No names saved — fall straight to number-based apply
+    PD_applyByNumber();
+    return;
+  }
+
+  const matched = savedNames.filter(c => PD_AllColumns.includes(c));
+  const missing = savedNames.filter(c => !PD_AllColumns.includes(c));
+
+  if (!missing.length) {
+    // All matched — apply immediately
+    PD_Selected = new Set(matched);
+    PD_renderChips();
+    PD_renderPreviewTable();
+    PD_showToast(`Applied: ${matched.length} cols matched`, 'success');
+    return;
+  }
+
+  // Some missing — show report in modal
+  const applyBtn    = document.getElementById('PD_ModalApplyBtn');
+  const applyNumBtn = document.getElementById('PD_ModalApplyByNumBtn');
+  if (applyBtn)    { applyBtn.textContent = `Apply Matched (${matched.length})`; applyBtn.style.display = ''; }
+  if (applyNumBtn) applyNumBtn.style.display = '';
+
+  const report = missing.map(c => `  ${c}`).join('\n');
+
+  document.getElementById('PD_ModalTitle').textContent   = `Missing in current file (${missing.length})`;
+  document.getElementById('PD_ModalContent').textContent = report;
+  Popup_open('PD_Modal');
+
+  // Store matched for apply
+  PD_PendingLoad._matchedNames = matched;
+}
+
+function PD_applyByNumber() {
+  if (!PD_PendingLoad) return;
+  const resolved = (PD_PendingLoad.columns || []).map(i => PD_AllColumns[i - 1]).filter(c => c !== undefined);
+  PD_Selected = new Set(resolved);
+  PD_renderChips();
+  PD_renderPreviewTable();
+  PD_closeModal();
+  PD_showToast(`Applied by number: ${PD_Selected.size} cols`, 'success');
+}
+
+
 function PD_refreshListDropdowns() {
   const lists = PD_getLists();
   const names = Object.keys(lists);
-  ['PD_LoadSelect','PD_RemoveSelect'].forEach(id => {
+  ['PD_LoadSelect','PD_ApplySelect','PD_RemoveSelect'].forEach(id => {
     const cs = document.getElementById(id);
     if (!cs) return;
     const optionsEl = cs.querySelector('.cs-options');
@@ -292,8 +443,9 @@ function PD_saveColumns() {
   const colIndices = PD_AllColumns
     .map((c, i) => PD_Selected.has(c) ? i + 1 : null)
     .filter(n => n !== null);
+  const colNames = PD_AllColumns.filter(c => PD_Selected.has(c));
   const lists = PD_getLists();
-  lists[name] = { name, file_header: PD_HasHeader, delimiter: PD_Delimiter, columns: colIndices };
+  lists[name] = { name, file_header: PD_HasHeader, delimiter: PD_Delimiter, columns: colIndices, column_names: colNames };
   localStorage.setItem(PD_STORAGE_KEY, JSON.stringify(lists));
   document.getElementById('PD_SaveName').value = '';
   PD_showToast('Saved: ' + name, 'success');
@@ -307,31 +459,46 @@ function PD_loadColumns() {
   if (!name) { PD_showToast('Select a list', 'error'); return; }
   const data = PD_getLists()[name];
   if (!data) { PD_showToast('List not found', 'error'); return; }
-  PD_PendingLoad = data;
+
+  // View-only — just show the stored template data, no apply logic
+  PD_PendingLoad = null;
   const display = {
-    name:        data.name || name,
-    file_header: data.file_header !== false ? 'yes' : 'no',
-    delimiter:   data.delimiter || 'auto',
-    columns:     data.columns || []
+    name:         data.name || name,
+    file_header:  data.file_header !== false ? 'yes' : 'no',
+    delimiter:    data.delimiter || 'auto',
+    column_names: data.column_names || [],
+    columns:      data.columns || []
   };
+  const applyBtn    = document.getElementById('PD_ModalApplyBtn');
+  const applyNumBtn = document.getElementById('PD_ModalApplyByNumBtn');
+  if (applyBtn)    applyBtn.style.display    = 'none';
+  if (applyNumBtn) applyNumBtn.style.display = 'none';
+
   document.getElementById('PD_ModalTitle').textContent   = name;
   document.getElementById('PD_ModalContent').textContent = JSON.stringify(display, null, 2);
-  document.getElementById('PD_Modal').style.display      = 'flex';
+  Popup_open('PD_Modal');
 }
 
 function PD_applyLoadedColumns() {
   if (!PD_PendingLoad) return;
-  const resolved = (PD_PendingLoad.columns || []).map(i => PD_AllColumns[i - 1]).filter(c => c !== undefined);
-  PD_Selected = new Set(resolved);
+  // Use matched names if available, otherwise fall back to column indices
+  const cols = PD_PendingLoad._matchedNames
+    ? PD_PendingLoad._matchedNames
+    : (PD_PendingLoad.columns || []).map(i => PD_AllColumns[i - 1]).filter(c => c !== undefined);
+  PD_Selected = new Set(cols);
   PD_renderChips();
   PD_renderPreviewTable();
   PD_closeModal();
-  PD_showToast('Loaded: ' + PD_Selected.size + ' cols matched', 'success');
+  PD_showToast('Applied: ' + PD_Selected.size + ' cols', 'success');
 }
 
 function PD_closeModal() {
-  document.getElementById('PD_Modal').style.display = 'none';
+  Popup_close('PD_Modal');
   PD_PendingLoad = null;
+  const applyBtn    = document.getElementById('PD_ModalApplyBtn');
+  const applyNumBtn = document.getElementById('PD_ModalApplyByNumBtn');
+  if (applyBtn)    { applyBtn.textContent = 'Apply'; applyBtn.style.display = ''; }
+  if (applyNumBtn) applyNumBtn.style.display = 'none';
 }
 
 function PD_deleteColumns() {

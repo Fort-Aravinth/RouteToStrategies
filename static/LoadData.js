@@ -77,9 +77,9 @@ function LD_OpenPanel() {
 
 // ── Nav lock — enforce Load → CM → everything else flow ──────────────────────
 const _LD_NAV_LOCK_IDS = [
-  'nav-preview-data','nav-parameters','nav-overview','nav-score-analysis',
+  'nav-parameters','nav-overview','nav-score-analysis',
   'nav-route-analysis','nav-individual-analysis','nav-policy-rules',
-  'nav-rmon-import','nav-playground',
+  'nav-rmon-import',
 ];
 
 function LD_LockNavToColumnMgmt() {

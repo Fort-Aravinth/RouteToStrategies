@@ -1,12 +1,19 @@
 /* ── Preview Data ── */
 
 /* Brand — override pg-* gold with --brand-dm (#E8714A) */
-#PreDatView .pg-card::before,
-#PD_Modal .pg-card::before          { background: var(--brand-dm); }
+#PreDatView .pg-card::before        { background: var(--brand-dm); }
 #PreDatView .pg-btn,
 #PD_Modal .pg-btn                   { border-color: var(--brand-dm-dim); background: var(--brand-dm-dim); color: var(--brand-dm); }
 #PreDatView .pg-btn:hover,
 #PD_Modal .pg-btn:hover             { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#PreDatView .pg-btn.active,
+#PD_Modal .pg-btn.active            { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+
+/* PD Modal — brand-dm applied to popup structure */
+#PD_Modal .popup-header             { border-bottom-color: rgba(232,113,74,0.25); }
+#PD_Modal .popup-footer             { border-top-color: rgba(232,113,74,0.25); }
+#PD_Modal .popup-close:hover        { color: var(--brand-dm); }
+#PD_Modal .popup-title              { color: var(--brand-dm); }
 #PreDatView .pg-chip.active             { background: var(--brand-dm); border-color: var(--brand-dm); }
 #PreDatView .pg-chip:hover              { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
 #PreDatView .pg-chip-sq.active          { background: var(--brand-dm); border-color: var(--brand-dm); }
@@ -20,6 +27,16 @@
 #PreDatView .custom-select.open .cs-trigger     { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }
 #PreDatView .cs-option:hover                    { background: var(--brand-dm-dim); }
 #PreDatView .cs-option.cs-selected              { color: #fff; background: var(--brand-dm); }
+
+/* Column search — highlight matched chips */
+#PreDatView .pg-chip-sq.pd-match {
+  border-color: var(--brand-dm);
+  box-shadow: 0 0 0 2px var(--brand-dm-dim);
+  order: -1; /* float matches to front */
+}
+#PreDatView .pg-chip-sq.pd-match.active {
+  box-shadow: 0 0 0 2px rgba(232,113,74,0.4);
+}
 
 /* Preview card table margins */
 #PD_PreviewCard .pg-table-wrap {

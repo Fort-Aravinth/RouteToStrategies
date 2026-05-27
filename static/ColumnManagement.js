@@ -500,9 +500,8 @@ function CM_TM_LoadList() {
   const templates = CM_TM_GetAll();
   const names     = Object.keys(templates);
   const dropdowns = {
-    CM_TMDropdown:       { placeholder: '— select template —',     handler: (name, opt) => {} },
-    CM_TMRemoveDropdown: { placeholder: '— select template —',     handler: () => {} },
-    CM_TMSaveDropdown:   { placeholder: '— select to overwrite —', handler: (name) => { const inp = document.getElementById('CM_TMName'); if (inp) inp.value = name; } },
+    CM_TMDropdown:       { placeholder: '— select template —', handler: (name, opt) => {} },
+    CM_TMRemoveDropdown: { placeholder: '— select template —', handler: () => {} },
   };
 
   // Sidebar quick-apply dropdown
