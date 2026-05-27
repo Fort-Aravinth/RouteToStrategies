@@ -58,7 +58,7 @@
   color: var(--dml-label);
 }
 .pg-card-divider {
-  height: 1.5px;
+  height: 1px;
   background: var(--dml-border);
   margin: 0 24px;
 }

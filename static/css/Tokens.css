@@ -45,6 +45,11 @@
   --brand-cm-light: #C84080;
   --brand-cm-dim: rgba(168,32,96,0.12);
 
+  /* Brand — Set Parameters (teal) */
+  --brand-param:     #0D9488;
+  --brand-param-light: #14B8A6;
+  --brand-param-dim: rgba(13,148,136,0.12);
+
   /* Brand — Playground / default (gold) */
   --brand-sn:     #F0A500;
   --brand-sn-light: #FFC94D;

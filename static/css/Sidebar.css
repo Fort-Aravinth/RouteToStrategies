@@ -126,8 +126,8 @@
 #nav-load-data.active::before   { background: var(--brand-sp); }
 #nav-column-mgmt.active           { color: var(--brand-cm);       background: var(--brand-cm-dim); }
 #nav-column-mgmt.active::before   { background: var(--brand-cm); }
-#nav-parameters.active           { color: var(--brand-pt);       background: var(--brand-pt-dim); }
-#nav-parameters.active::before   { background: var(--brand-pt); }
+#nav-parameters.active           { color: var(--brand-param);     background: var(--brand-param-dim); }
+#nav-parameters.active::before   { background: var(--brand-param); }
 #nav-overview.active           { color: var(--brand-ov);       background: var(--brand-ov-dim); }
 #nav-overview.active::before   { background: var(--brand-ov); }
 #nav-score-analysis.active           { color: var(--brand-sa);       background: var(--brand-sa-dim); }
@@ -154,6 +154,22 @@
   text-transform: uppercase; color: var(--color-nav-label);
 }
 .sidebar-divider { height: 0.5px; background: var(--color-nav-border); margin: 5px 12px; }
+
+/* ── Under Development badge ── */
+.sidebar-item-dev {
+  margin-left: auto;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  background: var(--color-nav-hover);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: 3px;
+  padding: 2px 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
 /* ── Sub Sections ── */
 .sidebar-sub-section { margin: 2px 0; }

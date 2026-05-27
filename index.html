@@ -14,15 +14,19 @@
 <link rel="stylesheet" href="static/css/pages/PreviewData.css?v=1">
 <link rel="stylesheet" href="static/css/pages/Playground.css?v=1">
 <link rel="stylesheet" href="static/css/pages/LoadData.css?v=1">
-<link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=1">
+<link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=2">
+<link rel="stylesheet" href="static/css/pages/SetParameters.css?v=1">
+<link rel="stylesheet" href="static/css/pages/Overview.css?v=1">
 <script src="static/Popup.js?v=1" defer></script>
 <script src="static/Sidebar.js?v=1" defer></script>
 <script src="static/Nav.js?v=1" defer></script>
 <script src="static/MainContent.js?v=1" defer></script>
 <script src="static/Playground.js?v=1" defer></script>
 <script src="static/LoadData.js?v=1" defer></script>
-<script src="static/PreviewData.js?v=3" defer></script>
-<script src="static/ColumnManagement.js?v=1" defer></script>
+<script src="static/PreviewData.js?v=4" defer></script>
+<script src="static/ColumnManagement.js?v=5" defer></script>
+<script src="static/SetParameters.js?v=1" defer></script>
+<script src="static/Overview.js?v=1" defer></script>
 <style>
 .ld-locked { opacity: 0.35; pointer-events: none; user-select: none; }
 
@@ -173,12 +177,27 @@
 
         <div class="sidebar-divider"></div>
 
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-parameters" class="sidebar-item" onclick="SP_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/>
             <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
           </svg>
           Set Parameters
+        </div>
+
+        <div id="SP_SidebarPreset_Row" class="sidebar-item sidebar-item-nodot">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 5h12M2 8h12M2 11h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <div class="custom-select" id="SP_SidebarPreset" style="flex:1;">
+            <div class="cs-trigger" onclick="toggleCustomSelect('SP_SidebarPreset')">
+              <span class="cs-value">Load Saved Parameters</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="cs-options">
+              <div class="cs-option cs-selected" data-value="">Load Saved Parameters</div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -197,40 +216,44 @@
         <span class="sidebar-section-label">Analysis</span>
       </div>
       <div class="sidebar-section-body open">
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-overview" class="sidebar-item sidebar-item-disabled" onclick="OV_OpenPanel()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
             <path d="M2 6h12M6 6v8M10 6v8" stroke="currentColor" stroke-width="1.3"/>
           </svg>
           Overview
         </div>
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-score-analysis" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3"/>
             <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Score Analysis
+          <span class="sidebar-item-dev">In Dev</span>
         </div>
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-route-analysis" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M2 8h2l2-4 3 8 2-4h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Route Analysis
+          <span class="sidebar-item-dev">In Dev</span>
         </div>
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-individual-analysis" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <rect x="2" y="4" width="5" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/>
             <rect x="9" y="2" width="5" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/>
           </svg>
           Individual Analysis
+          <span class="sidebar-item-dev">In Dev</span>
         </div>
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-policy-rules" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M3 3h10v2H3zM3 7h7M3 10h7M3 13h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="12.5" cy="11.5" r="2" stroke="currentColor" stroke-width="1.3"/>
             <path d="M11.5 11.5h2M12.5 10.5v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
           </svg>
           Policy Rules
+          <span class="sidebar-item-dev">In Dev</span>
         </div>
       </div>
     </div>
@@ -249,12 +272,13 @@
         <span class="sidebar-section-label">Rule Management</span>
       </div>
       <div class="sidebar-section-body open">
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-rmon-import" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M2 4h8M2 7h6M2 10h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             <path d="M11 9v5M9 12l2 2 2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Import Rules to Strategies
+          <span class="sidebar-item-dev">In Dev</span>
         </div>
       </div>
     </div>
@@ -794,13 +818,14 @@
           <div class="pg-card-divider"></div>
           <div class="pg-card-body">
             <div style="display:flex; gap:8px;">
-              <button type="button" class="pg-btn active" id="CM_TMTab_Load"   onclick="CM_TM_SwitchTab('load')">Load</button>
-              <button type="button" class="pg-btn"        id="CM_TMTab_Remove" onclick="CM_TM_SwitchTab('remove')">Remove</button>
+              <button type="button" class="pg-btn active" id="CM_TMTab_View"   onclick="CM_TM_SwitchTab('view')">View</button>
               <button type="button" class="pg-btn"        id="CM_TMTab_Save"   onclick="CM_TM_SwitchTab('save')">Save</button>
+              <button type="button" class="pg-btn"        id="CM_TMTab_Remove" onclick="CM_TM_SwitchTab('remove')">Remove</button>
+              <button type="button" class="pg-btn"        id="CM_TMTab_Load"   onclick="CM_TM_SwitchTab('load')">Load</button>
             </div>
 
             <!-- Load tab -->
-            <div id="CM_TMPanel_Load" style="display:flex; gap:8px; align-items:center;">
+            <div id="CM_TMPanel_Load" style="display:none; gap:8px; align-items:center;">
               <div id="CM_TMDropdown" class="custom-select" style="flex:1;">
                 <div class="cs-trigger" onclick="toggleCustomSelect('CM_TMDropdown')">
                   <span class="cs-value">— no templates —</span>
@@ -809,6 +834,18 @@
                 <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no templates —</div></div>
               </div>
               <button type="button" class="pg-btn" style="width:auto;" onclick="CM_TM_ApplySelected()">Apply</button>
+            </div>
+
+            <!-- View tab -->
+            <div id="CM_TMPanel_View" style="display:flex; gap:8px; align-items:center;">
+              <div id="CM_TMViewDropdown" class="custom-select" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('CM_TMViewDropdown')">
+                  <span class="cs-value">— select template —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no templates —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="CM_TM_ViewSelected()">View</button>
             </div>
 
             <!-- Remove tab -->
@@ -877,7 +914,6 @@
           <div class="pg-card-body">
             <div style="display:flex; gap:8px;">
               <button type="button" id="CM_COTabBinBtn"  class="pg-btn active" onclick="CM_CO_SwitchTool('bin')">Binned Column</button>
-              <button type="button" id="CM_COTabZpadBtn" class="pg-btn"        onclick="CM_CO_SwitchTool('zpad')">Zero-Pad</button>
             </div>
 
             <!-- Binned Column Tab -->
@@ -929,45 +965,6 @@
               </div>
             </div>
 
-            <!-- Zero-Pad Tab -->
-            <div id="CM_COZpadTab" style="display:none; flex-direction:column; gap:12px;">
-              <div>
-                <div class="pg-field-label">Template</div>
-                <div style="display:flex; gap:8px; align-items:center;">
-                  <div id="CM_COZpadTemplate" class="custom-select" style="flex:1;">
-                    <div class="cs-trigger" onclick="toggleCustomSelect('CM_COZpadTemplate')">
-                      <span class="cs-value">— new —</span>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                    </div>
-                    <div class="cs-options"><div class="cs-option cs-selected" data-value="">— new —</div></div>
-                  </div>
-                  <button type="button" class="pg-btn" style="width:auto;" onclick="CM_CO_DeleteZpadTemplate()">Delete</button>
-                </div>
-              </div>
-              <div>
-                <div class="pg-field-label">Source Column</div>
-                <div id="CM_COZpadColumn" class="custom-select">
-                  <div class="cs-trigger" onclick="toggleCustomSelect('CM_COZpadColumn')">
-                    <span class="cs-value">— select —</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                  </div>
-                  <div class="cs-options"><div class="cs-option cs-selected" data-value="">— select —</div></div>
-                </div>
-              </div>
-              <div>
-                <div class="pg-field-label">Pad Width</div>
-                <input type="number" id="CM_COZpadWidth" placeholder="e.g. 3" class="pg-input"/>
-              </div>
-              <div>
-                <div class="pg-field-label">New Column Name</div>
-                <input type="text" id="CM_COZpadName" placeholder="e.g. ID_Padded" class="pg-input"/>
-              </div>
-              <div style="display:flex; gap:8px;">
-                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateZpad(false)">Add Column</button>
-                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateZpad(true)">Add &amp; Save</button>
-              </div>
-            </div>
-
           </div>
         </div>
 
@@ -975,6 +972,268 @@
 
     </div>
     <!-- ══ end Column Management ══ -->
+
+    <!-- ══ Set Parameters View ══ -->
+    <div class="pg-layout" id="SPView" style="display:none;">
+
+      <div class="pg-layout-row pg-cols-3" id="SP_CardGrid">
+
+        <!-- Card 1: Fraud Related Column -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Select Column related</span>
+            <span class="pg-card-label" id="SP_FraudFilterBadge">Fraud</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div>
+              <div class="pg-field-label">Available Columns</div>
+              <div id="SP_Col1Options" class="pg-chip-row"></div>
+            </div>
+            <div>
+              <div class="pg-field-label">Select one or more</div>
+              <div id="SP_ValueOptions" class="pg-chip-row sp-scroll"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Amount Metric -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Select Column related</span>
+            <span class="pg-card-label">Amount</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div>
+              <div class="pg-field-label">Available Columns</div>
+              <div id="SP_NumericOptions" class="pg-chip-row"></div>
+            </div>
+            <div>
+              <div class="pg-field-label">Currency</div>
+              <input type="text" id="SP_Currency" class="pg-input" placeholder="e.g. USD, EUR, GBP, ZAR" oninput="SP_UpdateAppliedDisplay()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Card Dimension -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Select Column related</span>
+            <span class="pg-card-label">Customer Id</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div>
+              <div class="pg-field-label">Available Columns</div>
+              <div id="SP_ObjectOptions" class="pg-chip-row"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Date & Time · Decision Mode Filter · Card Builder (continues same grid) -->
+
+        <!-- Card 4: Date & Time -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Select Column related</span>
+            <span class="pg-card-label">Date &amp; time</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div style="display:flex; align-items:flex-start; gap:12px;">
+              <div style="min-width:110px; padding-top:2px;">
+                <div class="pg-field-label">Available Columns</div>
+                <div class="pg-field-label" style="color:var(--dml-muted); font-weight:400; margin-top:2px;">Date cols</div>
+              </div>
+              <div id="SP_DateOptions" class="pg-chip-row sp-scroll" style="flex:1;"></div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:12px;">
+              <div style="min-width:110px; padding-top:2px;">
+                <div class="pg-field-label">Available Columns</div>
+                <div class="pg-field-label" style="color:var(--dml-muted); font-weight:400; margin-top:2px;">Time cols</div>
+              </div>
+              <div id="SP_TimeOptions" class="pg-chip-row sp-scroll" style="flex:1;"></div>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <input type="text" id="SP_DT_MergeName" class="pg-input" style="flex:1; min-width:0;" placeholder="e.g. Transaction_DateTime" />
+              <button type="button" id="SP_DT_MergeBtn" class="pg-btn" style="flex-shrink:0; width:auto;" onclick="SP_DT_ToggleMerge()">Merge</button>
+            </div>
+            <div>
+              <button type="button" class="pg-btn" style="width:100%;" onclick="SP_DT_Preview()">Preview</button>
+            </div>
+            <div id="SP_DT_PreviewArea"></div>
+          </div>
+        </div>
+
+        <!-- Card 5: Decision Mode Filter -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Select Column related</span>
+            <span class="pg-card-label">Transaction Outcome</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div>
+              <div class="pg-field-label">Available Columns</div>
+              <div id="SP_DecisionModeColOptions" class="pg-chip-row"></div>
+            </div>
+            <div>
+              <div class="pg-field-label">Select one or more</div>
+              <div id="SP_DecisionModeValueOptions" class="pg-chip-row sp-scroll"></div>
+            </div>
+            <div>
+              <div style="display:flex; gap:6px;">
+                <button type="button" id="SP_DM_BtnSuccessful"   class="pg-btn" style="flex:1;" onclick="SP_DM_Assign('successful')">Successful</button>
+                <button type="button" id="SP_DM_BtnUnsuccessful" class="pg-btn" style="flex:1;" onclick="SP_DM_Assign('unsuccessful')">Unsuccessful</button>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
+                <div>
+                  <div id="SP_DM_SuccessfulTags" class="pg-chip-row" style="min-height:20px;"></div>
+                </div>
+                <div>
+                  <div id="SP_DM_UnsuccessfulTags" class="pg-chip-row" style="min-height:20px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Card Builder — always last in grid -->
+        <div class="pg-card" id="SP_CB_CardEl">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Card Builder</span>
+            <span class="pg-card-label">Add custom segment filter cards</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+            <div>
+              <div class="pg-field-label">Card Name</div>
+              <input type="text" id="SP_CB_Name" class="pg-input" placeholder="e.g. Transaction Type, Channel" />
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+              <div>
+                <div class="pg-field-label">Label A</div>
+                <input type="text" id="SP_CB_LabelA" class="pg-input" placeholder="e.g. Online" />
+              </div>
+              <div>
+                <div class="pg-field-label">Label B</div>
+                <input type="text" id="SP_CB_LabelB" class="pg-input" placeholder="e.g. In-Store" />
+              </div>
+            </div>
+            <button type="button" class="pg-btn" onclick="SP_CB_AddCard()">Add Card</button>
+          </div>
+        </div>
+
+        <!-- Confirm Setup — always after Card Builder -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Confirm Setup</span>
+            <span class="pg-card-label">Lock in your selections before running any analysis</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:8px;">
+            <button type="button" class="pg-btn" style="width:100%;" onclick="SP_ApplyParameters()">Apply Parameters</button>
+            <button type="button" class="pg-btn" style="width:100%;" onclick="SP_ResetParameters()">Reset All</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Parameter Presets (full width) -->
+      <div class="pg-layout-row">
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Parameter Presets</span>
+            <span class="pg-card-label">Save &amp; reload your parameter sets</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:10px;">
+
+            <!-- Applied Parameters display -->
+            <div style="padding:10px 12px; background:var(--dml-bg); border-radius:var(--dml-radius); border:0.5px solid var(--dml-border);">
+              <div class="pg-field-label">Applied Parameters</div>
+              <div id="SP_AppliedParamsDisplay" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--dml-text); line-height:1.5; white-space:pre-wrap; word-break:break-all; margin-top:4px;">—</div>
+            </div>
+
+            <!-- Tabs -->
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="pg-btn active" id="SP_Tab_View"   onclick="SP_SwitchTab('view')">View</button>
+              <button type="button" class="pg-btn"        id="SP_Tab_Save"   onclick="SP_SwitchTab('save')">Save</button>
+              <button type="button" class="pg-btn"        id="SP_Tab_Remove" onclick="SP_SwitchTab('remove')">Remove</button>
+              <button type="button" class="pg-btn"        id="SP_Tab_Load"   onclick="SP_SwitchTab('load')">Load</button>
+            </div>
+
+            <!-- View panel -->
+            <div id="SP_Panel_View" style="display:flex; gap:8px; align-items:center;">
+              <div class="custom-select" id="SP_ViewSelect" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('SP_ViewSelect')">
+                  <span class="cs-value">— no presets —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no presets —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="SP_ViewPreset()">View</button>
+            </div>
+
+            <!-- Save panel -->
+            <div id="SP_Panel_Save" style="display:none; gap:8px; align-items:center;">
+              <input type="text" id="SP_SaveName" class="pg-input" placeholder="Preset name…" style="flex:1;" />
+              <button type="button" class="pg-btn" style="width:auto;" onclick="SP_SavePreset()">Save</button>
+            </div>
+
+            <!-- Remove panel -->
+            <div id="SP_Panel_Remove" style="display:none; gap:8px; align-items:center;">
+              <div class="custom-select" id="SP_RemoveSelect" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('SP_RemoveSelect')">
+                  <span class="cs-value">— no presets —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no presets —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="SP_DeletePreset()">Remove</button>
+            </div>
+
+            <!-- Load panel -->
+            <div id="SP_Panel_Load" style="display:none; gap:8px; align-items:center;">
+              <div class="custom-select" id="SP_LoadSelect" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('SP_LoadSelect')">
+                  <span class="cs-value">— no presets —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no presets —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="SP_LoadPreset()">Apply</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ══ end Set Parameters ══ -->
+
+    <!-- ══ Overview ══ -->
+    <div class="pg-layout" id="OVView" style="display:none;">
+
+      <div class="pg-layout-row">
+        <div class="pg-card" style="flex:1;">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Key Metrics</span>
+            <span class="pg-card-label">volume · cards · value</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:column; gap:0;">
+            <div class="ov-metric-grid" id="OV_MetricGrid">
+              <div class="ov-state" style="grid-column:1/-1;">Loading…</div>
+            </div>
+            <div class="ov-rate-grid" id="OV_RateGrid"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ══ end Overview ══ -->
 
   </main>
 </div>
@@ -986,12 +1245,13 @@
     CM_TM_LoadList();
   });
 
-  // Global custom-select toggle used by CM (and any future views)
+  // Global custom-select toggle — closes only dropdowns within the same view
   function toggleCustomSelect(id) {
     const el = document.getElementById(id);
     if (!el) return;
     const isOpen = el.classList.contains('open');
-    document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+    const view = el.closest('.pg-layout, .sidebar') || document;
+    view.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
     if (!isOpen) {
       el.classList.add('open');
       const trigger = el.querySelector('.cs-trigger');
@@ -1013,7 +1273,8 @@
   }
   document.addEventListener('click', e => {
     if (!e.target.closest('.custom-select')) {
-      document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+      const view = e.target.closest('.pg-layout, .sidebar') || document;
+      view.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
     }
   });
 </script>

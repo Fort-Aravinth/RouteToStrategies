@@ -15,6 +15,14 @@
 #CMView .cs-option:hover              { background: var(--brand-cm-dim); }
 #CMView .cs-option.cs-selected        { background: var(--brand-cm) !important; color: #fff !important; }
 
+/* CM context modal — brand-cm overrides on shared PD_Modal */
+#PD_Modal.cm-context .popup-header    { border-bottom-color: rgba(168,32,96,0.25); }
+#PD_Modal.cm-context .popup-footer    { border-top-color: rgba(168,32,96,0.25); }
+#PD_Modal.cm-context .popup-title     { color: var(--brand-cm); }
+#PD_Modal.cm-context .popup-close:hover { color: var(--brand-cm); }
+#PD_Modal.cm-context .pg-btn          { border-color: var(--brand-cm-dim); background: var(--brand-cm-dim); color: var(--brand-cm); }
+#PD_Modal.cm-context .pg-btn:hover    { background: var(--brand-cm); border-color: var(--brand-cm); color: #fff; }
+
 /* Nav active state */
 #nav-column-mgmt.active         { color: var(--brand-cm); background: var(--brand-cm-dim); }
 #nav-column-mgmt.active::before { background: var(--brand-cm); }

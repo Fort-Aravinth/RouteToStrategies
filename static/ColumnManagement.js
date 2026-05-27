@@ -4,12 +4,11 @@
    All modifications tracked in JS state → applied as DuckDB VIEW 'cm_view'
    Templates:  localStorage key CM_Templates
    Bin tpls:   localStorage key CM_BinTemplates
-   Zpad tpls:  localStorage key CM_ZpadTemplates
 ──────────────────────────────────────────────────────────────────────────── */
 
 let _CM_cols       = [];   // [{ name, dtype }] from DESCRIBE
 let _CM_state      = {};   // { original_name: { include, rename, dtype, fmt, zfill } }
-let _CM_derived    = [];   // [{ name, sql_expr, dtype }] bin / zpad columns
+let _CM_derived    = [];   // [{ name, sql_expr, dtype }] derived (binned) columns
 let _CM_vcCache    = null; // last value-counts result for re-sort
 let _CM_baseSrc    = null; // original source before any cm_view is created
 
@@ -67,7 +66,6 @@ function CM_Open() {
   CM_LoadColumns();
   CM_TM_LoadList();
   CM_CO_LoadBinTemplates();
-  CM_CO_LoadZpadTemplates();
 }
 
 // ── Load Columns — fast: DESCRIBE first, preview sample async ────────────────
@@ -316,7 +314,7 @@ function CM_ExcludeEmpty() {
 
 // ── Apply Changes — build DuckDB VIEW ────────────────────────────────────────
 
-async function CM_ApplyChanges() {
+async function CM_ApplyChanges(navigate = true) {
   const conn = window.LD_getConn && window.LD_getConn();
   const src  = _CM_baseSrc;
   if (!conn || !src) { CM_showToast('No data loaded', 'error'); return; }
@@ -348,8 +346,9 @@ async function CM_ApplyChanges() {
     const countRes = await conn.query(`SELECT COUNT(*) AS n FROM cm_data`);
     const rows = Number(countRes.toArray()[0].n);
     CM_showToast(`Applied — ${parts.length} cols · ${rows.toLocaleString()} rows in cm_data`, 'success');
-    if (typeof window.LD_UnlockNav === 'function') window.LD_UnlockNav();
+    if (typeof window.LD_UnlockSP  === 'function') window.LD_UnlockSP();
     CM_LoadColumns();
+    if (navigate && typeof SP_Open === 'function') SP_Open();
   } catch (e) {
     CM_showToast('Error applying changes: ' + e.message, 'error');
   }
@@ -396,8 +395,8 @@ function CM_PopulateOperationDropdowns() {
     }
   }
 
-  // Bin / Zpad — show output (renamed) names; store original name as data-value for SQL expr
-  ['CM_COBinColumn', 'CM_COZpadColumn'].forEach(id => {
+  // Bin — show output (renamed) names; store original name as data-value for SQL expr
+  ['CM_COBinColumn'].forEach(id => {
     const container = document.getElementById(id);
     if (!container) return;
     const opts  = container.querySelector('.cs-options');
@@ -501,6 +500,7 @@ function CM_TM_LoadList() {
   const names     = Object.keys(templates);
   const dropdowns = {
     CM_TMDropdown:       { placeholder: '— select template —', handler: (name, opt) => {} },
+    CM_TMViewDropdown:   { placeholder: '— select template —', handler: () => {} },
     CM_TMRemoveDropdown: { placeholder: '— select template —', handler: () => {} },
   };
 
@@ -558,12 +558,47 @@ function CM_TM_LoadList() {
 }
 
 function CM_TM_SwitchTab(tab) {
-  ['Load', 'Remove', 'Save'].forEach(t => {
+  ['Load', 'View', 'Remove', 'Save'].forEach(t => {
     const isActive = t.toLowerCase() === tab;
     document.getElementById(`CM_TMTab_${t}`)?.classList.toggle('active', isActive);
     const panel = document.getElementById(`CM_TMPanel_${t}`);
     if (panel) panel.style.display = isActive ? 'flex' : 'none';
   });
+}
+
+function CM_TM_ViewSelected() {
+  const name = CM_getDropdownValue('CM_TMViewDropdown');
+  if (!name) { CM_showToast('Select a template', 'error'); return; }
+  const templates = CM_TM_GetAll();
+  const data = templates[name];
+  if (!data) { CM_showToast('Template not found', 'error'); return; }
+
+  const display = {
+    name,
+    columns: Object.entries(data.state || {}).map(([col, s]) => ({
+      column:  col,
+      rename:  s.rename || '',
+      dtype:   s.dtype  || '',
+      zfill:   s.zfill  || 0,
+      include: s.include !== false,
+    })),
+    derived: (data.derived || []).map(d => ({
+      name:     d.name,
+      dtype:    d.dtype    || '',
+      sql_expr: d.sql_expr || '',
+    })),
+  };
+
+  const titleEl   = document.getElementById('PD_ModalTitle');
+  const contentEl = document.getElementById('PD_ModalContent');
+  const applyBtn  = document.getElementById('PD_ModalApplyBtn');
+  const numBtn    = document.getElementById('PD_ModalApplyByNumBtn');
+  if (titleEl)   titleEl.textContent   = name;
+  if (contentEl) contentEl.textContent = JSON.stringify(display, null, 2);
+  if (applyBtn)  applyBtn.style.display  = 'none';
+  if (numBtn)    numBtn.style.display    = 'none';
+  document.getElementById('PD_Modal')?.classList.add('cm-context');
+  Popup_open('PD_Modal');
 }
 
 function CM_TM_Save() {
@@ -587,16 +622,18 @@ function CM_TM_ApplySelected() {
   CM_TM_QuickApply(name);
 }
 
-function CM_TM_QuickApply(name) {
+async function CM_TM_QuickApply(name) {
   const tpl = CM_TM_GetAll()[name];
   if (!tpl) { CM_showToast('Template not found: ' + name, 'error'); return; }
+  _CM_baseSrc = 'ld_raw';
+  await CM_LoadColumns();
   Object.keys(tpl.state || {}).forEach(k => {
     if (_CM_state[k]) _CM_state[k] = { ..._CM_state[k], ...tpl.state[k] };
   });
   _CM_derived = (tpl.derived || []).map(d => ({ ...d }));
   CM_RenderColumnTable(null);
   CM_showToast('Template applied: ' + name, 'success');
-  CM_ApplyChanges();
+  CM_ApplyChanges(false);
 }
 
 function CM_TM_Delete() {
@@ -614,10 +651,8 @@ function CM_TM_Delete() {
 // ── Bin Templates ─────────────────────────────────────────────────────────────
 
 const _CM_BIN_KEY  = 'CM_BinTemplates';
-const _CM_ZPAD_KEY = 'CM_ZpadTemplates';
 
 function CM_CO_GetBinTemplates()  { try { return JSON.parse(localStorage.getItem(_CM_BIN_KEY)  || '{}'); } catch { return {}; } }
-function CM_CO_GetZpadTemplates() { try { return JSON.parse(localStorage.getItem(_CM_ZPAD_KEY) || '{}'); } catch { return {}; } }
 
 function CM_CO_LoadBinTemplates() {
   const names = Object.keys(CM_CO_GetBinTemplates());
@@ -700,79 +735,13 @@ function CM_CO_CreateBinned(andSave = false) {
   CM_RenderColumnTable(null);
 }
 
-// ── Zpad Templates ────────────────────────────────────────────────────────────
-
-function CM_CO_LoadZpadTemplates() {
-  const names = Object.keys(CM_CO_GetZpadTemplates());
-  const container = document.getElementById('CM_COZpadTemplate');
-  if (!container) return;
-  const opts  = container.querySelector('.cs-options');
-  const valEl = container.querySelector('.cs-value');
-  opts.innerHTML = '<div class="cs-option cs-selected" data-value="">— new —</div>';
-  if (valEl) valEl.textContent = '— new —';
-  names.forEach(name => {
-    const opt = document.createElement('div');
-    opt.className = 'cs-option';
-    opt.setAttribute('data-value', name);
-    opt.textContent = name;
-    opt.onclick = () => { CM_selectOption('CM_COZpadTemplate', opt); CM_CO_LoadZpadTemplate(name); };
-    opts.appendChild(opt);
-  });
-}
-
-function CM_CO_LoadZpadTemplate(name) {
-  const tpl = CM_CO_GetZpadTemplates()[name];
-  if (!tpl) return;
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
-  set('CM_COZpadWidth', tpl.pad_width);
-  set('CM_COZpadName',  tpl.target_column);
-  if (tpl.source_column) {
-    const optEl = document.querySelector(`#CM_COZpadColumn .cs-option[data-value="${tpl.source_column}"]`);
-    if (optEl) CM_selectOption('CM_COZpadColumn', optEl);
-  }
-}
-
-function CM_CO_DeleteZpadTemplate() {
-  const name = CM_getDropdownValue('CM_COZpadTemplate');
-  if (!name) { CM_showToast('Select a template', 'error'); return; }
-  if (!confirm(`Delete zpad template "${name}"?`)) return;
-  const tpls = CM_CO_GetZpadTemplates();
-  delete tpls[name];
-  localStorage.setItem(_CM_ZPAD_KEY, JSON.stringify(tpls));
-  CM_showToast('Deleted: ' + name, 'success');
-  CM_CO_LoadZpadTemplates();
-}
-
-function CM_CO_CreateZpad(andSave = false) {
-  const col = CM_getDropdownValue('CM_COZpadColumn');
-  if (!col) { CM_showToast('Select source column', 'error'); return; }
-  const width = parseInt(document.getElementById('CM_COZpadWidth')?.value);
-  if (!width || width < 1) { CM_showToast('Enter pad width', 'error'); return; }
-  const newName = document.getElementById('CM_COZpadName')?.value.trim() || ('Padded_' + col);
-
-  _CM_derived = _CM_derived.filter(d => d.name !== newName);
-  _CM_derived.push({ name: newName, sql_expr: `LPAD(CAST("${col}" AS VARCHAR), ${width}, '0')`, dtype: 'VARCHAR' });
-
-  if (andSave) {
-    const tpls = CM_CO_GetZpadTemplates();
-    tpls[newName] = { source_column: col, pad_width: width, target_column: newName };
-    localStorage.setItem(_CM_ZPAD_KEY, JSON.stringify(tpls));
-    CM_CO_LoadZpadTemplates();
-    CM_showToast('Zero-pad column added & template saved: ' + newName, 'success');
-  } else {
-    CM_showToast('Zero-pad column added: ' + newName, 'success');
-  }
-  CM_RenderColumnTable(null);
-}
-
 function CM_CO_SwitchTool(tool) {
-  const isBin = tool === 'bin';
-  document.getElementById('CM_COBinTab')?.style.setProperty('display',  isBin ? 'block' : 'none');
-  document.getElementById('CM_COZpadTab')?.style.setProperty('display', isBin ? 'none'  : 'block');
-  document.getElementById('CM_COTabBinBtn')?.classList.toggle('active',  isBin);
-  document.getElementById('CM_COTabZpadBtn')?.classList.toggle('active', !isBin);
+  document.getElementById('CM_COBinTab')?.style.setProperty('display', 'block');
+  document.getElementById('CM_COTabBinBtn')?.classList.add('active');
 }
 
 // ── Expose source / connection for downstream modules ─────────────────────────
 window.CM_getConn   = () => window.LD_getConn && window.LD_getConn();
 window.CM_getSource = () => window.LD_getSource && window.LD_getSource();
+
+document.addEventListener('DOMContentLoaded', () => CM_TM_LoadList());

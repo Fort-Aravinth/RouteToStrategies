@@ -1,0 +1,114 @@
+/* ── Overview ── */
+
+/* Page header */
+.ov-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  border-left: 3px solid var(--brand-ov);
+  box-shadow: 0 1px 4px var(--color-card-shadow);
+  width: 100%;
+}
+.ov-view-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-header-title);
+  letter-spacing: -0.01em;
+}
+.ov-view-subtitle {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.ov-view-badge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-ov);
+  background: var(--brand-ov-dim);
+  border: 0.5px solid var(--brand-ov);
+  border-radius: 4px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* Brand — overview crimson */
+#OVView .pg-card::before { background: var(--brand-ov); }
+#OVView .pg-btn          { border-color: var(--brand-ov-dim); background: var(--brand-ov-dim); color: var(--brand-ov); }
+#OVView .pg-btn:hover    { background: var(--brand-ov); border-color: var(--brand-ov); color: #fff; }
+
+
+/* Metric boxes */
+.ov-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.ov-metric-box {
+  padding: 14px 12px;
+  background: var(--color-page-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  text-align: center;
+}
+.ov-metric-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+.ov-metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-header-title);
+  line-height: 1.2;
+}
+
+/* Rate boxes */
+.ov-rate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+}
+.ov-rate-box {
+  padding: 14px 12px;
+  background: var(--brand-ov-dim);
+  border: 0.5px solid var(--brand-ov);
+  border-radius: var(--dml-radius);
+  text-align: center;
+}
+.ov-rate-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--brand-ov);
+  margin-bottom: 6px;
+}
+.ov-rate-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-ov);
+  line-height: 1.2;
+}
+
+/* Loading / empty state */
+.ov-state {
+  padding: 32px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}

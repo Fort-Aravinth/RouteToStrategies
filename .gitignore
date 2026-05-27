@@ -1,10 +1,20 @@
-# Python
+# Secrets / API keys
+.da_key
+
+# Python server files
+app.py
+state.py
+*.py
 __pycache__/
 *.pyc
 *.pkl
 *.log
 state.json
 strategy_store.json
+templates/
+
+# Old HTML versions
+new_version_v6.html
 
 # Old/legacy files
 static/Version01.css

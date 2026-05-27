@@ -76,17 +76,21 @@ function LD_OpenPanel() {
 }
 
 // ── Nav lock — enforce Load → CM → everything else flow ──────────────────────
-const _LD_NAV_LOCK_IDS = [
-  'nav-parameters','nav-overview','nav-score-analysis',
-  'nav-route-analysis','nav-individual-analysis','nav-policy-rules',
-  'nav-rmon-import',
+// Unlocked by SP Apply Parameters
+const _LD_NAV_LOCK_IDS = ['nav-overview'];
+// Unlocked later (Score Analysis, Rule Management etc — not yet implemented)
+const _LD_ANALYSIS_LOCK_IDS = [
+  'nav-score-analysis','nav-route-analysis','nav-individual-analysis',
+  'nav-policy-rules','nav-rmon-import',
 ];
+// Unlocked when data loads (CM becomes accessible)
+const _LD_CM_LOCK_IDS = ['nav-cm-template-row'];
+// Unlocked only after CM Apply Changes
+const _LD_SP_LOCK_IDS = ['nav-parameters', 'SP_SidebarPreset_Row'];
 
 function LD_LockNavToColumnMgmt() {
-  // Lock CM until file is loaded
   const cm = document.getElementById('nav-column-mgmt');
   if (cm) { cm.classList.add('ld-locked'); cm.setAttribute('data-nav-locked','1'); }
-  // Lock everything else until CM is applied
   _LD_NAV_LOCK_IDS.forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.classList.add('ld-locked'); el.setAttribute('data-nav-locked','1'); }
@@ -94,16 +98,23 @@ function LD_LockNavToColumnMgmt() {
 }
 
 function LD_UnlockColumnMgmt() {
-  ['nav-column-mgmt', 'nav-cm-template-row'].forEach(id => {
+  ['nav-column-mgmt', ..._LD_CM_LOCK_IDS].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.classList.remove('ld-locked'); el.removeAttribute('data-nav-locked'); }
   });
 }
 
+window.LD_UnlockSP = function() {
+  _LD_SP_LOCK_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('ld-locked'); el.removeAttribute('data-nav-locked'); }
+  });
+};
+
 window.LD_UnlockNav = function() {
   _LD_NAV_LOCK_IDS.forEach(id => {
     const el = document.getElementById(id);
-    if (el) { el.classList.remove('ld-locked'); el.removeAttribute('data-nav-locked'); }
+    if (el) { el.classList.remove('ld-locked', 'sidebar-item-disabled'); el.removeAttribute('data-nav-locked'); }
   });
 };
 
@@ -132,8 +143,8 @@ function LD_ChooseFile() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Lock CM + CM template row + everything after it by default on page load
-  ['nav-column-mgmt', 'nav-cm-template-row', ..._LD_NAV_LOCK_IDS].forEach(id => {
+  // Lock CM + CM template row + SP + everything after it by default on page load
+  ['nav-column-mgmt', ..._LD_CM_LOCK_IDS, ..._LD_SP_LOCK_IDS, ..._LD_NAV_LOCK_IDS, ..._LD_ANALYSIS_LOCK_IDS].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.classList.add('ld-locked'); el.setAttribute('data-nav-locked','1'); }
   });

@@ -494,6 +494,7 @@ function PD_applyLoadedColumns() {
 
 function PD_closeModal() {
   Popup_close('PD_Modal');
+  document.getElementById('PD_Modal')?.classList.remove('cm-context');
   PD_PendingLoad = null;
   const applyBtn    = document.getElementById('PD_ModalApplyBtn');
   const applyNumBtn = document.getElementById('PD_ModalApplyByNumBtn');

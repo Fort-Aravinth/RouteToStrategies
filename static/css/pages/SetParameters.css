@@ -1,0 +1,67 @@
+/* ── Set Parameters ── */
+
+/* Page header */
+.sp-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  border-left: 3px solid var(--brand-param);
+  box-shadow: 0 1px 4px var(--color-card-shadow);
+  width: 100%;
+}
+.sp-view-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-header-title);
+  letter-spacing: -0.01em;
+}
+.sp-view-subtitle {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.sp-view-badge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-param);
+  background: var(--brand-param-dim);
+  border: 0.5px solid var(--brand-param);
+  border-radius: 4px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* Brand — teal */
+#SPView .pg-card::before              { background: var(--brand-param); }
+#SPView .pg-btn                       { border-color: var(--brand-param-dim); background: var(--brand-param-dim); color: var(--brand-param); }
+#SPView .pg-btn:hover,
+#SPView .pg-btn.active                { background: var(--brand-param); border-color: var(--brand-param); color: #fff; }
+#SPView .pg-chip.active               { background: var(--brand-param); border-color: var(--brand-param); color: #fff; }
+#SPView .pg-chip:hover                { background: var(--brand-param-dim); border-color: var(--brand-param); }
+#SPView input[type="checkbox"]        { accent-color: var(--brand-param); }
+#SPView input[type="date"]            { accent-color: var(--brand-param); }
+#SPView .cs-trigger:hover,
+#SP_SidebarPreset .cs-trigger:hover             { border-color: var(--brand-param); }
+#SPView .custom-select.open .cs-trigger,
+#SP_SidebarPreset.open .cs-trigger { border-color: var(--brand-param); box-shadow: 0 0 0 2px var(--brand-param-dim); }
+#SPView .cs-option:hover,
+#SP_SidebarPreset .cs-option:hover              { background: var(--brand-param-dim); }
+#SPView .cs-option.cs-selected,
+#SP_SidebarPreset .cs-option.cs-selected        { background: var(--brand-param) !important; color: #fff !important; }
+
+
+/* Scrollable chip row — SP only */
+#SPView .pg-chip-row.sp-scroll { max-height: 150px; overflow-y: auto; }
+
+/* pg-chip-sq brand overrides for SPView */
+#SPView .pg-chip-sq.active { background: var(--brand-param); border-color: var(--brand-param); color: #fff; }
+#SPView .pg-chip-sq:hover  { background: var(--brand-param-dim); border-color: var(--brand-param); }
