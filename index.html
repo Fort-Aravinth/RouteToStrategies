@@ -12,12 +12,18 @@
 <link rel="stylesheet" href="static/css/Components.css?v=1">
 <link rel="stylesheet" href="static/css/pages/PreviewData.css?v=1">
 <link rel="stylesheet" href="static/css/pages/Playground.css?v=1">
+<link rel="stylesheet" href="static/css/pages/LoadData.css?v=1">
+<link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=1">
 <script src="static/Sidebar.js" defer></script>
 <script src="static/Nav.js" defer></script>
 <script src="static/MainContent.js" defer></script>
 <script src="static/Playground.js" defer></script>
+<script src="static/LoadData.js?v=11" defer></script>
 <script src="static/PreviewData.js?v=7" defer></script>
+<script src="static/ColumnManagement.js?v=16" defer></script>
 <style>
+.ld-locked { opacity: 0.35; pointer-events: none; user-select: none; }
+
 .MN_topbar {
   grid-column: 1 / -1;
   grid-row: 1;
@@ -50,11 +56,13 @@
 .MN_brand_icon svg { width: 13px; height: 13px; }
 .MN_brand_name { font-size: 0.78rem; font-weight: 700; letter-spacing: .01em; color: var(--color-header-title); }
 .sidebar-item-disabled { opacity: 0.35; pointer-events: none; cursor: not-allowed; }
+.sidebar-item-nodot { cursor: default; }
+.sidebar-item-nodot:hover { background: transparent; }
 </style>
 </head>
 <body>
 
-<div class="DMLD_ToastContainer" id="DMLD_ToastContainer"></div>
+<div class="LD_ToastContainer" id="LD_ToastContainer"></div>
 
 <div class="shell">
 
@@ -104,7 +112,7 @@
       </div>
       <div class="sidebar-section-body open">
 
-        <div id="nav-preview-data" class="sidebar-item" onclick="PreviewData_Open()">
+        <div id="nav-preview-data" class="sidebar-item" onclick="PD_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
             <path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
@@ -112,7 +120,7 @@
           Preview Data
         </div>
 
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-load-data" class="sidebar-item" onclick="LD_OpenPanel()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -120,15 +128,45 @@
           Load Data
         </div>
 
+        <div class="sidebar-item sidebar-item-nodot">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 5h12M2 8h12M2 11h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <div class="custom-select" id="LD_SidebarTemplate" style="flex:1;opacity:0.45;pointer-events:none;">
+            <div class="cs-trigger">
+              <span class="cs-value">PC version only</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="cs-options">
+              <div class="cs-option cs-selected" data-value="">Load Data Templates</div>
+            </div>
+          </div>
+        </div>
+
         <div class="sidebar-divider"></div>
 
-        <div class="sidebar-item sidebar-item-disabled">
+        <div id="nav-column-mgmt" class="sidebar-item" onclick="CM_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <rect x="2" y="2" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
             <rect x="8" y="2" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
             <path d="M14 5v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
           </svg>
           Column Management
+        </div>
+
+        <div id="nav-cm-template-row" class="sidebar-item sidebar-item-nodot">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 5h12M2 8h12M2 11h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <div class="custom-select" id="CM_SidebarTemplate" style="flex:1;">
+            <div class="cs-trigger" onclick="toggleCustomSelect('CM_SidebarTemplate')">
+              <span class="cs-value">Column Templates</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="cs-options">
+              <div class="cs-option cs-selected" data-value="">Column Templates</div>
+            </div>
+          </div>
         </div>
 
         <div class="sidebar-divider"></div>
@@ -259,13 +297,13 @@
             </div>
             <div class="pg-card-divider"></div>
             <div class="pg-card-body">
-              <input type="file" id="PreDat_FileInput" accept=".csv,.tsv,.txt" style="display:none;" onchange="PreDat_onFilePicked(event)"/>
+              <input type="file" id="PD_FileInput" accept=".csv,.tsv,.txt" style="display:none;" onchange="PD_onFilePicked(event)"/>
               <div>
                 <div class="pg-field-label">File Path</div>
-                <input type="text" id="PreDat_FilePath" placeholder="/path/to/file.csv" class="pg-input"/>
+                <input type="text" id="PD_FilePath" placeholder="/path/to/file.csv" class="pg-input"/>
               </div>
-              <button type="button" class="pg-btn" onclick="document.getElementById('PreDat_FileInput').click()" title="Browse file">Browse</button>
-              <button type="button" class="pg-btn" onclick="PreDat_loadFile()">Load Preview</button>
+              <button type="button" class="pg-btn" onclick="document.getElementById('PD_FileInput').click()" title="Browse file">Browse</button>
+              <button type="button" class="pg-btn" onclick="PD_loadFile()">Load Preview</button>
             </div>
           </div>
         </div>
@@ -276,13 +314,13 @@
           <div class="pg-card">
             <div class="pg-card-header">
               <span class="pg-card-title">File Header</span>
-              <span class="pg-card-label" id="PreDat_HeaderBadge">Has Header</span>
+              <span class="pg-card-label" id="PD_HeaderBadge">Has Header</span>
             </div>
             <div class="pg-card-divider"></div>
             <div class="pg-card-body">
               <div class="pg-chip-row">
-                <button type="button" id="PreDat_BtnHeader" class="pg-chip active" onclick="PreDat_setHeader(true)">Has Header</button>
-                <button type="button" id="PreDat_BtnNoHeader" class="pg-chip" onclick="PreDat_setHeader(false)">No Header</button>
+                <button type="button" id="PD_BtnHeader" class="pg-chip active" onclick="PD_setHeader(true)">Has Header</button>
+                <button type="button" id="PD_BtnNoHeader" class="pg-chip" onclick="PD_setHeader(false)">No Header</button>
               </div>
             </div>
           </div>
@@ -290,21 +328,21 @@
           <div class="pg-card">
             <div class="pg-card-header">
               <span class="pg-card-title">Delimiter</span>
-              <span class="pg-card-label" id="PreDat_DelimBadge">Auto</span>
+              <span class="pg-card-label" id="PD_DelimBadge">Auto</span>
             </div>
             <div class="pg-card-divider"></div>
             <div class="pg-card-body">
               <div class="pg-chip-row">
-                <button type="button" class="pg-chip active" id="PreDat_Delim_auto"      onclick="PreDat_setDelim('auto',      this)">Auto</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_comma"     onclick="PreDat_setDelim(',',         this)">Comma</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_semicolon" onclick="PreDat_setDelim(';',         this)">Semicolon</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_tab"       onclick="PreDat_setDelim('\t',        this)">Tab</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_pipe"      onclick="PreDat_setDelim('|',         this)">Pipe</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_caret"     onclick="PreDat_setDelim('^',         this)">Caret</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_colon"     onclick="PreDat_setDelim(':',         this)">Colon</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_space"     onclick="PreDat_setDelim(' ',         this)">Space</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_tilde"     onclick="PreDat_setDelim('~',         this)">Tilde</button>
-                <button type="button" class="pg-chip"        id="PreDat_Delim_hash"      onclick="PreDat_setDelim('#',         this)">Hash</button>
+                <button type="button" class="pg-chip active" id="PD_Delim_auto"      onclick="PD_setDelim('auto',      this)">Auto</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_comma"     onclick="PD_setDelim(',',         this)">Comma</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_semicolon" onclick="PD_setDelim(';',         this)">Semicolon</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_tab"       onclick="PD_setDelim('\t',        this)">Tab</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_pipe"      onclick="PD_setDelim('|',         this)">Pipe</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_caret"     onclick="PD_setDelim('^',         this)">Caret</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_colon"     onclick="PD_setDelim(':',         this)">Colon</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_space"     onclick="PD_setDelim(' ',         this)">Space</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_tilde"     onclick="PD_setDelim('~',         this)">Tilde</button>
+                <button type="button" class="pg-chip"        id="PD_Delim_hash"      onclick="PD_setDelim('#',         this)">Hash</button>
               </div>
             </div>
           </div>
@@ -314,22 +352,22 @@
         <!-- Row 3: Column Selector | Column Lists (50/50) -->
         <div class="pg-layout-row pg-cols-2">
 
-          <div class="pg-card" id="PreDat_SelectorCard">
+          <div class="pg-card" id="PD_SelectorCard">
             <div class="pg-card-header">
               <span class="pg-card-title">Column Selector</span>
-              <span class="pg-card-label" id="PreDat_SelCount">0 selected</span>
+              <span class="pg-card-label" id="PD_SelCount">0 selected</span>
             </div>
             <div class="pg-card-divider"></div>
             <div class="pg-card-body">
               <div style="display:flex; gap:8px;">
-                <button type="button" class="pg-btn" style="flex:1;" onclick="PreDat_selectAll()">Select All</button>
-                <button type="button" class="pg-btn" style="flex:1;" onclick="PreDat_clearAll()">Clear All</button>
+                <button type="button" class="pg-btn" style="flex:1;" onclick="PD_selectAll()">Select All</button>
+                <button type="button" class="pg-btn" style="flex:1;" onclick="PD_clearAll()">Clear All</button>
               </div>
-              <div id="PreDat_ChipGrid" class="pg-chip-row" style="max-height:260px; overflow-y:auto;"></div>
+              <div id="PD_ChipGrid" class="pg-chip-row" style="max-height:260px; overflow-y:auto;"></div>
             </div>
           </div>
 
-          <div class="pg-card" id="PreDat_ListsCard">
+          <div class="pg-card" id="PD_ListsCard">
             <div class="pg-card-header">
               <span class="pg-card-title">Column Lists</span>
               <span class="pg-card-label">save · load · delete</span>
@@ -338,31 +376,31 @@
             <div class="pg-card-body">
               <div>
                 <div class="pg-field-label">Save</div>
-                <input type="text" id="PreDat_SaveName" placeholder="Save Current Selection" class="pg-input"/>
+                <input type="text" id="PD_SaveName" placeholder="Save Current Selection" class="pg-input"/>
               </div>
-              <button type="button" class="pg-btn" onclick="PreDat_saveColumns()">Save</button>
+              <button type="button" class="pg-btn" onclick="PD_saveColumns()">Save</button>
               <div>
                 <div class="pg-field-label">Load</div>
-                <div class="custom-select" id="PreDat_LoadSelect">
-                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PreDat_LoadSelect')">
+                <div class="custom-select" id="PD_LoadSelect">
+                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PD_LoadSelect')">
                     <span class="cs-value">— select —</span>
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
                   </div>
                   <div class="cs-options"></div>
                 </div>
               </div>
-              <button type="button" class="pg-btn" onclick="PreDat_loadColumns()">Load</button>
+              <button type="button" class="pg-btn" onclick="PD_loadColumns()">Load</button>
               <div>
                 <div class="pg-field-label">Delete</div>
-                <div class="custom-select" id="PreDat_RemoveSelect">
-                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PreDat_RemoveSelect')">
+                <div class="custom-select" id="PD_RemoveSelect">
+                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PD_RemoveSelect')">
                     <span class="cs-value">— select —</span>
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
                   </div>
                   <div class="cs-options"></div>
                 </div>
               </div>
-              <button type="button" class="pg-btn" onclick="PreDat_deleteColumns()">Delete</button>
+              <button type="button" class="pg-btn" onclick="PD_deleteColumns()">Delete</button>
             </div>
           </div>
 
@@ -370,18 +408,18 @@
 
         <!-- Row 4: Preview (100%) -->
         <div class="pg-layout-row">
-          <div class="pg-card" id="PreDat_PreviewCard">
+          <div class="pg-card" id="PD_PreviewCard">
             <div class="pg-card-header">
               <span class="pg-card-title">Preview</span>
-              <span class="pg-card-label" id="PreDat_StatsBadge">—</span>
+              <span class="pg-card-label" id="PD_StatsBadge">—</span>
             </div>
             <div class="pg-card-divider"></div>
             <div class="pg-card-body">
               <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                <button type="button" class="pg-btn" style="width:auto;" onclick="PreDat_loadFile()">Update</button>
-                <div id="PreDat_StatsRow" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;"></div>
+                <button type="button" class="pg-btn" style="width:auto;" onclick="PD_loadFile()">Update</button>
+                <div id="PD_StatsRow" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;"></div>
               </div>
-              <div id="PreDat_FullTable" class="pg-table-wrap"></div>
+              <div id="PD_FullTable" class="pg-table-wrap"></div>
             </div>
           </div>
         </div>
@@ -390,22 +428,180 @@
     <!-- ══ end Preview Data ══ -->
 
     <!-- Column List Modal -->
-    <div id="PreDat_Modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div id="PD_Modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
       <div class="pg-card" style="width:480px; max-width:90vw; max-height:80vh; display:flex; flex-direction:column; border-radius:14px; overflow:hidden;">
         <div class="pg-card-header" style="margin-bottom:0;">
-          <span class="pg-card-title" id="PreDat_ModalTitle">Column List</span>
-          <button type="button" onclick="PreDat_closeModal()" style="background:none;border:none;cursor:pointer;color:var(--dml-muted);font-size:18px;line-height:1;padding:0 2px;">✕</button>
+          <span class="pg-card-title" id="PD_ModalTitle">Column List</span>
+          <button type="button" onclick="PD_closeModal()" style="background:none;border:none;cursor:pointer;color:var(--dml-muted);font-size:18px;line-height:1;padding:0 2px;">✕</button>
         </div>
         <div class="pg-card-divider"></div>
         <div style="padding:16px 24px; overflow-y:auto; flex:1; background:var(--dml-bg);">
-          <pre id="PreDat_ModalContent" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--dml-text); white-space:pre-wrap; word-break:break-word; margin:0;"></pre>
+          <pre id="PD_ModalContent" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--dml-text); white-space:pre-wrap; word-break:break-word; margin:0;"></pre>
         </div>
         <div style="display:flex; gap:8px; justify-content:center; padding:16px 24px; border-top:1px solid var(--dml-border);">
-          <button type="button" class="pg-btn" style="width:120px;" onclick="PreDat_closeModal()">Cancel</button>
-          <button type="button" class="pg-btn" style="width:120px;" onclick="PreDat_applyLoadedColumns()">Apply</button>
+          <button type="button" class="pg-btn" style="width:120px;" onclick="PD_closeModal()">Cancel</button>
+          <button type="button" class="pg-btn" style="width:120px;" onclick="PD_applyLoadedColumns()">Apply</button>
         </div>
       </div>
     </div>
+
+    <!-- ══ Load Data View ══ -->
+    <div class="pg-layout" id="LDView" style="display:none;">
+
+      <!-- Row 1: Load File (left) · Data Info + Reprocess (right) -->
+      <div class="pg-layout-row pg-cols-2">
+
+        <!-- Load File -->
+        <div class="pg-card" id="LD_LoadFileCard">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Load File</span>
+            <span class="pg-card-label">CSV · TSV · TXT</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div class="pg-dropzone" id="LD_DropZone" ondrop="LD_HandleFileDrop(event)" ondragover="LD_HandleDragOver(event)" ondragleave="LD_HandleDragLeave(event)">
+              <svg class="pg-dropzone-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 16V4m0 0-3 3m3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1" stroke-linecap="round"/>
+              </svg>
+              <div class="pg-dropzone-title">Drag &amp; drop your file here</div>
+              <div class="pg-dropzone-or">or</div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="LD_ChooseFile()">Choose File</button>
+              <div id="LD_FileSelected" style="font-size:0.72rem; color:var(--dml-text); margin-top:4px; min-height:1em;">
+                <span id="LD_FileName"></span><span id="LD_FileSize"></span>
+              </div>
+            </div>
+            <input type="file" id="LD_FileInput" accept=".csv,.tsv,.txt" style="display:none"/>
+            <input type="hidden" id="LD_Delimiter" value="auto"/>
+            <div id="LD_PostSelectGroup" class="ld-locked" style="display:contents;">
+            <div class="pg-chip-row">
+              <button type="button" class="pg-chip active" onclick="LD_SetDelimiter3(this,'auto')">Auto</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,',')">Comma</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,';')">Semicolon</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,'\t')">Tab</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,'|')">Pipe</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,'^')">Caret</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,':')">Colon</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,' ')">Space</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,'~')">Tilde</button>
+              <button type="button" class="pg-chip" onclick="LD_SetDelimiter3(this,'#')">Hash</button>
+            </div>
+            <label style="display:flex; align-items:center; gap:8px; font-size:11px; color:var(--dml-text);">
+              <input type="checkbox" id="LD_HeaderCheckbox" checked> First row is header
+            </label>
+            <button type="button" class="pg-btn" onclick="LD_UploadFile()">Upload &amp; Process</button>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <div class="custom-select" id="LD_ReviewedSelect" style="flex:1;">
+                <div class="cs-trigger" onclick="PG_toggleCustomSelect('LD_ReviewedSelect')">
+                  <span class="cs-value">— select —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <div class="cs-options"></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="LD_UploadReviewedFile()">Upload &amp; Process Reviewed Data</button>
+            </div>
+            </div><!-- /LD_PostSelectGroup -->
+          </div>
+        </div>
+
+        <!-- Right: Data Info + Reprocess -->
+        <div id="LD_PostUploadGroup" class="ld-locked" style="display:flex; flex-direction:column; gap:16px;">
+
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Data Information</span>
+              <span class="pg-card-label">Loaded file</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div>
+                  <div class="pg-field-label">Rows</div>
+                  <div style="font-size:1rem; font-weight:700; color:var(--dml-text);" id="LD_Rows">—</div>
+                </div>
+                <div>
+                  <div class="pg-field-label">Columns</div>
+                  <div style="font-size:1rem; font-weight:700; color:var(--dml-text);" id="LD_Cols">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pg-card" id="LD_ReprocessCard">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Re-process</span>
+              <span class="pg-card-label">Reparse file</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <input type="hidden" id="LD_ReprocessDelimiter" value="auto"/>
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip active" onclick="LD_SetDelimiter4(this,'auto')">Auto</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,',')">Comma</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,';')">Semicolon</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,'\t')">Tab</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,'|')">Pipe</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,'^')">Caret</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,':')">Colon</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,' ')">Space</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,'~')">Tilde</button>
+                <button type="button" class="pg-chip" onclick="LD_SetDelimiter4(this,'#')">Hash</button>
+              </div>
+              <label style="display:flex; align-items:center; gap:8px; font-size:11px; color:var(--dml-text);">
+                <input type="checkbox" id="LD_ReprocessHeader" checked> First row is header
+              </label>
+              <button type="button" class="pg-btn" onclick="LD_ReprocessFile()">Re-process</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Row 2: Templates -->
+      <div class="pg-layout-row ld-locked" id="LD_TemplatesRow">
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Save Location &amp; Templates</span>
+            <span style="font-size:0.6rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-dim);background:var(--color-nav-hover);border:0.5px solid var(--color-card-border);border-radius:3px;padding:2px 6px;flex-shrink:0;">Desktop app only</span>
+            <span class="pg-card-label" id="LD_PathValue">—</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="pg-btn active" id="LD_Tab_Load"       onclick="LD_switchTab('load')">Load</button>
+              <button type="button" class="pg-btn"        id="LD_Tab_Remove"     onclick="LD_switchTab('remove')">Delete</button>
+              <button type="button" class="pg-btn"        id="LD_Tab_Saverename" onclick="LD_switchTab('saverename')">Save</button>
+            </div>
+            <div class="pg-tab-panel active" id="LD_Panel_Load">
+              <div class="custom-select" id="LD_LoadTemplate" style="flex:1;opacity:0.45;pointer-events:none;">
+                <div class="cs-trigger">
+                  <span class="cs-value">Select a saved template...</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <div class="cs-options"></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;opacity:0.45;cursor:not-allowed;" disabled title="Requires desktop app — cannot auto-load from a file path in the browser">Load</button>
+            </div>
+            <div class="pg-tab-panel" id="LD_Panel_Remove">
+              <div class="custom-select" id="LD_RemoveTemplate" style="flex:1;opacity:0.45;pointer-events:none;">
+                <div class="cs-trigger">
+                  <span class="cs-value">Select a template to delete...</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <div class="cs-options"></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;opacity:0.45;cursor:not-allowed;" disabled title="Requires desktop app">Delete</button>
+            </div>
+            <div class="pg-tab-panel" id="LD_Panel_Saverename">
+              <input class="pg-input" type="text" id="LD_SaveName" placeholder="Name to save as..." style="flex:1;opacity:0.45;pointer-events:none;" disabled>
+              <button type="button" class="pg-btn" style="width:auto;opacity:0.45;cursor:not-allowed;" disabled title="Requires desktop app">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ══ end Load Data ══ -->
 
     <!-- ══ Playground View ══ -->
     <div id="PlaygroundView" class="pg-layout" style="display:none;">
@@ -537,11 +733,290 @@
     </div>
     <!-- ══ end Playground ══ -->
 
+    <!-- ══ Column Management View ══ -->
+    <div class="pg-layout" id="CMView" style="display:none;">
+
+      <!-- Card 1: Column Editor (full width) -->
+      <div class="pg-layout-row">
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Column Editor</span>
+            <span class="pg-card-label">include · rename · retype · zfill</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="text" id="CM_SearchInput" placeholder="search columns…" class="pg-input" style="flex:1;" oninput="CM_FilterColumns()"/>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="CM_ExcludeEmpty()">Exclude Empty</button>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="CM_ApplyChanges()">Apply Changes</button>
+            </div>
+            <div class="pg-chip-row">
+              <button type="button" class="pg-chip" onclick="CM_ApplyPreset('remove_spaces')">Remove Spaces</button>
+              <button type="button" class="pg-chip" onclick="CM_ApplyPreset('snake_case')">Snake Case</button>
+              <button type="button" class="pg-chip" onclick="CM_ApplyPreset('lowercase')">Lowercase</button>
+              <button type="button" class="pg-chip" onclick="CM_ApplyPreset('uppercase')">Uppercase</button>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="CM_Table">
+                <thead>
+                  <tr>
+                    <th style="width:30px; text-align:center;">✓</th>
+                    <th style="text-align:left; min-width:120px;">Name</th>
+                    <th style="width:110px;">Type</th>
+                    <th style="width:100px;" title="Date/time parse format e.g. %Y%m%d — only for DATE / TIMESTAMP / TIME columns">Format</th>
+                    <th style="width:56px; text-align:center;" title="Zero-fill width (0 = off)">ZFill</th>
+                    <th style="width:56px; text-align:right;">Non-null</th>
+                    <th style="text-align:left;">Preview</th>
+                  </tr>
+                </thead>
+                <tbody id="CM_ColumnTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Template Management (full width) -->
+      <div class="pg-layout-row">
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Template Management</span>
+            <span class="pg-card-label">column config</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="pg-btn active" id="CM_TMTab_Load"   onclick="CM_TM_SwitchTab('load')">Load</button>
+              <button type="button" class="pg-btn"        id="CM_TMTab_Remove" onclick="CM_TM_SwitchTab('remove')">Remove</button>
+              <button type="button" class="pg-btn"        id="CM_TMTab_Save"   onclick="CM_TM_SwitchTab('save')">Save</button>
+            </div>
+
+            <!-- Load tab -->
+            <div id="CM_TMPanel_Load" style="display:flex; gap:8px; align-items:center;">
+              <div id="CM_TMDropdown" class="custom-select" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('CM_TMDropdown')">
+                  <span class="cs-value">— no templates —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no templates —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="CM_TM_ApplySelected()">Apply</button>
+            </div>
+
+            <!-- Remove tab -->
+            <div id="CM_TMPanel_Remove" style="display:none; gap:8px; align-items:center;">
+              <div id="CM_TMRemoveDropdown" class="custom-select" style="flex:1;">
+                <div class="cs-trigger" onclick="toggleCustomSelect('CM_TMRemoveDropdown')">
+                  <span class="cs-value">— no templates —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no templates —</div></div>
+              </div>
+              <button type="button" class="pg-btn" style="width:auto;" onclick="CM_TM_Delete()">Delete</button>
+            </div>
+
+            <!-- Save tab -->
+            <div id="CM_TMPanel_Save" style="display:none; flex-direction:column; gap:8px;">
+              <div id="CM_TMSaveDropdown" class="custom-select">
+                <div class="cs-trigger" onclick="toggleCustomSelect('CM_TMSaveDropdown')">
+                  <span class="cs-value">— select to overwrite —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— no templates —</div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <input type="text" id="CM_TMName" placeholder="new name (or overwrite selected)…" class="pg-input" style="flex:1;"/>
+                <button type="button" class="pg-btn" style="width:auto;" onclick="CM_TM_Save()">Save</button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards 3 & 4: Value Counts | Column Tools (side by side) -->
+      <div class="pg-layout-row pg-cols-2">
+
+        <!-- Card 3: Quick Value Counts -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Quick Value Counts</span>
+            <span class="pg-card-label">on demand</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div>
+              <div class="pg-field-label">Column</div>
+              <div id="CM_COValueCountsCol" class="custom-select">
+                <div class="cs-trigger" onclick="toggleCustomSelect('CM_COValueCountsCol')">
+                  <span class="cs-value">— select column —</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="cs-options"><div class="cs-option cs-selected" data-value="">— select column —</div></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="pg-btn" style="flex:1;" onclick="CM_RunValueCounts(10)">Top 10</button>
+              <button type="button" class="pg-btn" style="flex:1;" onclick="CM_RunValueCounts(100)">Top 100</button>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="pg-btn" style="flex:1;" onclick="CM_SortValueCounts('value')">By Value</button>
+              <button type="button" class="pg-btn" style="flex:1;" onclick="CM_SortValueCounts('count')">By Count</button>
+            </div>
+            <div id="CM_COValueCountsResult" style="font-size:11px; overflow-y:auto; max-height:300px; border:1px solid var(--dml-border); border-radius:var(--dml-radius);"></div>
+          </div>
+        </div>
+
+        <!-- Card 4: Column Tools -->
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Column Tools</span>
+            <span class="pg-card-label">derive</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div style="display:flex; gap:8px;">
+              <button type="button" id="CM_COTabBinBtn"  class="pg-btn active" onclick="CM_CO_SwitchTool('bin')">Binned Column</button>
+              <button type="button" id="CM_COTabZpadBtn" class="pg-btn"        onclick="CM_CO_SwitchTool('zpad')">Zero-Pad</button>
+            </div>
+
+            <!-- Binned Column Tab -->
+            <div id="CM_COBinTab" style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="pg-field-label">Template</div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <div id="CM_COBinTemplate" class="custom-select" style="flex:1;">
+                    <div class="cs-trigger" onclick="toggleCustomSelect('CM_COBinTemplate')">
+                      <span class="cs-value">— new —</span>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="cs-options"><div class="cs-option cs-selected" data-value="">— new —</div></div>
+                  </div>
+                  <button type="button" class="pg-btn" style="width:auto;" onclick="CM_CO_DeleteBinTemplate()">Delete</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-field-label">Source Column</div>
+                <div id="CM_COBinColumn" class="custom-select">
+                  <div class="cs-trigger" onclick="toggleCustomSelect('CM_COBinColumn')">
+                    <span class="cs-value">— select —</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="cs-options"><div class="cs-option cs-selected" data-value="">— select —</div></div>
+                </div>
+              </div>
+              <div class="pg-row" style="grid-template-columns:1fr 1fr;">
+                <div>
+                  <div class="pg-field-label">Step Size</div>
+                  <input type="number" id="CM_COBinStep" placeholder="e.g. 25" class="pg-input"/>
+                </div>
+                <div>
+                  <div class="pg-field-label">Max Value</div>
+                  <input type="number" id="CM_COBinMax" placeholder="e.g. 1000" class="pg-input"/>
+                </div>
+              </div>
+              <div>
+                <div class="pg-field-label">Zero-Pad Width</div>
+                <input type="number" id="CM_COBinZfill" placeholder="e.g. 3" class="pg-input"/>
+              </div>
+              <div>
+                <div class="pg-field-label">New Column Name</div>
+                <input type="text" id="CM_COBinName" placeholder="e.g. Amount_Binned" class="pg-input"/>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateBinned(false)">Add Column</button>
+                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateBinned(true)">Add &amp; Save</button>
+              </div>
+            </div>
+
+            <!-- Zero-Pad Tab -->
+            <div id="CM_COZpadTab" style="display:none; flex-direction:column; gap:12px;">
+              <div>
+                <div class="pg-field-label">Template</div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <div id="CM_COZpadTemplate" class="custom-select" style="flex:1;">
+                    <div class="cs-trigger" onclick="toggleCustomSelect('CM_COZpadTemplate')">
+                      <span class="cs-value">— new —</span>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="cs-options"><div class="cs-option cs-selected" data-value="">— new —</div></div>
+                  </div>
+                  <button type="button" class="pg-btn" style="width:auto;" onclick="CM_CO_DeleteZpadTemplate()">Delete</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-field-label">Source Column</div>
+                <div id="CM_COZpadColumn" class="custom-select">
+                  <div class="cs-trigger" onclick="toggleCustomSelect('CM_COZpadColumn')">
+                    <span class="cs-value">— select —</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="cs-options"><div class="cs-option cs-selected" data-value="">— select —</div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pg-field-label">Pad Width</div>
+                <input type="number" id="CM_COZpadWidth" placeholder="e.g. 3" class="pg-input"/>
+              </div>
+              <div>
+                <div class="pg-field-label">New Column Name</div>
+                <input type="text" id="CM_COZpadName" placeholder="e.g. ID_Padded" class="pg-input"/>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateZpad(false)">Add Column</button>
+                <button type="button" class="pg-btn" style="flex:1;" onclick="CM_CO_CreateZpad(true)">Add &amp; Save</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- end cards 3 & 4 -->
+
+    </div>
+    <!-- ══ end Column Management ══ -->
+
   </main>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => PreviewData_Open());
+  document.addEventListener('DOMContentLoaded', () => {
+    PD_Open();
+    LD_LoadTemplates();
+    CM_TM_LoadList();
+  });
+
+  // Global custom-select toggle used by CM (and any future views)
+  function toggleCustomSelect(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+    if (!isOpen) {
+      el.classList.add('open');
+      const trigger = el.querySelector('.cs-trigger');
+      const options = el.querySelector('.cs-options');
+      if (!trigger || !options) return;
+      const rect = el.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const dropdownH  = Math.min(200, options.scrollHeight + 8);
+      options.style.left  = rect.left + 'px';
+      options.style.width = rect.width + 'px';
+      if (spaceBelow < dropdownH && rect.top > dropdownH) {
+        options.style.top    = '';
+        options.style.bottom = (window.innerHeight - rect.top) + 'px';
+      } else {
+        options.style.bottom = '';
+        options.style.top    = rect.bottom + 'px';
+      }
+    }
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.custom-select')) {
+      document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+    }
+  });
 </script>
 </body>
 </html>
