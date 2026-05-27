@@ -1,0 +1,84 @@
+/* ── Design Tokens ── */
+:root {
+  /* Fonts */
+  --font-base: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Page & card */
+  --color-page-bg:         #f5f4f0;
+  --color-card-bg:         #ffffff;
+  --color-card-border:     #e0ddd6;
+  --color-card-shadow:     rgba(0,0,0,0.06);
+  --color-header-title:    #1c1917;
+  --color-header-subtitle: #78716c;
+  --color-text-muted:      #78716c;
+  --color-text-dim:        #c4bfb8;
+
+  /* Nav */
+  --color-nav-border:      #ede9e3;
+  --color-nav-hover:       #fdf8f0;
+  --color-nav-active-bg:   #fffbeb;
+  --color-nav-active-bar:  #f59e0b;
+  --color-nav-label:       #a8a29e;
+
+  /* DML system */
+  --dml-bg:      #F5F2EE;
+  --dml-surface: #FDFCFA;
+  --dml-border:  rgba(0,0,0,0.09);
+  --dml-text:    #1A1714;
+  --dml-muted:   #7A746E;
+  --dml-label:   #A09890;
+  --dml-radius:  10px;
+
+  /* Brand — Preview Data (orange) */
+  --brand-dm:     #E8714A;
+  --brand-dm-light: #F09070;
+  --brand-dm-dim: rgba(232,113,74,0.12);
+
+  /* Brand — Load Data (purple) */
+  --brand-sp:     #7B2D8B;
+  --brand-sp-light: #9B4DAB;
+  --brand-sp-dim: rgba(123,45,139,0.12);
+
+  /* Brand — Column Management (crimson) */
+  --brand-cm:     #A82060;
+  --brand-cm-light: #C84080;
+  --brand-cm-dim: rgba(168,32,96,0.12);
+
+  /* Brand — Playground / default (gold) */
+  --brand-sn:     #F0A500;
+  --brand-sn-light: #FFC94D;
+  --brand-sn-dim: rgba(240,165,0,0.12);
+}
+
+body, input, button, select, textarea {
+  font-family: var(--font-base);
+}
+
+.LD_ToastContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.LD_Toast {
+  background: var(--toast-brand, var(--brand-sn));
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  animation: toastIn 0.3s ease;
+  pointer-events: auto;
+}
+.LD_Toast.success { background: #22c55e; }
+.LD_Toast.error   { background: #ef4444; }
+.LD_Toast.info    { background: #3b82f6; }
+.LD_Toast.hide    { animation: toastOut 0.3s ease forwards; }
+@keyframes toastIn  { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }

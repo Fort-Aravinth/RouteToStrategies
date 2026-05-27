@@ -1,0 +1,28 @@
+/* ── Preview Data ── */
+
+/* Brand — override pg-* gold with --brand-dm (#E8714A) */
+#PreDatView .pg-card::before,
+#PD_Modal .pg-card::before          { background: var(--brand-dm); }
+#PreDatView .pg-btn,
+#PD_Modal .pg-btn                   { border-color: var(--brand-dm-dim); background: var(--brand-dm-dim); color: var(--brand-dm); }
+#PreDatView .pg-btn:hover,
+#PD_Modal .pg-btn:hover             { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#PreDatView .pg-chip.active             { background: var(--brand-dm); border-color: var(--brand-dm); }
+#PreDatView .pg-chip:hover              { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#PreDatView .pg-chip-sq.active          { background: var(--brand-dm); border-color: var(--brand-dm); }
+#PreDatView .pg-chip-sq:hover           { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#PreDatView .pg-table th.pg-col-selected   { background: rgba(232,113,74,0.15); color: #a84a28; border-bottom-color: rgba(232,113,74,0.4); }
+#PreDatView .pg-table td.pg-col-selected   { background: rgba(232,113,74,0.07) !important; }
+#PreDatView .pg-table th:hover             { background: #EDE8E4; color: #555; }
+
+/* Custom select — brand-dm colour override */
+#PreDatView .cs-trigger:hover                   { border-color: var(--brand-dm); }
+#PreDatView .custom-select.open .cs-trigger     { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }
+#PreDatView .cs-option:hover                    { background: var(--brand-dm-dim); }
+#PreDatView .cs-option.cs-selected              { color: #fff; background: var(--brand-dm); }
+
+/* Preview card table margins */
+#PD_PreviewCard .pg-table-wrap {
+  margin: 0 2px 2px;
+}
+

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pkl
+*.log
+state.json
+strategy_store.json
+
+# Old/legacy files
+static/Version01.css
+static/Version01.js
+static/data-management.css
+static/rmon.css
+static/analysis.css
+GlobalCSS.css
+
+# Old HTML versions
+new_version.html
+new_version_v1_2026-05-13.html
+new_version_v2.html
+new_version_v3.html
+new_version_v4.html
+
+# Misc
+.DS_Store
+*.xlsx
+*.csv
+*.json
+temp/

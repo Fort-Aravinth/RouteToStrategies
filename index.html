@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Data v7</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/Tokens.css?v=1">
+<link rel="stylesheet" href="static/css/Sidebar.css?v=1">
+<link rel="stylesheet" href="static/css/Nav.css?v=1">
+<link rel="stylesheet" href="static/css/MainContent.css?v=1">
+<link rel="stylesheet" href="static/css/Components.css?v=1">
+<link rel="stylesheet" href="static/css/pages/PreviewData.css?v=1">
+<link rel="stylesheet" href="static/css/pages/Playground.css?v=1">
+<script src="static/Sidebar.js" defer></script>
+<script src="static/Nav.js" defer></script>
+<script src="static/MainContent.js" defer></script>
+<script src="static/Playground.js" defer></script>
+<script src="static/PreviewData.js?v=7" defer></script>
+<style>
+.MN_topbar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  background: var(--color-card-bg);
+  border-bottom: 0.5px solid var(--color-card-border);
+  box-shadow: 0 1px 4px var(--color-card-shadow);
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 0;
+  z-index: 10;
+  height: 46px;
+}
+.MN_topbar_brand {
+  width: 256px;
+  flex-shrink: 0;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-right: 0.5px solid var(--color-card-border);
+  height: 100%;
+}
+.MN_brand_icon {
+  width: 24px; height: 24px;
+  background: var(--amber-500);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.MN_brand_icon svg { width: 13px; height: 13px; }
+.MN_brand_name { font-size: 0.78rem; font-weight: 700; letter-spacing: .01em; color: var(--color-header-title); }
+.sidebar-item-disabled { opacity: 0.35; pointer-events: none; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="DMLD_ToastContainer" id="DMLD_ToastContainer"></div>
+
+<div class="shell">
+
+  <!-- ═══ NAV (Top Bar) ═══ -->
+  <header class="MN_topbar">
+    <button id="sidebar-toggle-btn" onclick="Sidebar_Toggle()" title="Toggle sidebar">
+      <svg id="sidebar-toggle-icon" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <line x1="3" y1="5"  x2="17" y2="5"/>
+        <line x1="3" y1="10" x2="17" y2="10"/>
+        <line x1="3" y1="15" x2="17" y2="15"/>
+      </svg>
+    </button>
+    <div class="MN_topbar_brand">
+      <div class="MN_brand_icon">
+        <svg viewBox="0 0 16 16" fill="none">
+          <rect x="2"   y="9"  width="2.5" height="5"  fill="white" rx="0.4"/>
+          <rect x="6.5" y="6"  width="2.5" height="8"  fill="white" rx="0.4"/>
+          <rect x="11"  y="2"  width="2.5" height="12" fill="white" rx="0.4"/>
+        </svg>
+      </div>
+      <span class="MN_brand_name">Analysis Dashboard</span>
+    </div>
+    <button onclick="location.reload(true)" title="Hard refresh" style="margin-left:auto; margin-right:16px; background:var(--color-card-bg); border:1px solid var(--color-card-border); border-radius:6px; padding:5px 10px; cursor:pointer; color:var(--color-text); font-size:11px; font-weight:600; display:flex; align-items:center; gap:5px; line-height:1.4;">
+      <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13.5 2.5A6.5 6.5 0 1 1 8 1.5"/>
+        <polyline points="10.5 1.5 13.5 2.5 12.5 5.5"/>
+      </svg>
+      Refresh
+    </button>
+  </header>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <nav class="sidebar">
+
+    <!-- ══ Data Management ══ -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header open" onclick="Sidebar_ToggleSection(this)">
+        <svg class="sidebar-chevron" viewBox="0 0 16 16" fill="none">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="sidebar-section-icon" viewBox="0 0 16 16" fill="none">
+          <ellipse cx="8" cy="4" rx="5" ry="1.8" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M3 4v4c0 1 2.24 1.8 5 1.8S13 9 13 8V4" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M3 8v4c0 1 2.24 1.8 5 1.8S13 13 13 12V8" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+        <span class="sidebar-section-label">Data Management</span>
+      </div>
+      <div class="sidebar-section-body open">
+
+        <div id="nav-preview-data" class="sidebar-item" onclick="PreviewData_Open()">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          Preview Data
+        </div>
+
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Load Data
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="8" y="2" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M14 5v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          Column Management
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/>
+            <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+          </svg>
+          Set Parameters
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ Analysis ══ -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header open" onclick="Sidebar_ToggleSection(this)">
+        <svg class="sidebar-chevron" viewBox="0 0 16 16" fill="none">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="sidebar-section-icon" viewBox="0 0 16 16" fill="none">
+          <polyline points="2 12 5 8 8 10 11 5 14 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="14" cy="3" r="1.2" fill="currentColor"/>
+        </svg>
+        <span class="sidebar-section-label">Analysis</span>
+      </div>
+      <div class="sidebar-section-body open">
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M2 6h12M6 6v8M10 6v8" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          Overview
+        </div>
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Score Analysis
+        </div>
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h2l2-4 3 8 2-4h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Route Analysis
+        </div>
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="4" width="5" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="9" y="2" width="5" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          Individual Analysis
+        </div>
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M3 3h10v2H3zM3 7h7M3 10h7M3 13h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12.5" cy="11.5" r="2" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M11.5 11.5h2M12.5 10.5v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          Policy Rules
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Rule Management ══ -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header open" onclick="Sidebar_ToggleSection(this)">
+        <svg class="sidebar-chevron" viewBox="0 0 16 16" fill="none">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="sidebar-section-icon" viewBox="0 0 16 16" fill="none">
+          <path d="M3 4h10M3 8h7M3 12h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="12.5" cy="11.5" r="2" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M14 13l1.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <span class="sidebar-section-label">Rule Management</span>
+      </div>
+      <div class="sidebar-section-body open">
+        <div class="sidebar-item sidebar-item-disabled">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h8M2 7h6M2 10h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M11 9v5M9 12l2 2 2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Import Rules to Strategies
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Settings ══ -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header open" onclick="Sidebar_ToggleSection(this)">
+        <svg class="sidebar-chevron" viewBox="0 0 16 16" fill="none">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="sidebar-section-icon" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.22 3.22l1.42 1.42M11.36 11.36l1.42 1.42M3.22 12.78l1.42-1.42M11.36 4.64l1.42-1.42" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <span class="sidebar-section-label">Settings</span>
+      </div>
+      <div class="sidebar-section-body open">
+        <div id="nav-playground" class="sidebar-item" onclick="Playground_Open()">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          Playground
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main">
+
+    <!-- ══ Preview Data View ══ -->
+    <div class="pg-layout" id="PreDatView">
+
+        <!-- Row 1: File (100%) -->
+        <div class="pg-layout-row">
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">File</span>
+              <span class="pg-card-label">path</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <input type="file" id="PreDat_FileInput" accept=".csv,.tsv,.txt" style="display:none;" onchange="PreDat_onFilePicked(event)"/>
+              <div>
+                <div class="pg-field-label">File Path</div>
+                <input type="text" id="PreDat_FilePath" placeholder="/path/to/file.csv" class="pg-input"/>
+              </div>
+              <button type="button" class="pg-btn" onclick="document.getElementById('PreDat_FileInput').click()" title="Browse file">Browse</button>
+              <button type="button" class="pg-btn" onclick="PreDat_loadFile()">Load Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: File Header | Delimiter (50/50) -->
+        <div class="pg-layout-row pg-cols-2">
+
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">File Header</span>
+              <span class="pg-card-label" id="PreDat_HeaderBadge">Has Header</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div class="pg-chip-row">
+                <button type="button" id="PreDat_BtnHeader" class="pg-chip active" onclick="PreDat_setHeader(true)">Has Header</button>
+                <button type="button" id="PreDat_BtnNoHeader" class="pg-chip" onclick="PreDat_setHeader(false)">No Header</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Delimiter</span>
+              <span class="pg-card-label" id="PreDat_DelimBadge">Auto</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip active" id="PreDat_Delim_auto"      onclick="PreDat_setDelim('auto',      this)">Auto</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_comma"     onclick="PreDat_setDelim(',',         this)">Comma</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_semicolon" onclick="PreDat_setDelim(';',         this)">Semicolon</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_tab"       onclick="PreDat_setDelim('\t',        this)">Tab</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_pipe"      onclick="PreDat_setDelim('|',         this)">Pipe</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_caret"     onclick="PreDat_setDelim('^',         this)">Caret</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_colon"     onclick="PreDat_setDelim(':',         this)">Colon</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_space"     onclick="PreDat_setDelim(' ',         this)">Space</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_tilde"     onclick="PreDat_setDelim('~',         this)">Tilde</button>
+                <button type="button" class="pg-chip"        id="PreDat_Delim_hash"      onclick="PreDat_setDelim('#',         this)">Hash</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 3: Column Selector | Column Lists (50/50) -->
+        <div class="pg-layout-row pg-cols-2">
+
+          <div class="pg-card" id="PreDat_SelectorCard">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Column Selector</span>
+              <span class="pg-card-label" id="PreDat_SelCount">0 selected</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="pg-btn" style="flex:1;" onclick="PreDat_selectAll()">Select All</button>
+                <button type="button" class="pg-btn" style="flex:1;" onclick="PreDat_clearAll()">Clear All</button>
+              </div>
+              <div id="PreDat_ChipGrid" class="pg-chip-row" style="max-height:260px; overflow-y:auto;"></div>
+            </div>
+          </div>
+
+          <div class="pg-card" id="PreDat_ListsCard">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Column Lists</span>
+              <span class="pg-card-label">save · load · delete</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div>
+                <div class="pg-field-label">Save</div>
+                <input type="text" id="PreDat_SaveName" placeholder="Save Current Selection" class="pg-input"/>
+              </div>
+              <button type="button" class="pg-btn" onclick="PreDat_saveColumns()">Save</button>
+              <div>
+                <div class="pg-field-label">Load</div>
+                <div class="custom-select" id="PreDat_LoadSelect">
+                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PreDat_LoadSelect')">
+                    <span class="cs-value">— select —</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                  <div class="cs-options"></div>
+                </div>
+              </div>
+              <button type="button" class="pg-btn" onclick="PreDat_loadColumns()">Load</button>
+              <div>
+                <div class="pg-field-label">Delete</div>
+                <div class="custom-select" id="PreDat_RemoveSelect">
+                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('PreDat_RemoveSelect')">
+                    <span class="cs-value">— select —</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                  <div class="cs-options"></div>
+                </div>
+              </div>
+              <button type="button" class="pg-btn" onclick="PreDat_deleteColumns()">Delete</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 4: Preview (100%) -->
+        <div class="pg-layout-row">
+          <div class="pg-card" id="PreDat_PreviewCard">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Preview</span>
+              <span class="pg-card-label" id="PreDat_StatsBadge">—</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="pg-btn" style="width:auto;" onclick="PreDat_loadFile()">Update</button>
+                <div id="PreDat_StatsRow" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;"></div>
+              </div>
+              <div id="PreDat_FullTable" class="pg-table-wrap"></div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <!-- ══ end Preview Data ══ -->
+
+    <!-- Column List Modal -->
+    <div id="PreDat_Modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+      <div class="pg-card" style="width:480px; max-width:90vw; max-height:80vh; display:flex; flex-direction:column; border-radius:14px; overflow:hidden;">
+        <div class="pg-card-header" style="margin-bottom:0;">
+          <span class="pg-card-title" id="PreDat_ModalTitle">Column List</span>
+          <button type="button" onclick="PreDat_closeModal()" style="background:none;border:none;cursor:pointer;color:var(--dml-muted);font-size:18px;line-height:1;padding:0 2px;">✕</button>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div style="padding:16px 24px; overflow-y:auto; flex:1; background:var(--dml-bg);">
+          <pre id="PreDat_ModalContent" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--dml-text); white-space:pre-wrap; word-break:break-word; margin:0;"></pre>
+        </div>
+        <div style="display:flex; gap:8px; justify-content:center; padding:16px 24px; border-top:1px solid var(--dml-border);">
+          <button type="button" class="pg-btn" style="width:120px;" onclick="PreDat_closeModal()">Cancel</button>
+          <button type="button" class="pg-btn" style="width:120px;" onclick="PreDat_applyLoadedColumns()">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Playground View ══ -->
+    <div id="PlaygroundView" class="pg-layout" style="display:none;">
+
+        <!-- Row 1: 100% -->
+        <div class="pg-layout-row">
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Card Example One</span>
+              <span class="pg-card-label">100%</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div>
+                <div class="pg-field-label">Input 1 Label</div>
+                <input class="pg-input" placeholder="Input 1" />
+              </div>
+              <div>
+                <div class="pg-field-label">Button 1 Label</div>
+                <button type="button" class="pg-btn">Button 1</button>
+              </div>
+              <div>
+                <div class="pg-field-label">Dropdown 1 Label</div>
+                <div class="custom-select" id="pg-dd-1a">
+                  <div class="cs-trigger" onclick="PG_toggleCustomSelect('pg-dd-1a')">
+                    <span class="cs-value">Dropdown 1</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                  <div class="cs-options">
+                    <div class="cs-option" onclick="PG_selectOption(this, 'Option One')">Option One</div>
+                    <div class="cs-option" onclick="PG_selectOption(this, 'Option Two')">Option Two</div>
+                  </div>
+                </div>
+              </div>
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 1</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 2</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 3</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 4</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 5</button>
+              </div>
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 1</button>
+                <button type="button" class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 2</button>
+                <button type="button" class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 3</button>
+                <button type="button" class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 4</button>
+                <button type="button" class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 5</button>
+              </div>
+              <div class="pg-table-wrap">
+                <table class="pg-table">
+                  <thead><tr>
+                    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th><th>Column E</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr><td>Alpha 1</td><td>Beta 1</td><td>Gamma 1</td><td>Delta 1</td><td>Epsilon 1</td></tr>
+                    <tr><td>Alpha 2</td><td>Beta 2</td><td>Gamma 2</td><td>Delta 2</td><td>Epsilon 2</td></tr>
+                    <tr><td>Alpha 3</td><td>Beta 3</td><td>Gamma 3</td><td>Delta 3</td><td>Epsilon 3</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: 50/50 -->
+        <div class="pg-layout-row pg-cols-2">
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Card Example Two</span>
+              <span class="pg-card-label">50%</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div><div class="pg-field-label">Input</div><input class="pg-input" placeholder="Input" /></div>
+              <button type="button" class="pg-btn">Button</button>
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 1</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 2</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 3</button>
+              </div>
+            </div>
+          </div>
+          <div class="pg-card">
+            <div class="pg-card-header">
+              <span class="pg-card-title">Card Example Three</span>
+              <span class="pg-card-label">50%</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div><div class="pg-field-label">Input</div><input class="pg-input" placeholder="Input" /></div>
+              <button type="button" class="pg-btn">Button</button>
+              <div class="pg-chip-row">
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 1</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 2</button>
+                <button type="button" class="pg-chip" onclick="PG_toggleChip(this)">Chip 3</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: 33/33/33 -->
+        <div class="pg-layout-row pg-cols-3">
+          <div class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Card Example Four</span><span class="pg-card-label">33%</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div><div class="pg-field-label">Input</div><input class="pg-input" placeholder="Input" /></div>
+              <button type="button" class="pg-btn">Button</button>
+            </div>
+          </div>
+          <div class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Card Example Five</span><span class="pg-card-label">33%</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div><div class="pg-field-label">Input</div><input class="pg-input" placeholder="Input" /></div>
+              <button type="button" class="pg-btn">Button</button>
+            </div>
+          </div>
+          <div class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Card Example Six</span><span class="pg-card-label">33%</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body">
+              <div><div class="pg-field-label">Input</div><input class="pg-input" placeholder="Input" /></div>
+              <button type="button" class="pg-btn">Button</button>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <!-- ══ end Playground ══ -->
+
+  </main>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => PreviewData_Open());
+</script>
+</body>
+</html>

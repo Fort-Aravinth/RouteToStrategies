@@ -1,0 +1,174 @@
+/* ── MiniNav Global ── */
+:root {
+  --MN_gap:         4px;
+  --MN_section_pad: 0 12px 8px;
+  --MN_divider_mar: 8px 14px;
+  --MN_divider_col: var(--amber-400);
+}
+
+/* ── Hide scrollbar on all MiniNavs ── */
+#SA_MiniNav, #ANRA_MiniNav, #IA_MiniNav, #PR_MiniNav { scrollbar-width: none; -ms-overflow-style: none; }
+#SA_MiniNav::-webkit-scrollbar,
+#ANRA_MiniNav::-webkit-scrollbar,
+#IA_MiniNav::-webkit-scrollbar,
+#PR_MiniNav::-webkit-scrollbar { display: none; }
+
+/* ── MiniNav Brand Colours ── */
+/* Each nav sets its own brand tokens — all brand-aware rules inherit from here */
+#SA_MiniNav   { --MN_brand: var(--brand-sa);       --MN_brand_dim: var(--brand-sa-dim);       --MN_brand_light: var(--brand-sa-light);       --MN_divider_col: var(--brand-sa); }
+#ANRA_MiniNav { --MN_brand: var(--brand-ra);       --MN_brand_dim: var(--brand-ra-dim);       --MN_brand_light: var(--brand-ra-light);       --MN_divider_col: var(--brand-ra); }
+#IA_MiniNav   { --MN_brand: var(--brand-ia-light); --MN_brand_dim: var(--brand-ia-dim);       --MN_brand_light: var(--brand-ia-light);       --MN_divider_col: var(--brand-ia-light); }
+#PR_MiniNav   { --MN_brand: var(--brand-pr-light); --MN_brand_dim: var(--brand-pr-dim);       --MN_brand_light: var(--brand-pr-light);       --MN_divider_col: var(--brand-pr-light); }
+
+/*
+ * ══ MiniNav: ONE base rule ══════════════════════════════════════
+ * Structural properties are ALL !important — nothing can override.
+ * Only colours, borders, backgrounds, cursor, transition may vary
+ * in type-specific rules below.
+ * One allowed exception: .MN_step_wrap .MN_ctrl overrides
+ * padding-right only, to make room for the ÷ icon.
+ * ═══════════════════════════════════════════════════════════════
+ */
+html .MN_ctrl,
+html .MN_btn,
+html .MN_chip {
+  box-sizing:      border-box        !important;
+  appearance:      none              !important;
+  -webkit-appearance: none          !important;
+  display:         inline-flex      !important;
+  align-items:     center           !important;
+  height:          28px             !important;
+  padding:         0 8.8px          !important;
+  margin:          0                !important;
+  font-size:       0.65rem          !important;
+  font-family:     var(--font-base) !important;
+  border-radius:   var(--dml-radius)!important;
+  outline:         none             !important;
+  white-space:     nowrap           !important;
+}
+
+/* Controls — input / select / display div */
+html .MN_ctrl {
+  justify-content: flex-start !important;
+  width: 100% !important;
+  border: 1px solid var(--dml-border) !important;
+  background: #fff !important;
+  color: var(--dml-text) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+html .MN_ctrl:focus { border-color: var(--MN_brand, var(--brand-sa)) !important; box-shadow: 0 0 0 3px var(--MN_brand_dim, var(--brand-sa-dim)); }
+select.MN_ctrl {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A09890' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px !important;
+  color-scheme: light;
+}
+select.MN_ctrl option         { background: #fff; color: var(--dml-text); }
+select.MN_ctrl option:checked { background-color: var(--MN_brand, var(--brand-sa)) !important; color: #fff !important; }
+input.MN_ctrl[type="number"]  { -moz-appearance: textfield !important; }
+input.MN_ctrl[type="number"]::-webkit-inner-spin-button,
+input.MN_ctrl[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none !important; margin: 0; }
+input.MN_ctrl::placeholder    { color: var(--dml-label); }
+
+/* Buttons */
+html .MN_btn {
+  justify-content: center !important;
+  border: 1px solid var(--color-card-border) !important;
+  background: none !important;
+  color: var(--color-text-muted) !important;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  width: 10ch;
+}
+html .MN_btn:hover  { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
+html .MN_btn.active { background: var(--MN_brand, var(--gold)) !important; border-color: var(--MN_brand, var(--gold)) !important; color: #fff !important; font-weight: 600; }
+html .MN_btn.MN_run_btn { background: var(--MN_brand_dim) !important; border-color: var(--MN_brand_dim) !important; color: var(--MN_brand) !important; font-weight: 600; }
+html .MN_btn.MN_run_btn:hover { background: var(--MN_brand) !important; border-color: var(--MN_brand) !important; color: #fff !important; }
+
+/* Chips — fill row up to 6, scroll beyond */
+html .MN_chip {
+  justify-content: center !important;
+  flex: 1 !important;
+  min-width: calc((100% - 15px) / 6) !important;
+  border: 1px solid var(--color-card-border) !important;
+  background: none !important;
+  color: var(--color-header-title) !important;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html .MN_chip:hover             { background: var(--color-nav-hover); color: var(--color-header-title); }
+html .MN_chip--col              { background: var(--color-page-bg) !important; }
+html .MN_chip--col:hover        { background: var(--color-nav-hover) !important; }
+html .MN_chip--a.active,
+html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; color: var(--MN_brand) !important; border-color: var(--MN_brand) !important; }
+
+/* ── Icon button (expand/collapse all) ── */
+.MN_icon_btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px;
+  background: none;
+  border: 0.5px solid var(--color-nav-border);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text-dim);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.MN_icon_btn:hover { background: var(--color-nav-hover); }
+
+/* ── MiniNav Typography & Layout ── */
+.MN_title       { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em; color: var(--color-header-title); }
+.MN_nav_title   { font-size: 0.88rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-header-title); cursor: pointer; user-select: none; }
+.MN_label       { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
+.MN_hint        { font-size: 0.68rem; color: var(--color-text-dim); padding: 0 12px 8px; }
+.MN_divider     { margin: var(--MN_divider_mar); border-top: 2px solid var(--MN_divider_col); }
+.MN_section_body { padding: var(--MN_section_pad); }
+.MN_section_hdr { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 8px; cursor: pointer; user-select: none; }
+.MN_tab_bar     { display: flex; gap: 4px; margin-bottom: 8px; }
+.MN_chevron     { transition: transform 0.18s; flex-shrink: 0; }
+.MN_chevron polyline { color: var(--color-text-dim); }
+
+/* ── Scroll arrows ── */
+.MN_scroll_btn {
+  position: sticky;
+  left: 0; width: 100%;
+  height: 0; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.5rem; color: var(--color-text-dim);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, height 0.2s;
+  z-index: 3; cursor: pointer;
+}
+.MN_scroll_btn.MN_scroll_up { top: 0;    background: linear-gradient(to bottom, var(--color-card-bg) 50%, transparent); }
+.MN_scroll_btn.MN_scroll_dn { bottom: 0; background: linear-gradient(to top,    var(--color-card-bg) 50%, transparent); }
+.MN_scroll_btn.visible       { height: 20px; opacity: 1; pointer-events: auto; }
+
+/* ── Scrollable value list ── */
+.MN_list {
+  max-height: 140px;
+  overflow-y: auto;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  background: var(--color-page-bg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.MN_list::-webkit-scrollbar { display: none; }
+
+/* ── Chip row: scrollable, no visible scrollbar ── */
+.MN_chip_row { display: flex; gap: 3px; overflow-x: auto; overflow-y: hidden; }
+.MN_chip_row::-webkit-scrollbar { display: none; }
+.MN_chip_row { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ── Step input: ONLY allowed padding override — makes room for ÷ icon ── */
+.MN_step_wrap                   { position: relative; }
+.MN_step_wrap .MN_ctrl          { padding-right: 22px !important; }
+.MN_step_icon                   { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 0.55rem; font-weight: 700; color: var(--color-text-dim); pointer-events: none; letter-spacing: 0.04em; }
+
+/* ── Tab bar: buttons fill the row equally ── */
+.MN_tab_bar .MN_btn        { flex: 1; width: auto; }
+.MN_tab_bar .MN_btn.active { color: #fff !important; }

@@ -1,0 +1,255 @@
+/* ── Global Components (pg-*) ── */
+
+/* ── Layout ── */
+.pg-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.pg-layout-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+.pg-layout-row.pg-cols-2 { grid-template-columns: 1fr 1fr; }
+.pg-layout-row.pg-cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ── Card ── */
+.pg-card {
+  background: var(--dml-surface);
+  border: 1px solid var(--dml-border);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.pg-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--brand-sn);
+  border-radius: 14px 14px 0 0;
+}
+.pg-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pg-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--dml-text);
+}
+.pg-card-label {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dml-label);
+}
+.pg-card-divider {
+  height: 1.5px;
+  background: var(--dml-border);
+  margin: 0 24px;
+}
+.pg-card-body {
+  padding: 18px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Field Label ── */
+.pg-field-label {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dml-label);
+  margin-bottom: 4px;
+}
+
+/* ── Input ── */
+.pg-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--dml-border);
+  border-radius: var(--dml-radius);
+  background: #fff;
+  font-family: var(--font-base);
+  font-size: 11px;
+  color: var(--dml-text);
+  outline: none;
+  box-sizing: border-box;
+}
+.pg-input::placeholder { color: var(--dml-label); }
+
+/* ── Row (3-col grid) ── */
+.pg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+/* ── Button ── */
+.pg-btn {
+  width: 100%;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--brand-sn-dim);
+  border-radius: var(--dml-radius);
+  background: var(--brand-sn-dim);
+  font-family: var(--font-base);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand-sn);
+  cursor: pointer;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.pg-btn:hover  { background: var(--brand-sn); border-color: var(--brand-sn); color: #fff; }
+.pg-btn.active { background: var(--brand-sn); border-color: var(--brand-sn); color: #fff; }
+
+/* ── Drop Zone ── */
+.pg-dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1.5px dashed rgba(0,0,0,0.15); border-radius: var(--dml-radius); background: var(--dml-bg); padding: 34px 17px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.pg-dropzone:hover { border-color: var(--brand-sn); background: var(--brand-sn-dim); }
+.pg-dropzone-icon { width: 36px; height: 36px; margin-bottom: 10px; color: var(--dml-label); }
+.pg-dropzone-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; color: var(--dml-text); }
+.pg-dropzone-or { font-size: 10px; color: var(--dml-muted); margin-bottom: 8px; }
+
+/* ── Chips ── */
+.pg-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pg-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--dml-border);
+  border-radius: 99px;
+  background: none;
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--dml-label);
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.pg-chip:hover  { background: var(--brand-sn-dim); border-color: var(--brand-sn); color: var(--dml-text); }
+.pg-chip.active { background: var(--brand-sn); border-color: var(--brand-sn); color: #fff; font-weight: 600; }
+
+/* ── Chips (square) ── */
+.pg-chip-sq {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border: 1px solid var(--dml-border);
+  border-radius: var(--dml-radius);
+  background: #fff;
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--dml-label);
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.pg-chip-sq:hover  { background: var(--brand-sn-dim); border-color: var(--brand-sn); color: var(--dml-text); }
+.pg-chip-sq.active { background: var(--brand-sn); border-color: var(--brand-sn); color: #fff; font-weight: 600; }
+
+/* ── Custom Select ──────────────────────────────────────────────────────────
+   STANDARD DROPDOWN PATTERN — always use .custom-select / .cs-trigger / .cs-options
+   Never use a native <select> element. Per-view CSS files override brand colors only.
+   JS: call PG_toggleCustomSelect(id) for open/close; store selected value in el.dataset.value
+   ─────────────────────────────────────────────────────────────────────────── */
+.custom-select { position: relative; width: 100%; user-select: none; }
+.cs-trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 36px; padding: 0 10px; border: 1px solid var(--dml-border); border-radius: var(--dml-radius); background: #fff; font-family: var(--font-base); font-size: 11px; color: var(--dml-text); cursor: pointer; box-shadow: none; box-sizing: border-box; transition: border-color 0.15s; }
+.cs-trigger:hover { border-color: var(--brand-sn); }
+.cs-trigger svg { transition: transform 0.15s; flex-shrink: 0; }
+.cs-value { flex: 1; }
+.custom-select.open .cs-trigger { border-color: var(--brand-sn); box-shadow: 0 0 0 2px var(--brand-sn-dim); }
+.custom-select.open .cs-trigger svg { transform: rotate(180deg); }
+.cs-options { display: none; position: fixed; background: #fff; border: 1px solid var(--dml-border); border-radius: var(--dml-radius); box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 99999; overflow-y: auto; max-height: 200px; padding: 4px 0; box-sizing: border-box; }
+.custom-select.open .cs-options { display: block; }
+.cs-option { font-family: var(--font-base); font-size: 11px; color: var(--dml-text); padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--dml-border); transition: background 0.1s; }
+.cs-option:last-child { border-bottom: none; }
+.cs-option:hover { background: var(--brand-sn-dim); }
+.cs-option.cs-selected { color: #fff; background: var(--brand-sn); }
+
+/* ── Tab Panel ── */
+.pg-tab-panel        { display: none; }
+.pg-tab-panel.active { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* ── Table ── */
+.pg-table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.09);
+}
+.pg-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.pg-table th {
+  background: #F0EDE8;
+  color: #888078;
+  font-weight: 600;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 8px 14px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1.5px solid rgba(0,0,0,0.09);
+  border-right: 1px solid rgba(0,0,0,0.07);
+}
+.pg-table th:last-child { border-right: none; }
+.pg-table td {
+  padding: 6px 14px;
+  color: #1A1714;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-right: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+}
+.pg-table td:last-child { border-right: none; }
+.pg-table tbody tr:last-child td { border-bottom: none; }
+.pg-table tbody tr:hover td { background: #F8F6F2; }
+
+.pg-table th { cursor: pointer; user-select: none; transition: background 0.12s, color 0.12s; }
+.pg-table th:hover { background: #E8E4DE; color: #555; }
+.pg-table th.pg-col-selected { background: rgba(240,165,0,0.18); color: #9A6A00; font-weight: 700; border-bottom-color: rgba(240,165,0,0.4); }
+.pg-table td.pg-col-selected { background: rgba(240,165,0,0.07) !important; }
