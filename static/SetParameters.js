@@ -586,6 +586,8 @@ function SP_RenderPresetDropdowns() {
           if (params) {
             _SP_params = { ...params };
             try { localStorage.setItem('SP_CachedParams', JSON.stringify(params)); } catch(e) {}
+            const spView = document.getElementById('SPView');
+            if (spView && spView.style.display !== 'none') SP_ApplyPresetParams(params);
           }
           if (typeof window.LD_UnlockNav === 'function') window.LD_UnlockNav();
         };

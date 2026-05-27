@@ -40,10 +40,7 @@ function CM_showToast(msg, type = '') {
 }
 
 function CM_hideAllViews() {
-  ['PreDatView', 'LDView', 'PlaygroundView', 'CMView'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.classList.remove('visible'); el.style.setProperty('display', 'none', 'important'); }
-  });
+  if (typeof App_HideAllViews === 'function') App_HideAllViews();
 }
 
 function CM_setSidebarActive(navId) {
@@ -348,7 +345,7 @@ async function CM_ApplyChanges(navigate = true) {
     CM_showToast(`Applied — ${parts.length} cols · ${rows.toLocaleString()} rows in cm_data`, 'success');
     if (typeof window.LD_UnlockSP  === 'function') window.LD_UnlockSP();
     CM_LoadColumns();
-    if (navigate && typeof SP_Open === 'function') SP_Open();
+    // Unlock SP but stay on CM — do not auto-navigate
   } catch (e) {
     CM_showToast('Error applying changes: ' + e.message, 'error');
   }
