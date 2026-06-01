@@ -1,0 +1,456 @@
+/* ── Score Analysis ── */
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let _SA_SharedStyle = 'bar';
+let _SA_RunBy = { total: true, fraud: true };
+let _SA_Criteria    = 'Volume';
+let _SA_Calc        = 'Count';
+let _SA_Charts      = { g001: null, g002: null, g003: null };
+let _SA_Bins        = [];   // base bins (score range only, no extra filters)
+
+// Score config — stored on SA_Run so reruns can rebuild queries
+let _SA_ScoreCol = '';
+let _SA_Start    = 0;
+let _SA_End      = 0;
+let _SA_Step     = 10;
+
+// Per-graph filter toggles  { amt: bool, params: { dm: bool, custom_0: bool, … } }
+let _SA_G001_Filters = { amt: false, params: {} };
+let _SA_G002_Filters = { amt: false, params: {} };
+let _SA_G003_Filters = { amt: false, params: {} };
+
+let _SA_FilterConns = ['AND', 'AND'];
+
+// Nav controls → Nav_ScoreAnalysis.js  /  Toggle functions → Nav.js
+
+// ── Open ──────────────────────────────────────────────────────────────────────
+function SA_OpenPanel() {
+  App_HideAllViews();
+  document.querySelector('.shell').classList.add('sa-active');
+  document.getElementById('SAView').style.display = '';
+  document.getElementById('SA_MiniNav').style.display = 'flex';
+  Sidebar_SetActive('nav-score-analysis');
+  SA_OnOpen();
+}
+
+function SA_OnOpen() {
+  NAV_SA_PopulateColumns();
+  NAV_SA_RenderParams();
+  NAV_SA_RefreshExtraCards();
+  NAV_SA_RefreshPresetDropdowns();
+  _SA_Bins = [];
+  document.getElementById('SA_TopBarRow').style.display    = 'none';
+  document.getElementById('SA_ChapterPanel').style.display = 'none';
+}
+
+// SA_queryBins, SA_applyCalc, SA_getBinsData, SA_applyG002Filters → SA_Calc.js
+
+// ── Run Analysis ──────────────────────────────────────────────────────────────
+async function SA_Run() {
+  const conn = window.LD_getConn ? window.LD_getConn() : null;
+  if (!conn) { alert('No data loaded.'); return; }
+
+  _SA_ScoreCol = document.getElementById('SAScoreCol')?.value;
+  if (!_SA_ScoreCol) { alert('Select a score column first.'); return; }
+
+  _SA_Start = parseFloat(document.getElementById('SAStart')?.value);
+  _SA_End   = parseFloat(document.getElementById('SAEnd')?.value);
+  _SA_Step  = parseFloat(document.getElementById('SAStep')?.value) || 10;
+  if (isNaN(_SA_Start) || isNaN(_SA_End)) { alert('Enter Start and End values.'); return; }
+
+  // Base bins — no per-graph filters
+  _SA_Bins = await SA_queryBins({});
+  if (!_SA_Bins.length) { alert('No data in this score range.'); return; }
+
+  // Populate G002 filter metric custom-selects
+  const filterMetrics = ['total', 'fraud', 'rate', 'value_total', 'value_fraud'];
+  [0, 1, 2].forEach(i => {
+    const cs = document.getElementById(`SAG002_FilterColCS${i}`);
+    if (!cs) return;
+    const prev = cs.dataset.value;
+    const opts = cs.querySelector('.cs-options');
+    if (!opts) return;
+    opts.innerHTML = filterMetrics.map(c =>
+      `<div class="cs-option${c === prev ? ' cs-selected' : ''}" onclick="SA_selectCS(this,'${c}','SAG002_rerun')">${c}</div>`
+    ).join('');
+  });
+
+document.getElementById('SA_TopBarRow').style.display    = 'grid';
+  document.getElementById('SA_ChapterPanel').style.display = '';
+SA_SwitchTab(0);
+  SAG001_rerun();
+  SAG002_rerun();
+  SAG003_rerun();
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+const _SA_TabTitles = ['Score Analysis', 'Score trend with filters', 'Above my score'];
+
+function SA_SwitchTab(idx) {
+  [0, 1, 2].forEach(i => {
+    document.getElementById(`SAG00${i+1}_Container`)?.style.setProperty('display', i === idx ? '' : 'none');
+    document.getElementById(`SA_Tab${i}`)?.classList.toggle('SA_TabPill--active', i === idx);
+  });
+  const titleEl = document.getElementById('SA_ChapterTitle');
+  if (titleEl) titleEl.textContent = _SA_TabTitles[idx];
+
+  const fc        = document.getElementById('SA_FiltersCard');
+  const titleCard = document.getElementById('SA_FiltersCardTitle');
+  const mainEl    = document.getElementById('SA_FiltersMain');
+  const threshEl  = document.getElementById('SA_FiltersThreshold');
+  if (!fc) return;
+
+  if (idx === 1) {
+    fc.style.opacity = '1'; fc.style.pointerEvents = 'auto';
+    if (titleCard) titleCard.textContent = 'Filters';
+    if (mainEl)    mainEl.style.display = 'flex';
+    if (threshEl)  threshEl.style.display = 'none';
+  } else if (idx === 2) {
+    fc.style.opacity = '1'; fc.style.pointerEvents = 'auto';
+    if (titleCard) titleCard.textContent = 'Score Threshold';
+    if (mainEl)    mainEl.style.display = 'none';
+    if (threshEl)  threshEl.style.display = 'flex';
+  } else {
+    fc.style.opacity = '0.4'; fc.style.pointerEvents = 'none';
+    if (titleCard) titleCard.textContent = 'Filters';
+    if (mainEl)    mainEl.style.display = 'flex';
+    if (threshEl)  threshEl.style.display = 'none';
+  }
+}
+
+// ── Shared chart style ────────────────────────────────────────────────────────
+function SA_SetSharedStyle(style) {
+  _SA_SharedStyle = style;
+  document.querySelectorAll('[id^="SA_StyleBtn_"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(`SA_StyleBtn_${style}`)?.classList.add('active');
+  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+}
+
+function SA_SetRunBy(mode) {
+  _SA_RunBy[mode] = !_SA_RunBy[mode];
+  // Prevent both off — re-enable the one just toggled off
+  if (!_SA_RunBy.total && !_SA_RunBy.fraud) _SA_RunBy[mode] = true;
+  document.getElementById(`SA_RunByBtn_total`)?.classList.toggle('active', _SA_RunBy.total);
+  document.getElementById(`SA_RunByBtn_fraud`)?.classList.toggle('active', _SA_RunBy.fraud);
+  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+}
+
+// ── Criteria / Calculate ──────────────────────────────────────────────────────
+function SA_setCriteria(c) {
+  _SA_Criteria = c;
+  document.querySelectorAll('[id^="SACrit"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(`SACrit${c}`)?.classList.add('active');
+  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+}
+
+function SA_setCalc(c) {
+  _SA_Calc = c;
+  document.querySelectorAll('[id^="SACalc"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(`SACalc${c}`)?.classList.add('active');
+  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+}
+
+// ── Per-graph filter toggles ──────────────────────────────────────────────────
+function SA_toggleAmtFilter(gIdx) {
+  const f = [_SA_G001_Filters, _SA_G002_Filters, _SA_G003_Filters][gIdx];
+  f.amt = !f.amt;
+  [SAG001_rerun, SAG002_rerun, SAG003_rerun][gIdx]();
+}
+
+function SA_toggleParamFilter(gIdx, key) {
+  const f = [_SA_G001_Filters, _SA_G002_Filters, _SA_G003_Filters][gIdx];
+  f.params[key] = !f.params[key];
+  [SAG001_rerun, SAG002_rerun, SAG003_rerun][gIdx]();
+}
+
+
+// ── Graph render ──────────────────────────────────────────────────────────────
+function SA_RenderGraph(key, canvasId, bins) {
+  if (!bins.length) return;
+  const { labels, totalVals, fraudVals } = SA_getBinsData(bins);
+  const style     = _SA_SharedStyle;
+  const isArea    = style === 'area';
+  const chartType = isArea ? 'line' : (style === 'scatter' ? 'scatter' : style);
+
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (_SA_Charts[key]) { _SA_Charts[key].destroy(); _SA_Charts[key] = null; }
+
+  const TC = 'rgba(123,104,200,', FC = 'rgba(239,68,68,';
+  const scatterify = data => style === 'scatter' ? data.map((y, i) => ({ x: i, y })) : data;
+
+  const datasets = [
+    { label: 'Total', data: scatterify(totalVals),
+      backgroundColor: TC + (isArea ? '0.15)' : '0.5)'), borderColor: TC + '1)',
+      borderWidth: 1.5, fill: isArea, tension: 0.35,
+      hidden: !_SA_RunBy.total },
+    { label: 'Fraud', data: scatterify(fraudVals),
+      backgroundColor: FC + (isArea ? '0.15)' : '0.65)'), borderColor: FC + '1)',
+      borderWidth: 1.5, fill: isArea, tension: 0.35,
+      hidden: !_SA_RunBy.fraud },
+  ];
+
+  const fmtN = v => v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(1)+'K' : Number.isInteger(v) ? v : v.toFixed(2);
+
+  _SA_Charts[key] = new Chart(canvas, {
+    type: chartType,
+    data: {
+      labels: style === 'scatter' ? undefined : labels,
+      datasets,
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          mode: 'index', intersect: false,
+          callbacks: {
+            title: items => items[0]?.label ?? '',
+            label: item => {
+              const name = item.dataset.label;
+              const val  = fmtN(item.raw?.y ?? item.raw);
+              return `  ${name}: ${val}`;
+            },
+            afterBody: items => {
+              const tot = datasets[0].data[items[0]?.dataIndex];
+              const frd = datasets[1].data[items[0]?.dataIndex];
+              const t = typeof tot === 'object' ? tot.y : tot;
+              const f = typeof frd === 'object' ? frd.y : frd;
+              if (t > 0) return [`  Rate: ${(f / t * 100).toFixed(1)}%`];
+              return [];
+            },
+          },
+        },
+      },
+      scales: {
+        x: { ticks: { font: { size: 9 }, maxRotation: 45 } },
+        y: { ticks: { font: { size: 9 } }, beginAtZero: true },
+      },
+    },
+  });
+}
+
+// ── Individual graph reruns (async — re-query with per-graph filters) ──────────
+async function SAG001_rerun() {
+  const bins = await SA_queryBins(_SA_G001_Filters);
+  SA_RenderGraph('g001', 'SAG001_Canvas', bins);
+  SAG001_renderSummary(bins);
+}
+
+async function SAG002_rerun() {
+  const bins     = await SA_queryBins(_SA_G002_Filters);
+  const filtered = SA_applyG002Filters(bins);
+  SA_RenderGraph('g002', 'SAG002_Canvas', filtered);
+  SAG002_renderSummary();
+}
+
+async function SAG003_rerun() {
+  const threshold = parseFloat(document.getElementById('SAMyScore')?.value) || 0;
+  const extra     = threshold > 0 ? [`"${_SA_ScoreCol}" >= ${threshold}`] : [];
+  const bins      = await SA_queryBins(_SA_G003_Filters, extra);
+  SA_RenderGraph('g003', 'SAG003_Canvas', bins);
+  SAG003_renderSummary(bins);
+}
+
+
+function SA_setFilterConn(idx, type) {
+  _SA_FilterConns[idx] = type;
+  document.getElementById(`SAG002_FilterConn${idx}And`)?.classList.toggle('active', type === 'AND');
+  document.getElementById(`SAG002_FilterConn${idx}Or`)?.classList.toggle('active',  type === 'OR');
+  SAG002_rerun();
+}
+
+function SA_addFilter() {
+  const row1 = document.getElementById('SAG002_FilterRow1');
+  const row2 = document.getElementById('SAG002_FilterRow2');
+  if (row1?.style.display === 'none') { row1.style.display = ''; return; }
+  if (row2?.style.display === 'none') row2.style.display = '';
+}
+
+function SA_removeFilter(idx) {
+  const row = document.getElementById(`SAG002_FilterRow${idx}`);
+  if (row) row.style.display = 'none';
+  const cs = document.getElementById(`SAG002_FilterColCS${idx}`);
+  if (cs) {
+    cs.dataset.value = '';
+    const v = cs.querySelector('.cs-value');
+    if (v) { v.textContent = '— select —'; v.style.color = 'var(--dml-label)'; }
+    cs.querySelectorAll('.cs-option').forEach(o => o.classList.remove('cs-selected'));
+  }
+  const valEl = document.getElementById(`SAG002_FilterVal${idx}`);
+  if (valEl) valEl.value = '';
+  SAG002_rerun();
+}
+
+// ── Custom-select helpers (Filters card) ─────────────────────────────────────
+function SA_toggleCS(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('#SAView .custom-select.open').forEach(s => s.classList.remove('open'));
+  if (!isOpen) {
+    el.classList.add('open');
+    setTimeout(() => {
+      const opts = el.querySelector('.cs-options');
+      if (!opts) return;
+      const rect = el.getBoundingClientRect();
+      const dropH = Math.min(200, opts.scrollHeight + 8);
+      opts.style.left  = rect.left + 'px';
+      opts.style.width = rect.width + 'px';
+      opts.style.top   = (window.innerHeight - rect.bottom < dropH && rect.top > dropH)
+        ? (rect.top - dropH - 2) + 'px'
+        : (rect.bottom + 2) + 'px';
+    }, 0);
+  }
+}
+
+function SA_selectCS(el, value, callback) {
+  const cs = el.closest('.custom-select');
+  if (!cs) return;
+  const valEl = cs.querySelector('.cs-value');
+  if (valEl) { valEl.textContent = value || '— select —'; valEl.style.color = value ? '' : 'var(--dml-label)'; }
+  cs.querySelectorAll('.cs-option').forEach(o => o.classList.remove('cs-selected'));
+  el.classList.add('cs-selected');
+  cs.classList.remove('open');
+  cs.dataset.value = value;
+  if (callback && window[callback]) window[callback]();
+}
+
+function SA_getCSValue(id) {
+  return document.getElementById(id)?.dataset.value ?? '';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#SAView .custom-select')) {
+    document.querySelectorAll('#SAView .custom-select.open').forEach(s => s.classList.remove('open'));
+  }
+});
+
+// ── Summary chips ─────────────────────────────────────────────────────────────
+function SA_chip(label, val, color) {
+  return `<span style="display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 12px;border-radius:20px;background:${color}15;border:1px solid ${color}40;white-space:nowrap;">
+    <span style="font-size:0.65rem;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:0.05em;">${label}</span>
+    <span style="font-weight:600;color:var(--color-header-title);font-size:0.72rem;">${val}</span>
+  </span>`;
+}
+
+function SA_toggleChip(label, val, color, isActive, onclick) {
+  const bg  = isActive ? `${color}15` : 'transparent';
+  const bdr = isActive ? `${color}40` : '#9ca3af40';
+  const lc  = isActive ? color : '#9ca3af';
+  const vc  = isActive ? 'var(--color-header-title)' : '#9ca3af';
+  const tip = isActive ? 'Click to deactivate filter' : 'Click to activate filter';
+  return `<span onclick="${onclick}" title="${tip}" style="display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 12px;border-radius:20px;background:${bg};border:1px solid ${bdr};white-space:nowrap;cursor:pointer;transition:all 0.15s;">
+    <span style="font-size:0.65rem;font-weight:700;color:${lc};text-transform:uppercase;letter-spacing:0.05em;">${label}</span>
+    <span style="font-weight:600;color:${vc};font-size:0.72rem;">${val}</span>
+  </span>`;
+}
+
+// Read which values are currently active (toggled on) in a nav extra card
+function SA_getNavActiveVals(key) {
+  const body = document.getElementById(`NAV_SA_ExtraBody_${key}`);
+  if (!body) return null;
+  const btns = [...body.querySelectorAll('.MN_paramVal')];
+  if (!btns.length) return null;
+  const active = btns.filter(b => b.classList.contains('active')).map(b => b.textContent.trim());
+  return active; // empty array = card exists but nothing selected
+}
+
+function SA_buildFilterChips(gIdx) {
+  const g      = id => document.getElementById(id)?.value || '';
+  const params = window.SP_getParams ? window.SP_getParams() : {};
+  const fState = [_SA_G001_Filters, _SA_G002_Filters, _SA_G003_Filters][gIdx];
+  const parts  = [];
+
+  // Brand palette
+  const C = { purple:'#79189C', teal:'#00A99D', fusia:'#9C187D', peel:'#F47943',
+               sky:'#84B1EC', lavender:'#8571F4', indigo:'#37189C' };
+  // Custom card colours cycle
+  const customPalette = [C.peel, C.sky, C.lavender, C.fusia, C.indigo];
+
+  // Score chip (static info)
+  if (_SA_ScoreCol) parts.push(SA_chip('Score', `${_SA_Start} → ${_SA_End}`, C.purple));
+
+  // Amount filter chip (clickable toggle)
+  const amtCol = g('SAAmountCol');
+  if (amtCol) {
+    const valStart = g('SAAmountValStart');
+    const valEnd   = g('SAAmountValEnd');
+    const amtParts = [];
+    if (valStart) amtParts.push(`${g('SAAmountOpStart') || '>='} ${valStart}`);
+    if (valEnd)   amtParts.push(`${g('SAAmountOpEnd')   || '<='} ${valEnd}`);
+    const amtLabel = amtParts.length ? amtParts.join(' and ') : 'no filter';
+    parts.push(SA_toggleChip(amtCol, amtLabel, C.teal,
+      fState.amt, `SA_toggleAmtFilter(${gIdx})`));
+  }
+
+  // Decision Mode chip — reads live nav button state
+  const dm = params.decisionMode;
+  if (dm?.col) {
+    const navVals = SA_getNavActiveVals('dm');
+    const vals    = navVals !== null ? navVals :
+      [...(dm.assigned?.successful || []), ...(dm.assigned?.unsuccessful || [])];
+    if (vals.length) {
+      const active = !!fState.params['dm'];
+      parts.push(SA_toggleChip(dm.col, vals.join(', '), C.fusia,
+        active, `SA_toggleParamFilter(${gIdx},'dm')`));
+    }
+  }
+
+  // Custom card chips — reads live nav button state
+  (params.customCards || []).forEach((card, i) => {
+    if (!card.col) return;
+    const key     = `custom_${i}`;
+    const navVals = SA_getNavActiveVals(key);
+    const vals    = navVals !== null ? navVals :
+      [...(card.assigned?.a || []), ...(card.assigned?.b || [])];
+    if (!vals.length) return;
+    const active = !!fState.params[key];
+    parts.push(SA_toggleChip(card.col, vals.join(', '), customPalette[i % customPalette.length],
+      active, `SA_toggleParamFilter(${gIdx},'${key}')`));
+  });
+
+  return parts;
+}
+
+// Rebuild chips across all graphs without re-querying DuckDB
+function SA_RefreshChips() {
+  SAG001_renderSummary();
+  SAG002_renderSummary();
+  SAG003_renderSummary();
+}
+
+function SAG001_renderSummary() {
+  const el = document.getElementById('SAG001_Summary');
+  if (!el) return;
+  const parts = SA_buildFilterChips(0);
+  el.innerHTML = parts.join('') || '<span style="color:var(--color-text-dim);font-style:italic;">No active filters</span>';
+}
+
+function SAG002_renderSummary() {
+  const el = document.getElementById('SAG002_Summary');
+  if (!el) return;
+  const g     = id => document.getElementById(id)?.value || '';
+  const parts = SA_buildFilterChips(1);
+
+  [0, 1, 2].forEach(i => {
+    const col = SA_getCSValue(`SAG002_FilterColCS${i}`);
+    const op  = SA_getCSValue(`SAG002_FilterOpCS${i}`) || '>';
+    const val = g(`SAG002_FilterVal${i}`);
+    if (col && val !== '') parts.push(SA_chip(col, `${op} ${val}`, '#84B1EC'));
+  });
+
+  el.innerHTML = parts.join('') || '<span style="color:var(--color-text-dim);font-style:italic;">No active filters</span>';
+}
+
+function SAG003_renderSummary() {
+  const el = document.getElementById('SAG003_Summary');
+  if (!el) return;
+  const g     = id => document.getElementById(id)?.value || '';
+  const parts = SA_buildFilterChips(2);
+
+  const myScore = g('SAMyScore');
+  if (myScore) parts.push(SA_chip('Threshold', `≥ ${myScore}`, '#8571F4'));
+
+  el.innerHTML = parts.join('') || '<span style="color:var(--color-text-dim);font-style:italic;">No active filters</span>';
+}

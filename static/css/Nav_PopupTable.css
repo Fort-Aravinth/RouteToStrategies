@@ -1,0 +1,65 @@
+/* ── Nav_PopupTable ── */
+
+/* ── ChipButton system ── */
+.ChipButton_Btn {
+  font-family: var(--font-base); font-size: 0.63rem; font-weight: 500;
+  padding: 0 10px; height: 26px; border-radius: var(--dml-radius);
+  cursor: pointer; border: 0.5px solid var(--dml-border);
+  background: var(--dml-bg); color: var(--dml-muted);
+  transition: all 0.12s; white-space: nowrap; display: inline-flex; align-items: center;
+}
+.ChipButton_Btn:hover  { border-color: var(--gold); color: var(--gold); }
+.ChipButton_Btn.active { background: var(--gold); border-color: var(--gold); color: #fff; font-weight: 600; }
+
+/* ── Popup overlay ── */
+.npt-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+}
+.npt-overlay.open { display: flex; }
+
+/* ── Popup box ── */
+.npt-box {
+  background: var(--color-card-bg); border: 1px solid var(--color-card-border);
+  border-radius: 10px; width: min(860px, 94vw); max-height: 90vh;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* ── Header ── */
+.npt-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--color-card-border); flex-shrink: 0;
+}
+.npt-title { font-size: 0.78rem; font-weight: 700; color: var(--color-header-title); }
+.npt-close {
+  background: none; border: none; font-size: 1.1rem;
+  cursor: pointer; color: var(--color-text-muted); line-height: 1; padding: 0 4px;
+}
+.npt-close:hover { color: var(--color-header-title); }
+
+/* ── Toolbar ── */
+.npt-toolbar {
+  padding: 10px 16px; border-bottom: 1px solid var(--color-card-border);
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex-shrink: 0;
+}
+.npt-toolbar-lbl {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--color-text-dim);
+}
+.npt-toolbar-sep { width: 1px; height: 16px; background: var(--color-card-border); margin: 0 4px; }
+
+/* ── Body / chart area ── */
+.npt-body { flex: 1; overflow-y: auto; padding: 14px 16px; }
+.npt-totals {
+  display: none; margin-bottom: 8px; padding: 5px 10px;
+  background: var(--color-page-bg); border-radius: 5px;
+  border: 1px solid var(--color-card-border);
+  flex-wrap: wrap; gap: 18px; font-size: 0.7rem;
+}
+.npt-totals.visible { display: flex; }
+.npt-canvas-wrap { position: relative; width: 100%; height: 380px; }
+.npt-canvas-wrap canvas { position: absolute; top: 0; left: 0; }
+
+/* ── SA brand overrides ── */
+#SA_AmtPopup .ChipButton_Btn.active { background: var(--brand-sa); border-color: var(--brand-sa); color: #fff; }
+#SA_AmtPopup .ChipButton_Btn:hover  { border-color: var(--brand-sa); color: var(--brand-sa); }

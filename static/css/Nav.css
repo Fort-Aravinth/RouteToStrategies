@@ -19,6 +19,7 @@
 #ANRA_MiniNav { --MN_brand: var(--brand-ra);       --MN_brand_dim: var(--brand-ra-dim);       --MN_brand_light: var(--brand-ra-light);       --MN_divider_col: var(--brand-ra); }
 #IA_MiniNav   { --MN_brand: var(--brand-ia-light); --MN_brand_dim: var(--brand-ia-dim);       --MN_brand_light: var(--brand-ia-light);       --MN_divider_col: var(--brand-ia-light); }
 #PR_MiniNav   { --MN_brand: var(--brand-pr-light); --MN_brand_dim: var(--brand-pr-dim);       --MN_brand_light: var(--brand-pr-light);       --MN_divider_col: var(--brand-pr-light); }
+#PG_MiniNav   { --MN_brand: var(--brand-sn);       --MN_brand_dim: var(--brand-sn-dim);       --MN_brand_light: var(--brand-sn-light);       --MN_divider_col: var(--brand-sn); }
 
 /*
  * ══ MiniNav: ONE base rule ══════════════════════════════════════
@@ -125,12 +126,21 @@ html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; co
 .MN_nav_title   { font-size: 0.88rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-header-title); cursor: pointer; user-select: none; }
 .MN_label       { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
 .MN_hint        { font-size: 0.68rem; color: var(--color-text-dim); padding: 0 12px 8px; }
-.MN_divider     { margin: var(--MN_divider_mar); border-top: 2px solid var(--MN_divider_col); }
+.MN_divider     { margin: var(--MN_divider_mar); border-top: 1.5px solid var(--MN_divider_col); opacity: 0.4; }
 .MN_section_body { padding: var(--MN_section_pad); }
 .MN_section_hdr { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 8px; cursor: pointer; user-select: none; }
 .MN_tab_bar     { display: flex; gap: 4px; margin-bottom: 8px; }
 .MN_chevron     { transition: transform 0.18s; flex-shrink: 0; }
 .MN_chevron polyline { color: var(--color-text-dim); }
+
+/* ── Params display ── */
+.MN_param_row        { padding: 3px 12px 0; }
+.MN_param_label      { font-size: 0.72rem; font-weight: 600; color: var(--color-header-title); margin-bottom: 1px; }
+.MN_param_value      { font-size: 0.67rem; font-weight: 400; color: var(--color-text-muted); margin-bottom: 0; }
+.MN_param_divider    { margin: 5px 12px; border-top: 0.5px solid var(--color-card-border); }
+.MN_param_tags       { padding: 1px 12px 2px; }
+.MN_param_tag        { font-size: 0.62rem; color: var(--MN_brand); }
+.MN_param_tag.secondary { color: var(--color-text-dim); }
 
 /* ── Scroll arrows ── */
 .MN_scroll_btn {

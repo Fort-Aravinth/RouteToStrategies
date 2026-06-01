@@ -1,0 +1,140 @@
+/* ── Nav_ScoreAnalysis — SA mini-nav brand + MN system ── */
+
+/* Brand — violet scope */
+#SAView, #SA_MiniNav {
+  --gold:              var(--brand-sa);
+  --gold-light:        var(--brand-sa-light);
+  --gold-dim:          var(--brand-sa-dim);
+  --amber-400:         var(--brand-sa-light);
+  --amber-500:         var(--brand-sa);
+  --amber-600:         #5A50A8;
+  --color-primary:     var(--brand-sa);
+}
+
+/* Brand overrides for SAView pg-* components */
+#SAView .pg-card::before   { background: var(--brand-sa); }
+#SAView .pg-btn            { border-color: var(--brand-sa-dim); background: var(--brand-sa-dim); color: var(--brand-sa); }
+#SAView .pg-btn:hover,
+#SAView .pg-btn.active     { background: var(--brand-sa); border-color: var(--brand-sa); color: #fff; }
+#SAView .cs-trigger:hover  { border-color: var(--brand-sa); }
+#SAView .custom-select.open .cs-trigger { border-color: var(--brand-sa); box-shadow: 0 0 0 2px var(--brand-sa-dim); }
+#SAView .cs-option.cs-selected { background: var(--brand-sa) !important; color: #fff !important; }
+
+/* ── MN (Mini-Nav) shared system ── */
+:root {
+  --MN_gap:         4px;
+  --MN_section_pad: 0 12px 8px;
+  --MN_divider_mar: 6px 14px;
+  --MN_divider_col: var(--brand-sa);
+}
+html .MN_ctrl       { height: 28px !important; font-size: 0.65rem !important; padding: 0 0 0 8px !important; border-radius: var(--dml-radius) !important; border: 1px solid var(--dml-border) !important; background: #fff !important; color: var(--dml-text) !important; font-family: var(--font-base); outline: none; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+html .MN_ctrl:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 2px var(--gold-dim) !important; }
+select.MN_ctrl      { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A09890' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-position: right 8px center !important; padding-right: 24px !important; color-scheme: light; }
+select.MN_ctrl option:checked { background-color: var(--amber-600) !important; color: #fff !important; }
+input.MN_ctrl::placeholder { font-size: 0.65rem; color: var(--dml-label); }
+html .MN_btn        { height: 28px !important; font-size: 0.65rem !important; padding: 0 9px !important; cursor: pointer; transition: background 0.12s, color 0.12s; background: none !important; color: var(--color-text-muted) !important; border: 1px solid var(--color-card-border) !important; border-radius: var(--dml-radius); white-space: nowrap; font-family: var(--font-base); }
+html .MN_btn:hover  { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
+html .MN_btn.active { background: var(--gold) !important; border-color: var(--gold) !important; color: #fff !important; font-weight: 600; }
+.MN_title           { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.01em; color: var(--color-header-title); }
+.MN_nav_title       { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-header-title); cursor: pointer; user-select: none; }
+.MN_divider         { margin: var(--MN_divider_mar); height: 0; border: none; border-top: 2px solid var(--MN_divider_col); opacity: 0.35; }
+.MN_section_body    { padding: var(--MN_section_pad); }
+.MN_section_hdr     { display: flex; align-items: center; justify-content: space-between; padding: 5px 12px 6px; cursor: pointer; user-select: none; }
+.MN_section_hdr:hover .MN_title { color: var(--gold); }
+.MN_tab_bar         { display: flex; border: 1px solid var(--color-card-border); border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
+.MN_tab_bar .MN_btn { flex: 1; border: none !important; border-radius: 0 !important; border-left: 1px solid var(--color-card-border) !important; }
+.MN_tab_bar .MN_btn:first-child { border-left: none !important; }
+
+/* ── Spinner input ── */
+.MN_spinner {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--dml-border);
+  border-radius: var(--dml-radius);
+  overflow: hidden;
+  background: #fff;
+  height: 28px;
+}
+.MN_spinner input {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  text-align: center;
+  padding: 0 2px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.MN_spinner button {
+  flex-shrink: 0;
+  width: 20px;
+  height: 100%;
+  border: none;
+  background: none;
+  color: var(--color-text-dim);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.1s, color 0.1s;
+}
+.MN_spinner button:hover { background: var(--color-nav-hover); color: var(--gold); }
+.MN_spinner:focus-within  { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-dim); }
+
+/* ── Mini-nav shell position ── */
+#SA_MiniNav {
+  grid-column: 2;
+  grid-row: 2;
+  display: none;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border-right: 0.5px solid var(--color-card-border);
+  box-shadow: 1px 0 6px var(--color-card-shadow);
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#SA_MiniNav::-webkit-scrollbar { display: none; }
+.shell.sa-active #SA_MiniNav { display: flex; }
+
+/* ── Nav scroll indicators ── */
+#NAV_SA_ScrollerDown,
+#NAV_SA_ScrollerUp {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: color 0.15s;
+  z-index: 2;
+}
+#NAV_SA_ScrollerDown {
+  bottom: 0;
+  padding: 18px 0 10px;
+  background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%);
+}
+#NAV_SA_ScrollerUp {
+  top: 0;
+  padding: 6px 0 6px;
+  background: linear-gradient(to top, transparent, var(--color-card-bg) 55%);
+}
+#NAV_SA_ScrollerDown:hover,
+#NAV_SA_ScrollerUp:hover { color: var(--gold); }
+#NAV_SA_ScrollerDown:hover .NAV_SA_ScrollBar,
+#NAV_SA_ScrollerUp:hover  .NAV_SA_ScrollBar { background: var(--gold); opacity: 0.7; }
+.NAV_SA_ScrollBar {
+  width: 36px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--color-card-border);
+  opacity: 0.9;
+  transition: background 0.15s, opacity 0.15s;
+}

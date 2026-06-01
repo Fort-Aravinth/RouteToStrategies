@@ -5,6 +5,8 @@ function Playground_Open() {
   App_HideAllViews();
   Sidebar_SetActive('nav-playground');
   document.getElementById('PlaygroundView').style.removeProperty('display');
+  document.querySelector('.shell').classList.add('pg-active');
+  document.getElementById('PG_MiniNav').style.display = 'flex';
 }
 
 function PG_toggleCustomSelect(id) {

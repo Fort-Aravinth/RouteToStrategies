@@ -44,9 +44,11 @@
 .shell.pr-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.pr-active .main { overflow: hidden; padding: 0; align-items: stretch; }
 
+.shell.pg-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.sidebar-hidden { grid-template-columns: 0px 0px 1fr; }
 .shell.sidebar-hidden.anra-active { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.sa-active   { grid-template-columns: 0px 280px 1fr; }
+.shell.sidebar-hidden.pg-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.ia-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.pr-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden .sidebar {

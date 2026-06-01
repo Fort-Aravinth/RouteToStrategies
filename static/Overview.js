@@ -71,6 +71,7 @@ async function OV_RunAnalysis() {
     OV_RenderMetrics({ totalVol, fraudVol, totalCards, fraudCards, totalValue, fraudValue });
     OV_RenderRates({ volRate, valRate, hasValue: numeric !== null });
 
+    if (typeof window.LD_UnlockScoreAnalysis === 'function') window.LD_UnlockScoreAnalysis();
     OV_showToast('Overview updated', 'success');
   } catch (e) {
     console.error('OV_RunAnalysis error:', e);

@@ -1,0 +1,103 @@
+/* ── Score Analysis — view & chart styles only ── */
+/* Brand + MN system + mini-nav shell → Nav_ScoreAnalysis.css */
+
+/* ── Top bar card layout ── */
+#SA_TopBarRow { display: grid; }
+#SA_StyleToolbar,
+#SA_RunByBar { display: flex; flex-direction: column; }
+
+/* ── Chart Style square chips ── */
+.SA_StyleChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  padding: 0 6px;
+  border: 1px solid var(--dml-border);
+  border-radius: 10px;
+  background: var(--color-page-bg);
+  color: var(--color-text-muted);
+  font-family: var(--font-base);
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.SA_StyleChip:hover  { border-color: var(--brand-sa); color: var(--brand-sa); }
+.SA_StyleChip.active { border-color: var(--brand-sa); background: var(--brand-sa-dim); color: var(--brand-sa); }
+
+/* ── Graph tabs ── */
+.sa-tabs { display: flex; gap: 4px; }
+.sa-tab {
+  flex: 1; padding: 5px 4px; font-size: 0.64rem; font-weight: 600;
+  border: 1px solid var(--dml-border); border-radius: var(--dml-radius);
+  background: transparent; color: var(--color-text-muted);
+  cursor: pointer; font-family: var(--font-base); text-align: center; transition: all 0.12s;
+}
+.sa-tab:hover  { border-color: var(--brand-sa); color: var(--brand-sa); }
+.sa-tab.active { background: var(--brand-sa); border-color: var(--brand-sa); color: #fff; }
+
+/* ── Chart wrap ── */
+.SA_ChartWrap { position: relative; width: 100%; height: 280px; flex-shrink: 0; overflow: hidden; }
+.SA_ChartWrap canvas { position: absolute; top: 0; left: 0; width: 100% !important; height: 100% !important; }
+
+/* ── Summary chips ── */
+.sa-summary { display: flex; flex-wrap: wrap; gap: 5px; min-height: 18px; }
+.sa-chip {
+  font-size: 0.6rem; font-weight: 600; padding: 2px 8px; border-radius: 10px;
+  border: 1px solid var(--dml-border); background: var(--color-page-bg);
+  color: var(--color-text-muted); white-space: nowrap;
+}
+.sa-chip.active { background: var(--brand-sa-dim); border-color: var(--brand-sa); color: var(--brand-sa); }
+
+/* ── Stat boxes ── */
+.sa-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.sa-stat-box { padding: 8px 10px; background: var(--color-page-bg); border: 0.5px solid var(--color-card-border); border-radius: var(--dml-radius); text-align: center; }
+.sa-stat-label { font-size: 0.56rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-text-muted); margin-bottom: 3px; }
+.sa-stat-value { font-size: 0.95rem; font-weight: 700; color: var(--color-header-title); }
+
+/* ── Empty / loading state ── */
+.sa-state { padding: 48px 32px; text-align: center; color: var(--color-text-muted); font-size: 0.8rem; }
+
+/* ── Filters card — 32px inputs ── */
+#SA_FiltersCard .cs-trigger { height: 36px !important; padding: 0 8px; font-size: 0.65rem; }
+#SA_FiltersCard .MN_ctrl    { height: 36px !important; }
+
+/* ── DMLD card system ── */
+.DMLD_Card { background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 10px; min-width: 0; width: 100%; box-sizing: border-box; overflow: hidden; }
+.DMLD_CardHeader { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 16px 0; margin-bottom: 10px; flex-wrap: wrap; gap: 4px; }
+.DMLD_CardTitle  { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.2px; color: var(--color-header-title); }
+.DMLD_CardBadge  { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-dim); text-transform: uppercase; align-self: center; }
+.DMLD_CardBody   { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+.DMLD_ButtonOutline { font-family: var(--font-base); font-size: 0.68rem; font-weight: 500; height: 26px; padding: 0 10px; border-radius: 5px; border: 1px solid var(--color-card-border); background: none; color: var(--color-text-muted); cursor: pointer; transition: background 0.12s, color 0.12s; }
+.DMLD_ButtonOutline:hover { background: var(--color-nav-hover); color: var(--color-header-title); }
+.DMLD_ButtonSolid { font-family: var(--font-base); font-size: 0.68rem; font-weight: 600; height: 26px; padding: 0 10px; border-radius: 5px; border: 1px solid var(--brand-sa); background: var(--brand-sa); color: #fff; cursor: pointer; transition: opacity 0.12s; }
+.DMLD_ButtonSolid:hover { opacity: 0.85; }
+
+.DMLD_Select, .DMLD_Input { font-family: var(--font-base); font-size: 0.68rem; height: 26px; padding: 0 8px; border-radius: 5px; border: 1px solid var(--color-card-border); background: var(--color-card-bg); color: var(--color-header-title); outline: none; box-sizing: border-box; }
+.DMLD_Select:focus, .DMLD_Input:focus { border-color: var(--brand-sa); }
+
+/* ── T_ card helpers ── */
+.T_StatLabel { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-dim); text-transform: uppercase; margin-bottom: 4px; }
+
+/* ── Chapter tab pills ── */
+.SA_TabPill {
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--dml-border);
+  border-radius: 6px;
+  background: none;
+  font-family: var(--font-base); font-size: 0.65rem; font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.SA_TabPill:hover       { border-color: var(--brand-sa); color: var(--brand-sa); }
+.SA_TabPill--active     { background: var(--brand-sa); border-color: var(--brand-sa); color: #fff; }

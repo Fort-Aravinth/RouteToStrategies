@@ -26,6 +26,7 @@ function Sidebar_SetActive(id) {
     'nav-individual-analysis': 'var(--brand-ia-light)',
     'nav-policy-rules':        'var(--brand-pr-light)',
     'nav-rmon-import':         'var(--brand-irs-light)',
+    'nav-playground':          'var(--brand-sn)',
   };
   const accent = accentMap[id] || 'var(--amber-500)';
   const btn = document.getElementById('devAgentBtn');

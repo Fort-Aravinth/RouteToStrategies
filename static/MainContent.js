@@ -6,7 +6,8 @@ function App_HideAllViews() {
     el.style.setProperty('display', 'none', 'important');
   });
   document.querySelector('.shell')?.classList.remove('anra-active', 'sa-active', 'ia-active', 'pr-active');
-  ['IA_MiniNav', 'ANRA_MiniNav', 'SA_MiniNav', 'PR_MiniNav'].forEach(id => {
+  document.querySelector('.shell')?.classList.remove('pg-active');
+  ['IA_MiniNav', 'ANRA_MiniNav', 'SA_MiniNav', 'PR_MiniNav', 'PG_MiniNav'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });

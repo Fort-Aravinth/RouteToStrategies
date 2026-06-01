@@ -8,25 +8,33 @@
 <link rel="stylesheet" href="static/css/Tokens.css?v=1">
 <link rel="stylesheet" href="static/css/Sidebar.css?v=1">
 <link rel="stylesheet" href="static/css/Nav.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_PopupTable.css?v=1">
 <link rel="stylesheet" href="static/css/MainContent.css?v=1">
 <link rel="stylesheet" href="static/css/Components.css?v=1">
-<link rel="stylesheet" href="static/css/Popup.css?v=1">
+<link rel="stylesheet" href="static/css/MainContent_Popup.css?v=1">
 <link rel="stylesheet" href="static/css/pages/PreviewData.css?v=1">
 <link rel="stylesheet" href="static/css/pages/Playground.css?v=1">
 <link rel="stylesheet" href="static/css/pages/LoadData.css?v=1">
-<link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=2">
+<link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=1">
 <link rel="stylesheet" href="static/css/pages/SetParameters.css?v=1">
 <link rel="stylesheet" href="static/css/pages/Overview.css?v=1">
-<script src="static/Popup.js?v=1" defer></script>
+<link rel="stylesheet" href="static/css/Nav_ScoreAnalysis.css?v=1">
+<link rel="stylesheet" href="static/css/pages/ScoreAnalysis.css?v=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="static/MainContent_Popup.js?v=1" defer></script>
 <script src="static/Sidebar.js?v=1" defer></script>
 <script src="static/Nav.js?v=1" defer></script>
+<script src="static/Nav_PopupTable.js?v=1" defer></script>
 <script src="static/MainContent.js?v=1" defer></script>
 <script src="static/Playground.js?v=1" defer></script>
 <script src="static/LoadData.js?v=1" defer></script>
-<script src="static/PreviewData.js?v=4" defer></script>
-<script src="static/ColumnManagement.js?v=5" defer></script>
+<script src="static/PreviewData.js?v=1" defer></script>
+<script src="static/ColumnManagement.js?v=1" defer></script>
 <script src="static/SetParameters.js?v=1" defer></script>
 <script src="static/Overview.js?v=1" defer></script>
+<script src="static/Nav_ScoreAnalysis.js?v=1" defer></script>
+<script src="static/SA_Calc.js?v=1" defer></script>
+<script src="static/ScoreAnalysis.js?v=1" defer></script>
 <style>
 .ld-locked { opacity: 0.35; pointer-events: none; user-select: none; }
 
@@ -223,13 +231,12 @@
           </svg>
           Overview
         </div>
-        <div id="nav-score-analysis" class="sidebar-item sidebar-item-disabled">
+        <div id="nav-score-analysis" class="sidebar-item sidebar-item-disabled" onclick="SA_OpenPanel()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3"/>
             <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Score Analysis
-          <span class="sidebar-item-dev">In Dev</span>
         </div>
         <div id="nav-route-analysis" class="sidebar-item sidebar-item-disabled">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
@@ -307,6 +314,209 @@
     </div>
 
   </nav>
+
+  <!-- ═══ SCORE ANALYSIS MINI-NAV ═══ -->
+  <div id="SA_MiniNav">
+
+    <!-- Navigation header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+      <button id="NAV_SA_ExpandBtn" onclick="NAV_SA_ToggleAll()" title="Collapse all" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:none;border:0.5px solid var(--color-card-border);border-radius:4px;cursor:pointer;padding:0;color:var(--color-text-dim);transition:background 0.15s;">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+          <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="NAV_SA_ParamsSection">
+      <div onclick="NAV_SA_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="NAV_SA_ParamsChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(0deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SA_ParamsBody" style="display:none;">
+        <div id="NAV_SA_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Score Config -->
+    <div id="NAV_SA_ScoreSection">
+      <div onclick="NAV_SA_ToggleScore()" class="MN_section_hdr">
+        <span class="MN_title">Score Config</span>
+        <svg id="NAV_SA_ScoreChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SA_ScoreBody" style="display:block;">
+        <div class="MN_section_body">
+          <div style="display:flex;gap:var(--MN_gap);align-items:center;">
+            <select id="SAScoreCol" onchange="NAV_SA_OnScoreColChange()" class="MN_ctrl" style="flex:1;">
+              <option value="">— Select column —</option>
+            </select>
+            <button class="MN_btn active" onclick="SA_Run()" style="white-space:nowrap;flex-shrink:0;">Run</button>
+          </div>
+          <div id="SAMinMax" style="display:none;font-size:0.6rem;color:var(--color-text-dim);margin-top:3px;">Min: <strong id="SAMin"></strong> / Max: <strong id="SAMax"></strong></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--MN_gap);padding:0 12px 8px;">
+          <div class="MN_spinner"><button onclick="MN_step('SAStart',-1,'NAV_SA_AutoRun')">−</button><input type="number" id="SAStart" class="MN_ctrl" value="0" placeholder="Start" oninput="NAV_SA_AutoRun()"/><button onclick="MN_step('SAStart',1,'NAV_SA_AutoRun')">+</button></div>
+          <div class="MN_spinner"><button onclick="MN_step('SAEnd',-1,'NAV_SA_AutoRun')">−</button><input type="number" id="SAEnd" class="MN_ctrl" placeholder="End" oninput="NAV_SA_AutoRun()"/><button onclick="MN_step('SAEnd',1,'NAV_SA_AutoRun')">+</button></div>
+          <div class="MN_spinner"><button onclick="MN_step('SAStep',-1,'NAV_SA_AutoRun',1)">−</button><input type="number" id="SAStep" value="10" min="1" class="MN_ctrl" title="Step" oninput="NAV_SA_AutoRun()"/><button onclick="MN_step('SAStep',1,'NAV_SA_AutoRun',1)">+</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Amount Filter -->
+    <div id="NAV_SA_AmtSection">
+      <div onclick="NAV_SA_ToggleAmt()" class="MN_section_hdr">
+        <span class="MN_title">Amount Filter</span>
+        <svg id="NAV_SA_AmtChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SA_AmtBody" style="display:block;">
+        <div style="padding:0 12px 4px;">
+          <select id="SAAmountCol" class="MN_ctrl" onchange="NAV_SA_OnAmountColChange()" style="width:100%;">
+            <option value="">— Amount column —</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);padding:0 12px 4px;">
+          <select id="SAAmountOpStart" class="MN_ctrl" onchange="NAV_SA_AutoRun()" style="width:100%;" title="Start Op"><option value=">=">&gt;=</option><option value=">">&gt;</option><option value="==">=</option></select>
+          <div class="MN_spinner"><button onclick="MN_step('SAAmountValStart',-1,'NAV_SA_AutoRun')">−</button><input type="number" id="SAAmountValStart" class="MN_ctrl" placeholder="Start" oninput="NAV_SA_AutoRun()"/><button onclick="MN_step('SAAmountValStart',1,'NAV_SA_AutoRun')">+</button></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);padding:0 12px 8px;">
+          <select id="SAAmountOpEnd" class="MN_ctrl" onchange="NAV_SA_AutoRun()" style="width:100%;" title="End Op"><option value="<=">&lt;=</option><option value="<">&lt;</option><option value="==">=</option></select>
+          <div class="MN_spinner"><button onclick="MN_step('SAAmountValEnd',-1,'NAV_SA_AutoRun')">−</button><input type="number" id="SAAmountValEnd" class="MN_ctrl" placeholder="End" oninput="NAV_SA_AutoRun()"/><button onclick="MN_step('SAAmountValEnd',1,'NAV_SA_AutoRun')">+</button></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);padding:0 12px 8px;align-items:end;">
+          <div style="position:relative;">
+            <input type="number" id="SAAmountStep" value="100" class="MN_ctrl" min="1" title="Step" style="width:100%;padding-right:22px !important;"/>
+            <span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:0.55rem;font-weight:700;color:var(--color-text-dim);pointer-events:none;">÷</span>
+          </div>
+          <button class="MN_btn active" style="width:100%;" onclick="SA_RunAmountAnalysis()">Run Analysis</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra param cards (Decision Mode, custom cards) — injected by NAV_SA_RefreshExtraCards() -->
+    <div id="NAV_SA_ExtraCards"></div>
+
+  </div>
+  <!-- ═══ end Score Analysis Mini-Nav ═══ -->
+
+  <!-- ═══ PLAYGROUND MINI-NAV ═══ -->
+  <div id="PG_MiniNav" style="display:none; grid-column:2; grid-row:2; flex-direction:column; background:var(--color-card-bg); border-right:0.5px solid var(--color-card-border); box-shadow:1px 0 6px var(--color-card-shadow); overflow-y:auto; overflow-x:hidden; min-height:0; padding-bottom:32px; scrollbar-width:none;">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
+      <span class="MN_nav_title">Playground</span>
+      <button id="PG_MiniNav_ExpandBtn" onclick="PG_MiniNav_ToggleAll()" title="Collapse all" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:none;border:0.5px solid var(--color-card-border);border-radius:4px;cursor:pointer;padding:0;color:var(--color-text-dim);">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+          <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Inputs & Buttons -->
+    <div>
+      <div onclick="PG_MiniNav_ToggleInputs()" class="MN_section_hdr">
+        <span class="MN_title">Inputs &amp; Buttons</span>
+        <svg id="PG_MiniNav_InputsChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="PG_MiniNav_InputsBody" style="display:block;">
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);">Input 1 Label</div>
+          <input type="text" class="MN_ctrl" placeholder="Input 1"/>
+          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);margin-top:2px;">Button 1 Label</div>
+          <button class="MN_btn" style="width:100%;">Button 1</button>
+          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);margin-top:2px;">Popup Button Label</div>
+          <button class="MN_btn" style="width:100%;" onclick="PG_openModal()">Popup Button</button>
+        </div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Dropdown -->
+    <div>
+      <div onclick="PG_MiniNav_ToggleDropdown()" class="MN_section_hdr">
+        <span class="MN_title">Dropdown</span>
+        <svg id="PG_MiniNav_DropdownChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="PG_MiniNav_DropdownBody" style="display:block;">
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);">Dropdown 1 Label</div>
+          <select class="MN_ctrl">
+            <option>Option One</option>
+            <option>Option Two</option>
+            <option>Option Three</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Chips -->
+    <div>
+      <div onclick="PG_MiniNav_ToggleChips()" class="MN_section_hdr">
+        <span class="MN_title">Chips</span>
+        <svg id="PG_MiniNav_ChipsChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="PG_MiniNav_ChipsBody" style="display:block;">
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            <button class="pg-chip" onclick="PG_toggleChip(this)">Chip 1</button>
+            <button class="pg-chip" onclick="PG_toggleChip(this)">Chip 2</button>
+            <button class="pg-chip" onclick="PG_toggleChip(this)">Chip 3</button>
+            <button class="pg-chip" onclick="PG_toggleChip(this)">Chip 4</button>
+            <button class="pg-chip" onclick="PG_toggleChip(this)">Chip 5</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            <button class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 1</button>
+            <button class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 2</button>
+            <button class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 3</button>
+            <button class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 4</button>
+            <button class="pg-chip-sq" onclick="PG_toggleChip(this)">Sq 5</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Table -->
+    <div>
+      <div onclick="PG_MiniNav_ToggleTable()" class="MN_section_hdr">
+        <span class="MN_title">Table</span>
+        <svg id="PG_MiniNav_TableChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="PG_MiniNav_TableBody" style="display:block;">
+        <div class="MN_section_body" style="overflow-x:auto;padding-top:0;">
+          <table class="pg-table" style="font-size:0.6rem;">
+            <thead><tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead>
+            <tbody>
+              <tr><td>Alpha 1</td><td>Beta 1</td><td>Gamma 1</td><td>Delta 1</td><td>Epsilon 1</td></tr>
+              <tr><td>Alpha 2</td><td>Beta 2</td><td>Gamma 2</td><td>Delta 2</td><td>Epsilon 2</td></tr>
+              <tr><td>Alpha 3</td><td>Beta 3</td><td>Gamma 3</td><td>Delta 3</td><td>Epsilon 3</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ═══ end Playground Mini-Nav ═══ -->
 
   <!-- ═══ MAIN ═══ -->
   <main class="main">
@@ -1235,6 +1445,207 @@
     </div>
     <!-- ══ end Overview ══ -->
 
+    <!-- ══ Score Analysis View ══ -->
+    <div class="pg-layout" id="SAView" style="display:none;">
+      <div style="display:grid; grid-template-columns:1fr; gap:14px; padding:14px;">
+
+        <!-- Top bar: Chart Style + Analysis Config (shown after first Run) -->
+        <div id="SA_TopBarRow" style="display:none; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+          <div id="SA_StyleToolbar" class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Chart Style</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:10px;">
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Style</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SA_StyleBtn_bar"     class="SA_StyleChip active" onclick="SA_SetSharedStyle('bar')">Bar</button>
+                  <button id="SA_StyleBtn_line"    class="SA_StyleChip"        onclick="SA_SetSharedStyle('line')">Line</button>
+                  <button id="SA_StyleBtn_area"    class="SA_StyleChip"        onclick="SA_SetSharedStyle('area')">Area</button>
+                  <button id="SA_StyleBtn_scatter" class="SA_StyleChip"        onclick="SA_SetSharedStyle('scatter')">Scatter</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Run by</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SA_RunByBtn_total" class="SA_StyleChip active" onclick="SA_SetRunBy('total')">Total</button>
+                  <button id="SA_RunByBtn_fraud" class="SA_StyleChip active" onclick="SA_SetRunBy('fraud')">Fraud</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="SA_RunByBar" class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Analysis Config</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Criteria</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SACritVolume" onclick="SA_setCriteria('Volume')" class="SA_StyleChip active">Volume</button>
+                  <button id="SACritValue"  onclick="SA_setCriteria('Value')"  class="SA_StyleChip">Value</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Calculate</div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                  <button id="SACalcCount"         onclick="SA_setCalc('Count')"         class="SA_StyleChip active" style="flex:1 1 calc(33.33% - 4px);">Count</button>
+                  <button id="SACalcFraudRate"     onclick="SA_setCalc('FraudRate')"     class="SA_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Fraud Rate</button>
+                  <button id="SACalcCumulative"    onclick="SA_setCalc('Cumulative')"    class="SA_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Cumulative</button>
+                  <button id="SACalcDistribution"  onclick="SA_setCalc('Distribution')"  class="SA_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Distribution</button>
+                  <button id="SACalcFalsePositive" onclick="SA_setCalc('FalsePositive')" class="SA_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">False Positive</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="SA_FiltersCard" class="pg-card" style="opacity:0.4; pointer-events:none;">
+            <div class="pg-card-header">
+              <span class="pg-card-title" id="SA_FiltersCardTitle">Filters</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:12px;">
+
+              <!-- Tab 1 content: bin-level filters -->
+              <div id="SA_FiltersMain" style="display:flex; flex-direction:column; gap:12px;">
+                <div id="SAG002_FilterRow0" style="display:flex; flex-direction:column; gap:6px;">
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SAG002_FilterColCS0" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterColCS0')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SAG002_FilterOpCS0" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterOpCS0')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SA_selectCS(this,'>','SAG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'>=','SAG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<','SAG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<=','SAG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'=','SAG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SAG002_FilterVal0" class="MN_ctrl" placeholder="0" oninput="SAG002_rerun()"/></div>
+                </div>
+                <div id="SAG002_FilterRow1" style="display:none; flex-direction:column; gap:6px;">
+                  <div style="display:flex; gap:6px;">
+                    <button id="SAG002_FilterConn0And" onclick="SA_setFilterConn(0,'AND')" class="SA_StyleChip active" style="flex:1;">AND</button>
+                    <button id="SAG002_FilterConn0Or"  onclick="SA_setFilterConn(0,'OR')"  class="SA_StyleChip"        style="flex:1;">OR</button>
+                    <button onclick="SA_removeFilter(1)" class="DMLD_ButtonOutline">×</button>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SAG002_FilterColCS1" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterColCS1')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SAG002_FilterOpCS1" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterOpCS1')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SA_selectCS(this,'>','SAG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'>=','SAG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<','SAG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<=','SAG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'=','SAG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SAG002_FilterVal1" class="MN_ctrl" placeholder="0" oninput="SAG002_rerun()"/></div>
+                </div>
+                <div id="SAG002_FilterRow2" style="display:none; flex-direction:column; gap:6px;">
+                  <div style="display:flex; gap:6px;">
+                    <button id="SAG002_FilterConn1And" onclick="SA_setFilterConn(1,'AND')" class="SA_StyleChip active" style="flex:1;">AND</button>
+                    <button id="SAG002_FilterConn1Or"  onclick="SA_setFilterConn(1,'OR')"  class="SA_StyleChip"        style="flex:1;">OR</button>
+                    <button onclick="SA_removeFilter(2)" class="DMLD_ButtonOutline">×</button>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SAG002_FilterColCS2" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterColCS2')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SAG002_FilterOpCS2" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAG002_FilterOpCS2')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SA_selectCS(this,'>','SAG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'>=','SAG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<','SAG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'<=','SAG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SA_selectCS(this,'=','SAG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SAG002_FilterVal2" class="MN_ctrl" placeholder="0" oninput="SAG002_rerun()"/></div>
+                </div>
+                <button id="SAAddFilterBtn" onclick="SA_addFilter()" class="SA_StyleChip" style="width:100%;">+ Add Filter</button>
+              </div>
+
+              <!-- Tab 2 content: score threshold -->
+              <div id="SA_FiltersThreshold" style="display:none; flex-direction:column; gap:6px;">
+                <div class="pg-card-label">Enter your score to see how you compare</div>
+                <div class="MN_spinner"><button onclick="MN_step('SAMyScore',-1,'SAG003_rerun')">−</button><input type="number" id="SAMyScore" class="MN_ctrl" placeholder="e.g. 75" oninput="SAG003_rerun()"/><button onclick="MN_step('SAMyScore',1,'SAG003_rerun')">+</button></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- /SA_TopBarRow -->
+
+        <!-- Chapter panel — 3 tabs -->
+        <div id="SA_ChapterPanel" class="pg-card" style="display:none;">
+
+          <div class="pg-card-header" style="display:flex; align-items:center; justify-content:space-between;">
+            <span id="SA_ChapterTitle" class="pg-card-title">Score distribution</span>
+            <div style="display:flex; gap:4px;">
+              <button id="SA_Tab0" onclick="SA_SwitchTab(0)" class="SA_TabPill SA_TabPill--active">Score Analysis</button>
+              <button id="SA_Tab1" onclick="SA_SwitchTab(1)" class="SA_TabPill">Score trend with filters</button>
+              <button id="SA_Tab2" onclick="SA_SwitchTab(2)" class="SA_TabPill">Above my score</button>
+            </div>
+          </div>
+          <div class="pg-card-divider"></div>
+
+          <!-- Tab 0 — G001: Score Distribution -->
+          <div id="SAG001_Container" style="padding:16px 20px;">
+            <div class="SA_ChartWrap"><canvas id="SAG001_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SAG001_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
+            <div id="SAG001_Summary" style="margin-top:10px; padding:10px 12px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; margin-top:10px; padding:4px 0;"></div>
+          </div>
+
+          <!-- Tab 1 — G002: Filtered view -->
+          <div id="SAG002_Container" style="display:none; padding:16px 20px;">
+            <div class="SA_ChartWrap"><canvas id="SAG002_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SAG002_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
+            <div id="SAG002_Summary" style="margin-top:10px; padding:10px 12px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; margin-top:10px; padding:4px 0;"></div>
+          </div>
+
+          <!-- Tab 2 — G003: Above my score -->
+          <div id="SAG003_Container" style="display:none; padding:16px 20px;">
+            <div class="SA_ChartWrap"><canvas id="SAG003_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SAG003_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
+            <div id="SAG003_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+          </div>
+
+        </div><!-- /SA_ChapterPanel -->
+
+        <!-- Dynamic cards -->
+        <div id="SA_DynamicCardsContainer" style="display:contents;"></div>
+
+        <!-- Output boxes -->
+
+      </div>
+    </div>
+    <!-- ══ end Score Analysis ══ -->
+
   </main>
 </div>
 
@@ -1386,6 +1797,68 @@
       <button type="button" class="pg-btn" style="width:100px;" onclick="PD_closeModal()">Close</button>
       <button type="button" class="pg-btn" style="width:140px;" id="PD_ModalApplyBtn" onclick="PD_applyLoadedColumns()">Apply</button>
       <button type="button" class="pg-btn" style="width:160px;display:none;" id="PD_ModalApplyByNumBtn" onclick="PD_applyByNumber()">Apply by Number</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COLUMN ANALYSIS POPUP ═══ -->
+<div id="SA_ColPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;" onclick="if(event.target===this)SA_ColPopupClose()">
+  <div class="npt-box">
+    <div class="npt-hdr">
+      <span id="SA_ColPopupTitle" class="npt-title">Column Analysis</span>
+      <button class="npt-close" onclick="SA_ColPopupClose()">✕</button>
+    </div>
+    <div class="npt-toolbar">
+      <span class="npt-toolbar-lbl">Chart</span>
+      <button class="ChipButton_Btn active" id="SA_ColPopupType_bar"  onclick="SA_ColPopupSetType('bar')">Bar</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupType_line" onclick="SA_ColPopupSetType('line')">Line</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupType_area" onclick="SA_ColPopupSetType('area')">Area</button>
+      <span class="npt-toolbar-sep"></span>
+      <span class="npt-toolbar-lbl">Criteria</span>
+      <button class="ChipButton_Btn active" id="SA_ColPopupCrit_Volume" onclick="SA_ColPopupSetCrit('Volume')">Volume</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupCrit_Value"  onclick="SA_ColPopupSetCrit('Value')">Value</button>
+      <span class="npt-toolbar-sep"></span>
+      <span class="npt-toolbar-lbl">Calculate</span>
+      <button class="ChipButton_Btn active" id="SA_ColPopupCalc_Count"         onclick="SA_ColPopupSetCalc('Count')">Count</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupCalc_FraudRate"     onclick="SA_ColPopupSetCalc('FraudRate')">Fraud Rate</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupCalc_Cumulative"    onclick="SA_ColPopupSetCalc('Cumulative')">Cumulative</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupCalc_Distribution"  onclick="SA_ColPopupSetCalc('Distribution')">Distribution</button>
+      <button class="ChipButton_Btn"        id="SA_ColPopupCalc_FalsePositive" onclick="SA_ColPopupSetCalc('FalsePositive')">False Positive</button>
+    </div>
+    <div class="npt-body">
+      <div id="SA_ColPopupTotals" class="npt-totals"></div>
+      <div class="npt-canvas-wrap"><canvas id="SA_ColPopupCanvas"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AMOUNT ANALYSIS POPUP ═══ -->
+<div id="SA_AmtPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;" onclick="if(event.target===this)SA_AmtPopupClose()">
+  <div class="npt-box">
+    <div class="npt-hdr">
+      <span id="SA_AmtPopupTitle" class="npt-title">Amount Analysis</span>
+      <button class="npt-close" onclick="SA_AmtPopupClose()">✕</button>
+    </div>
+    <div class="npt-toolbar">
+      <span class="npt-toolbar-lbl">Chart</span>
+      <button class="ChipButton_Btn active" id="SA_AmtPopupType_bar"  onclick="SA_AmtPopupSetType('bar')">Bar</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupType_line" onclick="SA_AmtPopupSetType('line')">Line</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupType_area" onclick="SA_AmtPopupSetType('area')">Area</button>
+      <span class="npt-toolbar-sep"></span>
+      <span class="npt-toolbar-lbl">Criteria</span>
+      <button class="ChipButton_Btn active" id="SA_AmtPopupCrit_Volume" onclick="SA_AmtPopupSetCrit('Volume')">Volume</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupCrit_Value"  onclick="SA_AmtPopupSetCrit('Value')">Value</button>
+      <span class="npt-toolbar-sep"></span>
+      <span class="npt-toolbar-lbl">Calculate</span>
+      <button class="ChipButton_Btn active" id="SA_AmtPopupCalc_Count"        onclick="SA_AmtPopupSetCalc('Count')">Count</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupCalc_FraudRate"    onclick="SA_AmtPopupSetCalc('FraudRate')">Fraud Rate</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupCalc_Cumulative"   onclick="SA_AmtPopupSetCalc('Cumulative')">Cumulative</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupCalc_Distribution" onclick="SA_AmtPopupSetCalc('Distribution')">Distribution</button>
+      <button class="ChipButton_Btn"        id="SA_AmtPopupCalc_FalsePositive" onclick="SA_AmtPopupSetCalc('FalsePositive')">False Positive</button>
+    </div>
+    <div class="npt-body">
+      <div id="SA_AmtPopupTotals" class="npt-totals"></div>
+      <div class="npt-canvas-wrap"><canvas id="SA_AmtPopupCanvas"></canvas></div>
     </div>
   </div>
 </div>

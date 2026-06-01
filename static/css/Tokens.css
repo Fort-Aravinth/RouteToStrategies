@@ -50,6 +50,20 @@
   --brand-param-light: #14B8A6;
   --brand-param-dim: rgba(13,148,136,0.12);
 
+  /* Brand — Overview (burgundy) */
+  --brand-ov:       #9B2050;
+  --brand-ov-light: #C04070;
+  --brand-ov-dim:   rgba(155,32,80,0.12);
+
+  /* Brand — Score Analysis (violet) */
+  --brand-sa:       #7B68C8;
+  --brand-sa-light: #9B88E8;
+  --brand-sa-dim:   rgba(123,104,200,0.12);
+
+  /* Aliases */
+  --brand-pt:   var(--brand-param);
+  --amber-500:  var(--brand-sn);
+
   /* Brand — Playground / default (gold) */
   --brand-sn:     #F0A500;
   --brand-sn-light: #FFC94D;

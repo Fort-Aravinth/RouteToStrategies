@@ -113,117 +113,163 @@ function ANRA_MiniNav_ToggleAll() {
 
 // ── SA MiniNav ────────────────────────────────────────────────────────────────
 
-function SA_MiniNav_RenderParams() { SP_RenderParamsTo('SA_MiniNav_ParamsDisplay'); }
+function NAV_SA_RenderParams() { SP_RenderParamsTo('NAV_SA_ParamsDisplay'); }
 
-let _saMiniAmtOpen = true;
-function SA_MiniNav_ToggleAmt() {
-  _saMiniAmtOpen = !_saMiniAmtOpen;
-  const body    = document.getElementById('SA_MiniNav_AmtBody');
-  const chevron = document.getElementById('SA_MiniNav_AmtChevron');
-  if (body)    body.style.display      = _saMiniAmtOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniAmtOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_AmtOpen = true;
+function NAV_SA_ToggleAmt() {
+  _NAV_SA_AmtOpen = !_NAV_SA_AmtOpen;
+  const body    = document.getElementById('NAV_SA_AmtBody');
+  const chevron = document.getElementById('NAV_SA_AmtChevron');
+  if (body)    body.style.display      = _NAV_SA_AmtOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_AmtOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniFiltersOpen = true;
-function SA_MiniNav_ToggleFilters() {
-  _saMiniFiltersOpen = !_saMiniFiltersOpen;
-  const body    = document.getElementById('SA_MiniNav_FiltersBody');
-  const chevron = document.getElementById('SA_MiniNav_FiltersChevron');
-  if (body)    body.style.display      = _saMiniFiltersOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniFiltersOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_FiltersOpen = true;
+function NAV_SA_ToggleFilters() {
+  _NAV_SA_FiltersOpen = !_NAV_SA_FiltersOpen;
+  const body    = document.getElementById('NAV_SA_FiltersBody');
+  const chevron = document.getElementById('NAV_SA_FiltersChevron');
+  if (body)    body.style.display      = _NAV_SA_FiltersOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_FiltersOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniMyScoreOpen = true;
-function SA_MiniNav_ToggleMyScore() {
-  _saMiniMyScoreOpen = !_saMiniMyScoreOpen;
-  const body    = document.getElementById('SA_MiniNav_MyScoreBody');
-  const chevron = document.getElementById('SA_MiniNav_MyScoreChevron');
-  if (body)    body.style.display      = _saMiniMyScoreOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniMyScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_MyScoreOpen = true;
+function NAV_SA_ToggleMyScore() {
+  _NAV_SA_MyScoreOpen = !_NAV_SA_MyScoreOpen;
+  const body    = document.getElementById('NAV_SA_MyScoreBody');
+  const chevron = document.getElementById('NAV_SA_MyScoreChevron');
+  if (body)    body.style.display      = _NAV_SA_MyScoreOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_MyScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniScoreOpen = true;
-function SA_MiniNav_ToggleScore() {
-  _saMiniScoreOpen = !_saMiniScoreOpen;
-  const body    = document.getElementById('SA_MiniNav_ScoreBody');
-  const chevron = document.getElementById('SA_MiniNav_ScoreChevron');
-  if (body)    body.style.display      = _saMiniScoreOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-  if (_saMiniScoreOpen) _navScrollOnExpand(document.getElementById('SA_MiniNav_ScoreSection'), document.getElementById('SA_MiniNav'));
+let _NAV_SA_ScoreOpen = true;
+function NAV_SA_ToggleScore() {
+  _NAV_SA_ScoreOpen = !_NAV_SA_ScoreOpen;
+  const body    = document.getElementById('NAV_SA_ScoreBody');
+  const chevron = document.getElementById('NAV_SA_ScoreChevron');
+  if (body)    body.style.display      = _NAV_SA_ScoreOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_ScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+  if (_NAV_SA_ScoreOpen) _navScrollOnExpand(document.getElementById('NAV_SA_ScoreSection'), document.getElementById('SA_MiniNav'));
 }
 
-let _saMiniParamsOpen = true;
-function SA_MiniNav_ToggleParams() {
-  _saMiniParamsOpen = !_saMiniParamsOpen;
-  const body    = document.getElementById('SA_MiniNav_ParamsBody');
-  const chevron = document.getElementById('SA_MiniNav_ParamsChevron');
-  if (body)    body.style.display      = _saMiniParamsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_ParamsOpen = true;
+function NAV_SA_ToggleParams() {
+  _NAV_SA_ParamsOpen = !_NAV_SA_ParamsOpen;
+  const body    = document.getElementById('NAV_SA_ParamsBody');
+  const chevron = document.getElementById('NAV_SA_ParamsChevron');
+  if (body)    body.style.display      = _NAV_SA_ParamsOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_ParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-function SA_MiniNav_ToggleExtra(key) {
-  const body    = document.getElementById(`SA_MiniNav_ExtraBody_${key}`);
-  const chevron = document.getElementById(`SA_MiniNav_ExtraChevron_${key}`);
+function NAV_SA_ToggleExtra(key) {
+  const body    = document.getElementById(`NAV_SA_ExtraBody_${key}`);
+  const chevron = document.getElementById(`NAV_SA_ExtraChevron_${key}`);
   if (!body) return;
   const open = body.style.display === 'none';
   body.style.display      = open ? 'block' : 'none';
   if (chevron) chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniActionOpen = true;
-function SA_MiniNav_ToggleAction() {
-  _saMiniActionOpen = !_saMiniActionOpen;
-  const body    = document.getElementById('SA_MiniNav_ActionBody');
-  const chevron = document.getElementById('SA_MiniNav_ActionChevron');
-  if (body)    body.style.display      = _saMiniActionOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniActionOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_ActionOpen = true;
+function NAV_SA_ToggleAction() {
+  _NAV_SA_ActionOpen = !_NAV_SA_ActionOpen;
+  const body    = document.getElementById('NAV_SA_ActionBody');
+  const chevron = document.getElementById('NAV_SA_ActionChevron');
+  if (body)    body.style.display      = _NAV_SA_ActionOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_ActionOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniPresetsOpen = true;
-function SA_MiniNav_TogglePresets() {
-  _saMiniPresetsOpen = !_saMiniPresetsOpen;
-  const body    = document.getElementById('SA_MiniNav_PresetsBody');
-  const chevron = document.getElementById('SA_MiniNav_PresetsChevron');
-  if (body)    body.style.display      = _saMiniPresetsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _saMiniPresetsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+let _NAV_SA_PresetsOpen = true;
+function NAV_SA_TogglePresets() {
+  _NAV_SA_PresetsOpen = !_NAV_SA_PresetsOpen;
+  const body    = document.getElementById('NAV_SA_PresetsBody');
+  const chevron = document.getElementById('NAV_SA_PresetsChevron');
+  if (body)    body.style.display      = _NAV_SA_PresetsOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _NAV_SA_PresetsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-let _saMiniAllExpanded = true;
-function SA_MiniNav_ToggleAll() {
-  _saMiniAllExpanded = !_saMiniAllExpanded;
+let _NAV_SA_AllExpanded = true;
+function NAV_SA_ToggleAll() {
+  _NAV_SA_AllExpanded = !_NAV_SA_AllExpanded;
   const sections = [
-    { flag: '_saMiniParamsOpen',   body: 'SA_MiniNav_ParamsBody',   chevron: 'SA_MiniNav_ParamsChevron' },
-    { flag: '_saMiniScoreOpen',    body: 'SA_MiniNav_ScoreBody',    chevron: 'SA_MiniNav_ScoreChevron' },
-    { flag: '_saMiniAmtOpen',      body: 'SA_MiniNav_AmtBody',      chevron: 'SA_MiniNav_AmtChevron' },
-    { flag: '_saMiniFiltersOpen',  body: 'SA_MiniNav_FiltersBody',  chevron: 'SA_MiniNav_FiltersChevron' },
-    { flag: '_saMiniMyScoreOpen',  body: 'SA_MiniNav_MyScoreBody',  chevron: 'SA_MiniNav_MyScoreChevron' },
-    { flag: '_saMiniActionOpen',   body: 'SA_MiniNav_ActionBody',   chevron: 'SA_MiniNav_ActionChevron' },
-    { flag: '_saMiniPresetsOpen',  body: 'SA_MiniNav_PresetsBody',  chevron: 'SA_MiniNav_PresetsChevron' },
+    { flag: '_NAV_SA_ParamsOpen',   body: 'NAV_SA_ParamsBody',   chevron: 'NAV_SA_ParamsChevron' },
+    { flag: '_NAV_SA_ScoreOpen',    body: 'NAV_SA_ScoreBody',    chevron: 'NAV_SA_ScoreChevron' },
+    { flag: '_NAV_SA_AmtOpen',      body: 'NAV_SA_AmtBody',      chevron: 'NAV_SA_AmtChevron' },
+    { flag: '_NAV_SA_FiltersOpen',  body: 'NAV_SA_FiltersBody',  chevron: 'NAV_SA_FiltersChevron' },
+    { flag: '_NAV_SA_MyScoreOpen',  body: 'NAV_SA_MyScoreBody',  chevron: 'NAV_SA_MyScoreChevron' },
+    { flag: '_NAV_SA_ActionOpen',   body: 'NAV_SA_ActionBody',   chevron: 'NAV_SA_ActionChevron' },
+    { flag: '_NAV_SA_PresetsOpen',  body: 'NAV_SA_PresetsBody',  chevron: 'NAV_SA_PresetsChevron' },
   ];
   const flagMap = {
-    '_saMiniParamsOpen':  () => { _saMiniParamsOpen  = _saMiniAllExpanded; },
-    '_saMiniScoreOpen':   () => { _saMiniScoreOpen   = _saMiniAllExpanded; },
-    '_saMiniAmtOpen':     () => { _saMiniAmtOpen     = _saMiniAllExpanded; },
-    '_saMiniFiltersOpen': () => { _saMiniFiltersOpen = _saMiniAllExpanded; },
-    '_saMiniMyScoreOpen': () => { _saMiniMyScoreOpen = _saMiniAllExpanded; },
-    '_saMiniActionOpen':  () => { _saMiniActionOpen  = _saMiniAllExpanded; },
-    '_saMiniPresetsOpen': () => { _saMiniPresetsOpen = _saMiniAllExpanded; },
+    '_NAV_SA_ParamsOpen':  () => { _NAV_SA_ParamsOpen  = _NAV_SA_AllExpanded; },
+    '_NAV_SA_ScoreOpen':   () => { _NAV_SA_ScoreOpen   = _NAV_SA_AllExpanded; },
+    '_NAV_SA_AmtOpen':     () => { _NAV_SA_AmtOpen     = _NAV_SA_AllExpanded; },
+    '_NAV_SA_FiltersOpen': () => { _NAV_SA_FiltersOpen = _NAV_SA_AllExpanded; },
+    '_NAV_SA_MyScoreOpen': () => { _NAV_SA_MyScoreOpen = _NAV_SA_AllExpanded; },
+    '_NAV_SA_ActionOpen':  () => { _NAV_SA_ActionOpen  = _NAV_SA_AllExpanded; },
+    '_NAV_SA_PresetsOpen': () => { _NAV_SA_PresetsOpen = _NAV_SA_AllExpanded; },
   };
   sections.forEach(s => {
     flagMap[s.flag]();
     const body    = document.getElementById(s.body);
     const chevron = document.getElementById(s.chevron);
-    if (body)    body.style.display      = _saMiniAllExpanded ? 'block' : 'none';
-    if (chevron) chevron.style.transform = _saMiniAllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
+    if (body)    body.style.display      = _NAV_SA_AllExpanded ? 'block' : 'none';
+    if (chevron) chevron.style.transform = _NAV_SA_AllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
   });
-  document.querySelectorAll('[id^="SA_MiniNav_ExtraBody_"]').forEach(body => {
-    body.style.display = _saMiniAllExpanded ? 'block' : 'none';
+  document.querySelectorAll('[id^="NAV_SA_ExtraBody_"]').forEach(body => {
+    body.style.display = _NAV_SA_AllExpanded ? 'block' : 'none';
   });
-  document.querySelectorAll('[id^="SA_MiniNav_ExtraChevron_"]').forEach(chevron => {
-    chevron.style.transform = _saMiniAllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
+  document.querySelectorAll('[id^="NAV_SA_ExtraChevron_"]').forEach(chevron => {
+    chevron.style.transform = _NAV_SA_AllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
   });
-  const btn = document.getElementById('SA_MiniNav_ExpandBtn');
-  if (btn) btn.title = _saMiniAllExpanded ? 'Collapse all' : 'Expand all';
+  const btn = document.getElementById('NAV_SA_ExpandBtn');
+  if (btn) btn.title = _NAV_SA_AllExpanded ? 'Collapse all' : 'Expand all';
+}
+
+// ── PG MiniNav ────────────────────────────────────────────────────────────────
+
+let _pgMiniInputsOpen  = true;
+let _pgMiniDropdownOpen = true;
+let _pgMiniChipsOpen   = true;
+let _pgMiniTableOpen   = true;
+let _pgMiniAllExpanded = true;
+
+function _PG_toggle(bodyId, chevronId, open) {
+  const body    = document.getElementById(bodyId);
+  const chevron = document.getElementById(chevronId);
+  if (body)    body.style.display      = open ? 'block' : 'none';
+  if (chevron) chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+function PG_MiniNav_ToggleInputs() {
+  _pgMiniInputsOpen = !_pgMiniInputsOpen;
+  _PG_toggle('PG_MiniNav_InputsBody', 'PG_MiniNav_InputsChevron', _pgMiniInputsOpen);
+}
+function PG_MiniNav_ToggleDropdown() {
+  _pgMiniDropdownOpen = !_pgMiniDropdownOpen;
+  _PG_toggle('PG_MiniNav_DropdownBody', 'PG_MiniNav_DropdownChevron', _pgMiniDropdownOpen);
+}
+function PG_MiniNav_ToggleChips() {
+  _pgMiniChipsOpen = !_pgMiniChipsOpen;
+  _PG_toggle('PG_MiniNav_ChipsBody', 'PG_MiniNav_ChipsChevron', _pgMiniChipsOpen);
+}
+function PG_MiniNav_ToggleTable() {
+  _pgMiniTableOpen = !_pgMiniTableOpen;
+  _PG_toggle('PG_MiniNav_TableBody', 'PG_MiniNav_TableChevron', _pgMiniTableOpen);
+}
+function PG_MiniNav_ToggleAll() {
+  _pgMiniAllExpanded = !_pgMiniAllExpanded;
+  _pgMiniInputsOpen   = _pgMiniAllExpanded;
+  _pgMiniDropdownOpen = _pgMiniAllExpanded;
+  _pgMiniChipsOpen    = _pgMiniAllExpanded;
+  _pgMiniTableOpen    = _pgMiniAllExpanded;
+  [
+    ['PG_MiniNav_InputsBody',   'PG_MiniNav_InputsChevron'],
+    ['PG_MiniNav_DropdownBody', 'PG_MiniNav_DropdownChevron'],
+    ['PG_MiniNav_ChipsBody',    'PG_MiniNav_ChipsChevron'],
+    ['PG_MiniNav_TableBody',    'PG_MiniNav_TableChevron'],
+  ].forEach(([b, c]) => _PG_toggle(b, c, _pgMiniAllExpanded));
+  const btn = document.getElementById('PG_MiniNav_ExpandBtn');
+  if (btn) btn.title = _pgMiniAllExpanded ? 'Collapse all' : 'Expand all';
 }
 
 // ── IA MiniNav ────────────────────────────────────────────────────────────────

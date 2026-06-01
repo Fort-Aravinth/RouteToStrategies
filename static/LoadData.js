@@ -118,6 +118,16 @@ window.LD_UnlockNav = function() {
   });
 };
 
+window.LD_UnlockScoreAnalysis = function() {
+  const el = document.getElementById('nav-score-analysis');
+  if (el) {
+    el.classList.remove('ld-locked', 'sidebar-item-disabled');
+    el.removeAttribute('data-nav-locked');
+    const badge = el.querySelector('.sidebar-item-dev');
+    if (badge) badge.remove();
+  }
+};
+
 // ── Lock state ────────────────────────────────────────────────────────────────
 // empty   → only dropzone active
 // selected → post-select controls unlock (chips, header, upload btn)

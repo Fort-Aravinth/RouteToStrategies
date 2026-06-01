@@ -717,6 +717,47 @@ function SP_showToast(msg, type = '') {
 
 window.SP_getParams = () => _SP_params;
 
+window.SP_RenderParamsTo = function(elementId, brand = 'sa') {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const p = _SP_params;
+  if (!p || !p.col1) { el.innerHTML = '<div class="MN_hint">— Apply parameters to load —</div>'; return; }
+  const row = (label, value) =>
+    `<div class="MN_param_row">
+      <div class="MN_param_label">${label}</div>
+      <div class="MN_param_value">${value || '—'}</div>
+    </div>`;
+  const divider = `<div class="MN_param_divider"></div>`;
+  const values = Array.isArray(p.values) ? p.values.join(', ') : (p.values || '—');
+  let html = row('Fraud Filter Column', p.col1)
+           + row('Filter Values', values)
+           + row('Amount Metric Column', p.numeric)
+           + (p.currency ? row('Currency', p.currency) : '')
+           + row('Card Dimension Column', p.object);
+  if (p.auth_date || p.auth_time) {
+    html += divider;
+    if (p.auth_date)         html += row('Authorisations Date',  p.auth_date);
+    if (p.auth_time)         html += row('Authorisations Time',  p.auth_time);
+    if (p.combined_datetime) html += row('Combined Date & Time', p.combined_datetime);
+  }
+  const dm = p.decisionMode;
+  if (dm && dm.col) {
+    html += divider + row('Decision Mode Column', dm.col);
+    html += `<div class="MN_param_tags">
+      <div class="MN_param_tag">✓ Successful: ${(dm.assigned?.successful||[]).join(', ')||'—'}</div>
+      <div class="MN_param_tag secondary">✗ Unsuccessful: ${(dm.assigned?.unsuccessful||[]).join(', ')||'—'}</div>
+    </div>`;
+  }
+  (p.customCards || []).forEach(card => {
+    html += divider + row(card.name || 'Custom', card.col || '—');
+    html += `<div class="MN_param_tags">
+      <div class="MN_param_tag">✓ ${card.labelA||'A'}: ${(card.assigned?.a||[]).join(', ')||'—'}</div>
+      <div class="MN_param_tag secondary">✗ ${card.labelB||'B'}: ${(card.assigned?.b||[]).join(', ')||'—'}</div>
+    </div>`;
+  });
+  el.innerHTML = html;
+};
+
 // Populate sidebar dropdown on page load
 document.addEventListener('DOMContentLoaded', () => SP_RenderPresetDropdowns());
 

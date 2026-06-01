@@ -15,6 +15,7 @@ templates/
 
 # Old HTML versions
 new_version_v6.html
+new_version_v7.html
 
 # Old/legacy files
 static/Version01.css
@@ -30,6 +31,10 @@ new_version_v1_2026-05-13.html
 new_version_v2.html
 new_version_v3.html
 new_version_v4.html
+
+# Local dev only
+static/DevStub.js
+dev.html
 
 # Misc
 .DS_Store
