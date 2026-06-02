@@ -1587,7 +1587,7 @@
                   </div>
                   <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SAG002_FilterVal2" class="MN_ctrl" placeholder="0" oninput="SAG002_rerun()"/></div>
                 </div>
-                <button id="SAAddFilterBtn" onclick="SA_addFilter()" class="SA_StyleChip" style="width:100%;">+ Add Filter</button>
+                <button id="SAAddFilterBtn" onclick="SA_addFilter()" class="pg-btn">+ Add Filter</button>
               </div>
 
               <!-- Tab 2 content: score threshold -->
@@ -1618,14 +1618,16 @@
           <div id="SAG001_Container" style="padding:16px 20px;">
             <div class="SA_ChartWrap"><canvas id="SAG001_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG001_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
-            <div id="SAG001_Summary" style="margin-top:10px; padding:10px 12px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; margin-top:10px; padding:4px 0;"></div>
+            <div id="SAG001_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <button onclick="SA_ViewStrategies(0)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
           </div>
 
           <!-- Tab 1 — G002: Filtered view -->
           <div id="SAG002_Container" style="display:none; padding:16px 20px;">
             <div class="SA_ChartWrap"><canvas id="SAG002_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG002_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
-            <div id="SAG002_Summary" style="margin-top:10px; padding:10px 12px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; margin-top:10px; padding:4px 0;"></div>
+            <div id="SAG002_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <button onclick="SA_ViewStrategies(1)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
           </div>
 
           <!-- Tab 2 — G003: Above my score -->
@@ -1633,6 +1635,7 @@
             <div class="SA_ChartWrap"><canvas id="SAG003_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG003_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
             <div id="SAG003_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <button onclick="SA_ViewStrategies(2)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
           </div>
 
         </div><!-- /SA_ChapterPanel -->
@@ -1860,6 +1863,23 @@
       <div id="SA_AmtPopupTotals" class="npt-totals"></div>
       <div class="npt-canvas-wrap"><canvas id="SA_AmtPopupCanvas"></canvas></div>
     </div>
+  </div>
+</div>
+
+<!-- ── Score Analysis: View Strategies modal ── -->
+<div id="SA_StrategyModal" class="popup-overlay" onclick="if(event.target===this)Popup_close('SA_StrategyModal')">
+  <div class="popup-card" style="width:600px;">
+    <div class="popup-header">
+      <div>
+        <div id="SA_StrategyModalTitle" class="popup-title"></div>
+        <div id="SA_StrategyModalSub" style="font-size:0.7rem;color:var(--dml-label);margin-top:2px;"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="SA_CopyStrategy()" style="height:28px;padding:0 12px;border-radius:5px;border:1px solid var(--dml-border);background:var(--dml-surface);font-size:0.68rem;font-weight:600;color:var(--dml-text);cursor:pointer;">⎘ Copy All</button>
+        <button class="popup-close" onclick="Popup_close('SA_StrategyModal')">✕</button>
+      </div>
+    </div>
+    <div id="SA_StrategyModalBody" class="popup-body"></div>
   </div>
 </div>
 

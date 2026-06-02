@@ -2,9 +2,13 @@
 /* Brand + MN system + mini-nav shell → Nav_ScoreAnalysis.css */
 
 /* ── Top bar card layout ── */
-#SA_TopBarRow { display: grid; }
+#SA_TopBarRow { display: grid; align-items: stretch; }
 #SA_StyleToolbar,
-#SA_RunByBar { display: flex; flex-direction: column; }
+#SA_RunByBar,
+#SA_FiltersCard { display: flex; flex-direction: column; height: 100%; }
+#SA_StyleToolbar .pg-card-body,
+#SA_RunByBar .pg-card-body,
+#SA_FiltersCard .pg-card-body { flex: 1; }
 
 /* ── Chart Style square chips ── */
 .SA_StyleChip {

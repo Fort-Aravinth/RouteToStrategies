@@ -1,5 +1,15 @@
 // ── Main Content ─────────────────────────────────────────────────────────────
 
+// ── Shared copy template — used by all analysis views ────────────────────────
+let _APP_IdSeq = 0;
+
+function APP_ApplyTemplate(source, data) {
+  let tmpl = {};
+  try { tmpl = JSON.parse(localStorage.getItem('APP_CopyTemplate') || '{}'); } catch(e) {}
+  const id = source.replace(/\s+/g, '_') + '_' + Date.now() + '_' + (++_APP_IdSeq);
+  return { ...data, ...tmpl, Source: source, ID: id };
+}
+
 function App_HideAllViews() {
   document.querySelectorAll('.main > *').forEach(el => {
     el.classList.remove('visible');

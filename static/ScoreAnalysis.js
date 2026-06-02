@@ -454,3 +454,132 @@ function SAG003_renderSummary() {
 
   el.innerHTML = parts.join('') || '<span style="color:var(--color-text-dim);font-style:italic;">No active filters</span>';
 }
+
+// ── View Strategies ───────────────────────────────────────────────────────────
+function SA_BuildStrategyJSON(graphIdx) {
+  const g      = id => document.getElementById(id)?.value || '';
+  const params = window.SP_getParams ? window.SP_getParams() : {};
+
+  // Score conditions
+  let scoreConditions;
+  if (graphIdx === 2) {
+    const myScore = parseFloat(g('SAMyScore')) || 0;
+    scoreConditions = [{ op: '>=', value: myScore }];
+  } else {
+    scoreConditions = [
+      { op: '>=', value: _SA_Start },
+      { op: '<=', value: _SA_End   },
+    ];
+  }
+
+  // Amount filter
+  const amtCol    = g('SAAmountCol');
+  const amtStart  = g('SAAmountValStart');
+  const amtEnd    = g('SAAmountValEnd');
+  const fState    = [_SA_G001_Filters, _SA_G002_Filters, _SA_G003_Filters][graphIdx];
+  const amtActive = fState.amt && !!amtCol;
+  const amtConditions = [];
+  if (amtStart) amtConditions.push({ op: g('SAAmountOpStart') || '>=', value: parseFloat(amtStart) });
+  if (amtEnd)   amtConditions.push({ op: g('SAAmountOpEnd')   || '<=', value: parseFloat(amtEnd)   });
+
+  // Bin-level post-filters (G002 only)
+  const binFilters = [];
+  if (graphIdx === 1) {
+    [0, 1, 2].forEach(i => {
+      const col = SA_getCSValue(`SAG002_FilterColCS${i}`);
+      const op  = SA_getCSValue(`SAG002_FilterOpCS${i}`) || '>';
+      const val = g(`SAG002_FilterVal${i}`);
+      if (col && val !== '') binFilters.push({ col, op, value: parseFloat(val) });
+    });
+  }
+
+  // Param filters — read live nav state
+  const paramFilters = [];
+  if (params.decisionMode?.col) {
+    const vals = SA_getNavActiveVals('dm') ??
+      [...(params.decisionMode.assigned?.successful || []), ...(params.decisionMode.assigned?.unsuccessful || [])];
+    if (vals.length) paramFilters.push({ col: params.decisionMode.col, values: vals });
+  }
+  (params.customCards || []).forEach((card, i) => {
+    if (!card.col) return;
+    const vals = SA_getNavActiveVals(`custom_${i}`) ??
+      [...(card.assigned?.a || []), ...(card.assigned?.b || [])];
+    if (vals.length) paramFilters.push({ col: card.col, values: vals });
+  });
+
+  return {
+    ScoreInformation:  { col: _SA_ScoreCol, conditions: scoreConditions },
+    AmountInformation: { active: amtActive, col: amtCol, conditions: amtConditions },
+    BinFilters:   binFilters,
+    ParamFilters: paramFilters,
+    Criteria:  _SA_Criteria,
+    Calculate: _SA_Calc,
+  };
+}
+
+let _SA_CurrentStrategy = null;
+
+function SA_ViewStrategies(graphIdx) {
+  if (!_SA_Bins.length) { alert('Run analysis first.'); return; }
+  const s = SA_BuildStrategyJSON(graphIdx);
+  _SA_CurrentStrategy = s;
+  const graphLabel = `Graph${String(graphIdx + 1).padStart(3, '0')}`;
+
+  // ── helpers ──
+  const condVal = v => Number.isInteger(v) ? v : parseFloat(v.toFixed(2));
+  const label = t => `<div style="font-size:0.72rem;color:var(--dml-label);margin-bottom:2px;">${t}</div>`;
+  const val   = v => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);margin-bottom:8px;">${v}</div>`;
+  const sectionTitle = (t, color) =>
+    `<div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:${color};margin:16px 0 8px;">${t}</div>`;
+  const condRows = arr => arr.length
+    ? arr.map(c => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);">${c.op} ${condVal(c.value)}</div>`).join('')
+    : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">—</div>`;
+
+  // ── Amount ──
+  const amtHtml =
+    sectionTitle('Amount', '#3b82f6') +
+    label('Metric') + val(s.AmountInformation.col || '—') +
+    label('Conditions') +
+    (s.AmountInformation.active
+      ? condRows(s.AmountInformation.conditions)
+      : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">Not active</div>`);
+
+  // ── Filters ──
+  const filterLines = [
+    ...s.ParamFilters.map(f => `${f.col}: ${f.values.join(', ')}`),
+    ...s.BinFilters.map(f => `${f.col} ${f.op} ${f.value}`),
+  ];
+  const filtersHtml =
+    sectionTitle('Filters', '#6366f1') +
+    (filterLines.length
+      ? filterLines.map(l => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);margin-bottom:4px;">${l}</div>`).join('')
+      : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">none</div>`);
+
+  // ── Score ──
+  const scoreHtml =
+    sectionTitle('Score', '#f59e0b') +
+    label('Filter Active') +
+    `<div style="margin-bottom:8px;"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.72rem;font-weight:600;background:rgba(121,24,156,0.1);color:var(--brand-sa);">Yes</span></div>` +
+    label('Metric') + val(s.ScoreInformation.col) +
+    label('Conditions') + condRows(s.ScoreInformation.conditions);
+
+  const cardHtml = amtHtml + filtersHtml + scoreHtml;
+
+  document.getElementById('SA_StrategyModalTitle').textContent = `SA · ${graphLabel} — Strategies`;
+  document.getElementById('SA_StrategyModalSub').textContent = '1 strategy';
+  document.getElementById('SA_StrategyModalBody').innerHTML = cardHtml;
+  document.getElementById('SA_StrategyModal').dataset.graphIdx = graphIdx;
+  Popup_open('SA_StrategyModal');
+}
+
+function SA_CopyStrategy() {
+  if (!_SA_CurrentStrategy) return;
+  const output = APP_ApplyTemplate('Score Analysis', _SA_CurrentStrategy);
+  navigator.clipboard.writeText(JSON.stringify(output, null, 2))
+    .then(() => alert('Strategy copied'));
+}
+
+function SA_LikeStrategy() {
+  Popup_close('SA_StrategyModal');
+  Playground_Open();
+}
