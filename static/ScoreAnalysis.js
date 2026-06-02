@@ -525,45 +525,61 @@ function SA_ViewStrategies(graphIdx) {
   _SA_CurrentStrategy = s;
   const graphLabel = `Graph${String(graphIdx + 1).padStart(3, '0')}`;
 
-  // ── helpers ──
   const condVal = v => Number.isInteger(v) ? v : parseFloat(v.toFixed(2));
-  const label = t => `<div style="font-size:0.72rem;color:var(--dml-label);margin-bottom:2px;">${t}</div>`;
-  const val   = v => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);margin-bottom:8px;">${v}</div>`;
-  const sectionTitle = (t, color) =>
-    `<div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:${color};margin:16px 0 8px;">${t}</div>`;
+  const lbl = t => `<div style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--dml-label);margin-bottom:2px;margin-top:10px;">${t}</div>`;
+  const row = v => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);margin-bottom:2px;">${v}</div>`;
+  const dim = t => `<div style="font-size:0.8rem;color:var(--dml-label);font-style:italic;">${t}</div>`;
+  const badge = (t, bg, color) => `<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.72rem;font-weight:600;background:${bg};color:${color};margin-bottom:2px;">${t}</span>`;
   const condRows = arr => arr.length
-    ? arr.map(c => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);">${c.op} ${condVal(c.value)}</div>`).join('')
-    : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">—</div>`;
+    ? arr.map(c => row(`${c.op} ${condVal(c.value)}`)).join('')
+    : dim('—');
 
-  // ── Amount ──
-  const amtHtml =
-    sectionTitle('Amount', '#3b82f6') +
-    label('Metric') + val(s.AmountInformation.col || '—') +
-    label('Conditions') +
+  // Score column
+  const scoreCell =
+    lbl('Metric') + row(s.ScoreInformation.col || '—') +
+    lbl('Conditions') + condRows(s.ScoreInformation.conditions);
+
+  // Amount column
+  const amtCell =
+    lbl('Active') +
+    (s.AmountInformation.active
+      ? badge('Yes', 'rgba(59,130,246,0.12)', '#3b82f6')
+      : badge('No', 'var(--color-page-bg)', 'var(--dml-label)')) +
+    lbl('Metric') + row(s.AmountInformation.col || '—') +
+    lbl('Conditions') +
     (s.AmountInformation.active
       ? condRows(s.AmountInformation.conditions)
-      : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">Not active</div>`);
+      : dim('Not active'));
 
-  // ── Filters ──
+  // Filters column
   const filterLines = [
     ...s.ParamFilters.map(f => `${f.col}: ${f.values.join(', ')}`),
     ...s.BinFilters.map(f => `${f.col} ${f.op} ${f.value}`),
   ];
-  const filtersHtml =
-    sectionTitle('Filters', '#6366f1') +
-    (filterLines.length
-      ? filterLines.map(l => `<div style="font-size:0.82rem;font-weight:600;color:var(--dml-text);margin-bottom:4px;">${l}</div>`).join('')
-      : `<div style="font-size:0.82rem;color:var(--dml-label);font-style:italic;">none</div>`);
+  const filtersCell = filterLines.length
+    ? filterLines.map(l => row(l)).join('')
+    : dim('None');
 
-  // ── Score ──
-  const scoreHtml =
-    sectionTitle('Score', '#f59e0b') +
-    label('Filter Active') +
-    `<div style="margin-bottom:8px;"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.72rem;font-weight:600;background:rgba(121,24,156,0.1);color:var(--brand-sa);">Yes</span></div>` +
-    label('Metric') + val(s.ScoreInformation.col) +
-    label('Conditions') + condRows(s.ScoreInformation.conditions);
+  const thStyle = `padding:10px 14px;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--color-card-border);text-align:left;white-space:nowrap;`;
+  const tdStyle = `padding:10px 14px;vertical-align:top;border-right:1px solid var(--color-card-border);`;
 
-  const cardHtml = amtHtml + filtersHtml + scoreHtml;
+  const cardHtml = `
+    <table style="width:100%;border-collapse:collapse;table-layout:fixed;">
+      <thead>
+        <tr style="background:var(--color-page-bg);">
+          <th style="${thStyle}color:#f59e0b;">Score Information</th>
+          <th style="${thStyle}color:#3b82f6;">Amount Information</th>
+          <th style="${thStyle}color:#6366f1;border-right:none;">Filter Information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="${tdStyle}">${scoreCell}</td>
+          <td style="${tdStyle}">${amtCell}</td>
+          <td style="${tdStyle.replace('border-right:1px solid var(--color-card-border);','')}">${filtersCell}</td>
+        </tr>
+      </tbody>
+    </table>`;
 
   document.getElementById('SA_StrategyModalTitle').textContent = `SA · ${graphLabel} — Strategies`;
   document.getElementById('SA_StrategyModalSub').textContent = '1 strategy';
