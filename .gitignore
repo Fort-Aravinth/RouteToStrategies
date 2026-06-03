@@ -38,6 +38,9 @@ dev.html
 index_spike.html
 NAV_PATTERN.md
 
+# Proprietary calculation logic — never publish
+static/SC_Calc.js
+
 # Misc
 .DS_Store
 *.xlsx
