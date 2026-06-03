@@ -50,7 +50,7 @@ async function SA_Run() {
   const conn = window.LD_getConn ? window.LD_getConn() : null;
   if (!conn) { alert('No data loaded.'); return; }
 
-  _SA_ScoreCol = document.getElementById('SAScoreCol')?.value;
+  _SA_ScoreCol = SA_getCSValue('SAScoreColCS');
   if (!_SA_ScoreCol) { alert('Select a score column first.'); return; }
 
   _SA_Start = parseFloat(document.getElementById('SAStart')?.value);
@@ -75,9 +75,13 @@ async function SA_Run() {
     ).join('');
   });
 
-document.getElementById('SA_TopBarRow').style.display    = 'grid';
+  // Constrain SAMyScore to the selected score range
+  const myScoreEl = document.getElementById('SAMyScore');
+  if (myScoreEl) { myScoreEl.min = _SA_Start; myScoreEl.max = _SA_End; myScoreEl.value = ''; }
+
+  document.getElementById('SA_TopBarRow').style.display    = 'grid';
   document.getElementById('SA_ChapterPanel').style.display = '';
-SA_SwitchTab(0);
+  SA_SwitchTab(0);
   SAG001_rerun();
   SAG002_rerun();
   SAG003_rerun();
@@ -244,6 +248,16 @@ async function SAG002_rerun() {
   SAG002_renderSummary();
 }
 
+function SA_clampMyScore() {
+  const el = document.getElementById('SAMyScore');
+  if (!el || el.value === '') { SAG003_rerun(); return; }
+  let v = parseFloat(el.value);
+  if (v < _SA_Start) v = _SA_Start;
+  if (v > _SA_End)   v = _SA_End;
+  el.value = v;
+  SAG003_rerun();
+}
+
 async function SAG003_rerun() {
   const threshold = parseFloat(document.getElementById('SAMyScore')?.value) || 0;
   const extra     = threshold > 0 ? [`"${_SA_ScoreCol}" >= ${threshold}`] : [];
@@ -287,7 +301,7 @@ function SA_toggleCS(id) {
   const el = document.getElementById(id);
   if (!el) return;
   const isOpen = el.classList.contains('open');
-  document.querySelectorAll('#SAView .custom-select.open').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('#SAView .custom-select.open, #SA_MiniNav .custom-select.open').forEach(s => s.classList.remove('open'));
   if (!isOpen) {
     el.classList.add('open');
     setTimeout(() => {
@@ -321,8 +335,8 @@ function SA_getCSValue(id) {
 }
 
 document.addEventListener('click', e => {
-  if (!e.target.closest('#SAView .custom-select')) {
-    document.querySelectorAll('#SAView .custom-select.open').forEach(s => s.classList.remove('open'));
+  if (!e.target.closest('#SAView .custom-select') && !e.target.closest('#SA_MiniNav .custom-select')) {
+    document.querySelectorAll('#SAView .custom-select.open, #SA_MiniNav .custom-select.open').forEach(s => s.classList.remove('open'));
   }
 });
 
@@ -368,8 +382,13 @@ function SA_buildFilterChips(gIdx) {
   // Custom card colours cycle
   const customPalette = [C.peel, C.sky, C.lavender, C.fusia, C.indigo];
 
-  // Score chip (static info)
-  if (_SA_ScoreCol) parts.push(SA_chip('Score', `${_SA_Start} → ${_SA_End}`, C.purple));
+  // Score chip — for G003 use the threshold as the lower bound
+  if (_SA_ScoreCol) {
+    const scoreStart = gIdx === 2
+      ? (parseFloat(document.getElementById('SAMyScore')?.value) || _SA_Start)
+      : _SA_Start;
+    parts.push(SA_chip('Score', `${scoreStart} → ${_SA_End}`, C.purple));
+  }
 
   // Amount filter chip (clickable toggle)
   const amtCol = g('SAAmountCol');
@@ -446,12 +465,7 @@ function SAG002_renderSummary() {
 function SAG003_renderSummary() {
   const el = document.getElementById('SAG003_Summary');
   if (!el) return;
-  const g     = id => document.getElementById(id)?.value || '';
   const parts = SA_buildFilterChips(2);
-
-  const myScore = g('SAMyScore');
-  if (myScore) parts.push(SA_chip('Threshold', `≥ ${myScore}`, '#8571F4'));
-
   el.innerHTML = parts.join('') || '<span style="color:var(--color-text-dim);font-style:italic;">No active filters</span>';
 }
 
@@ -493,15 +507,16 @@ function SA_BuildStrategyJSON(graphIdx) {
     });
   }
 
-  // Param filters — read live nav state
+  // Param filters — only include if the per-graph toggle is active
   const paramFilters = [];
-  if (params.decisionMode?.col) {
+  if (params.decisionMode?.col && fState.params['dm']) {
     const vals = SA_getNavActiveVals('dm') ??
       [...(params.decisionMode.assigned?.successful || []), ...(params.decisionMode.assigned?.unsuccessful || [])];
     if (vals.length) paramFilters.push({ col: params.decisionMode.col, values: vals });
   }
   (params.customCards || []).forEach((card, i) => {
     if (!card.col) return;
+    if (!fState.params[`custom_${i}`]) return;
     const vals = SA_getNavActiveVals(`custom_${i}`) ??
       [...(card.assigned?.a || []), ...(card.assigned?.b || [])];
     if (vals.length) paramFilters.push({ col: card.col, values: vals });
@@ -540,24 +555,18 @@ function SA_ViewStrategies(graphIdx) {
     lbl('Conditions') + condRows(s.ScoreInformation.conditions);
 
   // Amount column
-  const amtCell =
-    lbl('Active') +
-    (s.AmountInformation.active
-      ? badge('Yes', 'rgba(59,130,246,0.12)', '#3b82f6')
-      : badge('No', 'var(--color-page-bg)', 'var(--dml-label)')) +
-    lbl('Metric') + row(s.AmountInformation.col || '—') +
-    lbl('Conditions') +
-    (s.AmountInformation.active
-      ? condRows(s.AmountInformation.conditions)
-      : dim('Not active'));
+  const amtCell = s.AmountInformation.active
+    ? lbl('Metric') + row(s.AmountInformation.col || '—') +
+      lbl('Conditions') + condRows(s.AmountInformation.conditions)
+    : dim('None');
 
-  // Filters column
-  const filterLines = [
-    ...s.ParamFilters.map(f => `${f.col}: ${f.values.join(', ')}`),
-    ...s.BinFilters.map(f => `${f.col} ${f.op} ${f.value}`),
+  // Additional Information column
+  const filterEntries = [
+    ...s.ParamFilters.map(f => ({ col: f.col, cond: f.values.join(', ') })),
+    ...s.BinFilters.map(f => ({ col: f.col, cond: `${f.op} ${f.value}` })),
   ];
-  const filtersCell = filterLines.length
-    ? filterLines.map(l => row(l)).join('')
+  const filtersCell = filterEntries.length
+    ? filterEntries.map(f => lbl('Metric') + row(f.col) + lbl('Conditions') + row(f.cond)).join('')
     : dim('None');
 
   const thStyle = `padding:10px 14px;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--color-card-border);text-align:left;white-space:nowrap;`;
@@ -569,7 +578,7 @@ function SA_ViewStrategies(graphIdx) {
         <tr style="background:var(--color-page-bg);">
           <th style="${thStyle}color:#f59e0b;">Score Information</th>
           <th style="${thStyle}color:#3b82f6;">Amount Information</th>
-          <th style="${thStyle}color:#6366f1;border-right:none;">Filter Information</th>
+          <th style="${thStyle}color:#6366f1;border-right:none;">Additional Information</th>
         </tr>
       </thead>
       <tbody>
@@ -581,8 +590,8 @@ function SA_ViewStrategies(graphIdx) {
       </tbody>
     </table>`;
 
-  document.getElementById('SA_StrategyModalTitle').textContent = `SA · ${graphLabel} — Strategies`;
-  document.getElementById('SA_StrategyModalSub').textContent = '1 strategy';
+  document.getElementById('SA_StrategyModalTitle').textContent = _SA_TabTitles[graphIdx];
+  document.getElementById('SA_StrategyModalSub').textContent = '';
   document.getElementById('SA_StrategyModalBody').innerHTML = cardHtml;
   document.getElementById('SA_StrategyModal').dataset.graphIdx = graphIdx;
   Popup_open('SA_StrategyModal');
@@ -591,11 +600,51 @@ function SA_ViewStrategies(graphIdx) {
 function SA_CopyStrategy() {
   if (!_SA_CurrentStrategy) return;
   const output = APP_ApplyTemplate('Score Analysis', _SA_CurrentStrategy);
-  navigator.clipboard.writeText(JSON.stringify(output, null, 2))
-    .then(() => alert('Strategy copied'));
+  APP_CopyText(JSON.stringify(output, null, 2));
+}
+
+function SA_LikeGraph(graphIdx) {
+  if (!_SA_Bins.length) { alert('Run analysis first.'); return; }
+  const s = SA_BuildStrategyJSON(graphIdx);
+  const additionalColumns = [
+    ...s.ParamFilters.map(f => ({ Column: f.col, Values: f.values })),
+    ...s.BinFilters.map(f  => ({ Column: f.col, Operator: f.op, Value: f.value })),
+  ];
+  APP_LikeIt('Score Analysis', {
+    amount: s.AmountInformation,
+    score:  s.ScoreInformation,
+    additionalColumns,
+  });
+}
+
+function SA_CopyGraph(graphIdx) {
+  if (!_SA_Bins.length) { alert('Run analysis first.'); return; }
+  const s = SA_BuildStrategyJSON(graphIdx);
+
+  const additionalColumns = [
+    ...s.ParamFilters.map(f => ({ Column: f.col, Values: f.values })),
+    ...s.BinFilters.map(f  => ({ Column: f.col, Operator: f.op, Value: f.value })),
+  ];
+
+  const output = APP_FormatStrategyPayload('Score Analysis', {
+    amount: s.AmountInformation,
+    score:  s.ScoreInformation,
+    additionalColumns,
+  });
+  APP_CopyText(JSON.stringify(output, null, 2));
 }
 
 function SA_LikeStrategy() {
+  if (!_SA_CurrentStrategy) return;
+  const s = _SA_CurrentStrategy;
+  const additionalColumns = [
+    ...s.ParamFilters.map(f => ({ Column: f.col, Values: f.values })),
+    ...s.BinFilters.map(f  => ({ Column: f.col, Operator: f.op, Value: f.value })),
+  ];
+  APP_LikeIt('Score Analysis', {
+    amount: s.AmountInformation,
+    score:  s.ScoreInformation,
+    additionalColumns,
+  });
   Popup_close('SA_StrategyModal');
-  Playground_Open();
 }

@@ -1,0 +1,174 @@
+/* ── Nav_RouteAnalysis — Route Analysis mini-nav ── */
+
+#ANRA_MiniNav {
+  --MN_brand:       var(--brand-ra);
+  --MN_brand_dim:   var(--brand-ra-dim);
+  --MN_brand_light: var(--brand-ra-light);
+  --MN_divider_col: var(--brand-ra);
+}
+.shell.anra-active #ANRA_MiniNav { display: flex; }
+
+/* ── Scoped MN_btn active — overrides Nav_ScoreAnalysis.css global rule ── */
+#ANRA_MiniNav .MN_btn.active { background: var(--brand-ra) !important; border-color: var(--brand-ra) !important; color: #fff !important; font-weight: 600; }
+
+/* ── RAView pg-* brand overrides ── */
+#RAView .anra-card::before           { background: var(--brand-ra); }
+
+/* Route buttons — standard playground base, brand-ra only on active */
+#RAView .anra-route-btn              { display:flex; flex-direction:column; align-items:flex-start; width:100%; height:auto !important; color: var(--color-header-title); }
+#RAView .anra-route-btn .pg-card-label { color: var(--color-text-muted); }
+#RAView .anra-route-btn:hover        { background: var(--brand-ra-dim) !important; border-color: var(--brand-ra) !important; color: var(--color-header-title) !important; }
+#RAView .anra-route-btn.active       { background: var(--brand-ra) !important; border-color: var(--brand-ra) !important; color: var(--color-header-title) !important; }
+#RAView .anra-route-btn.active .pg-card-label { color: var(--color-text-muted) !important; }
+#RAView .anra-route-btn:disabled,
+#RAView .anra-route-btn:disabled:hover { cursor: not-allowed; background: var(--color-page-bg) !important; border-color: var(--color-card-border) !important; color: var(--color-header-title) !important; }
+#RAView .anra-route-btn:disabled .pg-card-label { color: var(--color-text-muted) !important; opacity: 1; }
+
+/* ── Scroll indicators ── */
+#ANRA_ScrollerDown,
+#ANRA_ScrollerUp {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: color 0.15s;
+  z-index: 2;
+}
+#ANRA_ScrollerUp   { top: 0;    padding: 6px 0 6px;   background: linear-gradient(to top,    transparent, var(--color-card-bg) 55%); }
+#ANRA_ScrollerDown { bottom: 0; padding: 18px 0 10px; background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%); }
+#ANRA_ScrollerDown:hover,
+#ANRA_ScrollerUp:hover { color: var(--brand-ra); }
+#ANRA_ScrollerDown:hover .MN_ScrollBar,
+#ANRA_ScrollerUp:hover   .MN_ScrollBar { background: var(--brand-ra); opacity: 0.7; }
+
+/* ── Results grid ── */
+.anra-routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  padding: 0 24px 24px;
+}
+
+/* ── Route result card — uses pg-card shell + brand-ra top bar ── */
+#RAView .anra-card::before { background: var(--brand-ra); }
+
+/* ── Metrics 2-col grid ── */
+.anra-route-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 8px;
+  padding: 12px;
+  border-bottom: 0.5px solid var(--color-card-border);
+}
+.anra-route-metric { display: flex; flex-direction: column; gap: 3px; }
+.anra-route-metric-label {
+  font-size: 0.60rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+.anra-route-metric-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-ra);
+  line-height: 1;
+}
+
+/* ── Bar rows ── */
+.anra-route-bars {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.anra-route-bar-row {
+  display: grid;
+  grid-template-columns: 78px 1fr 46px;
+  align-items: center;
+  gap: 8px;
+}
+.anra-route-bar-label {
+  font-size: 0.60rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  line-height: 1.3;
+}
+.anra-route-bar-track {
+  height: 7px;
+  background: var(--color-card-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.anra-route-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+.anra-route-bar-fill-amber { background: var(--brand-ra); }
+.anra-route-bar-fill-blue  { background: #2563eb; }
+.anra-route-bar-pct {
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: var(--brand-ra);
+  text-align: right;
+}
+.anra-route-bar-divider {
+  height: 0.5px;
+  background: var(--color-card-border);
+  margin: 3px 0;
+}
+
+/* ── Summary grid — fixed 4-col max ── */
+.anra-summary-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* ── Card sub-label (top-right) ── */
+.anra-route-card-sub {
+  font-size: 0.58rem;
+  color: var(--color-text-dim);
+  text-align: right;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+/* ── Section label ── */
+.anra-section-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  padding: 0 16px 8px;
+}
+
+/* ── Action buttons row ── */
+.anra-route-card-actions {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 0.5px solid var(--color-card-border);
+}
+.anra-route-card-actions .pg-btn {
+  flex: 1;
+  font-size: 0.65rem !important;
+  padding: 0 6px !important;
+  white-space: nowrap;
+  border-color: var(--brand-ra-dim) !important;
+  background: var(--brand-ra-dim) !important;
+  color: var(--brand-ra) !important;
+}
+.anra-route-card-actions .pg-btn:hover {
+  background: var(--brand-ra) !important;
+  border-color: var(--brand-ra) !important;
+  color: #fff !important;
+}
+

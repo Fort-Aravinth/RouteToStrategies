@@ -1,0 +1,32 @@
+/* ── Import Rules to Strategies ── */
+
+#RMONView { padding: 16px 20px; gap: 14px; }
+
+/* Brand colour — matches Preview Data (--brand-dm) */
+#RMONView .pg-card::before      { background: var(--brand-dm); }
+#RMONView .pg-btn               { border-color: var(--brand-dm); background: var(--brand-dm); color: #fff; }
+#RMONView .pg-btn:hover         { background: var(--brand-dm); opacity: 0.85; border-color: var(--brand-dm); color: #fff; }
+#RMONView .pg-chip.active       { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#RMONView .pg-chip:hover        { border-color: var(--brand-dm); color: var(--brand-dm); background: var(--brand-dm-dim); }
+
+/* ── Chips row ── */
+#RMON_Chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 26px;
+  align-items: center;
+}
+
+/* ── Results table cell modifiers ── */
+#RMONView .rmon-th-r  { text-align: right; }
+#RMONView .rmon-num   { text-align: right; }
+#RMONView .rmon-label { text-align: left; color: var(--color-text-dim); }
+#RMONView .rmon-fp    { text-align: right; color: #d97706; }
+#RMONView .rmon-total td,
+#RMONView tr.rmon-total td {
+  font-weight: 700;
+  border-top: 2px solid rgba(0,0,0,0.09);
+  background: #F0EDE8;
+}
+

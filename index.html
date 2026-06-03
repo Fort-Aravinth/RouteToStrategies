@@ -18,8 +18,16 @@
 <link rel="stylesheet" href="static/css/pages/ColumnManagement.css?v=1">
 <link rel="stylesheet" href="static/css/pages/SetParameters.css?v=1">
 <link rel="stylesheet" href="static/css/pages/Overview.css?v=1">
+<link rel="stylesheet" href="static/css/pages/RMON.css?v=1">
 <link rel="stylesheet" href="static/css/Nav_ScoreAnalysis.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_ScoreComparison.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_RouteAnalysis.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_IndividualAnalysis.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_PolicyRules.css?v=1">
+<link rel="stylesheet" href="static/css/Nav_SpikeReport.css?v=1">
+<link rel="stylesheet" href="static/css/pages/SpikeReport.css?v=1">
 <link rel="stylesheet" href="static/css/pages/ScoreAnalysis.css?v=1">
+<link rel="stylesheet" href="static/css/pages/ScoreComparison.css?v=1">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script src="static/MainContent_Popup.js?v=1" defer></script>
 <script src="static/Sidebar.js?v=1" defer></script>
@@ -32,9 +40,19 @@
 <script src="static/ColumnManagement.js?v=1" defer></script>
 <script src="static/SetParameters.js?v=1" defer></script>
 <script src="static/Overview.js?v=1" defer></script>
+<script src="static/RMON.js?v=1" defer></script>
 <script src="static/Nav_ScoreAnalysis.js?v=1" defer></script>
+<script src="static/Nav_RouteAnalysis.js?v=1" defer></script>
+<script src="static/RouteAnalysis.js?v=1" defer></script>
+<script src="static/Nav_IndividualAnalysis.js?v=1" defer></script>
+<script src="static/Nav_PolicyRules.js?v=1" defer></script>
+<script src="static/Nav_SpikeReport.js?v=1" defer></script>
+<script src="static/SpikeReport.js?v=1" defer></script>
 <script src="static/SA_Calc.js?v=1" defer></script>
 <script src="static/ScoreAnalysis.js?v=1" defer></script>
+<script src="static/SC_Calc.js?v=1" defer></script>
+<script src="static/ScoreComparison.js?v=1" defer></script>
+<script src="static/Nav_ScoreComparison.js?v=1" defer></script>
 <style>
 .ld-locked { opacity: 0.35; pointer-events: none; user-select: none; }
 
@@ -238,14 +256,20 @@
           </svg>
           Score Analysis
         </div>
-        <div id="nav-route-analysis" class="sidebar-item sidebar-item-disabled">
+        <div id="nav-score-comparison" class="sidebar-item sidebar-item-disabled" onclick="SC_OpenPanel()">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 12 L5 7 L8 9 L11 4 L14 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 14 L5 10 L8 12 L11 7 L14 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1.5 1.5"/>
+          </svg>
+          Score Comparison
+        </div>
+        <div id="nav-route-analysis" class="sidebar-item" onclick="RA_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M2 8h2l2-4 3 8 2-4h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Route Analysis
-          <span class="sidebar-item-dev">In Dev</span>
         </div>
-        <div id="nav-individual-analysis" class="sidebar-item sidebar-item-disabled">
+        <div id="nav-individual-analysis" class="sidebar-item" onclick="IA_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <rect x="2" y="4" width="5" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/>
             <rect x="9" y="2" width="5" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/>
@@ -253,7 +277,7 @@
           Individual Analysis
           <span class="sidebar-item-dev">In Dev</span>
         </div>
-        <div id="nav-policy-rules" class="sidebar-item sidebar-item-disabled">
+        <div id="nav-policy-rules" class="sidebar-item" onclick="PR_Open()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M3 3h10v2H3zM3 7h7M3 10h7M3 13h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="12.5" cy="11.5" r="2" stroke="currentColor" stroke-width="1.3"/>
@@ -261,6 +285,22 @@
           </svg>
           Policy Rules
           <span class="sidebar-item-dev">In Dev</span>
+        </div>
+        <div id="nav-spike-report" class="sidebar-item ld-locked" data-nav-locked="1" onclick="SR_OpenPanel()">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <polyline points="2 12 5 9 7 11 10 5 13 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="13" cy="7" r="1.5" fill="#DC2626" stroke="none"/>
+          </svg>
+          Spike Report
+        </div>
+        <div id="nav-spike-merchant" class="sidebar-item ld-locked" data-nav-locked="1" onclick="SRM_OpenPanel()">
+          <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="9" width="3" height="5" rx="0.8" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="6.5" y="6" width="3" height="8" rx="0.8" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="11" y="3" width="3" height="11" rx="0.8" stroke="currentColor" stroke-width="1.3"/>
+            <circle cx="12.5" cy="2.5" r="1.2" fill="#DC2626" stroke="none"/>
+          </svg>
+          Spike Report by Merchant
         </div>
       </div>
     </div>
@@ -279,13 +319,12 @@
         <span class="sidebar-section-label">Rule Management</span>
       </div>
       <div class="sidebar-section-body open">
-        <div id="nav-rmon-import" class="sidebar-item sidebar-item-disabled">
+        <div id="nav-rmon-import" class="sidebar-item sidebar-item-disabled" onclick="RMON_OpenJsonImport()">
           <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none">
             <path d="M2 4h8M2 7h6M2 10h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             <path d="M11 9v5M9 12l2 2 2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Import Rules to Strategies
-          <span class="sidebar-item-dev">In Dev</span>
         </div>
       </div>
     </div>
@@ -354,9 +393,10 @@
       <div id="NAV_SA_ScoreBody" style="display:block;">
         <div class="MN_section_body">
           <div style="display:flex;gap:var(--MN_gap);align-items:center;">
-            <select id="SAScoreCol" onchange="NAV_SA_OnScoreColChange()" class="MN_ctrl" style="flex:1;">
-              <option value="">— Select column —</option>
-            </select>
+            <div id="SAScoreColCS" class="custom-select" data-value="" style="flex:1;min-width:0;">
+              <button type="button" class="cs-trigger" onclick="SA_toggleCS('SAScoreColCS')"><span class="cs-value" style="color:var(--dml-label)">— Select column —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+              <div class="cs-options"></div>
+            </div>
             <button class="MN_btn active" onclick="SA_Run()" style="white-space:nowrap;flex-shrink:0;">Run</button>
           </div>
           <div id="SAMinMax" style="display:none;font-size:0.6rem;color:var(--color-text-dim);margin-top:3px;">Min: <strong id="SAMin"></strong> / Max: <strong id="SAMax"></strong></div>
@@ -408,6 +448,289 @@
   </div>
   <!-- ═══ end Score Analysis Mini-Nav ═══ -->
 
+  <!-- ═══ SCORE COMPARISON MINI-NAV ═══ -->
+  <div id="SC_MiniNav" style="display:none;">
+
+    <!-- Navigation header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="NAV_SC_ParamsSection">
+      <div onclick="NAV_SC_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="NAV_SC_ParamsChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(0deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SC_ParamsBody" style="display:none;">
+        <div id="NAV_SC_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Score Columns -->
+    <div id="NAV_SC_ScoreSection">
+      <div onclick="NAV_SC_ToggleScore()" class="MN_section_hdr">
+        <span class="MN_title">Score Columns</span>
+        <svg id="NAV_SC_ScoreChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SC_ScoreBody" style="display:block;">
+        <div class="MN_section_body">
+          <!-- Score rows rendered by NAV_SC_RenderScoreRows() -->
+          <div id="SC_ScoreRows" style="display:flex;flex-direction:column;gap:4px;"></div>
+          <button class="SC_AddScoreBtn" onclick="NAV_SC_AddScore()" style="margin-top:6px;">+ Add Score</button>
+        </div>
+        <div class="MN_section_body" style="display:flex;gap:var(--MN_gap);">
+          <button id="SC_RunRawBtn"  class="MN_btn MN_run_btn active" onclick="SC_Run()"            style="flex:1;">Run</button>
+          <button id="SC_RunNormBtn" class="MN_btn MN_run_btn"        onclick="SC_RunNormalised()"  style="flex:1;">Normalised</button>
+        </div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Amount Filter -->
+    <div id="NAV_SC_AmtSection">
+      <div onclick="NAV_SC_ToggleAmt()" class="MN_section_hdr">
+        <span class="MN_title">Amount Filter</span>
+        <svg id="NAV_SC_AmtChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_SC_AmtBody" style="display:block;">
+        <div style="padding:0 12px 4px;">
+          <select id="SCAmountCol" class="MN_ctrl" onchange="NAV_SC_OnAmountColChange()" style="width:100%;">
+            <option value="">— Amount column —</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);padding:0 12px 4px;">
+          <select id="SCAmountOpStart" class="MN_ctrl" onchange="NAV_SC_AutoRun()" style="width:100%;" title="Start Op"><option value=">=">&gt;=</option><option value=">">&gt;</option><option value="==">=</option></select>
+          <div class="MN_spinner"><button onclick="SC_MN_step('SCAmountValStart',-1,'NAV_SC_AutoRun')">−</button><input type="number" id="SCAmountValStart" class="MN_ctrl" placeholder="Start" oninput="NAV_SC_AutoRun()"/><button onclick="SC_MN_step('SCAmountValStart',1,'NAV_SC_AutoRun')">+</button></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);padding:0 12px 8px;">
+          <select id="SCAmountOpEnd" class="MN_ctrl" onchange="NAV_SC_AutoRun()" style="width:100%;" title="End Op"><option value="<=">&lt;=</option><option value="<">&lt;</option><option value="==">=</option></select>
+          <div class="MN_spinner"><button onclick="SC_MN_step('SCAmountValEnd',-1,'NAV_SC_AutoRun')">−</button><input type="number" id="SCAmountValEnd" class="MN_ctrl" placeholder="End" oninput="NAV_SC_AutoRun()"/><button onclick="SC_MN_step('SCAmountValEnd',1,'NAV_SC_AutoRun')">+</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra param cards — injected by NAV_SC_RefreshExtraCards() -->
+    <div id="NAV_SC_ExtraCards"></div>
+
+  </div>
+  <!-- ═══ end Score Comparison Mini-Nav ═══ -->
+
+  <!-- ═══ ROUTE ANALYSIS MINI-NAV ═══ -->
+  <div id="ANRA_MiniNav">
+
+    <!-- Navigation header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+      <button id="ANRA_MiniNav_ExpandBtn" onclick="ANRA_MiniNav_ToggleAll()" title="Collapse all" class="MN_icon_btn">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+          <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="ANRA_MiniNav_ParamsSection">
+      <div onclick="ANRA_MiniNav_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="ANRA_MiniNav_ParamsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(0deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="ANRA_MiniNav_ParamsBody" style="display:none;">
+        <div id="ANRA_MiniNav_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Available Columns -->
+    <div id="ANRA_MiniNav_ColSection">
+      <div onclick="ANRA_MiniNav_ToggleCols()" class="MN_section_hdr">
+        <span class="MN_title">Available Columns</span>
+        <svg id="ANRA_MiniNav_ColChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="ANRA_MiniNav_ColBody" style="display:block;">
+        <div style="display:flex;gap:4px;padding:0 12px 6px;">
+          <button onclick="ANRA_MiniNav_SelectAllCols()" class="MN_btn" style="flex:1;">Select All</button>
+          <button onclick="ANRA_MiniNav_ClearCols()" class="MN_btn" style="flex:1;">Clear All</button>
+        </div>
+        <div id="ANRA_MiniNav_ColumnsList" style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;padding:0 12px 8px;"></div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Amount Filters -->
+    <div id="ANRA_MiniNav_AmtSection">
+      <div onclick="ANRA_MiniNav_ToggleAmt()" class="MN_section_hdr">
+        <span class="MN_title">Amount Filters</span>
+        <svg id="ANRA_MiniNav_AmtChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(0deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="ANRA_MiniNav_AmtBody" style="display:none;">
+
+        <!-- Saved templates -->
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Saved Templates</div>
+          <div id="ANRA_MiniNav_AmtTemplates" style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--MN_gap);min-height:12px;"></div>
+        </div>
+
+        <!-- Add filter -->
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Add Filter</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);">
+            <select id="ANRA_MiniNav_AmountOp" class="MN_ctrl">
+              <option value="equal">Equal to</option>
+              <option value="greater_than">Greater than</option>
+              <option value="less_than">Less than</option>
+            </select>
+            <input type="number" id="ANRA_MiniNav_AmountVal" placeholder="amount…" class="MN_ctrl" step="0.01"/>
+          </div>
+          <button onclick="ANRA_MiniNav_AddFilter()" class="MN_btn" style="width:100%;font-weight:600;">Add Amount Filter</button>
+        </div>
+
+        <!-- Active filters list -->
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div id="ANRA_MiniNav_AmountFiltersList" style="display:grid;gap:var(--MN_gap);max-height:160px;overflow-y:auto;"></div>
+        </div>
+
+        <!-- Save template -->
+        <div class="MN_divider" style="border-top-width:0.75px;"></div>
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Save Template</div>
+          <input type="text" id="ANRA_MiniNav_TemplateNameInput" placeholder="template name…" class="MN_ctrl"/>
+          <button onclick="ANRA_MiniNav_SaveTemplate()" class="MN_btn" style="width:100%;font-weight:600;">Save Template</button>
+        </div>
+
+        <!-- Reset -->
+        <div class="MN_divider" style="border-top-width:0.75px;"></div>
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <button onclick="ANRA_ResetAmountFilters()" class="MN_btn" style="width:100%;">Reset to Defaults</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Score Column -->
+    <div id="ANRA_MiniNav_ScoreSection">
+      <div onclick="ANRA_MiniNav_ToggleScore()" class="MN_section_hdr">
+        <span class="MN_title">Score Column</span>
+        <svg id="ANRA_MiniNav_ScoreChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(0deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="ANRA_MiniNav_ScoreBody" style="display:none;">
+
+        <!-- Column chips -->
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Available Columns</div>
+          <div id="ANRA_MiniNav_ScoreColumnsList" style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--MN_gap);"></div>
+        </div>
+
+        <!-- Threshold -->
+        <div class="MN_divider" style="border-top-width:0.75px;"></div>
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Threshold</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--MN_gap);">
+            <select id="ANRA_MiniNav_ScoreOp" class="MN_ctrl">
+              <option value="greater_than">&gt;</option>
+              <option value="greater_than_or_equal" selected>&gt;=</option>
+              <option value="less_than">&lt;</option>
+              <option value="less_than_or_equal">&lt;=</option>
+              <option value="equal">=</option>
+            </select>
+            <input type="number" id="ANRA_MiniNav_ScoreVal" placeholder="threshold…" class="MN_ctrl" step="0.01" value="30"/>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Volume False Positive -->
+    <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+      <div class="MN_label">Volume False Positive</div>
+      <input type="number" id="ANRA_MiniNav_VolumeFP" placeholder="10" class="MN_ctrl" value="10" step="0.01"/>
+    </div>
+    <div class="MN_divider"></div>
+
+  </div>
+  <!-- ═══ end Route Analysis Mini-Nav ═══ -->
+
+  <!-- ═══ INDIVIDUAL ANALYSIS MINI-NAV ═══ -->
+  <div id="IA_MiniNav">
+
+    <!-- Navigation header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+      <button id="IA_MiniNav_ExpandBtn" onclick="IA_MiniNav_ToggleAll()" title="Collapse all" class="MN_icon_btn">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+          <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="IA_MiniNav_ParamsSection">
+      <div onclick="IA_MiniNav_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="IA_MiniNav_ParamsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="IA_MiniNav_ParamsBody" style="display:block;">
+        <div id="IA_MiniNav_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+  </div>
+  <!-- ═══ end Individual Analysis Mini-Nav ═══ -->
+
+  <!-- ═══ POLICY RULES MINI-NAV ═══ -->
+  <div id="PR_MiniNav">
+
+    <!-- Navigation header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+      <button id="PR_MiniNav_ExpandBtn" onclick="PR_MiniNav_ToggleAll()" title="Collapse all" class="MN_icon_btn">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+          <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="PR_MiniNav_ParamsSection">
+      <div onclick="PR_MiniNav_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="PR_MiniNav_ParamsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="PR_MiniNav_ParamsBody" style="display:block;">
+        <div id="PR_MiniNav_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+  </div>
+  <!-- ═══ end Policy Rules Mini-Nav ═══ -->
+
   <!-- ═══ PLAYGROUND MINI-NAV ═══ -->
   <div id="PG_MiniNav" style="display:none; grid-column:2; grid-row:2; flex-direction:column; background:var(--color-card-bg); border-right:0.5px solid var(--color-card-border); box-shadow:1px 0 6px var(--color-card-shadow); overflow-y:auto; overflow-x:hidden; min-height:0; padding-bottom:32px; scrollbar-width:none;">
 
@@ -432,11 +755,11 @@
       </div>
       <div id="PG_MiniNav_InputsBody" style="display:block;">
         <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
-          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);">Input 1 Label</div>
+          <div class="MN_label">Input 1 Label</div>
           <input type="text" class="MN_ctrl" placeholder="Input 1"/>
-          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);margin-top:2px;">Button 1 Label</div>
+          <div class="MN_label" style="margin-top:2px;">Button 1 Label</div>
           <button class="MN_btn" style="width:100%;">Button 1</button>
-          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);margin-top:2px;">Popup Button Label</div>
+          <div class="MN_label" style="margin-top:2px;">Popup Button Label</div>
           <button class="MN_btn" style="width:100%;" onclick="PG_openModal()">Popup Button</button>
         </div>
       </div>
@@ -453,7 +776,7 @@
       </div>
       <div id="PG_MiniNav_DropdownBody" style="display:block;">
         <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
-          <div style="font-size:0.62rem;font-weight:600;color:var(--color-text-muted);">Dropdown 1 Label</div>
+          <div class="MN_label">Dropdown 1 Label</div>
           <select class="MN_ctrl">
             <option>Option One</option>
             <option>Option Two</option>
@@ -517,6 +840,151 @@
 
   </div>
   <!-- ═══ end Playground Mini-Nav ═══ -->
+
+  <!-- ═══ Spike Report Mini-Nav ═══ -->
+  <div id="SR_MiniNav" style="display:none;">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="SR_ParamsSection">
+      <div onclick="SR_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="SR_ParamsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(0deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="SR_ParamsBody" style="display:none;">
+        <div id="SR_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+
+
+    <!-- Analysis Window -->
+    <div id="SR_WindowSection">
+      <div onclick="SR_ToggleWindow()" class="MN_section_hdr">
+        <span class="MN_title">Analysis Window</span>
+        <svg id="SR_WindowChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="SR_WindowBody" style="display:block;">
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Period</div>
+          <div id="SR_WindowBtns" class="MN_tab_bar">
+            <button class="MN_btn active" onclick="SR_SetWindow('7',this)">7d</button>
+            <button class="MN_btn" onclick="SR_SetWindow('14',this)">14d</button>
+            <button class="MN_btn" onclick="SR_SetWindow('21',this)">21d</button>
+            <button class="MN_btn" onclick="SR_SetWindow('28',this)">28d</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="MN_btn" id="SR_WinPrev" onclick="SR_ShiftWindow(-1)" title="Older" style="width:28px;padding:0;flex-shrink:0;">
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"><polyline points="10 3 5 8 10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span id="SR_WinRange" style="flex:1;text-align:center;font-size:0.6rem;color:var(--color-text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</span>
+            <button class="MN_btn" id="SR_WinNext" onclick="SR_ShiftWindow(1)" title="Newer" style="width:28px;padding:0;flex-shrink:0;" disabled>
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"><polyline points="6 3 11 8 6 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="MN_label">Metric</div>
+          <div id="SR_MetricBtns" class="MN_tab_bar">
+            <button class="MN_btn active" onclick="SR_SetMetric('total',this)">Total</button>
+            <button class="MN_btn" onclick="SR_SetMetric('fraud',this)">Fraud</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra param cards (Decision Mode, custom cards) — injected by SR_RefreshExtraCards() -->
+    <div id="SR_ExtraCards"></div>
+
+  </div>
+  <!-- ═══ end Spike Report Mini-Nav ═══ -->
+
+  <!-- ═══ Spike Report by Merchant Mini-Nav ═══ -->
+  <div id="SRM_MiniNav" style="display:none;">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 12px 8px;">
+      <span class="MN_nav_title">Navigation</span>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Parameters -->
+    <div id="SRM_ParamsSection">
+      <div onclick="SRM_ToggleParams()" class="MN_section_hdr">
+        <span class="MN_title">Parameters</span>
+        <svg id="SRM_ParamsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(0deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="SRM_ParamsBody" style="display:none;">
+        <div id="SRM_ParamsDisplay" class="MN_hint">— Apply parameters to load —</div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Available Columns -->
+    <div id="SRM_ColsSection">
+      <div onclick="SRM_ToggleCols()" class="MN_section_hdr">
+        <span class="MN_title">Available Columns</span>
+        <svg id="SRM_ColsChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="SRM_ColsBody" style="display:block;">
+        <div style="display:flex;gap:4px;padding:0 12px 6px;">
+          <button onclick="SRM_SelectAllCols()" class="MN_btn" style="flex:1;">Select All</button>
+          <button onclick="SRM_ClearCols()" class="MN_btn" style="flex:1;">Clear</button>
+        </div>
+        <div id="SRM_ColsList" style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;padding:0 12px 8px;"></div>
+      </div>
+    </div>
+    <div class="MN_divider"></div>
+
+    <!-- Analysis Window -->
+    <div id="SRM_WindowSection">
+      <div onclick="SRM_ToggleWindow()" class="MN_section_hdr">
+        <span class="MN_title">Analysis Window</span>
+        <svg id="SRM_WindowChevron" class="MN_chevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transform:rotate(90deg);">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="SRM_WindowBody" style="display:block;">
+        <div class="MN_section_body" style="display:flex;flex-direction:column;gap:var(--MN_gap);">
+          <div class="MN_label">Period</div>
+          <div id="SRM_WindowBtns" class="MN_tab_bar">
+            <button class="MN_btn active" onclick="SRM_SetWindow('7',this)">7d</button>
+            <button class="MN_btn" onclick="SRM_SetWindow('14',this)">14d</button>
+            <button class="MN_btn" onclick="SRM_SetWindow('21',this)">21d</button>
+            <button class="MN_btn" onclick="SRM_SetWindow('28',this)">28d</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="MN_btn" id="SRM_WinPrev" onclick="SRM_ShiftWindow(-1)" title="Older" style="width:28px;padding:0;flex-shrink:0;">
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"><polyline points="10 3 5 8 10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span id="SRM_WinRange" style="flex:1;text-align:center;font-size:0.6rem;color:var(--color-text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</span>
+            <button class="MN_btn" id="SRM_WinNext" onclick="SRM_ShiftWindow(1)" title="Newer" style="width:28px;padding:0;flex-shrink:0;" disabled>
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"><polyline points="6 3 11 8 6 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="MN_label">Metric</div>
+          <div id="SRM_MetricBtns" class="MN_tab_bar">
+            <button class="MN_btn active" onclick="SRM_SetMetric('total',this)">Total</button>
+            <button class="MN_btn" onclick="SRM_SetMetric('fraud',this)">Fraud</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Extra param cards (Decision Mode, custom cards) — injected by SRM_RefreshExtraCards() -->
+    <div id="SRM_ExtraCards"></div>
+
+  </div>
+  <!-- ═══ end Spike Report by Merchant Mini-Nav ═══ -->
 
   <!-- ═══ MAIN ═══ -->
   <main class="main">
@@ -1442,8 +1910,126 @@
         </div>
       </div>
 
+      <!-- Weekday Pattern console -->
+      <div class="pg-layout-row" id="OV_WD_Section">
+        <div class="pg-card" style="flex:1;">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Weekday Pattern</span>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div id="OV_WD_TypeBtns" style="display:flex;gap:4px;">
+                <button class="pg-btn active" onclick="OV_WD_SetType('bar',this)">Bar</button>
+                <button class="pg-btn"        onclick="OV_WD_SetType('line',this)">Line</button>
+              </div>
+            </div>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" id="OV_WD_Body">
+            <div style="height:220px;position:relative;"><canvas id="OV_WD_Canvas"></canvas></div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- ══ end Overview ══ -->
+
+    <!-- ══ Import Rules to Strategies ══ -->
+    <!-- ══ Route Analysis View ══ -->
+    <div id="RAView" style="display:none;">
+
+      <!-- ── Route Selector Bar ── -->
+      <div id="ANRA_RouteBar" style="padding:24px 24px 0;position:sticky;top:0;z-index:10;background:var(--color-page-bg);">
+        <div class="pg-card anra-card">
+
+          <!-- Header -->
+          <div class="pg-card-header" style="align-items:center;">
+            <span class="pg-card-title" style="flex:1;">Select Routes</span>
+            <span id="ANRA_SelectedRoutesLabel" class="pg-card-label" style="color:var(--brand-ra);"></span>
+          </div>
+
+          <div class="pg-card-divider"></div>
+
+          <!-- Route buttons -->
+          <div id="ANRA_RouteBarBody" class="pg-card-body" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <button id="ANRA_RouteBtn_R5" onclick="ANRA_toggleRoute('R5')" class="pg-btn anra-route-btn" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;">
+              <div style="font-size:11px;font-weight:600;line-height:1.4;">FP filter only</div>
+              <div id="ANRA_R5Desc" class="pg-card-label" style="margin-top:2px;text-transform:none;letter-spacing:0;font-size:10.5px;line-height:1.5;">No score · No exclusion</div>
+            </button>
+            <button id="ANRA_RouteBtn_R6" onclick="ANRA_toggleRoute('R6')" class="pg-btn anra-route-btn" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;">
+              <div style="font-size:11px;font-weight:600;line-height:1.4;">FP filter only</div>
+              <div id="ANRA_R6Desc" class="pg-card-label" style="margin-top:2px;text-transform:none;letter-spacing:0;font-size:10.5px;line-height:1.5;">No score · Excludes seen merchants</div>
+            </button>
+            <button id="ANRA_RouteBtn_R7" onclick="ANRA_toggleRoute('R7')" class="pg-btn anra-route-btn" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;">
+              <div style="font-size:11px;font-weight:600;line-height:1.4;">FP + score filter</div>
+              <div id="ANRA_R7Desc" class="pg-card-label" style="margin-top:2px;text-transform:none;letter-spacing:0;font-size:10.5px;line-height:1.5;">No exclusion</div>
+            </button>
+            <button id="ANRA_RouteBtn_R8" onclick="ANRA_toggleRoute('R8')" class="pg-btn anra-route-btn" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;">
+              <div style="font-size:11px;font-weight:600;line-height:1.4;">FP + score filter</div>
+              <div id="ANRA_R8Desc" class="pg-card-label" style="margin-top:2px;text-transform:none;letter-spacing:0;font-size:10.5px;line-height:1.5;">Excludes seen merchants</div>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Results area — populated by ANRA_RunAnalysis() -->
+      <div id="ANRA_ResultsArea" style="padding-top:16px;"></div>
+
+    </div>
+    <div id="IAView" style="display:none;"></div>
+    <div id="PRView" style="display:none;"></div>
+
+    <div class="pg-layout" id="RMONView" style="display:none;">
+
+      <!-- Row: Chips + Console -->
+      <div class="pg-layout-row">
+        <div class="pg-card" style="flex:1;">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Added Strategies from Analysis</span>
+            <span class="pg-card-badge">Clickable Chips</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div id="RMON_Chips"></div>
+          </div>
+        </div>
+        <div class="pg-card" style="flex:0 0 auto;">
+          <div class="pg-card-header">
+            <span class="pg-card-title">Console</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body" style="flex-direction:row;gap:8px;align-items:flex-start;">
+            <button id="RMON_RunBtn" onclick="RMON_RunMatch()" class="pg-btn">▶ Run Match</button>
+            <button onclick="RMON_DownloadJson()" class="pg-btn">⬇ Download JSON</button>
+            <button onclick="RMON_ClearAll()" class="pg-btn">Clear All</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison table -->
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Strategies</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div id="RMON_TableWrap"></div>
+        </div>
+      </div>
+
+      <!-- Results table (populated after Run Match) -->
+      <div class="pg-card" id="RMON_ResultsCard" style="display:none;">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Results</span>
+          <span class="pg-card-badge">All · Waterfall</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div id="RMON_ResultsWrap"></div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ══ end Import Rules to Strategies ══ -->
 
     <!-- ══ Score Analysis View ══ -->
     <div class="pg-layout" id="SAView" style="display:none;">
@@ -1593,7 +2179,7 @@
               <!-- Tab 2 content: score threshold -->
               <div id="SA_FiltersThreshold" style="display:none; flex-direction:column; gap:6px;">
                 <div class="pg-card-label">Enter your score to see how you compare</div>
-                <div class="MN_spinner"><button onclick="MN_step('SAMyScore',-1,'SAG003_rerun')">−</button><input type="number" id="SAMyScore" class="MN_ctrl" placeholder="e.g. 75" oninput="SAG003_rerun()"/><button onclick="MN_step('SAMyScore',1,'SAG003_rerun')">+</button></div>
+                <div class="MN_spinner"><button onclick="MN_step('SAMyScore',-1,'SAG003_rerun')">−</button><input type="number" id="SAMyScore" class="MN_ctrl" placeholder="e.g. 75" oninput="SA_clampMyScore()"/><button onclick="MN_step('SAMyScore',1,'SAG003_rerun')">+</button></div>
               </div>
 
             </div>
@@ -1619,7 +2205,11 @@
             <div class="SA_ChartWrap"><canvas id="SAG001_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG001_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
             <div id="SAG001_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
-            <button onclick="SA_ViewStrategies(0)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SA_ViewStrategies(0)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SA_CopyGraph(0)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SA_LikeGraph(0)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
           </div>
 
           <!-- Tab 1 — G002: Filtered view -->
@@ -1627,7 +2217,11 @@
             <div class="SA_ChartWrap"><canvas id="SAG002_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG002_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
             <div id="SAG002_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
-            <button onclick="SA_ViewStrategies(1)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SA_ViewStrategies(1)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SA_CopyGraph(1)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SA_LikeGraph(1)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
           </div>
 
           <!-- Tab 2 — G003: Above my score -->
@@ -1635,7 +2229,11 @@
             <div class="SA_ChartWrap"><canvas id="SAG003_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
             <div id="SAG003_Totals" style="display:none; margin-top:6px; padding:5px 10px; background:var(--color-page-bg); border-radius:5px; border:1px solid var(--color-card-border); gap:18px; font-size:0.7rem;"></div>
             <div id="SAG003_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
-            <button onclick="SA_ViewStrategies(2)" class="pg-btn" style="margin-top:10px;">View Strategies</button>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SA_ViewStrategies(2)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SA_CopyGraph(2)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SA_LikeGraph(2)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
           </div>
 
         </div><!-- /SA_ChapterPanel -->
@@ -1648,6 +2246,222 @@
       </div>
     </div>
     <!-- ══ end Score Analysis ══ -->
+
+    <!-- ══ Score Comparison View ══ -->
+    <div class="pg-layout" id="SCView" style="display:none;">
+      <div style="display:grid; grid-template-columns:1fr; gap:14px; padding:14px;">
+
+        <!-- Top bar: Chart Style + Analysis Config -->
+        <div id="SC_TopBarRow" style="display:none; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+          <div id="SC_StyleToolbar" class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Chart Style</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:10px;">
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Style</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SC_StyleBtn_bar"     class="SC_StyleChip active" onclick="SC_SetSharedStyle('bar')">Bar</button>
+                  <button id="SC_StyleBtn_line"    class="SC_StyleChip"        onclick="SC_SetSharedStyle('line')">Line</button>
+                  <button id="SC_StyleBtn_area"    class="SC_StyleChip"        onclick="SC_SetSharedStyle('area')">Area</button>
+                  <button id="SC_StyleBtn_scatter" class="SC_StyleChip"        onclick="SC_SetSharedStyle('scatter')">Scatter</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Run by</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SC_RunByBtn_total" class="SC_StyleChip active" onclick="SC_SetRunBy('total')">Total</button>
+                  <button id="SC_RunByBtn_fraud" class="SC_StyleChip active" onclick="SC_SetRunBy('fraud')">Fraud</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="SC_RunByBar" class="pg-card">
+            <div class="pg-card-header"><span class="pg-card-title">Analysis Config</span></div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Criteria</div>
+                <div style="display:flex; gap:6px;">
+                  <button id="SCCritVolume" onclick="SC_setCriteria('Volume')" class="SC_StyleChip active">Volume</button>
+                  <button id="SCCritValue"  onclick="SC_setCriteria('Value')"  class="SC_StyleChip">Value</button>
+                </div>
+              </div>
+              <div>
+                <div class="pg-card-label" style="margin-bottom:6px;">Calculate</div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                  <button id="SCCalcCount"         onclick="SC_setCalc('Count')"         class="SC_StyleChip active" style="flex:1 1 calc(33.33% - 4px);">Count</button>
+                  <button id="SCCalcFraudRate"     onclick="SC_setCalc('FraudRate')"     class="SC_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Fraud Rate</button>
+                  <button id="SCCalcCumulative"    onclick="SC_setCalc('Cumulative')"    class="SC_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Cumulative</button>
+                  <button id="SCCalcDistribution"  onclick="SC_setCalc('Distribution')"  class="SC_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">Distribution</button>
+                  <button id="SCCalcFalsePositive" onclick="SC_setCalc('FalsePositive')" class="SC_StyleChip"        style="flex:1 1 calc(33.33% - 4px);">False Positive</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="SC_FiltersCard" class="pg-card" style="opacity:0.4; pointer-events:none;">
+            <div class="pg-card-header">
+              <span class="pg-card-title" id="SC_FiltersCardTitle">Filters</span>
+            </div>
+            <div class="pg-card-divider"></div>
+            <div class="pg-card-body" style="display:flex; flex-direction:column; gap:12px;">
+
+              <!-- Bin-level filters -->
+              <div id="SC_FiltersMain" style="display:flex; flex-direction:column; gap:12px;">
+                <div id="SCG002_FilterRow0" style="display:flex; flex-direction:column; gap:6px;">
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SCG002_FilterColCS0" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterColCS0')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SCG002_FilterOpCS0" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterOpCS0')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SC_selectCS(this,'>','SCG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'>=','SCG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<','SCG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<=','SCG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'=','SCG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SCG002_FilterVal0" class="MN_ctrl" placeholder="0" oninput="SCG002_rerun()"/></div>
+                </div>
+                <div id="SCG002_FilterRow1" style="display:none; flex-direction:column; gap:6px;">
+                  <div style="display:flex; gap:6px;">
+                    <button id="SCG002_FilterConn0And" onclick="SC_setFilterConn(0,'AND')" class="SC_StyleChip active" style="flex:1;">AND</button>
+                    <button id="SCG002_FilterConn0Or"  onclick="SC_setFilterConn(0,'OR')"  class="SC_StyleChip"        style="flex:1;">OR</button>
+                    <button onclick="SC_removeFilter(1)" class="SC_ButtonOutline">×</button>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SCG002_FilterColCS1" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterColCS1')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SCG002_FilterOpCS1" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterOpCS1')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SC_selectCS(this,'>','SCG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'>=','SCG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<','SCG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<=','SCG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'=','SCG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SCG002_FilterVal1" class="MN_ctrl" placeholder="0" oninput="SCG002_rerun()"/></div>
+                </div>
+                <div id="SCG002_FilterRow2" style="display:none; flex-direction:column; gap:6px;">
+                  <div style="display:flex; gap:6px;">
+                    <button id="SCG002_FilterConn1And" onclick="SC_setFilterConn(1,'AND')" class="SC_StyleChip active" style="flex:1;">AND</button>
+                    <button id="SCG002_FilterConn1Or"  onclick="SC_setFilterConn(1,'OR')"  class="SC_StyleChip"        style="flex:1;">OR</button>
+                    <button onclick="SC_removeFilter(2)" class="SC_ButtonOutline">×</button>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Metric</div>
+                    <div id="SCG002_FilterColCS2" class="custom-select" data-value="">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterColCS2')"><span class="cs-value" style="color:var(--dml-label)">— select —</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pg-card-label" style="margin-bottom:4px;">Op</div>
+                    <div id="SCG002_FilterOpCS2" class="custom-select" data-value=">">
+                      <button type="button" class="cs-trigger" onclick="SC_toggleCS('SCG002_FilterOpCS2')"><span class="cs-value">&gt;</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+                      <div class="cs-options">
+                        <div class="cs-option cs-selected" onclick="SC_selectCS(this,'>','SCG002_rerun')">&gt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'>=','SCG002_rerun')">&gt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<','SCG002_rerun')">&lt;</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'<=','SCG002_rerun')">&lt;=</div>
+                        <div class="cs-option" onclick="SC_selectCS(this,'=','SCG002_rerun')">=</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div><div class="pg-card-label" style="margin-bottom:4px;">Value</div><input type="number" id="SCG002_FilterVal2" class="MN_ctrl" placeholder="0" oninput="SCG002_rerun()"/></div>
+                </div>
+                <button onclick="SC_addFilter()" class="pg-btn">+ Add Filter</button>
+              </div>
+
+              <!-- Score threshold (G003) -->
+              <div id="SC_FiltersThreshold" style="display:none; flex-direction:column; gap:6px;">
+                <div class="pg-card-label">Shared threshold across all scores</div>
+                <div class="MN_spinner"><button onclick="SC_MN_step('SCMyScore',-1,'SCG003_rerun')">−</button><input type="number" id="SCMyScore" class="MN_ctrl" placeholder="e.g. 75" oninput="SC_clampMyScore()"/><button onclick="SC_MN_step('SCMyScore',1,'SCG003_rerun')">+</button></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- /SC_TopBarRow -->
+
+        <!-- Chapter panel — 3 tabs -->
+        <div id="SC_ChapterPanel" class="pg-card" style="display:none;">
+
+          <div class="pg-card-header" style="display:flex; align-items:center; justify-content:space-between;">
+            <span id="SC_ChapterTitle" class="pg-card-title">Score Comparison</span>
+            <div style="display:flex; gap:4px;">
+              <button id="SC_Tab0" onclick="SC_SwitchTab(0)" class="SC_TabPill SC_TabPill--active">Score Comparison</button>
+              <button id="SC_Tab1" onclick="SC_SwitchTab(1)" class="SC_TabPill">Score trend with filters</button>
+              <button id="SC_Tab2" onclick="SC_SwitchTab(2)" class="SC_TabPill">Above threshold</button>
+            </div>
+          </div>
+          <div class="pg-card-divider"></div>
+
+          <!-- Tab 0 — G001: Base comparison -->
+          <div id="SCG001_Container" style="padding:16px 20px;">
+            <div id="SC_Legend_g001" class="SC_Legend"></div>
+            <div class="SC_ChartWrap"><canvas id="SCG001_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SCG001_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SC_ViewStrategies(0)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SC_CopyGraph(0)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SC_LikeGraph(0)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
+          </div>
+
+          <!-- Tab 1 — G002: Filtered view -->
+          <div id="SCG002_Container" style="display:none; padding:16px 20px;">
+            <div id="SC_Legend_g002" class="SC_Legend"></div>
+            <div class="SC_ChartWrap"><canvas id="SCG002_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SCG002_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SC_ViewStrategies(1)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SC_CopyGraph(1)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SC_LikeGraph(1)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
+          </div>
+
+          <!-- Tab 2 — G003: Above threshold -->
+          <div id="SCG003_Container" style="display:none; padding:16px 20px;">
+            <div id="SC_Legend_g003" class="SC_Legend"></div>
+            <div class="SC_ChartWrap"><canvas id="SCG003_Canvas" style="position:absolute;top:0;left:0;"></canvas></div>
+            <div id="SCG003_Summary" style="margin-top:10px; font-size:0.72rem; display:flex; flex-wrap:wrap; gap:8px; min-height:32px; align-items:center; padding:4px 0;"></div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button onclick="SC_ViewStrategies(2)" class="pg-btn" style="flex:1;">View Strategies</button>
+              <button onclick="SC_CopyGraph(2)" class="pg-btn" style="flex:1;">⎘ Copy</button>
+              <button onclick="SC_LikeGraph(2)" class="pg-btn" style="flex:1;">👍 Like it</button>
+            </div>
+          </div>
+
+        </div><!-- /SC_ChapterPanel -->
+
+      </div>
+    </div>
+    <!-- ══ end Score Comparison ══ -->
+
+    <div id="SRView" class="pg-layout" style="display:none;"></div>
+
+    <!-- ══ Spike Report by Merchant ══ -->
+    <div id="SRMView" class="pg-layout" style="display:none;"></div>
 
   </main>
 </div>
@@ -1874,12 +2688,25 @@
         <div id="SA_StrategyModalTitle" class="popup-title"></div>
         <div id="SA_StrategyModalSub" style="font-size:0.7rem;color:var(--dml-label);margin-top:2px;"></div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="SA_CopyStrategy()" style="height:28px;padding:0 12px;border-radius:5px;border:1px solid var(--dml-border);background:var(--dml-surface);font-size:0.68rem;font-weight:600;color:var(--dml-text);cursor:pointer;">⎘ Copy All</button>
-        <button class="popup-close" onclick="Popup_close('SA_StrategyModal')">✕</button>
-      </div>
+      <button class="popup-close" onclick="Popup_close('SA_StrategyModal')">✕</button>
     </div>
     <div id="SA_StrategyModalBody" class="popup-body"></div>
+    <div class="popup-footer">
+      <button onclick="SA_LikeStrategy()" style="height:30px;padding:0 16px;border-radius:5px;border:1px solid var(--amber-400,#f59e0b);background:var(--color-page-bg);font-size:0.7rem;font-weight:600;color:var(--amber-400,#f59e0b);cursor:pointer;">👍 Like it</button>
+    </div>
+  </div>
+</div>
+
+<div id="ANRA_StrategyModal" class="popup-overlay" onclick="if(event.target===this)Popup_close('ANRA_StrategyModal')">
+  <div class="popup-card" style="width:auto;min-width:480px;max-width:90vw;max-height:80vh;display:flex;flex-direction:column;">
+    <div class="popup-header">
+      <div>
+        <div id="ANRA_StrategyModalTitle" class="popup-title"></div>
+        <div id="ANRA_StrategyModalSub" style="font-size:0.7rem;color:var(--dml-label);margin-top:2px;"></div>
+      </div>
+      <button class="popup-close" onclick="Popup_close('ANRA_StrategyModal')">✕</button>
+    </div>
+    <div id="ANRA_StrategyModalBody" class="popup-body" style="overflow-y:auto;"></div>
   </div>
 </div>
 

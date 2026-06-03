@@ -60,6 +60,21 @@
   --brand-sa-light: #9B88E8;
   --brand-sa-dim:   rgba(123,104,200,0.12);
 
+  /* Brand — Individual Analysis */
+  --brand-ia:       #1B4A42;
+  --brand-ia-light: #1A9474;
+  --brand-ia-dim:   rgba(27,74,66,0.12);
+
+  /* Brand — Policy Rules */
+  --brand-pr:       #2D1F80;
+  --brand-pr-light: #6254C8;
+  --brand-pr-dim:   rgba(45,31,128,0.12);
+
+  /* Brand — Route Analysis */
+  --brand-ra:       #3DAB8E;
+  --brand-ra-light: #5EC4A7;
+  --brand-ra-dim:   rgba(61,171,142,0.12);
+
   /* Aliases */
   --brand-pt:   var(--brand-param);
   --amber-500:  var(--brand-sn);

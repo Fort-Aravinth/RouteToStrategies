@@ -1,5 +1,38 @@
 // ── Playground ───────────────────────────────────────────────────────────────
 
+// ── Nav scroll indicators ─────────────────────────────────────────────────────
+(function () {
+  function _inject() {
+    const nav = document.getElementById('PG_MiniNav');
+    if (!nav || document.getElementById('PG_ScrollerDown')) return;
+    nav.insertAdjacentHTML('afterbegin', `
+      <div id="PG_ScrollerUp" onclick="PG_ScrollUp()" title="Scroll up">
+        <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
+          <polyline points="1 7 8 1 15 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="MN_ScrollBar"></div>
+      </div>`);
+    nav.insertAdjacentHTML('beforeend', `
+      <div id="PG_ScrollerDown" onclick="PG_ScrollDown()" title="Scroll down">
+        <div class="MN_ScrollBar"></div>
+        <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
+          <polyline points="1 1 8 7 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>`);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _inject);
+  else _inject();
+})();
+
+function PG_ScrollDown() {
+  const nav = document.getElementById('PG_MiniNav');
+  if (nav) nav.scrollBy({ top: 150, behavior: 'smooth' });
+}
+function PG_ScrollUp() {
+  const nav = document.getElementById('PG_MiniNav');
+  if (nav) nav.scrollBy({ top: -150, behavior: 'smooth' });
+}
+
 function Playground_Open() {
   document.documentElement.style.setProperty('--toast-brand', 'var(--brand-sn)');
   App_HideAllViews();

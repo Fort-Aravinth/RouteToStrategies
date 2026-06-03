@@ -1,0 +1,71 @@
+/* ── Spike Report — view styles ── */
+
+/* ── Brand overrides for pg-* components — gold (matches nav + Playground) ── */
+#SRView {
+  --gold:          var(--brand-sn);
+  --gold-light:    var(--brand-sn-light);
+  --gold-dim:      var(--brand-sn-dim);
+  --amber-400:     var(--brand-sn-light);
+  --amber-500:     var(--brand-sn);
+  --amber-600:     #D4920A;
+  --color-primary: var(--brand-sn);
+}
+
+#SRView .pg-card::before   { background: var(--brand-sn); }
+#SRView .pg-btn            { border-color: rgba(240,165,0,0.2); background: rgba(240,165,0,0.06); color: var(--brand-sn); }
+#SRView .pg-btn:hover,
+#SRView .pg-btn.active     { background: var(--brand-sn); border-color: var(--brand-sn); color: var(--color-header-title); }
+
+/* ── Chart wrap ── */
+.SR_chart_wrap {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  flex-shrink: 0;
+}
+.SR_chart_wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width:  100% !important;
+  height: 100% !important;
+}
+
+/* ── Stat value ── */
+.SR_stat {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-header-title);
+  letter-spacing: -0.02em;
+}
+.SR_stat--spike { color: #DC2626; }
+
+/* ── Table ── */
+.SR_row--spike td { background: rgba(220,38,38,0.04); }
+.SR_row--spike td:first-child { border-left: 2px solid #DC2626; }
+
+.SR_delta--up { color: #DC2626; font-weight: 600; }
+.SR_delta--dn { color: #16a34a; font-weight: 600; }
+
+.SR_spike_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #DC2626;
+  background: rgba(220,38,38,0.08);
+  border: 1px solid rgba(220,38,38,0.25);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+/* ── Empty state ── */
+.SR_empty {
+  padding: 48px 32px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.SR_empty strong { color: #DC2626; }

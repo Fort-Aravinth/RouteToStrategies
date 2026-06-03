@@ -1,0 +1,47 @@
+/* ── Nav_SpikeReport — Spike Report mini-nav ── */
+/* Brand tokens now live in Nav.css — no override needed here */
+
+.shell.sr-active #SR_MiniNav { display: flex; }
+
+/* ── Button active — gold brand, dark text (matches Playground) ── */
+/* Scoped overrides needed: Nav_ScoreAnalysis.css has a global html .MN_btn.active rule
+   using var(--gold) which is undefined, making backgrounds transparent. */
+#SR_MiniNav .MN_btn.active,
+#SRM_MiniNav .MN_btn.active {
+  background:   var(--MN_brand) !important;
+  border-color: var(--MN_brand) !important;
+  color: var(--color-header-title) !important;
+}
+
+/* ── Tab bar inside flex-gap parent — remove double-spacing ── */
+#SR_MiniNav .MN_section_body .MN_tab_bar { margin-bottom: 0; }
+
+/* ── Chip brand override ── */
+#SR_MiniNav .MN_chip--a.active,
+#SR_MiniNav .MN_chip--b.active {
+  background: var(--MN_brand_dim) !important;
+  color: var(--MN_brand) !important;
+  border-color: var(--MN_brand) !important;
+}
+
+/* ── Scroll indicators ── */
+#SR_ScrollerDown,  #SR_ScrollerUp,
+#SRM_ScrollerDown, #SRM_ScrollerUp {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: color 0.15s;
+  z-index: 2;
+}
+#SR_ScrollerUp,  #SRM_ScrollerUp   { top: 0;    padding: 6px 0 6px;   background: linear-gradient(to top,    transparent, var(--color-card-bg) 55%); }
+#SR_ScrollerDown,#SRM_ScrollerDown { bottom: 0; padding: 18px 0 10px; background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%); }
+#SR_ScrollerDown:hover,  #SR_ScrollerUp:hover,
+#SRM_ScrollerDown:hover, #SRM_ScrollerUp:hover { color: var(--MN_brand); }
+#SR_ScrollerDown:hover .MN_ScrollBar,  #SR_ScrollerUp:hover .MN_ScrollBar,
+#SRM_ScrollerDown:hover .MN_ScrollBar, #SRM_ScrollerUp:hover .MN_ScrollBar { background: var(--MN_brand); opacity: 0.7; }

@@ -1,0 +1,31 @@
+/* ── Nav_PolicyRules ── */
+
+#PR_MiniNav {
+  --MN_brand:       var(--brand-pr-light);
+  --MN_brand_dim:   var(--brand-pr-dim);
+  --MN_brand_light: var(--brand-pr-light);
+  --MN_divider_col: var(--brand-pr-light);
+}
+.shell.pr-active #PR_MiniNav { display: flex; }
+
+/* ── Scroll indicators ── */
+#PR_ScrollerDown,
+#PR_ScrollerUp {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: color 0.15s;
+  z-index: 2;
+}
+#PR_ScrollerUp   { top: 0;    padding: 6px 0 6px;   background: linear-gradient(to top,    transparent, var(--color-card-bg) 55%); }
+#PR_ScrollerDown { bottom: 0; padding: 18px 0 10px; background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%); }
+#PR_ScrollerDown:hover,
+#PR_ScrollerUp:hover { color: var(--brand-pr-light); }
+#PR_ScrollerDown:hover .MN_ScrollBar,
+#PR_ScrollerUp:hover   .MN_ScrollBar { background: var(--brand-pr-light); opacity: 0.7; }

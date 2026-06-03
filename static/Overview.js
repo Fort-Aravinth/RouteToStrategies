@@ -16,11 +16,16 @@ function OV_showToast(message, type = 'success') {
 }
 
 function OV_OpenPanel() {
-  if (typeof App_HideAllViews === 'function') App_HideAllViews();
-  if (typeof Sidebar_SetActive === 'function') Sidebar_SetActive('nav-overview');
-  const main = document.querySelector('main.main');
-  if (main) { main.style.display = 'flex'; main.style.visibility = 'visible'; main.scrollTop = 0; }
-  document.getElementById('OVView').style.removeProperty('display');
+  App_HideAllViews();
+  Sidebar_SetActive('nav-overview');
+  document.getElementById('OVView').style.setProperty('display', 'flex', 'important');
+
+  // Unlock analysis nav items
+  ['nav-rmon-import', 'nav-score-analysis', 'nav-score-comparison', 'nav-route-analysis'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('ld-locked', 'sidebar-item-disabled');
+  });
+
   OV_RunAnalysis();
 }
 

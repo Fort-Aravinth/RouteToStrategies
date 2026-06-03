@@ -35,6 +35,8 @@ new_version_v4.html
 # Local dev only
 static/DevStub.js
 dev.html
+index_spike.html
+NAV_PATTERN.md
 
 # Misc
 .DS_Store

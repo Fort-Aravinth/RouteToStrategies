@@ -16,13 +16,12 @@ async function NAV_SA_PopulateColumns() {
   const numTypes = ['INTEGER','BIGINT','DOUBLE','FLOAT','DECIMAL','REAL','HUGEINT','UBIGINT','UINTEGER','SMALLINT','TINYINT'];
   const numCols  = cols.filter(c => numTypes.some(t => c.type.startsWith(t))).map(c => c.name);
 
-  NAV_SA_FillSelect('SAScoreCol',  numCols, '— Select column —');
+  NAV_SA_FillScoreCS(numCols);
   NAV_SA_FillSelect('SAAmountCol', numCols, '— Amount column —');
 
-  const scoreEl = document.getElementById('SAScoreCol');
-  if (!scoreEl.value) {
+  if (!SA_getCSValue('SAScoreColCS')) {
     const guess = numCols.find(c => /score/i.test(c));
-    if (guess) scoreEl.value = guess;
+    if (guess) NAV_SA_SetScoreCS(guess);
   }
 
   const params = window.SP_getParams ? window.SP_getParams() : {};
@@ -48,8 +47,27 @@ function NAV_SA_FillSelect(id, options, placeholder) {
     options.map(o => `<option value="${o}"${o === cur ? ' selected' : ''}>${o}</option>`).join('');
 }
 
+function NAV_SA_FillScoreCS(options) {
+  const cs = document.getElementById('SAScoreColCS');
+  if (!cs) return;
+  const cur = cs.dataset.value || '';
+  const opts = cs.querySelector('.cs-options');
+  if (!opts) return;
+  opts.innerHTML = `<div class="cs-option${!cur ? ' cs-selected' : ''}" data-value="" onclick="SA_selectCS(this,'','NAV_SA_OnScoreColChange')" style="color:var(--dml-label)">— Select column —</div>` +
+    options.map(o => `<div class="cs-option${o === cur ? ' cs-selected' : ''}" data-value="${o}" onclick="SA_selectCS(this,'${o}','NAV_SA_OnScoreColChange')">${o}</div>`).join('');
+}
+
+function NAV_SA_SetScoreCS(value) {
+  const cs = document.getElementById('SAScoreColCS');
+  if (!cs) return;
+  const opt = cs.querySelector(`.cs-option[data-value="${CSS.escape(value)}"]`);
+  if (opt) { SA_selectCS(opt, value, null); }
+  else { cs.dataset.value = value; const v = cs.querySelector('.cs-value'); if (v) { v.textContent = value; v.style.color = ''; } }
+  NAV_SA_OnScoreColChange();
+}
+
 async function NAV_SA_OnScoreColChange() {
-  const col = document.getElementById('SAScoreCol')?.value;
+  const col = SA_getCSValue('SAScoreColCS');
   const minMaxEl = document.getElementById('SAMinMax');
   if (!col || !minMaxEl) { if (minMaxEl) minMaxEl.style.display = 'none'; return; }
 
@@ -218,7 +236,7 @@ function NAV_SA_SavePreset() {
   const name = (document.getElementById('SA_LDSR_SaveName')?.value || '').trim();
   if (!name) return;
   const preset = {
-    scoreCol:    document.getElementById('SAScoreCol')?.value,
+    scoreCol:    SA_getCSValue('SAScoreColCS'),
     start:       document.getElementById('SAStart')?.value,
     end:         document.getElementById('SAEnd')?.value,
     step:        document.getElementById('SAStep')?.value,
@@ -241,7 +259,7 @@ function NAV_SA_PresetsApply() {
     const name = document.getElementById('SA_LDSR_LoadSelect')?.value;
     const p    = NAV_SA_GetPresets()[name];
     if (!p) return;
-    if (p.scoreCol)    document.getElementById('SAScoreCol').value       = p.scoreCol;
+    if (p.scoreCol)    NAV_SA_SetScoreCS(p.scoreCol);
     if (p.start)       document.getElementById('SAStart').value          = p.start;
     if (p.end)         document.getElementById('SAEnd').value            = p.end;
     if (p.step)        document.getElementById('SAStep').value           = p.step;
@@ -280,11 +298,11 @@ function NAV_SA_PresetsApply() {
         <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
           <polyline points="1 7 8 1 15 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <div class="NAV_SA_ScrollBar"></div>
+        <div class="MN_ScrollBar"></div>
       </div>`);
     nav.insertAdjacentHTML('beforeend', `
       <div id="NAV_SA_ScrollerDown" onclick="NAV_SA_ScrollDown()" title="Scroll down">
-        <div class="NAV_SA_ScrollBar"></div>
+        <div class="MN_ScrollBar"></div>
         <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
           <polyline points="1 1 8 7 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -326,6 +344,6 @@ function NAV_SA_AutoRun() {
   if (!window._SA_Bins?.length) return;
   clearTimeout(_NAV_SA_AutoRunTimer);
   _NAV_SA_AutoRunTimer = setTimeout(() => {
-    if (document.getElementById('SAScoreCol')?.value) SA_Run();
+    if (SA_getCSValue('SAScoreColCS')) SA_Run();
   }, 800);
 }

@@ -1,0 +1,208 @@
+/* ── Score Comparison — view & chart styles only ── */
+/* Brand token: --brand-sc defined here so it doesn't touch Tokens.css */
+:root {
+  --brand-sc:     #0ea5e9;
+  --brand-sc-dim: #0ea5e910;
+}
+
+/* ── Top bar card layout ── */
+#SC_TopBarRow { display: grid; align-items: stretch; }
+#SC_StyleToolbar,
+#SC_RunByBar,
+#SC_FiltersCard { display: flex; flex-direction: column; height: 100%; }
+#SC_StyleToolbar .pg-card-body,
+#SC_RunByBar .pg-card-body,
+#SC_FiltersCard .pg-card-body { flex: 1; }
+
+/* ── Chart Style chips ── */
+.SC_StyleChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  padding: 0 6px;
+  border: 1px solid var(--dml-border);
+  border-radius: 10px;
+  background: var(--color-page-bg);
+  color: var(--color-text-muted);
+  font-family: var(--font-base);
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.SC_StyleChip:hover  { border-color: var(--brand-sc); color: var(--brand-sc); }
+.SC_StyleChip.active { border-color: var(--brand-sc); background: var(--brand-sc-dim); color: var(--brand-sc); }
+
+/* ── Graph tabs ── */
+.sc-tabs { display: flex; gap: 4px; }
+.sc-tab {
+  flex: 1; padding: 5px 4px; font-size: 0.64rem; font-weight: 600;
+  border: 1px solid var(--dml-border); border-radius: var(--dml-radius);
+  background: transparent; color: var(--color-text-muted);
+  cursor: pointer; font-family: var(--font-base); text-align: center; transition: all 0.12s;
+}
+.sc-tab:hover  { border-color: var(--brand-sc); color: var(--brand-sc); }
+.sc-tab.active { background: var(--brand-sc); border-color: var(--brand-sc); color: #fff; }
+
+/* ── Chapter tab pills ── */
+.SC_TabPill {
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--dml-border);
+  border-radius: 6px;
+  background: none;
+  font-family: var(--font-base); font-size: 0.65rem; font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.SC_TabPill:hover       { border-color: var(--brand-sc); color: var(--brand-sc); }
+.SC_TabPill--active     { background: var(--brand-sc); border-color: var(--brand-sc); color: #fff; }
+
+/* ── Chart wrap ── */
+.SC_ChartWrap { position: relative; width: 100%; height: 280px; flex-shrink: 0; overflow: hidden; }
+.SC_ChartWrap canvas { position: absolute; top: 0; left: 0; width: 100% !important; height: 100% !important; }
+
+/* ── Score legend (colour dots below chart) ── */
+.SC_Legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 6px 0 2px;
+}
+
+/* ── Summary chips ── */
+.sc-summary { display: flex; flex-wrap: wrap; gap: 5px; min-height: 18px; }
+.sc-chip {
+  font-size: 0.6rem; font-weight: 600; padding: 2px 8px; border-radius: 10px;
+  border: 1px solid var(--dml-border); background: var(--color-page-bg);
+  color: var(--color-text-muted); white-space: nowrap;
+}
+
+/* ── Stat boxes ── */
+.sc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.sc-stat-box {
+  padding: 8px 10px;
+  background: var(--color-page-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  text-align: center;
+}
+.sc-stat-label {
+  font-size: 0.56rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.03em; color: var(--color-text-muted); margin-bottom: 3px;
+}
+.sc-stat-value { font-size: 0.95rem; font-weight: 700; color: var(--color-header-title); }
+
+/* ── Empty / loading state ── */
+.sc-state { padding: 48px 32px; text-align: center; color: var(--color-text-muted); font-size: 0.8rem; }
+
+/* ── Filters card inputs ── */
+#SC_FiltersCard .cs-trigger { height: 36px !important; padding: 0 8px; font-size: 0.65rem; }
+#SC_FiltersCard .MN_ctrl    { height: 36px !important; }
+
+/* ── Score row list (mini-nav) ── */
+.SC_ScoreRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 3px 0;
+}
+
+.SC_ScoreDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.SC_ScoreRemove {
+  font-family: var(--font-base);
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid var(--dml-border);
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.SC_ScoreRemove:hover {
+  background: #ef444420;
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* ── Add Score button ── */
+.SC_AddScoreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 28px;
+  margin-top: 4px;
+  border: 1px dashed var(--dml-border);
+  border-radius: 6px;
+  background: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-base);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s;
+}
+.SC_AddScoreBtn:hover { border-color: var(--brand-sc); color: var(--brand-sc); }
+
+/* ── Card helpers (mirrors DMLD_ pattern from ScoreAnalysis) ── */
+.SC_Card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: 10px;
+  min-width: 0; width: 100%; box-sizing: border-box; overflow: hidden;
+}
+.SC_CardHeader {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 14px 16px 0; margin-bottom: 10px; flex-wrap: wrap; gap: 4px;
+}
+.SC_CardTitle  { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.2px; color: var(--color-header-title); }
+.SC_CardBadge  { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-dim); text-transform: uppercase; align-self: center; }
+.SC_CardBody   { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+.SC_ButtonOutline {
+  font-family: var(--font-base); font-size: 0.68rem; font-weight: 500;
+  height: 26px; padding: 0 10px; border-radius: 5px;
+  border: 1px solid var(--color-card-border); background: none;
+  color: var(--color-text-muted); cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.SC_ButtonOutline:hover { background: var(--color-nav-hover); color: var(--color-header-title); }
+
+.SC_ButtonSolid {
+  font-family: var(--font-base); font-size: 0.68rem; font-weight: 600;
+  height: 26px; padding: 0 10px; border-radius: 5px;
+  border: 1px solid var(--brand-sc); background: var(--brand-sc); color: #fff;
+  cursor: pointer; transition: opacity 0.12s;
+}
+.SC_ButtonSolid:hover { opacity: 0.85; }
+
+.SC_Select, .SC_Input {
+  font-family: var(--font-base); font-size: 0.68rem; height: 26px;
+  padding: 0 8px; border-radius: 5px;
+  border: 1px solid var(--color-card-border); background: var(--color-card-bg);
+  color: var(--color-header-title); outline: none; box-sizing: border-box;
+}
+.SC_Select:focus, .SC_Input:focus { border-color: var(--brand-sc); }

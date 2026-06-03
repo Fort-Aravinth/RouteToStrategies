@@ -119,13 +119,15 @@ window.LD_UnlockNav = function() {
 };
 
 window.LD_UnlockScoreAnalysis = function() {
-  const el = document.getElementById('nav-score-analysis');
-  if (el) {
-    el.classList.remove('ld-locked', 'sidebar-item-disabled');
-    el.removeAttribute('data-nav-locked');
-    const badge = el.querySelector('.sidebar-item-dev');
-    if (badge) badge.remove();
-  }
+  ['nav-score-analysis', 'nav-score-comparison'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('ld-locked', 'sidebar-item-disabled');
+      el.removeAttribute('data-nav-locked');
+      const badge = el.querySelector('.sidebar-item-dev');
+      if (badge) badge.remove();
+    }
+  });
 };
 
 // ── Lock state ────────────────────────────────────────────────────────────────

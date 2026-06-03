@@ -6,20 +6,55 @@
   --MN_divider_col: var(--amber-400);
 }
 
-/* ── Hide scrollbar on all MiniNavs ── */
-#SA_MiniNav, #ANRA_MiniNav, #IA_MiniNav, #PR_MiniNav { scrollbar-width: none; -ms-overflow-style: none; }
-#SA_MiniNav::-webkit-scrollbar,
-#ANRA_MiniNav::-webkit-scrollbar,
-#IA_MiniNav::-webkit-scrollbar,
-#PR_MiniNav::-webkit-scrollbar { display: none; }
+/* ── Mini-nav panel layout (shared by all) ── */
+[id$="_MiniNav"] {
+  grid-column: 2;
+  grid-row: 2;
+  display: none;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border-right: 0.5px solid var(--color-card-border);
+  box-shadow: 1px 0 6px var(--color-card-shadow);
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  padding-bottom: 32px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+[id$="_MiniNav"]::-webkit-scrollbar { display: none; }
+
+/* ── Scroll indicator bar shape (shared) ── */
+.MN_ScrollBar {
+  width: 36px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--color-card-border);
+  opacity: 0.9;
+  transition: background 0.15s, opacity 0.15s;
+}
 
 /* ── MiniNav Brand Colours ── */
 /* Each nav sets its own brand tokens — all brand-aware rules inherit from here */
-#SA_MiniNav   { --MN_brand: var(--brand-sa);       --MN_brand_dim: var(--brand-sa-dim);       --MN_brand_light: var(--brand-sa-light);       --MN_divider_col: var(--brand-sa); }
-#ANRA_MiniNav { --MN_brand: var(--brand-ra);       --MN_brand_dim: var(--brand-ra-dim);       --MN_brand_light: var(--brand-ra-light);       --MN_divider_col: var(--brand-ra); }
-#IA_MiniNav   { --MN_brand: var(--brand-ia-light); --MN_brand_dim: var(--brand-ia-dim);       --MN_brand_light: var(--brand-ia-light);       --MN_divider_col: var(--brand-ia-light); }
-#PR_MiniNav   { --MN_brand: var(--brand-pr-light); --MN_brand_dim: var(--brand-pr-dim);       --MN_brand_light: var(--brand-pr-light);       --MN_divider_col: var(--brand-pr-light); }
-#PG_MiniNav   { --MN_brand: var(--brand-sn);       --MN_brand_dim: var(--brand-sn-dim);       --MN_brand_light: var(--brand-sn-light);       --MN_divider_col: var(--brand-sn); }
+#SA_MiniNav { --MN_brand: var(--brand-sa); --MN_brand_dim: var(--brand-sa-dim); --MN_brand_light: var(--brand-sa-light); --MN_divider_col: var(--brand-sa); }
+#SC_MiniNav { --MN_brand: #0ea5e9;        --MN_brand_dim: rgba(14,165,233,0.10); --MN_brand_light: #38bdf8;              --MN_divider_col: #0ea5e9; }
+#PG_MiniNav { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
+#SR_MiniNav  { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
+#SRM_MiniNav { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
+
+/* ── PG scroll indicators ── */
+#PG_ScrollerDown,
+#PG_ScrollerUp {
+  position: sticky; width: 100%; display: flex; flex-direction: column;
+  align-items: center; gap: 4px; cursor: pointer; flex-shrink: 0;
+  color: var(--color-text-dim); transition: color 0.15s; z-index: 2;
+}
+#PG_ScrollerUp   { top: 0;    padding: 6px 0 6px;   background: linear-gradient(to top,    transparent, var(--color-card-bg) 55%); }
+#PG_ScrollerDown { bottom: 0; padding: 18px 0 10px; background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%); }
+#PG_ScrollerDown:hover,
+#PG_ScrollerUp:hover { color: var(--brand-sn); }
+#PG_ScrollerDown:hover .MN_ScrollBar,
+#PG_ScrollerUp:hover   .MN_ScrollBar { background: var(--brand-sn); opacity: 0.7; }
 
 /*
  * ══ MiniNav: ONE base rule ══════════════════════════════════════
@@ -84,6 +119,10 @@ html .MN_btn {
 }
 html .MN_btn:hover  { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
 html .MN_btn.active { background: var(--MN_brand, var(--gold)) !important; border-color: var(--MN_brand, var(--gold)) !important; color: #fff !important; font-weight: 600; }
+/* Gold brand needs dark text — white-on-gold contrast is too low */
+#PG_MiniNav  .MN_btn.active,
+#SR_MiniNav  .MN_btn.active,
+#SRM_MiniNav .MN_btn.active { color: var(--color-header-title) !important; }
 html .MN_btn.MN_run_btn { background: var(--MN_brand_dim) !important; border-color: var(--MN_brand_dim) !important; color: var(--MN_brand) !important; font-weight: 600; }
 html .MN_btn.MN_run_btn:hover { background: var(--MN_brand) !important; border-color: var(--MN_brand) !important; color: #fff !important; }
 
@@ -124,7 +163,7 @@ html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; co
 /* ── MiniNav Typography & Layout ── */
 .MN_title       { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em; color: var(--color-header-title); }
 .MN_nav_title   { font-size: 0.88rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-header-title); cursor: pointer; user-select: none; }
-.MN_label       { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
+.MN_label       { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-dim); margin-bottom: 5px; }
 .MN_hint        { font-size: 0.68rem; color: var(--color-text-dim); padding: 0 12px 8px; }
 .MN_divider     { margin: var(--MN_divider_mar); border-top: 1.5px solid var(--MN_divider_col); opacity: 0.4; }
 .MN_section_body { padding: var(--MN_section_pad); }

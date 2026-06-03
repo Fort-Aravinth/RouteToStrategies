@@ -1,5 +1,37 @@
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
+// ── Available Columns — shared column picker ──────────────────────────────────
+async function MN_PopulateCols(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const conn = window.LD_getConn?.();
+  const src  = window.LD_getSource?.();
+  if (!conn || !src) {
+    list.innerHTML = '<span style="font-size:0.62rem;color:var(--color-text-dim);padding:2px 0;">— Load data first —</span>';
+    return;
+  }
+  let cols = [];
+  try {
+    const res = await conn.query(`DESCRIBE "${src}"`);
+    cols = res.toArray().map(r => r.column_name);
+  } catch { return; }
+  list.innerHTML = cols.map(c => `
+    <button class="MN_chip MN_chip--col MN_chip--a" onclick="this.classList.toggle('active')" title="${c}">${c}</button>
+  `).join('');
+}
+
+function MN_SelectAllCols(listId) {
+  document.querySelectorAll(`#${listId} .MN_chip`).forEach(b => b.classList.add('active'));
+}
+
+function MN_ClearCols(listId) {
+  document.querySelectorAll(`#${listId} .MN_chip`).forEach(b => b.classList.remove('active'));
+}
+
+function MN_GetSelectedCols(listId) {
+  return Array.from(document.querySelectorAll(`#${listId} .MN_chip.active`)).map(b => b.title);
+}
+
 function MN_initScrollArrows(navId) {
   const nav = document.getElementById(navId);
   if (!nav) return;
@@ -32,83 +64,6 @@ function _navScrollOnExpand(sectionEl, navEl) {
       navEl.scrollBy({ top: secRect.top - navRect.top - 8, behavior: 'smooth' });
     }
   }, 50);
-}
-
-// ── ANRA MiniNav ───────────────────────────────────────────────────────────────
-
-function ANRA_MiniNav_RenderParams() { SP_RenderParamsTo('ANRA_MiniNav_ParamsDisplay', 'ra'); }
-
-let _anraMiniParamsOpen = true;
-function ANRA_MiniNav_ToggleParams() {
-  _anraMiniParamsOpen = !_anraMiniParamsOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ParamsBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ParamsChevron');
-  if (body)    body.style.display      = _anraMiniParamsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _anraMiniParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-
-let _anraMiniColsOpen = true;
-function ANRA_MiniNav_ToggleCols() {
-  _anraMiniColsOpen = !_anraMiniColsOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ColBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ColChevron');
-  if (body)    body.style.display      = _anraMiniColsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _anraMiniColsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-  if (_anraMiniColsOpen) _navScrollOnExpand(document.getElementById('ANRA_MiniNav_ColSection'), document.getElementById('ANRA_MiniNav'));
-}
-
-let _anraMiniAmtOpen = true;
-function ANRA_MiniNav_ToggleAmt() {
-  _anraMiniAmtOpen = !_anraMiniAmtOpen;
-  const body    = document.getElementById('ANRA_MiniNav_AmtBody');
-  const chevron = document.getElementById('ANRA_MiniNav_AmtChevron');
-  if (body)    body.style.display      = _anraMiniAmtOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _anraMiniAmtOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-
-let _anraMiniScoreOpen = true;
-function ANRA_MiniNav_ToggleScore() {
-  _anraMiniScoreOpen = !_anraMiniScoreOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ScoreBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ScoreChevron');
-  if (body)    body.style.display      = _anraMiniScoreOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _anraMiniScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-  if (_anraMiniScoreOpen) _navScrollOnExpand(document.getElementById('ANRA_MiniNav_ScoreSection'), document.getElementById('ANRA_MiniNav'));
-}
-
-let _anraMiniPresetsOpen = true;
-function ANRA_MiniNav_TogglePresets() {
-  _anraMiniPresetsOpen = !_anraMiniPresetsOpen;
-  const body    = document.getElementById('ANRA_MiniNav_PresetsBody');
-  const chevron = document.getElementById('ANRA_MiniNav_PresetsChevron');
-  if (body)    body.style.display      = _anraMiniPresetsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _anraMiniPresetsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-  if (_anraMiniPresetsOpen) _navScrollOnExpand(document.getElementById('ANRA_MiniNav_PresetsSection'), document.getElementById('ANRA_MiniNav'));
-}
-
-let _anraMiniAllExpanded = true;
-function ANRA_MiniNav_ToggleAll() {
-  _anraMiniAllExpanded = !_anraMiniAllExpanded;
-  const sections = [
-    { flag: '_anraMiniParamsOpen',   body: 'ANRA_MiniNav_ParamsBody',   chevron: 'ANRA_MiniNav_ParamsChevron' },
-    { flag: '_anraMiniColsOpen',     body: 'ANRA_MiniNav_ColBody',      chevron: 'ANRA_MiniNav_ColChevron' },
-    { flag: '_anraMiniAmtOpen',      body: 'ANRA_MiniNav_AmtBody',      chevron: 'ANRA_MiniNav_AmtChevron' },
-    { flag: '_anraMiniScoreOpen',    body: 'ANRA_MiniNav_ScoreBody',    chevron: 'ANRA_MiniNav_ScoreChevron' },
-    { flag: '_anraMiniPresetsOpen',  body: 'ANRA_MiniNav_PresetsBody',  chevron: 'ANRA_MiniNav_PresetsChevron' },
-  ];
-  sections.forEach(s => {
-    if (s.flag === '_anraMiniParamsOpen')  _anraMiniParamsOpen  = _anraMiniAllExpanded;
-    if (s.flag === '_anraMiniColsOpen')    _anraMiniColsOpen    = _anraMiniAllExpanded;
-    if (s.flag === '_anraMiniAmtOpen')     _anraMiniAmtOpen     = _anraMiniAllExpanded;
-    if (s.flag === '_anraMiniScoreOpen')   _anraMiniScoreOpen   = _anraMiniAllExpanded;
-    if (s.flag === '_anraMiniPresetsOpen') _anraMiniPresetsOpen = _anraMiniAllExpanded;
-    const body    = document.getElementById(s.body);
-    const chevron = document.getElementById(s.chevron);
-    if (body)    body.style.display      = _anraMiniAllExpanded ? 'block' : 'none';
-    if (chevron) chevron.style.transform = _anraMiniAllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
-  });
-  const btn = document.getElementById('ANRA_MiniNav_ExpandBtn');
-  if (btn) btn.title = _anraMiniAllExpanded ? 'Collapse all' : 'Expand all';
 }
 
 // ── SA MiniNav ────────────────────────────────────────────────────────────────

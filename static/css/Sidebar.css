@@ -39,18 +39,22 @@
 }
 .shell.anra-active { grid-template-columns: 256px 280px 1fr; }
 .shell.sa-active   { grid-template-columns: 256px 280px 1fr; }
+.shell.sc-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.ia-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.ia-active .main { overflow: hidden; padding: 0; align-items: stretch; }
 .shell.pr-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.pr-active .main { overflow: hidden; padding: 0; align-items: stretch; }
 
 .shell.pg-active   { grid-template-columns: 256px 280px 1fr; }
+.shell.sr-active   { grid-template-columns: 256px 280px 1fr; }
 .shell.sidebar-hidden { grid-template-columns: 0px 0px 1fr; }
 .shell.sidebar-hidden.anra-active { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.sa-active   { grid-template-columns: 0px 280px 1fr; }
+.shell.sidebar-hidden.sc-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.pg-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.ia-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden.pr-active   { grid-template-columns: 0px 280px 1fr; }
+.shell.sidebar-hidden.sr-active   { grid-template-columns: 0px 280px 1fr; }
 .shell.sidebar-hidden .sidebar {
   width: 0;
   min-width: 0;
@@ -146,6 +150,8 @@
 #nav-preview-data.active::before  { background: var(--brand-dm); }
 #nav-playground.active            { color: var(--brand-sn);       background: var(--brand-sn-dim); }
 #nav-playground.active::before    { background: var(--brand-sn); }
+#nav-score-comparison.active           { color: #0ea5e9;              background: rgba(14,165,233,0.08); }
+#nav-score-comparison.active::before   { background: #0ea5e9; }
 
 /* ── Nav Item Icons & Misc ── */
 .sidebar-item-icon { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; }
