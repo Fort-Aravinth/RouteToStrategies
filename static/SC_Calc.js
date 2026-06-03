@@ -1,1 +1,250 @@
-function a0_0x3976(_0x4f4a49,_0x28fb43){_0x4f4a49=_0x4f4a49-0xc4;const _0x29b178=a0_0x29b1();let _0x3976e3=_0x29b178[_0x4f4a49];if(a0_0x3976['wEHxkU']===undefined){var _0x25bd66=function(_0x36d4e1){const _0x1168e7='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x7cdef3='',_0x2234d9='';for(let _0x447969=0x0,_0x1e5005,_0x5846e3,_0x5bfae6=0x0;_0x5846e3=_0x36d4e1['charAt'](_0x5bfae6++);~_0x5846e3&&(_0x1e5005=_0x447969%0x4?_0x1e5005*0x40+_0x5846e3:_0x5846e3,_0x447969++%0x4)?_0x7cdef3+=String['fromCharCode'](0xff&_0x1e5005>>(-0x2*_0x447969&0x6)):0x0){_0x5846e3=_0x1168e7['indexOf'](_0x5846e3);}for(let _0x515d5c=0x0,_0x45fc74=_0x7cdef3['length'];_0x515d5c<_0x45fc74;_0x515d5c++){_0x2234d9+='%'+('00'+_0x7cdef3['charCodeAt'](_0x515d5c)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x2234d9);};a0_0x3976['BadORe']=_0x25bd66,a0_0x3976['YAdDau']={},a0_0x3976['wEHxkU']=!![];}const _0x91f81b=_0x29b178[0x0],_0x5cd59a=_0x4f4a49+_0x91f81b,_0x4d2780=a0_0x3976['YAdDau'][_0x5cd59a];return!_0x4d2780?(_0x3976e3=a0_0x3976['BadORe'](_0x3976e3),a0_0x3976['YAdDau'][_0x5cd59a]=_0x3976e3):_0x3976e3=_0x4d2780,_0x3976e3;}(function(_0x59a5b0,_0x24dfd8){const _0x13723f=a0_0x3976,_0x5a9e15=_0x59a5b0();while(!![]){try{const _0x75f607=-parseInt(_0x13723f(0xdc))/0x1+parseInt(_0x13723f(0x112))/0x2*(parseInt(_0x13723f(0xe0))/0x3)+-parseInt(_0x13723f(0x110))/0x4+parseInt(_0x13723f(0xcc))/0x5*(parseInt(_0x13723f(0x10c))/0x6)+-parseInt(_0x13723f(0xfd))/0x7*(parseInt(_0x13723f(0xf3))/0x8)+parseInt(_0x13723f(0x101))/0x9+-parseInt(_0x13723f(0xeb))/0xa;if(_0x75f607===_0x24dfd8)break;else _0x5a9e15['push'](_0x5a9e15['shift']());}catch(_0x176645){_0x5a9e15['push'](_0x5a9e15['shift']());}}}(a0_0x29b1,0x429a1));async function SC_queryBins(_0x7cdef3,_0x2234d9,_0x447969=[],_0x1e5005,_0x5846e3,_0x5bfae6){const _0x423fa9=a0_0x3976,_0x515d5c=window[_0x423fa9(0xda)]?window[_0x423fa9(0xda)]():null;if(!_0x515d5c||!_0x7cdef3)return[];const _0x45fc74=window['SP_getParams']?window[_0x423fa9(0xc5)]():{},_0x51714f=window[_0x423fa9(0xf6)]?window[_0x423fa9(0xf6)]():_0x423fa9(0x109),_0x2bb833=_0x1e5005??_SC_Start,_0x49b664=_0x5846e3??_SC_End,_0x312d1d=_0x5bfae6??_SC_Step??0xa,_0x31e48a=['\x22'+_0x7cdef3+'\x22\x20>=\x20'+_0x2bb833+_0x423fa9(0x114)+_0x7cdef3+_0x423fa9(0x10e)+_0x49b664,..._0x447969];if(_0x2234d9?.[_0x423fa9(0xd3)]){const _0x1d84c8=document[_0x423fa9(0xd5)](_0x423fa9(0xe4))?.[_0x423fa9(0xe8)],_0x5d9fb8=document[_0x423fa9(0xd5)]('SCAmountOpStart')?.[_0x423fa9(0xe8)]||'>=',_0x2fc745=document[_0x423fa9(0xd5)](_0x423fa9(0x108))?.[_0x423fa9(0xe8)],_0x102162=document[_0x423fa9(0xd5)]('SCAmountOpEnd')?.['value']||'<=',_0x459679=document[_0x423fa9(0xd5)](_0x423fa9(0xce))?.['value'];if(_0x1d84c8&&_0x2fc745)_0x31e48a['push']('\x22'+_0x1d84c8+'\x22\x20'+_0x5d9fb8+'\x20'+_0x2fc745);if(_0x1d84c8&&_0x459679)_0x31e48a[_0x423fa9(0xde)]('\x22'+_0x1d84c8+'\x22\x20'+_0x102162+'\x20'+_0x459679);}Object[_0x423fa9(0x10b)](_0x2234d9?.[_0x423fa9(0xcf)]||{})[_0x423fa9(0xc6)](([_0x459f27,_0x55ad97])=>{const _0x566450=_0x423fa9;if(!_0x55ad97)return;let _0x4a14fc,_0x34b8ec;if(_0x459f27==='dm'){_0x4a14fc=_0x45fc74[_0x566450(0x117)]?.['col'];const _0x270b1b=SC_getNavActiveVals('dm');_0x34b8ec=_0x270b1b!==null?_0x270b1b:[..._0x45fc74['decisionMode']?.[_0x566450(0x105)]?.[_0x566450(0xd7)]||[],..._0x45fc74['decisionMode']?.[_0x566450(0x105)]?.[_0x566450(0xff)]||[]];}else{if(_0x459f27[_0x566450(0x10a)](_0x566450(0x111))){const _0xcf4b56=(_0x45fc74[_0x566450(0xfc)]||[])[parseInt(_0x459f27['split']('_')[0x1])];_0x4a14fc=_0xcf4b56?.['col'];const _0x199d32=SC_getNavActiveVals(_0x459f27);_0x34b8ec=_0x199d32!==null?_0x199d32:[..._0xcf4b56?.[_0x566450(0x105)]?.['a']||[],..._0xcf4b56?.[_0x566450(0x105)]?.['b']||[]];}}_0x4a14fc&&_0x34b8ec?.['length']&&_0x31e48a[_0x566450(0xde)]('\x22'+_0x4a14fc+_0x566450(0x103)+_0x34b8ec['map'](_0x28a4e1=>'\x27'+_0x28a4e1[_0x566450(0xf2)](/'/g,'\x27\x27')+'\x27')[_0x566450(0xfe)](',')+')');});let _0x29c41e='0';if(_0x45fc74['col1']&&_0x45fc74['values']?.[_0x423fa9(0x106)]){const _0x15317c=_0x45fc74[_0x423fa9(0xed)][_0x423fa9(0xf0)](_0x4ff5db=>'\x27'+_0x4ff5db[_0x423fa9(0xf2)](/'/g,'\x27\x27')+'\x27')[_0x423fa9(0xfe)](',');_0x29c41e=_0x423fa9(0xdb)+_0x45fc74[_0x423fa9(0xdd)]+_0x423fa9(0x103)+_0x15317c+_0x423fa9(0xcb);}const _0x569546=document[_0x423fa9(0xd5)](_0x423fa9(0xe4))?.[_0x423fa9(0xe8)],_0x181ce9=_0x569546?_0x423fa9(0xec)+_0x569546+_0x423fa9(0x116):'0',_0x6452eb=_0x423fa9(0xc4)+_0x7cdef3+_0x423fa9(0xca)+_0x312d1d+_0x423fa9(0xfa)+_0x312d1d+_0x423fa9(0xcd)+_0x29c41e+_0x423fa9(0xe1)+_0x181ce9+_0x423fa9(0xe7)+_0x51714f+'\x0a\x20\x20\x20\x20\x20\x20WHERE\x20'+_0x31e48a['join'](_0x423fa9(0xf7))+_0x423fa9(0xe2),_0x2f5566=(await _0x515d5c[_0x423fa9(0x10f)](_0x6452eb))[_0x423fa9(0xee)]();return _0x2f5566['map'](_0x46482a=>({'bin':Number(_0x46482a[_0x423fa9(0xe9)]),'label':Number(_0x46482a['bin_start'])[_0x423fa9(0xf1)](0x0)+'–'+(Number(_0x46482a[_0x423fa9(0xe9)])+_0x312d1d)['toFixed'](0x0),'total':Number(_0x46482a['total']),'fraud':Number(_0x46482a[_0x423fa9(0x102)]),'rate':Number(_0x46482a[_0x423fa9(0xf5)]||0x0),'value_total':Number(_0x46482a[_0x423fa9(0xef)]||0x0),'value_fraud':Number(_0x46482a[_0x423fa9(0xd0)]||0x0)}));}async function SC_queryBinsNormalised(_0x2d61c6,_0x3cf703,_0xb79389=[],_0x1a18ce,_0xe966fa,_0x4d007f=0xa){const _0xe59150=a0_0x3976,_0x28bdfc=window['LD_getConn']?window[_0xe59150(0xda)]():null;if(!_0x28bdfc||!_0x2d61c6)return[];const _0x585337=window[_0xe59150(0xc5)]?window[_0xe59150(0xc5)]():{},_0x326495=window[_0xe59150(0xf6)]?window[_0xe59150(0xf6)]():_0xe59150(0x109),_0x161d61=_0x1a18ce??_SC_Start,_0x3c3f91=_0xe966fa??_SC_End,_0x4fde62=['\x22'+_0x2d61c6+_0xe59150(0xc7)+_0x161d61+_0xe59150(0x114)+_0x2d61c6+'\x22\x20<=\x20'+_0x3c3f91,..._0xb79389];if(_0x3cf703?.[_0xe59150(0xd3)]){const _0x578a72=document[_0xe59150(0xd5)](_0xe59150(0xe4))?.['value'],_0x670da5=document[_0xe59150(0xd5)](_0xe59150(0x100))?.[_0xe59150(0xe8)]||'>=',_0x4d0e13=document[_0xe59150(0xd5)](_0xe59150(0x108))?.[_0xe59150(0xe8)],_0x2901b9=document[_0xe59150(0xd5)]('SCAmountOpEnd')?.[_0xe59150(0xe8)]||'<=',_0x15b54d=document[_0xe59150(0xd5)](_0xe59150(0xce))?.['value'];if(_0x578a72&&_0x4d0e13)_0x4fde62[_0xe59150(0xde)]('\x22'+_0x578a72+'\x22\x20'+_0x670da5+'\x20'+_0x4d0e13);if(_0x578a72&&_0x15b54d)_0x4fde62[_0xe59150(0xde)]('\x22'+_0x578a72+'\x22\x20'+_0x2901b9+'\x20'+_0x15b54d);}Object[_0xe59150(0x10b)](_0x3cf703?.[_0xe59150(0xcf)]||{})['forEach'](([_0x2b72e1,_0x3a5087])=>{const _0x2a32a0=_0xe59150;if(!_0x3a5087)return;let _0x47f502,_0x4ea920;if(_0x2b72e1==='dm'){_0x47f502=_0x585337[_0x2a32a0(0x117)]?.[_0x2a32a0(0x115)];const _0x319c26=SC_getNavActiveVals('dm');_0x4ea920=_0x319c26!==null?_0x319c26:[..._0x585337['decisionMode']?.[_0x2a32a0(0x105)]?.[_0x2a32a0(0xd7)]||[],..._0x585337['decisionMode']?.[_0x2a32a0(0x105)]?.['unsuccessful']||[]];}else{if(_0x2b72e1[_0x2a32a0(0x10a)](_0x2a32a0(0x111))){const _0x1c9adf=(_0x585337[_0x2a32a0(0xfc)]||[])[parseInt(_0x2b72e1[_0x2a32a0(0xe5)]('_')[0x1])];_0x47f502=_0x1c9adf?.[_0x2a32a0(0x115)];const _0x1c3ce6=SC_getNavActiveVals(_0x2b72e1);_0x4ea920=_0x1c3ce6!==null?_0x1c3ce6:[..._0x1c9adf?.['assigned']?.['a']||[],..._0x1c9adf?.[_0x2a32a0(0x105)]?.['b']||[]];}}_0x47f502&&_0x4ea920?.[_0x2a32a0(0x106)]&&_0x4fde62[_0x2a32a0(0xde)]('\x22'+_0x47f502+_0x2a32a0(0x103)+_0x4ea920[_0x2a32a0(0xf0)](_0x4ddf16=>'\x27'+_0x4ddf16['replace'](/'/g,'\x27\x27')+'\x27')[_0x2a32a0(0xfe)](',')+')');});let _0x3c443c='0';if(_0x585337[_0xe59150(0xdd)]&&_0x585337[_0xe59150(0xed)]?.[_0xe59150(0x106)]){const _0x458fc4=_0x585337[_0xe59150(0xed)][_0xe59150(0xf0)](_0x253b66=>'\x27'+_0x253b66['replace'](/'/g,'\x27\x27')+'\x27')[_0xe59150(0xfe)](',');_0x3c443c=_0xe59150(0xdb)+_0x585337[_0xe59150(0xdd)]+_0xe59150(0x103)+_0x458fc4+_0xe59150(0xcb);}const _0xa58672=document[_0xe59150(0xd5)](_0xe59150(0xe4))?.[_0xe59150(0xe8)],_0x182b44=_0xa58672?_0xe59150(0xec)+_0xa58672+_0xe59150(0x116):'0',_0x5ed0a8='\x0a\x20\x20\x20\x20WITH\x20binned\x20AS\x20(\x0a\x20\x20\x20\x20\x20\x20SELECT\x0a\x20\x20\x20\x20\x20\x20\x20\x20FLOOR((\x22'+_0x2d61c6+_0xe59150(0xf8)+_0x161d61+_0xe59150(0x104)+_0x3c3f91+_0xe59150(0xf4)+_0x161d61+_0xe59150(0xe3)+_0x4d007f+_0xe59150(0xfa)+_0x4d007f+_0xe59150(0xcd)+_0x3c443c+_0xe59150(0xe1)+_0x182b44+'\x20\x20\x20AS\x20amt_val\x0a\x20\x20\x20\x20\x20\x20FROM\x20'+_0x326495+_0xe59150(0xd6)+_0x4fde62[_0xe59150(0xfe)](_0xe59150(0xf7))+_0xe59150(0xe2),_0x10dd46=(await _0x28bdfc['query'](_0x5ed0a8))[_0xe59150(0xee)]();return _0x10dd46[_0xe59150(0xf0)](_0x17d092=>({'bin':Number(_0x17d092[_0xe59150(0xe9)]),'label':Number(_0x17d092['bin_start'])[_0xe59150(0xf1)](0x0)+'–'+(Number(_0x17d092[_0xe59150(0xe9)])+_0x4d007f)[_0xe59150(0xf1)](0x0)+'%','total':Number(_0x17d092[_0xe59150(0x113)]),'fraud':Number(_0x17d092[_0xe59150(0x102)]),'rate':Number(_0x17d092[_0xe59150(0xf5)]||0x0),'value_total':Number(_0x17d092[_0xe59150(0xef)]||0x0),'value_fraud':Number(_0x17d092[_0xe59150(0xd0)]||0x0)}));}async function SC_queryAllBins(_0x4359d8,_0xf61c40={}){const _0x5022e0=a0_0x3976,_0x1a77e5=!!window[_0x5022e0(0xd4)],_0x49dcf1=0xa,_0x2cd9d3=await Promise[_0x5022e0(0xdf)](_SC_ScoreCols[_0x5022e0(0xf0)](_0x2dfe45=>_0x1a77e5?SC_queryBinsNormalised(_0x2dfe45[_0x5022e0(0x115)],_0x4359d8,_0xf61c40[_0x2dfe45[_0x5022e0(0x115)]]||[],_0x2dfe45['start'],_0x2dfe45[_0x5022e0(0x10d)],_0x49dcf1):SC_queryBins(_0x2dfe45[_0x5022e0(0x115)],_0x4359d8,_0xf61c40[_0x2dfe45['col']]||[],_0x2dfe45[_0x5022e0(0xe6)],_0x2dfe45[_0x5022e0(0x10d)],_0x2dfe45[_0x5022e0(0x107)]??0xa))),_0x68f9a7={};return _SC_ScoreCols[_0x5022e0(0xc6)]((_0x2e93e9,_0xe1d187)=>{const _0x185e7e=_0x5022e0;_0x68f9a7[_0x2e93e9[_0x185e7e(0x115)]]=_0x2cd9d3[_0xe1d187];}),_0x68f9a7;}function SC_applyCalc(_0x4d2cc8,_0x1b102c){const _0x1f4624=a0_0x3976,_0x276066=_SC_Calc;if(_0x276066===_0x1f4624(0xc8))return _0x4d2cc8;if(_0x276066===_0x1f4624(0xc9))return _0x4d2cc8[_0x1f4624(0xf0)]((_0x5c2d6c,_0x3d6589)=>_0x1b102c[_0x3d6589]>0x0?_0x5c2d6c/_0x1b102c[_0x3d6589]*0x64:0x0);if(_0x276066==='Cumulative'){let _0x87b223=0x0;const _0x14a0d3=_0x4d2cc8[_0x1f4624(0xea)]((_0x4cb84c,_0x2871bc)=>_0x4cb84c+_0x2871bc,0x0);return _0x4d2cc8[_0x1f4624(0xf0)](_0x3b6a31=>{return _0x87b223+=_0x3b6a31,_0x14a0d3>0x0?_0x87b223/_0x14a0d3*0x64:0x0;});}if(_0x276066===_0x1f4624(0xf9)){const _0x4f5fd9=_0x4d2cc8['reduce']((_0x4b93a4,_0x255b51)=>_0x4b93a4+_0x255b51,0x0);return _0x4d2cc8[_0x1f4624(0xf0)](_0x2ac089=>_0x4f5fd9>0x0?_0x2ac089/_0x4f5fd9*0x64:0x0);}if(_0x276066===_0x1f4624(0xd8))return _0x4d2cc8[_0x1f4624(0xf0)]((_0x4a0546,_0x367ad3)=>_0x4a0546>0x0?_0x1b102c[_0x367ad3]/_0x4a0546:0x0);return _0x4d2cc8;}function SC_getBinsData(_0x607ea6){const _0x5c57bf=a0_0x3976,_0x296843=_SC_Criteria==='Value',_0xb4e5db=_0x607ea6[_0x5c57bf(0xf0)](_0x1f115b=>_0x296843?_0x1f115b[_0x5c57bf(0xef)]:_0x1f115b[_0x5c57bf(0x113)]),_0x5caea9=_0x607ea6[_0x5c57bf(0xf0)](_0x16468d=>_0x296843?_0x16468d[_0x5c57bf(0xd0)]:_0x16468d['fraud']);return{'labels':_0x607ea6['map'](_0x3004a2=>_0x3004a2['label']),'totalVals':_0xb4e5db,'fraudVals':SC_applyCalc(_0x5caea9,_0xb4e5db),'sumT':_0xb4e5db[_0x5c57bf(0xea)]((_0x3a86fe,_0x2f63ee)=>_0x3a86fe+_0x2f63ee,0x0),'sumF':_0x5caea9[_0x5c57bf(0xea)]((_0x28ecd6,_0x3e47ec)=>_0x28ecd6+_0x3e47ec,0x0)};}function a0_0x29b1(){const _0x156974=['mJm2mJa2nxvIseLiAG','ieftigjPBL9ZDgfYDcWkicaGicaGica','u0nbBw91BNrwywXfBMq','CgfYyw1Z','DMfSDwvFzNjHDwq','u0nhmdaYx0zPBhrLCLzHBa','u0nhmdaYx0zPBhrLCKnVBent','yw10','x1ndx05VCM1nB2rL','z2v0rwXLBwvUDej5swq','cIaGicaGifDirvjfia','C3vJy2vZC2z1Ba','rMfSC2vqB3nPDgL2zq','y29UBG','terFz2v0q29UBG','q0ftrsbxsevoici','ntG1mtfKBhfrt1i','y29Smq','ChvZAa','ywXS','mtGWoxjZrfzMqW','ieftigLZx2zYyxvKlaOGicaGicaGia','cIaGicaPcIaGicbtruXfq1qkicaGicaGyMLUx3n0yxj0laOGicaGicbdt1vovcGQksaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicbbuYb0B3rHBcWkicaGicaGu1vnkgLZx2zYyxvKksaGicaGicaGicaGicaGicaGicaGicaGicaGicaGqvmGzNjHDwqScIaGicaGifnvtsHPC19MCMf1zcKQmtaWlJaGlYbovuXmsuyOq09vtLqOkIKSmcKGieftihjHDguScIaGicaGifnvtsHHBxrFDMfSksaGicaGicaGicaGicaGicaGicaGicaGicaGicaGieftihzHBhvLx3rVDgfSlaOGicaGicbtvu0OAxnFzNjHDwqGkIbHBxrFDMfSksaGicaGicaGicaGicaGicaGicbbuYb2ywX1zv9MCMf1zaOGicaGrLjptsbIAw5UzwqkicaGieDst1vqiejzigjPBL9ZDgfYDaOGicaGt1jerviGqLKGyMLUx3n0yxj0cIaG','lcaWksaQideWmc4Wic8G','u0nbBw91BNrdB2W','C3bSAxq','C3rHCNq','icaGqvmGyw10x3zHBaOGicaGicbguK9nia','DMfSDwu','yMLUx3n0yxj0','CMvKDwnL','ndKYoti3mhzNuwHHza','q0ftvcGI','DMfSDwvZ','Dg9bCNjHEq','DMfSDwvFDg90ywW','BwfW','Dg9gAxHLza','CMvWBgfJzq','odq4oef0t3fjva','ic0G','CMf0zq','terFz2v0u291CMnL','ieforca','iIaTia','rgLZDhjPyNv0Aw9U','ksaQia','zMLSDgvY','y3vZDg9Tq2fYzhm','mJeZnw9Xqu1hEq','AM9PBG','Dw5ZDwnJzxnZzNvS','u0nbBw91BNrpCfn0yxj0','nde5nteZneDIv1zqCG','zNjHDwq','iIbjtIaO','ksaVie5vteXjrIG','yxnZAwDUzwq','BgvUz3rO','C3rLCa','u0nbBw91BNrwywXtDgfYDa','y21Fzgf0yq','C3rHCNrZv2L0Aa','zw50CMLLCW','nK1vqKTiBW','zw5K','iIa8psa','CxvLCNK','nJe3mJe2DfDJzxjx','y3vZDg9TxW','mtiWnKjvBg1WCG','Dg90ywW','ieforcaI','y29S','iIbbuYbet1vcteuP','zgvJAxnPB25nB2rL','cIaGicbxsvriigjPBM5LzcbbuYaOcIaGicaGifnftevdvaOGicaGicaGiezmt09skci','u1bFz2v0ugfYyw1Z','zM9YrwfJAa','iIa+psa','q291BNq','rNjHDwrsyxrL','iIaVia','ksbusevoideGruXtrsaWievora'];a0_0x29b1=function(){return _0x156974;};return a0_0x29b1();}function SC_applyG002Filters(_0x5f54f1){const _0xfcebb3=a0_0x3976,_0x36c1a6=_0x3a658b=>document[_0xfcebb3(0xd5)](_0x3a658b)?.[_0xfcebb3(0xe8)]||'',_0x49c821=_0xa4c102=>SC_getCSValue(_0xa4c102),_0x26c680=[0x0,0x1,0x2][_0xfcebb3(0xf0)](_0x16b67b=>{const _0x51f2c3=_0xfcebb3,_0x2f723a=_0x49c821(_0x51f2c3(0xd2)+_0x16b67b),_0x552567=_0x49c821('SCG002_FilterOpCS'+_0x16b67b)||'>',_0x57eda2=parseFloat(_0x36c1a6(_0x51f2c3(0xd1)+_0x16b67b));return _0x2f723a&&!isNaN(_0x57eda2)?{'col':_0x2f723a,'op':_0x552567,'val':_0x57eda2,'conn':_SC_FilterConns[_0x16b67b-0x1]||'AND'}:null;})[_0xfcebb3(0xfb)](Boolean);if(!_0x26c680[_0xfcebb3(0x106)])return _0x5f54f1;const _0x2c2271=(_0x4c08d0,_0x19b49b,_0x1f1e74)=>_0x19b49b==='>'?_0x4c08d0>_0x1f1e74:_0x19b49b==='>='?_0x4c08d0>=_0x1f1e74:_0x19b49b==='<'?_0x4c08d0<_0x1f1e74:_0x19b49b==='<='?_0x4c08d0<=_0x1f1e74:_0x4c08d0===_0x1f1e74;return _0x5f54f1[_0xfcebb3(0xfb)](_0x1097d7=>{const _0x1a102a=_0xfcebb3,_0x505f3f=_0x26c680['map'](_0x4bd67d=>_0x2c2271(_0x1097d7[_0x4bd67d[_0x1a102a(0x115)]]??0x0,_0x4bd67d['op'],_0x4bd67d['val']));return _0x505f3f[_0x1a102a(0xea)]((_0x5216d2,_0x3a6f68,_0x17c5fe)=>_0x17c5fe===0x0?_0x3a6f68:_0x26c680[_0x17c5fe][_0x1a102a(0xd9)]==='OR'?_0x5216d2||_0x3a6f68:_0x5216d2&&_0x3a6f68);});}
+// ── SC_Calc — Score Comparison calculation layer ──────────────────────────────
+// Pure functions + DuckDB query builder.
+// Reads shared range state from ScoreComparison.js globals: _SC_Start, _SC_End,
+// _SC_Step, _SC_Calc, _SC_Criteria.
+// Unlike SA_Calc, the score column is always passed as a parameter.
+
+// ── DuckDB query builder ──────────────────────────────────────────────────────
+async function SC_queryBins(col, gFilters, extraWheres = [], start, end, step) {
+  const conn = window.LD_getConn ? window.LD_getConn() : null;
+  if (!conn || !col) return [];
+
+  const params = window.SP_getParams ? window.SP_getParams() : {};
+  const src    = window.LD_getSource ? window.LD_getSource() : 'cm_data';
+
+  // Per-column range — fall back to shared globals for backward compat
+  const s = start ?? _SC_Start;
+  const e = end   ?? _SC_End;
+  const t = step  ?? _SC_Step ?? 10;
+
+  const wheres = [
+    `"${col}" >= ${s} AND "${col}" <= ${e}`,
+    ...extraWheres,
+  ];
+
+  // Amount filter
+  if (gFilters?.amt) {
+    const amtCol   = document.getElementById('SCAmountCol')?.value;
+    const opStart  = document.getElementById('SCAmountOpStart')?.value  || '>=';
+    const valStart = document.getElementById('SCAmountValStart')?.value;
+    const opEnd    = document.getElementById('SCAmountOpEnd')?.value    || '<=';
+    const valEnd   = document.getElementById('SCAmountValEnd')?.value;
+    if (amtCol && valStart) wheres.push(`"${amtCol}" ${opStart} ${valStart}`);
+    if (amtCol && valEnd)   wheres.push(`"${amtCol}" ${opEnd} ${valEnd}`);
+  }
+
+  // Param card filters
+  Object.entries(gFilters?.params || {}).forEach(([key, active]) => {
+    if (!active) return;
+    let pCol, vals;
+    if (key === 'dm') {
+      pCol = params.decisionMode?.col;
+      const navVals = SC_getNavActiveVals('dm');
+      vals = navVals !== null ? navVals :
+        [...(params.decisionMode?.assigned?.successful || []), ...(params.decisionMode?.assigned?.unsuccessful || [])];
+    } else if (key.startsWith('custom_')) {
+      const card = (params.customCards || [])[parseInt(key.split('_')[1])];
+      pCol = card?.col;
+      const navVals = SC_getNavActiveVals(key);
+      vals = navVals !== null ? navVals : [...(card?.assigned?.a || []), ...(card?.assigned?.b || [])];
+    }
+    if (pCol && vals?.length) {
+      wheres.push(`"${pCol}" IN (${vals.map(v => `'${v.replace(/'/g, "''")}'`).join(',')})`);
+    }
+  });
+
+  // Fraud expression — uses col1 + values from Set Parameters
+  let fraudExpr = '0';
+  if (params.col1 && params.values?.length) {
+    const fVals = params.values.map(v => `'${v.replace(/'/g, "''")}'`).join(',');
+    fraudExpr = `CASE WHEN "${params.col1}" IN (${fVals}) THEN 1 ELSE 0 END`;
+  }
+
+  const amtCol  = document.getElementById('SCAmountCol')?.value;
+  const amtExpr = amtCol ? `CAST("${amtCol}" AS DOUBLE)` : '0';
+
+  const sql = `
+    WITH binned AS (
+      SELECT
+        FLOOR("${col}" / ${t}) * ${t} AS bin_start,
+        ${fraudExpr} AS is_fraud,
+        ${amtExpr}   AS amt_val
+      FROM ${src}
+      WHERE ${wheres.join(' AND ')}
+    )
+    SELECT
+      bin_start,
+      COUNT(*)                                  AS total,
+      SUM(is_fraud)                             AS fraud,
+      SUM(is_fraud)*100.0 / NULLIF(COUNT(*),0)  AS rate,
+      SUM(amt_val)                              AS value_total,
+      SUM(is_fraud * amt_val)                   AS value_fraud
+    FROM binned
+    GROUP BY bin_start
+    ORDER BY bin_start
+  `;
+
+  const rows = (await conn.query(sql)).toArray();
+  return rows.map(r => ({
+    bin:         Number(r.bin_start),
+    label:       `${Number(r.bin_start).toFixed(0)}–${(Number(r.bin_start) + t).toFixed(0)}`,
+    total:       Number(r.total),
+    fraud:       Number(r.fraud),
+    rate:        Number(r.rate  || 0),
+    value_total: Number(r.value_total || 0),
+    value_fraud: Number(r.value_fraud || 0),
+  }));
+}
+
+// ── Normalised query — bins in 0–100% space so all scores share the same axis ─
+async function SC_queryBinsNormalised(col, gFilters, extraWheres = [], start, end, normStep = 10) {
+  const conn = window.LD_getConn ? window.LD_getConn() : null;
+  if (!conn || !col) return [];
+
+  const params = window.SP_getParams ? window.SP_getParams() : {};
+  const src    = window.LD_getSource ? window.LD_getSource() : 'cm_data';
+  const s = start ?? _SC_Start;
+  const e = end   ?? _SC_End;
+
+  const wheres = [`"${col}" >= ${s} AND "${col}" <= ${e}`, ...extraWheres];
+
+  if (gFilters?.amt) {
+    const amtCol   = document.getElementById('SCAmountCol')?.value;
+    const opStart  = document.getElementById('SCAmountOpStart')?.value  || '>=';
+    const valStart = document.getElementById('SCAmountValStart')?.value;
+    const opEnd    = document.getElementById('SCAmountOpEnd')?.value    || '<=';
+    const valEnd   = document.getElementById('SCAmountValEnd')?.value;
+    if (amtCol && valStart) wheres.push(`"${amtCol}" ${opStart} ${valStart}`);
+    if (amtCol && valEnd)   wheres.push(`"${amtCol}" ${opEnd} ${valEnd}`);
+  }
+
+  Object.entries(gFilters?.params || {}).forEach(([key, active]) => {
+    if (!active) return;
+    let pCol, vals;
+    if (key === 'dm') {
+      pCol = params.decisionMode?.col;
+      const navVals = SC_getNavActiveVals('dm');
+      vals = navVals !== null ? navVals :
+        [...(params.decisionMode?.assigned?.successful || []), ...(params.decisionMode?.assigned?.unsuccessful || [])];
+    } else if (key.startsWith('custom_')) {
+      const card = (params.customCards || [])[parseInt(key.split('_')[1])];
+      pCol = card?.col;
+      const navVals = SC_getNavActiveVals(key);
+      vals = navVals !== null ? navVals : [...(card?.assigned?.a || []), ...(card?.assigned?.b || [])];
+    }
+    if (pCol && vals?.length) {
+      wheres.push(`"${pCol}" IN (${vals.map(v => `'${v.replace(/'/g, "''")}'`).join(',')})`);
+    }
+  });
+
+  let fraudExpr = '0';
+  if (params.col1 && params.values?.length) {
+    const fVals = params.values.map(v => `'${v.replace(/'/g, "''")}'`).join(',');
+    fraudExpr = `CASE WHEN "${params.col1}" IN (${fVals}) THEN 1 ELSE 0 END`;
+  }
+  const amtCol  = document.getElementById('SCAmountCol')?.value;
+  const amtExpr = amtCol ? `CAST("${amtCol}" AS DOUBLE)` : '0';
+
+  const sql = `
+    WITH binned AS (
+      SELECT
+        FLOOR(("${col}" - ${s}) / NULLIF(${e} - ${s}, 0) * 100.0 / ${normStep}) * ${normStep} AS bin_start,
+        ${fraudExpr} AS is_fraud,
+        ${amtExpr}   AS amt_val
+      FROM ${src}
+      WHERE ${wheres.join(' AND ')}
+    )
+    SELECT
+      bin_start,
+      COUNT(*)                                  AS total,
+      SUM(is_fraud)                             AS fraud,
+      SUM(is_fraud)*100.0 / NULLIF(COUNT(*),0)  AS rate,
+      SUM(amt_val)                              AS value_total,
+      SUM(is_fraud * amt_val)                   AS value_fraud
+    FROM binned
+    GROUP BY bin_start
+    ORDER BY bin_start
+  `;
+
+  const rows = (await conn.query(sql)).toArray();
+  return rows.map(r => ({
+    bin:         Number(r.bin_start),
+    label:       `${Number(r.bin_start).toFixed(0)}–${(Number(r.bin_start) + normStep).toFixed(0)}%`,
+    total:       Number(r.total),
+    fraud:       Number(r.fraud),
+    rate:        Number(r.rate  || 0),
+    value_total: Number(r.value_total || 0),
+    value_fraud: Number(r.value_fraud || 0),
+  }));
+}
+
+// ── Query all active scores in parallel ───────────────────────────────────────
+async function SC_queryAllBins(gFilters, extraWheresPerCol = {}) {
+  const useNorm = !!window._SC_NormMode;
+  const normStep = 10;
+  const results = await Promise.all(
+    _SC_ScoreCols.map(s => useNorm
+      ? SC_queryBinsNormalised(s.col, gFilters, extraWheresPerCol[s.col] || [], s.start, s.end, normStep)
+      : SC_queryBins(s.col, gFilters, extraWheresPerCol[s.col] || [], s.start, s.end, s.step ?? 10)
+    )
+  );
+  const map = {};
+  _SC_ScoreCols.forEach((s, i) => { map[s.col] = results[i]; });
+  return map;
+}
+
+// ── Calculate transform ───────────────────────────────────────────────────────
+function SC_applyCalc(arr, totArr) {
+  const c = _SC_Calc;
+  if (c === 'Count')        return arr;
+  if (c === 'FraudRate')    return arr.map((v, i) => totArr[i] > 0 ? v / totArr[i] * 100 : 0);
+  if (c === 'Cumulative') {
+    let cum = 0;
+    const s = arr.reduce((a, b) => a + b, 0);
+    return arr.map(v => { cum += v; return s > 0 ? cum / s * 100 : 0; });
+  }
+  if (c === 'Distribution') {
+    const s = arr.reduce((a, b) => a + b, 0);
+    return arr.map(v => s > 0 ? v / s * 100 : 0);
+  }
+  if (c === 'FalsePositive') return arr.map((v, i) => v > 0 ? totArr[i] / v : 0);
+  return arr;
+}
+
+// ── Bin → chart-ready data ────────────────────────────────────────────────────
+function SC_getBinsData(bins) {
+  const useValue = _SC_Criteria === 'Value';
+  const totRaw   = bins.map(b => useValue ? b.value_total : b.total);
+  const frdRaw   = bins.map(b => useValue ? b.value_fraud : b.fraud);
+  return {
+    labels:    bins.map(b => b.label),
+    totalVals: totRaw,
+    fraudVals: SC_applyCalc(frdRaw, totRaw),
+    sumT:      totRaw.reduce((a, b) => a + b, 0),
+    sumF:      frdRaw.reduce((a, b) => a + b, 0),
+  };
+}
+
+// ── G002 bin-level post-filters (applied per score after query) ───────────────
+function SC_applyG002Filters(bins) {
+  const g   = id => document.getElementById(id)?.value || '';
+  const gCS = id => SC_getCSValue(id);
+  const filters = [0, 1, 2].map(i => {
+    const col = gCS(`SCG002_FilterColCS${i}`);
+    const op  = gCS(`SCG002_FilterOpCS${i}`) || '>';
+    const val = parseFloat(g(`SCG002_FilterVal${i}`));
+    return col && !isNaN(val) ? { col, op, val, conn: _SC_FilterConns[i - 1] || 'AND' } : null;
+  }).filter(Boolean);
+  if (!filters.length) return bins;
+
+  const applyOp = (v, op, t) =>
+    op === '>'  ? v > t  : op === '>=' ? v >= t :
+    op === '<'  ? v < t  : op === '<=' ? v <= t : v === t;
+
+  return bins.filter(b => {
+    const results = filters.map(f => applyOp(b[f.col] ?? 0, f.op, f.val));
+    return results.reduce((acc, res, i) =>
+      i === 0 ? res : filters[i].conn === 'OR' ? acc || res : acc && res
+    );
+  });
+}

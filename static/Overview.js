@@ -1,1 +1,126 @@
-function a0_0x1b44(){const _0x5df790=['t1zFuMf0zuDYAwq','vg90ywWGvM9SDw1L','rNjHDwqGuMf0zsaOvM9SDw1Lkq','BMf2lw92zxj2Awv3','BMf2lxjVDxrLlwfUywX5C2LZ','pc9KAxy+cIaGica8l2rPDJ4kica','nJzhufrTBuK','terFvg9HC3qG','lcaXzNiP','y3nZvgv4Da','BwvZC2fNzq','mtqYnZmYogjOrKHXzq','tM8Gzgf0ysbSB2fKzwq','u0vmrunuienpquXfu0nfkfnvtsGI','u0vmrunuienpvu5ukerju1rjtKnuici','otGZodCWCgPoDKHu','Dgv4DenVBNrLBNq','zgLZCgXHEq','zNvUy3rPB24','qw5HBhLZAxmGzxjYB3i6ia','terFz2v0q29UBG','iIKGqvmGBIbguK9nia','BMf2lxnJB3jLlwfUywX5C2LZ','terFz2v0u291CMnL','mZGYnJGZz2DjC2zg','BgvUz3rO','CMvTB3zL','iIbjtIaO','t1zFtwv0CMLJr3jPza','mJe3nJzVDLvWvKG','vMfSDwuGkezYyxvKkq','Dg9bCNjHEq','Aw1WB3j0yw50','zgL2','odiWnZiWq1fJzxnl','y3jLyxrLrwXLBwvUDa','zMXLEa','v0HfuKuGiG','nJmZnZG1BuLuANDp','zxjYB3i','y2XHC3nmAxn0','mZmYmZm1yKXSAhjM','pc9KAxy+','Dg9gAxHLza','terFvw5SB2nRu2nVCMvbBMfSExnPCW','BgfIzwW','B2jQzwn0','Dg9mB2nHBgvtDhjPBMC','DMfSDwu','pgrPDIbJBgfZCZ0IB3yTC3rHDguIpKfWCgX5ifbHCMfTzxrLCNmGzMLYC3qGyMvMB3jLihzPzxDPBMCGDgHLig92zxj2Awv3lJWVzgL2pG','u1bFz2v0ugfYyw1Z','BwfW','t1zFuNvUqw5HBhLZAxmGzxjYB3i6','t1zFvg9HC3rdB250ywLUzxi','C3r5Bgu','t1zwAwv3','C3vJy2vZCW','zM9YrwfJAa','mtjuAeDNC3G','rNjHDwqGq2fYzhm','AM9PBG','ouTLr0fNDa','AgLKzq','Aw5Uzxjive1m','y29Smq','ywrK','DMfSDwvZ','u0vmrunuienpvu5ukcOPieftig4GrLjptsa','CMvWzwf0ka','yM9KEq','BMf2lxjTB24TAw1WB3j0','BMf2lxnJB3jLlwnVBxbHCMLZB24','cIaGica8zgL2ignSyxnZpsjVDI1TzxrYAwmTyM94iJ4kicaGicaGpgrPDIbJBgfZCZ0IB3yTBwv0CMLJlwXHyMvSiJ4','z2v0rwXLBwvUDej5swq','CMvWBgfJzq','iIKSidaPieftig4GrLjptsa','t3zLCNzPzxCGDxbKyxrLza','CxvLCNK','vg90ywWGq2fYzhm','Cg9ZAxrPB246zML4zwq7yM90Dg9ToJiWChG7CMLNAhq6mJbWEdT6lwLUzgv4oJK5otK7zgLZCgXHEtPMBgv4o2zSzxGTzgLYzwn0Aw9UoMnVBhvTBJTNyxa6ohb4oW','C2v0uhjVCgvYDhK','yxbWzw5Kq2HPBgq'];a0_0x1b44=function(){return _0x5df790;};return a0_0x1b44();}const a0_0x30b898=a0_0x53fd;(function(_0x1ab421,_0x2b506a){const _0x52fc04=a0_0x53fd,_0x2d65bd=_0x1ab421();while(!![]){try{const _0x46b22c=parseInt(_0x52fc04(0xeb))/0x1+-parseInt(_0x52fc04(0xdf))/0x2*(parseInt(_0x52fc04(0x11a))/0x3)+-parseInt(_0x52fc04(0xe4))/0x4+parseInt(_0x52fc04(0xe8))/0x5+parseInt(_0x52fc04(0xfc))/0x6*(-parseInt(_0x52fc04(0xda))/0x7)+parseInt(_0x52fc04(0xcd))/0x8+-parseInt(_0x52fc04(0xff))/0x9*(-parseInt(_0x52fc04(0xd1))/0xa);if(_0x46b22c===_0x2b506a)break;else _0x2d65bd['push'](_0x2d65bd['shift']());}catch(_0x3e6dc9){_0x2d65bd['push'](_0x2d65bd['shift']());}}}(a0_0x1b44,0x2c6bf));function a0_0x53fd(_0x531f35,_0x3a79d2){_0x531f35=_0x531f35-0xcb;const _0x1b4439=a0_0x1b44();let _0x53fd57=_0x1b4439[_0x531f35];if(a0_0x53fd['dNFWeu']===undefined){var _0x3e93e8=function(_0x21d5d4){const _0x1f04f1='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x1b9282='',_0x24e5cf='';for(let _0x314249=0x0,_0xbec2ea,_0x967e48,_0x118131=0x0;_0x967e48=_0x21d5d4['charAt'](_0x118131++);~_0x967e48&&(_0xbec2ea=_0x314249%0x4?_0xbec2ea*0x40+_0x967e48:_0x967e48,_0x314249++%0x4)?_0x1b9282+=String['fromCharCode'](0xff&_0xbec2ea>>(-0x2*_0x314249&0x6)):0x0){_0x967e48=_0x1f04f1['indexOf'](_0x967e48);}for(let _0x5bd1f0=0x0,_0x4ee9a6=_0x1b9282['length'];_0x5bd1f0<_0x4ee9a6;_0x5bd1f0++){_0x24e5cf+='%'+('00'+_0x1b9282['charCodeAt'](_0x5bd1f0)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x24e5cf);};a0_0x53fd['qyfYKM']=_0x3e93e8,a0_0x53fd['MzdiLn']={},a0_0x53fd['dNFWeu']=!![];}const _0x5a5394=_0x1b4439[0x0],_0x43bb9b=_0x531f35+_0x5a5394,_0x597ebf=a0_0x53fd['MzdiLn'][_0x43bb9b];return!_0x597ebf?(_0x53fd57=a0_0x53fd['qyfYKM'](_0x53fd57),a0_0x53fd['MzdiLn'][_0x43bb9b]=_0x53fd57):_0x53fd57=_0x597ebf,_0x53fd57;}function OV_showToast(_0x1b9282,_0x24e5cf=a0_0x30b898(0xfa)){const _0x1e749d=a0_0x30b898;let _0x314249=document[_0x1e749d(0x10b)](_0x1e749d(0xf7));!_0x314249&&(_0x314249=document['createElement'](_0x1e749d(0xe3)),_0x314249['id']='OV_ToastContainer',_0x314249['style'][_0x1e749d(0xcb)]=_0x1e749d(0x111),document[_0x1e749d(0x107)][_0x1e749d(0x113)](_0x314249));const _0xbec2ea=document[_0x1e749d(0xe5)]('div');_0xbec2ea['className']=_0x1e749d(0x11b)+_0x24e5cf,_0xbec2ea[_0x1e749d(0xd2)]=_0x1b9282,_0x314249[_0x1e749d(0x113)](_0xbec2ea),setTimeout(()=>{const _0x1e70de=_0x1e749d;_0xbec2ea[_0x1e70de(0xea)][_0x1e70de(0x103)](_0x1e70de(0x100)),setTimeout(()=>_0xbec2ea['remove'](),0x12c);},0xfa0);}function OV_OpenPanel(){const _0x3b69f7=a0_0x30b898;App_HideAllViews(),Sidebar_SetActive(_0x3b69f7(0x117)),document['getElementById'](_0x3b69f7(0xf9))[_0x3b69f7(0xf8)][_0x3b69f7(0x112)](_0x3b69f7(0xd3),_0x3b69f7(0xe6),_0x3b69f7(0xe2)),[_0x3b69f7(0x108),_0x3b69f7(0xd8),_0x3b69f7(0x109),_0x3b69f7(0x118)][_0x3b69f7(0xfb)](_0x967e48=>{const _0x33181d=_0x3b69f7,_0x118131=document[_0x33181d(0x10b)](_0x967e48);if(_0x118131)_0x118131[_0x33181d(0xea)][_0x33181d(0xdc)]('ld-locked','sidebar-item-disabled');}),OV_RunAnalysis();}async function OV_RunAnalysis(){const _0xe02852=a0_0x30b898,_0x5bd1f0=typeof window['SP_getParams']===_0xe02852(0xd4)?window[_0xe02852(0xf4)]():null;if(!_0x5bd1f0||!_0x5bd1f0[_0xe02852(0x102)]){document[_0xe02852(0x10b)]('OV_MetricGrid')[_0xe02852(0x101)]=_0xe02852(0xf3),document[_0xe02852(0x10b)](_0xe02852(0x114))[_0xe02852(0x101)]='';return;}const _0x4ee9a6=window['LD_getConn']?window[_0xe02852(0xd6)]():null,_0x462a1c=window['LD_getSource']?window[_0xe02852(0xd9)]():null;if(!_0x4ee9a6||!_0x462a1c){OV_showToast(_0xe02852(0xce),'error');return;}document[_0xe02852(0x10b)](_0xe02852(0xde))[_0xe02852(0x101)]='<div\x20class=\x22ov-state\x22\x20style=\x22grid-column:1/-1;\x22>Loading…</div>',document[_0xe02852(0x10b)](_0xe02852(0x114))[_0xe02852(0x101)]='';try{const _0x8d6719=_0x5bd1f0[_0xe02852(0x102)],_0xc09e3a=(_0x5bd1f0[_0xe02852(0x104)]||[])[_0xe02852(0xf5)](_0xb5a72c=>'\x27'+_0xb5a72c[_0xe02852(0x10c)](/'/g,'\x27\x27')+'\x27')[_0xe02852(0xfe)](','),_0x194981=_0x5bd1f0['numeric']||null,_0x25848f=_0x5bd1f0[_0xe02852(0xf0)]||null,_0x35f26c=_0xc09e3a[_0xe02852(0xdb)]?_0xe02852(0xe7)+_0x8d6719+_0xe02852(0xdd)+_0xc09e3a+')':'WHERE\x201=0',_0x56f183=Number((await _0x4ee9a6[_0xe02852(0x10f)](_0xe02852(0x105)+_0x462a1c))[_0xe02852(0xe1)]()[0x0]['n']),_0x5e18f3=Number((await _0x4ee9a6[_0xe02852(0x10f)]('SELECT\x20COUNT(*)\x20AS\x20n\x20FROM\x20'+_0x462a1c+'\x20'+_0x35f26c))[_0xe02852(0xe1)]()[0x0]['n']);let _0x5e7a1e=null,_0x34ee97=null;_0x25848f&&(_0x5e7a1e=Number((await _0x4ee9a6['query'](_0xe02852(0xd0)+_0x25848f+_0xe02852(0xd7)+_0x462a1c))[_0xe02852(0xe1)]()[0x0]['n']),_0x34ee97=Number((await _0x4ee9a6[_0xe02852(0x10f)](_0xe02852(0xd0)+_0x25848f+'\x22)\x20AS\x20n\x20FROM\x20'+_0x462a1c+'\x20'+_0x35f26c))[_0xe02852(0xe1)]()[0x0]['n']));let _0x2c8498=null,_0x4498e7=null;_0x194981&&(_0x2c8498=Number((await _0x4ee9a6[_0xe02852(0x10f)](_0xe02852(0xcf)+_0x194981+'\x22),\x200)\x20AS\x20n\x20FROM\x20'+_0x462a1c))[_0xe02852(0xe1)]()[0x0]['n']),_0x4498e7=Number((await _0x4ee9a6['query'](_0xe02852(0xcf)+_0x194981+_0xe02852(0x10d)+_0x462a1c+'\x20'+_0x35f26c))[_0xe02852(0xe1)]()[0x0]['n']));const _0x48a72d=_0x56f183>0x0?_0x5e18f3/_0x56f183*0x64:0x0,_0x4eae93=_0x2c8498>0x0?_0x4498e7/_0x2c8498*0x64:0x0;OV_RenderMetrics({'totalVol':_0x56f183,'fraudVol':_0x5e18f3,'totalCards':_0x5e7a1e,'fraudCards':_0x34ee97,'totalValue':_0x2c8498,'fraudValue':_0x4498e7}),OV_RenderRates({'volRate':_0x48a72d,'valRate':_0x4eae93,'hasValue':_0x194981!==null});if(typeof window[_0xe02852(0xee)]===_0xe02852(0xd4))window[_0xe02852(0xee)]();OV_showToast(_0xe02852(0x10e),_0xe02852(0xfa));}catch(_0x35f250){console[_0xe02852(0xe9)](_0xe02852(0xf6),_0x35f250),document[_0xe02852(0x10b)](_0xe02852(0xde))[_0xe02852(0x101)]='<div\x20class=\x22ov-state\x22\x20style=\x22grid-column:1/-1;\x22>Error:\x20'+_0x35f250[_0xe02852(0xcc)]+_0xe02852(0xec),OV_showToast(_0xe02852(0xd5)+_0x35f250[_0xe02852(0xcc)],_0xe02852(0xe9));}}function OV_fmt(_0x218eec){const _0x4cd3c7=a0_0x30b898;if(_0x218eec===null||_0x218eec===undefined)return'—';if(typeof _0x218eec!=='number')return _0x218eec;if(Number['isInteger'](_0x218eec))return _0x218eec[_0x4cd3c7(0xf1)]();return _0x218eec[_0x4cd3c7(0xf1)](undefined,{'minimumFractionDigits':0x2,'maximumFractionDigits':0x2});}function OV_RenderMetrics({totalVol:_0x53e772,fraudVol:_0x34c179,totalCards:_0x43265d,fraudCards:_0x245669,totalValue:_0x57a7c3,fraudValue:_0x22d5f0}){const _0x40a39f=a0_0x30b898,_0x5a721a=[{'label':_0x40a39f(0x115),'value':OV_fmt(_0x53e772)},{'label':'Fraud\x20Volume','value':OV_fmt(_0x34c179)},{'label':_0x40a39f(0x110),'value':OV_fmt(_0x43265d)},{'label':_0x40a39f(0xfd),'value':OV_fmt(_0x245669)},{'label':'Total\x20Value','value':OV_fmt(_0x57a7c3)},{'label':_0x40a39f(0xe0),'value':OV_fmt(_0x22d5f0)}];document['getElementById'](_0x40a39f(0xde))['innerHTML']=_0x5a721a[_0x40a39f(0xf5)](_0x5744b3=>_0x40a39f(0x10a)+_0x5744b3['label']+'</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22ov-metric-value\x22>'+_0x5744b3[_0x40a39f(0xf2)]+_0x40a39f(0x119))[_0x40a39f(0xfe)]('');}function OV_RenderRates({volRate:_0x5a7916,valRate:_0x253eb7,hasValue:_0xc0aeab}){const _0x2168c5=a0_0x30b898,_0x39661e=document[_0x2168c5(0x10b)](_0x2168c5(0x114)),_0x55ad2a=[{'label':_0x2168c5(0x116),'value':_0x5a7916[_0x2168c5(0xed)](0x2)+'%'},..._0xc0aeab?[{'label':'Fraud\x20Rate\x20(Value)','value':_0x253eb7[_0x2168c5(0xed)](0x2)+'%'}]:[]];_0x39661e[_0x2168c5(0xf8)]['gridTemplateColumns']=_0x2168c5(0x106)+_0x55ad2a[_0x2168c5(0xdb)]+_0x2168c5(0x11c),_0x39661e[_0x2168c5(0x101)]=_0x55ad2a[_0x2168c5(0xf5)](_0x2ad5ef=>'\x0a\x20\x20\x20\x20<div\x20class=\x22ov-rate-box\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22ov-rate-label\x22>'+_0x2ad5ef[_0x2168c5(0xef)]+'</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22ov-rate-value\x22>'+_0x2ad5ef[_0x2168c5(0xf2)]+_0x2168c5(0x119))['join']('');}
+// ── Overview — DuckDB-WASM (no server required) ──────────────────────────────
+
+function OV_showToast(message, type = 'success') {
+  let container = document.getElementById('OV_ToastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'OV_ToastContainer';
+    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
+    document.body.appendChild(container);
+  }
+  const toast = document.createElement('div');
+  toast.className = 'LD_Toast ' + type;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => { toast.classList.add('hide'); setTimeout(() => toast.remove(), 300); }, 4000);
+}
+
+function OV_OpenPanel() {
+  App_HideAllViews();
+  Sidebar_SetActive('nav-overview');
+  document.getElementById('OVView').style.setProperty('display', 'flex', 'important');
+
+  // Unlock analysis nav items
+  ['nav-rmon-import', 'nav-score-analysis', 'nav-score-comparison', 'nav-route-analysis'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('ld-locked', 'sidebar-item-disabled');
+  });
+
+  OV_RunAnalysis();
+}
+
+async function OV_RunAnalysis() {
+  const params = typeof window.SP_getParams === 'function' ? window.SP_getParams() : null;
+  if (!params || !params.col1) {
+    document.getElementById('OV_MetricGrid').innerHTML  = '<div class="ov-state">Apply Parameters first before viewing the overview.</div>';
+    document.getElementById('OV_RateGrid').innerHTML    = '';
+    return;
+  }
+
+  const conn = window.LD_getConn ? window.LD_getConn() : null;
+  const src  = window.LD_getSource ? window.LD_getSource() : null;
+  if (!conn || !src) {
+    OV_showToast('No data loaded', 'error');
+    return;
+  }
+
+  document.getElementById('OV_MetricGrid').innerHTML = '<div class="ov-state" style="grid-column:1/-1;">Loading…</div>';
+  document.getElementById('OV_RateGrid').innerHTML   = '';
+
+  try {
+    const col1    = params.col1;
+    const values  = (params.values || []).map(v => `'${v.replace(/'/g, "''")}'`).join(',');
+    const numeric = params.numeric  || null;
+    const object  = params.object   || null;
+
+    const whereClause = values.length ? `WHERE "${col1}" IN (${values})` : 'WHERE 1=0';
+
+    const totalVol  = Number((await conn.query(`SELECT COUNT(*) AS n FROM ${src}`)).toArray()[0].n);
+    const fraudVol  = Number((await conn.query(`SELECT COUNT(*) AS n FROM ${src} ${whereClause}`)).toArray()[0].n);
+
+    let totalCards = null, fraudCards = null;
+    if (object) {
+      totalCards = Number((await conn.query(`SELECT COUNT(DISTINCT "${object}") AS n FROM ${src}`)).toArray()[0].n);
+      fraudCards = Number((await conn.query(`SELECT COUNT(DISTINCT "${object}") AS n FROM ${src} ${whereClause}`)).toArray()[0].n);
+    }
+
+    let totalValue = null, fraudValue = null;
+    if (numeric) {
+      totalValue = Number((await conn.query(`SELECT COALESCE(SUM("${numeric}"), 0) AS n FROM ${src}`)).toArray()[0].n);
+      fraudValue = Number((await conn.query(`SELECT COALESCE(SUM("${numeric}"), 0) AS n FROM ${src} ${whereClause}`)).toArray()[0].n);
+    }
+
+    const volRate   = totalVol  > 0 ? (fraudVol  / totalVol  * 100) : 0;
+    const valRate   = totalValue > 0 ? (fraudValue / totalValue * 100) : 0;
+
+    OV_RenderMetrics({ totalVol, fraudVol, totalCards, fraudCards, totalValue, fraudValue });
+    OV_RenderRates({ volRate, valRate, hasValue: numeric !== null });
+
+    if (typeof window.LD_UnlockScoreAnalysis === 'function') window.LD_UnlockScoreAnalysis();
+    OV_showToast('Overview updated', 'success');
+  } catch (e) {
+    console.error('OV_RunAnalysis error:', e);
+    document.getElementById('OV_MetricGrid').innerHTML = `<div class="ov-state" style="grid-column:1/-1;">Error: ${e.message}</div>`;
+    OV_showToast('Analysis error: ' + e.message, 'error');
+  }
+}
+
+function OV_fmt(n) {
+  if (n === null || n === undefined) return '—';
+  if (typeof n !== 'number') return n;
+  if (Number.isInteger(n)) return n.toLocaleString();
+  return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function OV_RenderMetrics({ totalVol, fraudVol, totalCards, fraudCards, totalValue, fraudValue }) {
+  const metrics = [
+    { label: 'Total Volume',      value: OV_fmt(totalVol) },
+    { label: 'Fraud Volume',      value: OV_fmt(fraudVol) },
+    { label: 'Total Cards',       value: OV_fmt(totalCards) },
+    { label: 'Fraud Cards',       value: OV_fmt(fraudCards) },
+    { label: 'Total Value',       value: OV_fmt(totalValue) },
+    { label: 'Value (Fraud)',     value: OV_fmt(fraudValue) },
+  ];
+
+  document.getElementById('OV_MetricGrid').innerHTML = metrics.map(m => `
+    <div class="ov-metric-box">
+      <div class="ov-metric-label">${m.label}</div>
+      <div class="ov-metric-value">${m.value}</div>
+    </div>
+  `).join('');
+}
+
+function OV_RenderRates({ volRate, valRate, hasValue }) {
+  const rateGrid = document.getElementById('OV_RateGrid');
+  const rates = [
+    { label: 'Fraud Rate (Volume)', value: volRate.toFixed(2) + '%' },
+    ...(hasValue ? [{ label: 'Fraud Rate (Value)', value: valRate.toFixed(2) + '%' }] : []),
+  ];
+  rateGrid.style.gridTemplateColumns = `repeat(${rates.length}, 1fr)`;
+  rateGrid.innerHTML = rates.map(r => `
+    <div class="ov-rate-box">
+      <div class="ov-rate-label">${r.label}</div>
+      <div class="ov-rate-value">${r.value}</div>
+    </div>
+  `).join('');
+}

@@ -1,1 +1,513 @@
-const a0_0x23bf36=a0_0x30e7;(function(_0x513203,_0x9fe19){const _0x1ab637=a0_0x30e7,_0x47b88c=_0x513203();while(!![]){try{const _0x1a188b=-parseInt(_0x1ab637(0x1b8))/0x1*(-parseInt(_0x1ab637(0x1d3))/0x2)+parseInt(_0x1ab637(0x15a))/0x3+parseInt(_0x1ab637(0x182))/0x4*(parseInt(_0x1ab637(0x1e0))/0x5)+parseInt(_0x1ab637(0x1a1))/0x6+parseInt(_0x1ab637(0x14f))/0x7+parseInt(_0x1ab637(0x165))/0x8+parseInt(_0x1ab637(0x146))/0x9*(-parseInt(_0x1ab637(0x18d))/0xa);if(_0x1a188b===_0x9fe19)break;else _0x47b88c['push'](_0x47b88c['shift']());}catch(_0x4dc96a){_0x47b88c['push'](_0x47b88c['shift']());}}}(a0_0xcf9c,0x41c5b));let ANRA_SelectedRoutes=new Set(),_ANRA_LastResults={};const ANRA_ROUTES={'R5':{'label':'R5','desc':()=>a0_0x23bf36(0x19c)},'R6':{'label':'R6','desc':()=>a0_0x23bf36(0x143)},'R7':{'label':'R7','desc':()=>a0_0x23bf36(0x1c4)},'R8':{'label':'R8','desc':()=>a0_0x23bf36(0x13c)}};function ANRA_toggleRoute(_0x171f37){const _0x2d700f=a0_0x23bf36;if(ANRA_SelectedRoutes['has'](_0x171f37))ANRA_SelectedRoutes[_0x2d700f(0x1a4)](_0x171f37);else ANRA_SelectedRoutes[_0x2d700f(0x141)](_0x171f37);ANRA_RefreshRouteBtns(),ANRA_RunAnalysis();}function ANRA_RefreshRouteBtns(){const _0xb7cf83=a0_0x23bf36,_0x269f1f=(ANRA_MiniNav_GetSelectedCols?.()||[])['length']>0x0,_0x3680d1=!!ANRA_SelectedScoreColumn,_0x1c3a40={'R5':_0x269f1f,'R6':_0x269f1f,'R7':_0x269f1f&&_0x3680d1,'R8':_0x269f1f&&_0x3680d1};Object['keys'](ANRA_ROUTES)[_0xb7cf83(0x181)](_0x1c5310=>{const _0x1a3819=_0xb7cf83,_0x5ec8fa=document[_0x1a3819(0x1a2)]('ANRA_RouteBtn_'+_0x1c5310);if(!_0x5ec8fa)return;const _0x5d6200=_0x1c3a40[_0x1c5310];_0x5ec8fa[_0x1a3819(0x17a)]=!_0x5d6200;if(!_0x5d6200&&ANRA_SelectedRoutes[_0x1a3819(0x1a9)](_0x1c5310))ANRA_SelectedRoutes[_0x1a3819(0x1a4)](_0x1c5310);_0x5ec8fa[_0x1a3819(0x1b7)][_0x1a3819(0x1c8)](_0x1a3819(0x172),ANRA_SelectedRoutes['has'](_0x1c5310));});const _0x124c50=ANRA_SelectedRoutes['size'],_0x2eba18=document[_0xb7cf83(0x1a2)](_0xb7cf83(0x156));if(_0x2eba18)_0x2eba18[_0xb7cf83(0x1b2)]=_0x124c50?_0x124c50+'\x20selected':'';}function ANRA_UpdateRouteDescriptions(){const _0x24ee5b=a0_0x23bf36,_0x3fad7d=ANRA_SelectedScoreColumn||_0x24ee5b(0x13e),_0x630ff=document[_0x24ee5b(0x1a2)](_0x24ee5b(0x1d8))?.[_0x24ee5b(0x13f)]||_0x24ee5b(0x140),_0x44d29a=document[_0x24ee5b(0x1a2)]('ANRA_MiniNav_ScoreVal')?.[_0x24ee5b(0x13f)]||'[Score]',_0x342efb={'R5':_0x24ee5b(0x158)+_0x3fad7d+_0x24ee5b(0x1b0)+_0x630ff,'R6':_0x24ee5b(0x158)+_0x3fad7d+_0x24ee5b(0x1b0)+_0x630ff+'\x20(excl.\x20seen\x20merchants)','R7':_0x24ee5b(0x158)+_0x3fad7d+'\x20where\x20FP\x20<\x20'+_0x630ff+'\x20and\x20score\x20above\x20'+_0x44d29a,'R8':_0x24ee5b(0x158)+_0x3fad7d+_0x24ee5b(0x1b0)+_0x630ff+_0x24ee5b(0x177)+_0x44d29a};Object[_0x24ee5b(0x1dd)](_0x342efb)['forEach'](([_0x4e1d6e,_0x473682])=>{const _0x326a20=_0x24ee5b,_0x2d673e=document[_0x326a20(0x1a2)](_0x326a20(0x1dc)+_0x4e1d6e+'Desc');if(_0x2d673e)_0x2d673e[_0x326a20(0x1b2)]=_0x473682;});}function a0_0xcf9c(){const _0x3767ce=['mJyXnZuYrMXKs29h','pc9ZCgfUpJWVzgL2pGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmIpJXZCgfUignSyxnZpsjHBNjHlxjVDxrLlw1LDhjPyY1SywjLBci+rMfSC2uGCg9ZlJWVC3bHBJ48C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmTDMfSiJ4','iGOGicaGicaGicaGv0HfuKuG','iIbbuYbwqvjdsefsksbjtIaO','iIbbuYbet1vcteuPidWG','cIaGicaGifnftevdvaOGicaGicaGifnvtsHdqvnfifDiru4G','u2nVCMuGWRCGtM8GzxHJBc4','BwvZC2fNzq','cIaGicaGica','DhzHBa','pc90zd4kicaGicaGica8DgqGC3r5Bgu9iG','uJCGlYbsocbYzxf1AxjLigeGC2nVCMuGy29SDw1UiokaLcbZzwXLy3qGB25LigLUihrOzsbty29YzsbZzwn0Aw9UlG','CxvHBgLMAwvK','ywn0AxzL','iIbbuYbwqvjdsefsksbftKqPieftihv0CMCkicaGicaGrLjptsaI','iIbxsevsrsa','AM9PBG','tg9HzcbKyxrHigzPCNn0lG','icHLEgnSlIbZzwvUig1LCMnOyw50CYKGyw5KihnJB3jLigfIB3zLia','pc9KAxy+cIaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLCY1NCMLKiIbZDhLSzt0IBwfYz2LUlxrVCdOYmhb4oYi+','cIaGicaGicaGicbhuK9vucbcwsaI','zgLZywjSzwq','zMLSDgvYu3bLy3m','pc90Ad4kicaGicaGicaGidWVDhi+cIaGicaGicaGpc90AgvHzd4kicaGicaGica8DgjVzhK+','iIbbuYbet1vcteuPievmu0uGmcbftKqPieftiezYyxvKvMfSDwukicaGiezst00GiG','jYKIpLzPzxCGu3rYyxrLz2LLCZWVyNv0Dg9UpGOGicaGidXIDxr0B24Gy2XHC3m9iNbNlwj0BIiGB25JBgLJAZ0Iqu5sqv9dB3b5q2fYzcGN','ifriru4GmsbftfnfidaGru5eksbbuYb2zGOGicaGicaGicaGrLjptsaI','CM91BMq','zM9YrwfJAa','mtjABMvjDwe','iIbZDhLSzt0ID2LKDgG6','B2jQzwn0','BNvTzxjPyW','jYWNrMLUywWNksi+q29WEtWVyNv0Dg9UpGOGicaGidXIDxr0B24Gy2XHC3m9iNbNlwj0BIbHBNjHlwXPA2uTyNrUiIbVBMnSAwnRpsjbtLjbx0fKzenHCMqOjW','DhjPz2DLCMvK','CgfKzgLUzZO5ChGGmtrWEdT2zxj0AwnHBc1HBgLNBJP0B3a7yM9YzgvYlwjVDhrVBtOXChGGC29SAwqGDMfYkc0Ty29SB3iTy2fYzc1IB3jKzxiPo2jVCMrLCI1YAwDODdOXChGGC29SAwqGDMfYkc0Ty29SB3iTy2fYzc1IB3jKzxiPo2zVBNqTC2L6ztOWlJC1CMvToW','pc90yM9KEt4kicaGicaGpc90ywjSzt4','CM91DgvnzxrH','cIaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLCY1NCMLKigfUCMeTC3vTBwfYEs1NCMLKiJ4kicaGicaG','phrKihn0EwXLpsi','mtCWA2TkueL0','iGOGicaGicaGicKkicaGicaGicbtruXfq1qGy3yGrLjptsbNcIaGicaGicaGv0HfuKuGDMyGpIaWieforcbdqvnukhz0ieftierpvujmrsKGlYbdqvnukhzMieftierpvujmrsKGpca','pc9KAxy+','BwfW','tM8GC2nVCMuGWRCGq3vTDwWUigv4y2WU','ieforcbot1qGka','pc90zd4','u2vSzwn0igf0igXLyxn0ig9UzsbJB2X1Bw4GAw4GqxzHAwXHyMXLienVBhvTBNmU','zxf1ywW','iIbbuYbet1vcteuPice9ia','rMLUywW','qwrKigf0igXLyxn0ig9UzsbHBw91BNqGzMLSDgvYlG','iokaPIaR','ieforcbdqvnukci','zMLUywXszxn1Bhq','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxq','pc9ZCgfUpJWVzgL2pGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmIpJXZCgfUignSyxnZpsjHBNjHlxjVDxrLlw1LDhjPyY1SywjLBci+vMfSDwuGzgv0lJWVC3bHBJ48C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmTDMfSiJ4','AxngAw5PDgu','cIaGicaGpc9KAxy+','terFz2v0q29UBG','mti0odmZmePbEerXtq','z2v0rwXLBwvUDej5swq','pc9ZCgfUpJWVzgL2pGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmIpJXZCgfUignSyxnZpsjHBNjHlxjVDxrLlw1LDhjPyY1SywjLBci+u2nVCMuG4OMLpc9ZCgfUpJXZCgfUignSyxnZpsjHBNjHlxjVDxrLlw1LDhjPyY12ywWIpG','zgvSzxrL','phrYpGOGicaGicaGia','CgfKzgLUzZOXmhb4ide0ChG7zM9UDc1ZAxPLoJaUnJjYzw07zM9UDc13zwLNAhq6nZaWo3rLEhqTDhjHBNnMB3jToNvWCgvYy2fZztTSzxr0zxiTC3bHy2LUzZOWlJa4zw07yM9YzgvYlwjVDhrVBtOXChGGC29SAwqGDMfYkc0Ty29SB3iTy2fYzc1IB3jKzxiPo3rLEhqTywXPz246BgvMDdT3AgL0zs1ZCgfJztPUB3DYyxa7','Bwf4','ieforcaO','AgfZ','pgrPDIbJBgfZCZ0ICgCTy2fYzcbHBNjHlwnHCMqIpGOGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1OzwfKzxiIihn0EwXLpsjWywrKAw5NoJeYChGGmtrWEcaXmhb4o21HCMDPBI1IB3r0B206mdTHBgLNBI1PDgvTCZPMBgv4lxn0yxj0oYi+cIaGicaGidXKAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc10AxrSzsiGC3r5Bgu9iMzVBNqTC2L6ztOWlJG4CMvToYi+','CMvWBgfJzq','u1bFz2v0ugfYyw1Z','phnWyw4GC3r5Bgu9iMnVBg9YoNzHCIGTlwrTBc1SywjLBcK7zM9UDc1ZDhLSztPPDgfSAwm7iJ4','imk3ia','zMLSDgvY','ihDOzxjLiezqidWG','ksbusevoienbu1qOiG','Dgv4DenVBNrLBNq','ie9sia','cIaGicaGidX0ywjSzsbZDhLSzt0ID2LKDgG6mtaWjtTIB3jKzxiTy29SBgfWC2u6y29SBgfWC2u7DgfIBguTBgf5B3v0oMf1Dg87iJ4kicaGicaGica8DgHLywq+cIaGicaGicaGica8DhiGC3r5Bgu9iMjHy2TNCM91BMq6DMfYkc0Ty29SB3iTCgfNzs1IzYK7iJ4kicaGicaGicaGicaGphrOihn0EwXLpsi','BMz2ywW','iIbbuYbwqvjdsefsksbot1qGsu4Gka','y2XHC3nmAxn0','mJi0mtDNB0Ptzxm','jYKIpKnVChK8l2j1DhrVBJ4kicaGica8yNv0Dg9UignSyxnZpsjWzY1IDg4Gyw5Yys1SAwTLlwj0BIiGB25JBgLJAZ0Iqu5sqv9bzgrdyxjKkcC','vg90ywXwB2X1Bwu','iIbbuYbwqvjdsefsksbbuYbJDIWkicaGicaGicaGicaGicaGicbdt1vovcGQksbbuYb2DcWkicaGicaGicaGicaGicaGicbtvu0Oq0ftrsbxsevoia','rNjHDwrwywX1zq','iIbbuYbet1vcteuPid4G','qu5sqv9tDhjHDgvNEu1VzgfS','iGOGicaG','ieforcaGicaGka','cIaGica','jYKIpVcFKy0GtgLRzsbPDdWVyNv0Dg9UpG','cIaGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxjZiJ4kicaGicaGia','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsbHBMqGC2nVCMuGywjVDMuGw1nJB3jLxq','pc9ZDhjVBMC+phnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOWlJCYCMvTo2nVBg9YoNzHCIGTlwrTBc1SywjLBcK7iJ7IIAuG','cIaGicaGifnftevdvcbdt1vovcHesvnusu5dvcbdqvnukci','tM8GC2nVCMuGWRCGtM8GzxHJBc4','Dg9Nz2XL','cIaGicaGicaGv0LuscbNiefticGkicaGicaGicaGifnftevdvcbdqvnukci','pc9KAxy+cIaGicaGidWVzgL2pGOGicaGica8C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1JyxjKlxn1yIi+','sw1Wywn0ihzVBhvTzq','ksbusevoideGruXtrsaWievorcKGqvmGDhjPz2DLCMvKlaOGicaGicaGifnvtsHdqvnfifDiru4G','DMfSDwvZ','y29SB3i6iZnIodjMnJSIpG','Dg9bCNjHEq','qu5eienbu1qOiG','BM93','AxnPBG','mtbQBKzJDe4','rNjHDwqGDM9SDw1L','Aw5JBhvKzxm','DxrYzW','u2nVCMuGWRCGq3vTDwWUigv4y2WU','qu5sqv9nAw5PtMf2x1zVBhvTzuzq','pc9ZCgfUpGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTDhjHy2SIpJXKAxyGy2XHC3m9iMfUCMeTCM91DguTyMfYlwzPBgWG','sw1Wywn0ihzHBhvL','CxvLCNK','qu5sqv8','zw50CMLLCW','zM9UDc13zwLNAhq6nJaWo2nVBg9YoNzHCIGTlwrTBc10zxH0ktSIpG','terFz2v0u291CMnL','mteZodu1zfzPCNnX','pc9ZCgfUpG','iIbbuYbet1vcteuPievmu0uGmcbftKqPieftig5MDMfSlaOGicaGicaGienpvu5ukerju1rjtKnuienbu0uGv0HftIa','qu5sqv9tDhjHDgvNEu1VzgfSvgL0Bgu','iIbbuYbet1vcteuPid49ia','tI9b','q292zxjHz2u','pc9KAxy+cIaGica','yw5Yys1YB3v0zs1IyxiTzMLSBc1HBwjLCG','zw4Tr0i','tM9Uzq','pc9ZCgfUpJWVzgL2pGOGidWVzgL2pG','zNzS','pc9ZCgfUpGOGicaGpc9KAxy+cIaGica8zgL2ignSyxnZpsjWzY1JyxjKlwrPDMLKzxiIpJWVzgL2pGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1JyxjKlwfJDgLVBNmIpG','Aw5Uzxjive1m','BgvUz3rO','y29SB3i6iZyZnJzMmtTIB3jKzxiTCMLNAhq6BM9UztSIpG','uM91DguGqw5HBhLZAxm','rNjHDwqGDMfSDwu','jYWN','ig1VCMu','ChvZAa','y29SB3i6i2y1owuWyJSIpLnJB3jLieLUzM9YBwf0Aw9Upc90Ad4kicaGicaGicaGicaGphrOihn0EwXLpsi','yM9YzgvYlxjPz2H0oJfWEcbZB2XPzcb2yxiOls1JB2XVCI1JyxjKlwjVCMrLCIK7','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsaOzxHJBc4GC2vLBIbTzxjJAgfUDhmPigfUzcbZy29YzsbHyM92zsbBu2nVCMvD','qu5sqv9szxn1BhrZqxjLyq','w0nVBhvTBL0','DMfSDwu','w1zHBhvLxq','ywrK','zNvUy3rPB24','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsaOzxHJBc4GC2vLBIbTzxjJAgfUDhmP','q0ftvcGI','pc9KAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1SywjLBciGC3r5Bgu9iM1HCMDPBI10B3a6m3b4oYi+','ndiWmtaYtePnDgrS','iIbbuYbwqvjdsefsksKGqvmGBIbguK9nici','ifriru4GmsbftfnfidaGru5eksbbuYbgCMf1zfzVBhvTzsWkicaGicaGu1vnkenbu0uGv0HftIa','pc90zd4kicaGicaGpc90CJ4','y29Smq','C2nVCMu','y29SuMvZDwX0CW','BwLU','vg90ywXwywX1zq','mty3nJK1nw50ww5yva','Dg9mB2nHBgvtDhjPBMC','qu5sqv9nAw5PtMf2x1nJB3jLvMfS','jYWNrMLUywWNksi+8j+rJsbmAwTLigL0pc9IDxr0B24+','qu5sqv9tDhjHDgvNEu1VzgfSqM9KEq','jsi+pc9KAxy+pc9KAxy+cIaGica8C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTCgn0iJ4','pgrPDIbJBgfZCZ0ICgCTy2fYzcbHBNjHlwnHCMqIihn0EwXLpsjTAw4TAgvPz2H0oJeYmhb4oYi+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1OzwfKzxiIihn0EwXLpsjWywrKAw5NoJeYChGGmtrWEcaXmhb4o21HCMDPBI1IB3r0B206mdSIpGOGicaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc10AxrSzsiGC3r5Bgu9iMzVBNqTC2L6ztOWlJG4CMvToYi+','qu5sqv9tzwXLy3rLzfjVDxrLC0XHyMvS','rNjHDwrwB2X1Bwu','rMLSDgvYia','cIaGicaGia','mtiWnJu3nKjKDNrfta','rLaGkYbZy29YzsbMAwX0zxi','ksbusevoideGruXtrsaWievorcKGqvmGBM9UzNjKlaOGicaGicaGifnvtsHdqvnfifDiru4G','iIbYB3DZCgfUpsi','jtWVC3bHBJ4kica8l2rPDJ4','A2v5CW','yw5Yys1YB3v0zs1IyxiTzMLSBc1IBhvL','pgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTCM93iJ4kicaGidXZCgfUignSyxnZpsjHBNjHlxjVDxrLlwjHCI1SywjLBci+','uM91DgvFqw5HBhLZAxnF','BM9UzNjK','qxbWBhKGCgfYyw1LDgvYCYbMAxjZDcaOzNjHDwqGy29SDw1Ulcb2ywX1zxmSigfTB3vUDcbJB2X1Bw4SignHCMqGzgLTzw5ZAw9Uks4'];a0_0xcf9c=function(){return _0x3767ce;};return a0_0xcf9c();}const _ANRA_SQL_OPS={'equal':(_0x398fa2,_0xb2cc91)=>a0_0x23bf36(0x144)+_0x398fa2+'\x22\x20AS\x20DOUBLE)\x20=\x20'+_0xb2cc91,'greater_than':(_0x4ba8e9,_0x523bfe)=>'CAST(\x22'+_0x4ba8e9+a0_0x23bf36(0x1bd)+_0x523bfe,'less_than':(_0x1d17e5,_0x32b989)=>'CAST(\x22'+_0x1d17e5+a0_0x23bf36(0x169)+_0x32b989,'greater_than_or_equal':(_0x1ea080,_0x55b775)=>a0_0x23bf36(0x144)+_0x1ea080+'\x22\x20AS\x20DOUBLE)\x20>=\x20'+_0x55b775,'less_than_or_equal':(_0x214619,_0x281db7)=>a0_0x23bf36(0x144)+_0x214619+'\x22\x20AS\x20DOUBLE)\x20<=\x20'+_0x281db7,'not_equal':(_0x12ca03,_0x5c1987)=>a0_0x23bf36(0x144)+_0x12ca03+a0_0x23bf36(0x196)+_0x5c1987},_ANRA_OP_SYM={'equal':'=','greater_than':'>','less_than':'<','greater_than_or_equal':'>=','less_than_or_equal':'<=','not_equal':'!='};let _ANRA_running=![];async function ANRA_RunAnalysis(){const _0x494378=a0_0x23bf36,_0x2bb765=window[_0x494378(0x1a0)]?.(),_0x300534=window[_0x494378(0x1df)]?.(),_0x2d3ad3=document['getElementById'](_0x494378(0x13d));if(!_0x2d3ad3)return;const _0x5edda3=[...ANRA_SelectedRoutes];if(!_0x5edda3['length']){_0x2d3ad3[_0x494378(0x1ee)]='';return;}if(!_0x2bb765||!_0x300534){_ANRA_showError(_0x2d3ad3,_0x494378(0x176));return;}const _0x494e04=window[_0x494378(0x1ac)]?.();if(!_0x494e04?.[_0x494378(0x14a)]||!_0x494e04?.[_0x494378(0x1cd)]?.[_0x494378(0x1ef)]||!_0x494e04?.['numeric']||!_0x494e04?.['object']){_ANRA_showError(_0x2d3ad3,_0x494378(0x164));return;}const _0x2b515c=ANRA_MiniNav_GetSelectedCols?.()||[];if(!_0x2b515c['length']){_ANRA_showError(_0x2d3ad3,_0x494378(0x194));return;}if(!ANRA_AmountList['length']){_ANRA_showError(_0x2d3ad3,_0x494378(0x198));return;}const _0xd1a7b9=[...ANRA_SelectedRoutes]['some'](_0x46a69e=>_0x46a69e==='R7'||_0x46a69e==='R8');if(_0xd1a7b9&&!ANRA_SelectedScoreColumn){_ANRA_showError(_0x2d3ad3,_0x494378(0x170));return;}if(_ANRA_running)return;_ANRA_running=!![],_ANRA_showLoading(_0x2d3ad3,_0x5edda3);const _0x4e6df3=parseFloat(document[_0x494378(0x1a2)]('ANRA_MiniNav_VolumeFP')?.[_0x494378(0x13f)])||0xa,_0x26bc73=ANRA_SelectedScoreColumn,_0x3fe34f=parseFloat(document['getElementById'](_0x494378(0x151))?.[_0x494378(0x13f)])||0x0;try{const _0x57887e={};for(const _0x19d7fc of _0x5edda3){_0x57887e[_0x19d7fc]=await _ANRA_computeRoute(_0x19d7fc,{'conn':_0x2bb765,'src':_0x300534,'fraudCol':_0x494e04[_0x494378(0x14a)],'fraudVals':_0x494e04[_0x494378(0x1cd)],'amountCol':_0x494e04[_0x494378(0x185)],'cardCol':_0x494e04[_0x494378(0x184)],'selectCols':_0x2b515c,'fpThreshold':_0x4e6df3,'amountList':ANRA_AmountList,'scoreCol':_0x26bc73,'scoreVal':_0x3fe34f});}_ANRA_LastResults=_0x57887e,_ANRA_renderResults(_0x2d3ad3,_0x57887e,_0x5edda3);}catch(_0x378734){_ANRA_showError(_0x2d3ad3,'Analysis\x20error:\x20'+_0x378734[_0x494378(0x16c)]);}finally{_ANRA_running=![];}}async function _ANRA_computeRoute(_0x21d629,_0x2a6d9e){const _0x5cabbe=a0_0x23bf36,{conn:_0x28859b,src:_0x8bcc41,fraudCol:_0x61c733,fraudVals:_0x8ff9f3,amountCol:_0x38dca7,cardCol:_0x5e3aab,selectCols:_0x4274db,fpThreshold:_0x4b5c8d,amountList:_0xd2b19b,scoreCol:_0x355087,scoreVal:_0xd91cb2}=_0x2a6d9e,_0x2844ed=['R7','R8']['includes'](_0x21d629),_0x4b4a8a=['R6','R8'][_0x5cabbe(0x1d5)](_0x21d629),_0x3e58e3=_0x8ff9f3[_0x5cabbe(0x190)](_0x5c3c24=>'\x27'+String(_0x5c3c24)[_0x5cabbe(0x1ab)](/'/g,'\x27\x27')+'\x27')[_0x5cabbe(0x175)](','),_0x4b28da=_0x5cabbe(0x144)+_0x61c733+_0x5cabbe(0x168)+_0x3e58e3+')',_0x3dc000=(await _0x28859b[_0x5cabbe(0x1db)]('\x0a\x20\x20\x20\x20SELECT\x0a\x20\x20\x20\x20\x20\x20COUNT(*)\x20AS\x20TotalVolume,\x0a\x20\x20\x20\x20\x20\x20SUM(CAST(\x22'+_0x38dca7+'\x22\x20AS\x20DOUBLE))\x20AS\x20TotalValue,\x0a\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x4b28da+_0x5cabbe(0x148)+_0x4b28da+'\x20THEN\x20CAST(\x22'+_0x38dca7+_0x5cabbe(0x17d)+_0x8bcc41+'\x22\x0a\x20\x20'))[_0x5cabbe(0x1cf)]()[0x0],_0x31ddfd=Number(_0x3dc000[_0x5cabbe(0x1ba)]),_0xa9f1b=Number(_0x3dc000[_0x5cabbe(0x14e)]),_0x134a2a=Number(_0x3dc000[_0x5cabbe(0x157)]),_0x30c841=Number(_0x3dc000[_0x5cabbe(0x1bc)]),_0x4e3289={},_0x2506d5=[];for(const _0x247789 of _0x4274db){const _0xb58b8a=_0x247789[_0x5cabbe(0x1ab)](/"/g,'\x22\x22');let _0x381737=[];const _0x5d7b9b=[];for(const {op:_0x16b182,val:_0xb7c943}of _0xd2b19b){const _0xcf41d7=_ANRA_SQL_OPS[_0x16b182];if(!_0xcf41d7)continue;const _0x21f1a1=_0xcf41d7(_0x38dca7,_0xb7c943),_0x34c1e2=_0x4b4a8a&&_0x381737[_0x5cabbe(0x1ef)]?'AND\x20CAST(\x22'+_0xb58b8a+_0x5cabbe(0x1b6)+_0x381737[_0x5cabbe(0x190)](_0x49010d=>'\x27'+String(_0x49010d)['replace'](/'/g,'\x27\x27')+'\x27')[_0x5cabbe(0x175)](',')+')':'',_0x4b490f=_0x2844ed&&_0x355087?_0x5cabbe(0x1d0)+_0x355087+_0x5cabbe(0x1e4)+_0xd91cb2:'',_0x38607a=(await _0x28859b[_0x5cabbe(0x1db)](_0x5cabbe(0x1c9)+_0xb58b8a+_0x5cabbe(0x1bb)+_0x4b28da+_0x5cabbe(0x17f)+_0x8bcc41+_0x5cabbe(0x167)+_0x21f1a1+'\x20'+_0x34c1e2+'\x20'+_0x4b490f+_0x5cabbe(0x179)+_0xb58b8a+_0x5cabbe(0x18e)+_0x4b5c8d+_0x5cabbe(0x159)))[_0x5cabbe(0x1cf)](),_0x5a94b5=_0x38607a['map'](_0x91ab4d=>String(_0x91ab4d['cv']));_0x5d7b9b[_0x5cabbe(0x1f5)]({'op':_0x16b182,'val':_0xb7c943,'qualified':_0x5a94b5});if(_0x4b4a8a&&!(_0x16b182===_0x5cabbe(0x195)&&Number(_0xb7c943)===0x0))_0x5a94b5['forEach'](_0x13db94=>{const _0x49f744=_0x5cabbe;if(!_0x381737['includes'](_0x13db94))_0x381737[_0x49f744(0x1f5)](_0x13db94);});}const _0x382e9e=_0x5d7b9b[_0x5cabbe(0x1af)](_0x288626=>_0x288626['qualified'][_0x5cabbe(0x1ef)]>0x0)[_0x5cabbe(0x190)](({op:_0x594a2d,val:_0x3e30ee,qualified:_0x267fc2})=>{const _0x492588=_0x5cabbe,_0x429621=_0x267fc2['map'](_0x554796=>'\x27'+_0x554796['replace'](/'/g,'\x27\x27')+'\x27')[_0x492588(0x175)](','),_0x15c540=_0x2844ed&&_0x355087?_0x492588(0x19a)+_0x355087+_0x492588(0x1e4)+_0xd91cb2:'';return'('+_ANRA_SQL_OPS[_0x594a2d](_0x38dca7,_0x3e30ee)+_0x492588(0x19a)+_0xb58b8a+_0x492588(0x168)+_0x429621+')'+_0x15c540+')';});if(!_0x382e9e[_0x5cabbe(0x1ef)]){_0x4e3289[_0x247789]={..._ANRA_zeroMetrics(_0x2844ed,_0xd91cb2),'filterSpecs':_0x5d7b9b};continue;}_0x2506d5[_0x5cabbe(0x1f5)](..._0x382e9e);const _0x22aaf9='('+_0x382e9e[_0x5cabbe(0x175)]('\x20OR\x20')+')',_0x1323c5=Number((await _0x28859b[_0x5cabbe(0x1db)](_0x5cabbe(0x1c6)+_0xb58b8a+_0x5cabbe(0x147)+_0x8bcc41+_0x5cabbe(0x174)+_0x4b28da+_0x5cabbe(0x1c1)))[_0x5cabbe(0x1cf)]()[0x0]['n']),_0x5d6340=(await _0x28859b['query']('\x0a\x20\x20\x20\x20\x20\x20SELECT\x0a\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x22aaf9+_0x5cabbe(0x1c0)+_0x4b28da+_0x5cabbe(0x1cc)+_0x22aaf9+_0x5cabbe(0x1c0)+_0x4b28da+_0x5cabbe(0x1b1)+_0x38dca7+'\x22\x20AS\x20DOUBLE)\x20ELSE\x200\x20END)\x20AS\x20tval,\x0a\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x22aaf9+_0x5cabbe(0x192)+_0x4b28da+_0x5cabbe(0x15c)+_0x22aaf9+_0x5cabbe(0x192)+_0x4b28da+')\x20THEN\x20CAST(\x22'+_0x38dca7+_0x5cabbe(0x1e2)+_0x22aaf9+_0x5cabbe(0x1a8)+_0x4b28da+_0x5cabbe(0x1b1)+_0xb58b8a+_0x5cabbe(0x173)+_0x8bcc41+_0x5cabbe(0x1bf)))[_0x5cabbe(0x1cf)]()[0x0],_0x2bb612=Number(_0x5d6340['triggered']),_0x564edc=Number(_0x5d6340[_0x5cabbe(0x16e)]),_0x537e9e=Number(_0x5d6340[_0x5cabbe(0x163)]),_0xb8baa1=Number(_0x5d6340['nfval']),_0x2c3149=Number(_0x5d6340[_0x5cabbe(0x1d6)]);_0x4e3289[_0x247789]={'triggered':_0x2bb612,'value':_0x564edc,'fp':_0x2bb612>0x0?Math[_0x5cabbe(0x180)](_0x537e9e/_0x2bb612)+':1':'N/A','unique':_0x2c3149,'fv':_r2(_0x134a2a>0x0?_0x2bb612/_0x134a2a*0x64:0x0),'fvl':_r2(_0x30c841>0x0?_0x564edc/_0x30c841*0x64:0x0),'iv':_r2(_0x31ddfd>0x0?_0x537e9e/_0x31ddfd*0x64:0x0),'ivl':_r2(_0xa9f1b>0x0?_0xb8baa1/_0xa9f1b*0x64:0x0),'aa':_r2(_0x1323c5>0x0?_0x2c3149/_0x1323c5*0x64:0x0),'score':_0x2844ed?String(_0xd91cb2):'0','filterSpecs':_0x5d7b9b};}let _0xd1fdc5=_ANRA_zeroMetrics(_0x2844ed,_0xd91cb2);if(_0x2506d5[_0x5cabbe(0x1ef)]){const _0x47fdc3='('+_0x2506d5[_0x5cabbe(0x175)](_0x5cabbe(0x1b3))+')',_0x406af9=_0x4274db[_0x4274db[_0x5cabbe(0x1ef)]-0x1][_0x5cabbe(0x1ab)](/"/g,'\x22\x22'),_0x4ce1c8=Number((await _0x28859b['query']('\x0a\x20\x20\x20\x20\x20\x20SELECT\x20COUNT(DISTINCT\x20CAST(\x22'+_0x406af9+_0x5cabbe(0x147)+_0x8bcc41+_0x5cabbe(0x174)+_0x4b28da+'\x0a\x20\x20\x20\x20'))['toArray']()[0x0]['n']),_0x7d6a06=(await _0x28859b[_0x5cabbe(0x1db)](_0x5cabbe(0x16a)+_0x47fdc3+_0x5cabbe(0x1c0)+_0x4b28da+_0x5cabbe(0x1cc)+_0x47fdc3+_0x5cabbe(0x1c0)+_0x4b28da+_0x5cabbe(0x1b1)+_0x38dca7+'\x22\x20AS\x20DOUBLE)\x20ELSE\x200\x20END)\x20AS\x20tval,\x0a\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x47fdc3+_0x5cabbe(0x192)+_0x4b28da+')\x20THEN\x201\x20ELSE\x200\x20END)\x20AS\x20nonfrd,\x0a\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x47fdc3+_0x5cabbe(0x192)+_0x4b28da+_0x5cabbe(0x1b1)+_0x38dca7+_0x5cabbe(0x1e2)+_0x47fdc3+_0x5cabbe(0x1a8)+_0x4b28da+_0x5cabbe(0x1b1)+_0x406af9+'\x22\x20AS\x20VARCHAR)\x20END)\x20AS\x20utrg\x0a\x20\x20\x20\x20\x20\x20FROM\x20\x22'+_0x8bcc41+_0x5cabbe(0x1bf)))['toArray']()[0x0],_0x1e1637=Number(_0x7d6a06[_0x5cabbe(0x187)]),_0x43fa08=Number(_0x7d6a06[_0x5cabbe(0x16e)]),_0x14720a=Number(_0x7d6a06[_0x5cabbe(0x163)]),_0x3ec343=Number(_0x7d6a06[_0x5cabbe(0x1b5)]),_0x21892a=Number(_0x7d6a06['utrg']);_0xd1fdc5={'triggered':_0x1e1637,'value':_0x43fa08,'fp':_0x1e1637>0x0?Math[_0x5cabbe(0x180)](_0x14720a/_0x1e1637)+':1':_0x5cabbe(0x1e5),'unique':_0x21892a,'fv':_r2(_0x134a2a>0x0?_0x1e1637/_0x134a2a*0x64:0x0),'fvl':_r2(_0x30c841>0x0?_0x43fa08/_0x30c841*0x64:0x0),'iv':_r2(_0x31ddfd>0x0?_0x14720a/_0x31ddfd*0x64:0x0),'ivl':_r2(_0xa9f1b>0x0?_0x3ec343/_0xa9f1b*0x64:0x0),'aa':_r2(_0x4ce1c8>0x0?_0x21892a/_0x4ce1c8*0x64:0x0),'score':_0x2844ed?String(_0xd91cb2):'0'};}return{'colResults':_0x4e3289,'finalResult':_0xd1fdc5,'TotalVolume':_0x31ddfd,'TotalValue':_0xa9f1b,'FraudVolume':_0x134a2a,'FraudValue':_0x30c841,'routeMeta':{'useScore':_0x2844ed,'scoreCol':_0x355087,'scoreVal':_0xd91cb2}};}function _r2(_0x348dad){const _0x4c76fe=a0_0x23bf36;return Math[_0x4c76fe(0x180)](_0x348dad*0x64)/0x64;}function _ANRA_zeroMetrics(_0x3f30e5,_0x50eb6e){return{'triggered':0x0,'value':0x0,'fp':'N/A','unique':0x0,'fv':0x0,'fvl':0x0,'iv':0x0,'ivl':0x0,'aa':0x0,'score':_0x3f30e5?String(_0x50eb6e):'0'};}const _ANRA_FMT_NUM=_0x59b378=>Number[a0_0x23bf36(0x19e)](_0x59b378)?_0x59b378['toLocaleString']('en-GB'):'—',_ANRA_FMT_VAL=_0x2f7dc5=>Number['isFinite'](_0x2f7dc5)?_0x2f7dc5[a0_0x23bf36(0x150)](a0_0x23bf36(0x1e9),{'minimumFractionDigits':0x2,'maximumFractionDigits':0x2}):'—',_ANRA_SUB={'R5':a0_0x23bf36(0x1c7),'R6':a0_0x23bf36(0x191),'R7':a0_0x23bf36(0x16b),'R8':a0_0x23bf36(0x1d7)},_ANRA_TITLE={'R5':'FP\x20filter\x20only','R6':'FP\x20filter\x20only','R7':a0_0x23bf36(0x15b),'R8':a0_0x23bf36(0x15b)};function _ANRA_barRow(_0x45d293,_0x27b6c1,_0x380c7b){const _0x3a79b0=a0_0x23bf36,_0x373052=Math[_0x3a79b0(0x14d)](Math[_0x3a79b0(0x1a7)](_0x27b6c1,0x0),0x64);return _0x3a79b0(0x161)+_0x45d293+_0x3a79b0(0x1d9)+_0x380c7b+_0x3a79b0(0x183)+_0x373052+_0x3a79b0(0x154)+_0x27b6c1+_0x3a79b0(0x15e);}function _ANRA_metrics(_0x14fe33){const _0x2425c1=a0_0x23bf36;return'<div\x20class=\x22anra-route-metrics\x22>\x0a\x20\x20\x20\x20<div\x20class=\x22anra-route-metric\x22><span\x20class=\x22anra-route-metric-label\x22>Triggered</span><span\x20class=\x22anra-route-metric-val\x22>'+_ANRA_FMT_NUM(_0x14fe33[_0x2425c1(0x187)])+_0x2425c1(0x19d)+_ANRA_FMT_VAL(_0x14fe33[_0x2425c1(0x13f)])+_0x2425c1(0x166)+_0x14fe33['fp']+_0x2425c1(0x1a3)+_0x14fe33[_0x2425c1(0x14b)]+_0x2425c1(0x1eb);}function a0_0x30e7(_0x4edd41,_0x42d918){_0x4edd41=_0x4edd41-0x13b;const _0xcf9ce2=a0_0xcf9c();let _0x30e78a=_0xcf9ce2[_0x4edd41];if(a0_0x30e7['TZVLxH']===undefined){var _0x2d608e=function(_0x5a2c81){const _0x5d18d1='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x171f37='',_0x269f1f='';for(let _0x3680d1=0x0,_0x1c3a40,_0x124c50,_0x2eba18=0x0;_0x124c50=_0x5a2c81['charAt'](_0x2eba18++);~_0x124c50&&(_0x1c3a40=_0x3680d1%0x4?_0x1c3a40*0x40+_0x124c50:_0x124c50,_0x3680d1++%0x4)?_0x171f37+=String['fromCharCode'](0xff&_0x1c3a40>>(-0x2*_0x3680d1&0x6)):0x0){_0x124c50=_0x5d18d1['indexOf'](_0x124c50);}for(let _0x1c5310=0x0,_0x5ec8fa=_0x171f37['length'];_0x1c5310<_0x5ec8fa;_0x1c5310++){_0x269f1f+='%'+('00'+_0x171f37['charCodeAt'](_0x1c5310)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x269f1f);};a0_0x30e7['wdmGJM']=_0x2d608e,a0_0x30e7['mDbdRB']={},a0_0x30e7['TZVLxH']=!![];}const _0x167d28=_0xcf9ce2[0x0],_0x12b968=_0x4edd41+_0x167d28,_0x1ec5cf=a0_0x30e7['mDbdRB'][_0x12b968];return!_0x1ec5cf?(_0x30e78a=a0_0x30e7['wdmGJM'](_0x30e78a),a0_0x30e7['mDbdRB'][_0x12b968]=_0x30e78a):_0x30e78a=_0x1ec5cf,_0x30e78a;}function _ANRA_cardShell(_0x5ba03d,_0x35ca91,_0x2e07c0,_0x2cc439,_0x2c88ad){const _0x415914=a0_0x23bf36;return _0x415914(0x1aa)+_0x5ba03d+_0x415914(0x145)+_0x35ca91+_0x415914(0x1ca)+_0x2e07c0+_0x415914(0x1ed)+_0x2cc439+_0x415914(0x1e7)+_0x2c88ad+'\x0a\x20\x20</div>';}function _ANRA_makeSummaryCard(_0xdbe9ec,_0x1bc3cc){const _0x1823c4=a0_0x23bf36;return _ANRA_cardShell(_ANRA_TITLE[_0xdbe9ec]||_0xdbe9ec,_0x1823c4(0x197),_ANRA_SUB[_0xdbe9ec]||'','<button\x20class=\x22pg-btn\x22\x20onclick=\x22ANRA_ShowStrategies(\x27'+_0xdbe9ec+'\x27,\x27Final\x27)\x22>View\x20Strategies</button>\x0a\x20\x20\x20\x20\x20<button\x20class=\x22pg-btn\x22\x20onclick=\x22ANRA_CopyCard(\x27'+_0xdbe9ec+_0x1823c4(0x186)+_0xdbe9ec+_0x1823c4(0x152),_ANRA_metrics(_0x1bc3cc)+_0x1823c4(0x1c3)+_ANRA_barRow(_0x1823c4(0x1d4),_0x1bc3cc['fv'],_0x1823c4(0x1e8))+'\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x1823c4(0x1f2),_0x1bc3cc[_0x1823c4(0x1ec)],_0x1823c4(0x1e8))+'\x0a\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22anra-route-bar-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x1823c4(0x1cb),_0x1bc3cc['iv'],'anra-route-bar-fill-blue')+'\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x1823c4(0x1da),_0x1bc3cc['ivl'],_0x1823c4(0x160))+'\x0a\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22anra-route-bar-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x1823c4(0x1e6),_0x1bc3cc['aa'],_0x1823c4(0x160))+'\x0a\x20\x20\x20\x20\x20</div>');}function _ANRA_makeRouteCard(_0x179c8c,_0x3f9196,_0x57c6a4){const _0x432b3c=a0_0x23bf36,_0x21f3ce=_0x3f9196['replace'](/'/g,'\x5c\x27');return _ANRA_cardShell(_0x3f9196,_ANRA_TITLE[_0x179c8c]||_0x179c8c,_ANRA_SUB[_0x179c8c]||'','<button\x20class=\x22pg-btn\x22\x20onclick=\x22ANRA_ShowStrategies(\x27'+_0x179c8c+_0x432b3c(0x1f3)+_0x21f3ce+_0x432b3c(0x17e)+_0x179c8c+_0x432b3c(0x1f3)+_0x21f3ce+_0x432b3c(0x1b9)+_0x179c8c+_0x432b3c(0x1f3)+_0x21f3ce+_0x432b3c(0x1c2),_ANRA_metrics(_0x57c6a4)+_0x432b3c(0x1c3)+_ANRA_barRow('Fraud\x20volume',_0x57c6a4['fv'],_0x432b3c(0x1e8))+_0x432b3c(0x16d)+_ANRA_barRow(_0x432b3c(0x1f2),_0x57c6a4['fvl'],_0x432b3c(0x1e8))+'\x0a\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22anra-route-bar-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x432b3c(0x1cb),_0x57c6a4['iv'],'anra-route-bar-fill-blue')+_0x432b3c(0x16d)+_ANRA_barRow(_0x432b3c(0x1da),_0x57c6a4['ivl'],_0x432b3c(0x160))+_0x432b3c(0x19f));}function _ANRA_renderResults(_0x366f5e,_0x3e7bff,_0x3ea438){const _0x365f57=a0_0x23bf36,_0xe0e39e=_0x3ea438[_0x365f57(0x190)](_0x3876af=>_ANRA_makeSummaryCard(_0x3876af,_0x3e7bff[_0x3876af][_0x365f57(0x19b)]))[_0x365f57(0x175)](''),_0x2c848e=[];for(const _0xe90497 of _0x3ea438)for(const _0x32dd42 of Object[_0x365f57(0x15f)](_0x3e7bff[_0xe90497]['colResults']))_0x2c848e[_0x365f57(0x1f5)](_ANRA_makeRouteCard(_0xe90497,_0x32dd42,_0x3e7bff[_0xe90497]['colResults'][_0x32dd42]));_0x366f5e[_0x365f57(0x1ee)]='\x0a\x20\x20\x20\x20<div\x20class=\x22anra-routes-grid\x20anra-summary-grid\x22>'+_0xe0e39e+_0x365f57(0x178)+_0x2c848e['join']('')+_0x365f57(0x18f);}function _ANRA_showError(_0x183c22,_0x22f908){const _0x3bc5ae=a0_0x23bf36;_0x183c22[_0x3bc5ae(0x1ee)]='<div\x20style=\x22padding:16px;font-size:0.72rem;color:#ef4444;\x22>'+_0x22f908+_0x3bc5ae(0x18f);}function _ANRA_showLoading(_0x43771a,_0x3ad1b2){const _0x3c0fec=a0_0x23bf36;_0x43771a[_0x3c0fec(0x1ee)]=_0x3c0fec(0x18b)+_0x3ad1b2[_0x3c0fec(0x190)](_0x36ce1c=>_0x3c0fec(0x155)+_0x36ce1c+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-label\x22\x20style=\x22margin-top:3px;\x22>Final</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22padding:16px;font-size:0.68rem;color:var(--color-text-dim);\x22>Computing…</div>\x0a\x20\x20\x20\x20\x20\x20</div>')[_0x3c0fec(0x175)]('')+'\x0a\x20\x20\x20\x20</div>';}function ANRA_ShowStrategies(_0x35f6a5,_0x1c594e){const _0x1350b6=a0_0x23bf36,_0x12c4aa=window[_0x1350b6(0x1ac)]?.(),_0x32165c=_0x12c4aa?.['numeric']||'Amount',_0x438f98=_ANRA_LastResults[_0x35f6a5];if(!_0x438f98)return;const {useScore:_0x355f89,scoreCol:_0x430e67,scoreVal:_0x5a29dc}=_0x438f98[_0x1350b6(0x18a)]||{},_0x5ae205=_0x1350b6(0x1a6),_0x1c3968=_0x1350b6(0x188),_0x267c97=_0x55b5c3=>_0x1350b6(0x1ad)+_0x55b5c3+_0x1350b6(0x1e1),_0x46f048=_0x355f89&&_0x430e67?'<strong\x20style=\x22display:block;font-size:0.78rem;color:var(--dml-text);\x22>'+_0x430e67+_0x1350b6(0x1c5)+_0x5a29dc+_0x1350b6(0x1e1):_0x267c97(_0x1350b6(0x1ea)),_0x507a51=(_0x22dac8,_0x55f043)=>{const _0x46a6b6=_0x1350b6,_0x3c8e80=_0x22dac8['length'],_0x135c27=_0x22dac8['map'](({op:_0x5efb0c,val:_0xffd1b1,qualified:_0x2131c7},_0x473e96)=>{const _0x18a0a8=a0_0x30e7,_0x83c7c5=_ANRA_OP_SYM[_0x5efb0c]||_0x5efb0c,_0x372496=_0x2131c7[_0x18a0a8(0x1ef)]?_0x2131c7['slice'](0x0,0xa)[_0x18a0a8(0x175)](',\x20')+(_0x2131c7[_0x18a0a8(0x1ef)]>0xa?_0x18a0a8(0x199)+(_0x2131c7['length']-0xa)+_0x18a0a8(0x1f4):''):'—',_0x465853=_0x473e96===0x0?_0x18a0a8(0x18c)+_0x1c3968+_0x18a0a8(0x15d)+_0x3c8e80+'\x22>'+_0x46f048+_0x18a0a8(0x193):'';return _0x18a0a8(0x1a5)+_0x465853+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22'+_0x1c3968+_0x18a0a8(0x1de)+_0x83c7c5+'\x20'+_0xffd1b1+_0x18a0a8(0x16f)+_0x1c3968[_0x18a0a8(0x1ab)](_0x18a0a8(0x13b),'')+'color:var(--dml-text);\x22>'+_0x372496+_0x18a0a8(0x149);})['join']('');return _0x46a6b6(0x1b4)+_0x5ae205+_0x46a6b6(0x1f6)+_0x5ae205+_0x46a6b6(0x1ce)+_0x32165c+'</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th\x20style=\x22'+_0x5ae205+_0x46a6b6(0x1f0)+(_0x55f043||'Merchant\x20Information')+_0x46a6b6(0x17c)+_0x135c27+_0x46a6b6(0x189);};let _0x195828='';if(_0x1c594e===_0x1350b6(0x197))for(const [_0x3446db,_0x54bd77]of Object[_0x1350b6(0x1dd)](_0x438f98[_0x1350b6(0x14c)])){if(_0x54bd77?.[_0x1350b6(0x17b)]?.[_0x1350b6(0x1ef)])_0x195828+=_0x507a51(_0x54bd77[_0x1350b6(0x17b)],_0x3446db);}else{const _0x5d0b30=_0x438f98[_0x1350b6(0x14c)]?.[_0x1c594e];if(_0x5d0b30?.[_0x1350b6(0x17b)]?.[_0x1350b6(0x1ef)])_0x195828=_0x507a51(_0x5d0b30[_0x1350b6(0x17b)],null);}if(!_0x195828)return;_ANRA_openModal(_0x35f6a5+_0x1350b6(0x1ae)+_0x1c594e,_0x195828);}function _ANRA_buildPayloads(_0x553333,_0x15e1c3){const _0x5ee519=a0_0x23bf36,_0x35018f=_ANRA_LastResults[_0x553333];if(!_0x35018f)return null;const {useScore:_0x2bfca7,scoreCol:_0x4c0b1f,scoreVal:_0x35fa83}=_0x35018f['routeMeta']||{},_0x50f581=window[_0x5ee519(0x1ac)]?.()||{},_0x155cf7={'FilterByScore':!!_0x2bfca7,'ScoreMetric':_0x2bfca7?_0x4c0b1f||null:null,'Conditions':_0x2bfca7?[{'OperatorDescription':'>=','ScoreValue':_0x35fa83}]:[]},_0x275c8b=(_0x5dc09e,_0x115fa4)=>{const _0x3a3b41=_0x5ee519,_0x343dab=_0x3a3b41(0x162)+Date[_0x3a3b41(0x1d1)]()+'_'+ ++_APP_IdSeq;return{'AmountInformation':{'FilterByAmount':!![],'AmountMetric':_0x50f581[_0x3a3b41(0x185)]||'','Conditions':[{'OperatorDescription':_ANRA_OP_SYM[_0x115fa4['op']]||_0x115fa4['op'],'AmountValue':_0x115fa4['val']}]},'MerchantInformation':{'SelectedColumn':'','ColumnOperator':'isin','MerchantList':[]},'ScoreInformation':[_0x155cf7],'AdditionalColumns':[{'Column':_0x5dc09e,'Operator':_0x3a3b41(0x1d2),'Values':_0x115fa4[_0x3a3b41(0x171)]}],'Source':_0x3a3b41(0x1f1),'ID':_0x343dab};},_0x6669c3=_0x15e1c3===_0x5ee519(0x197)?Object[_0x5ee519(0x15f)](_0x35018f[_0x5ee519(0x14c)]||{}):[_0x15e1c3],_0x502b0e=[];for(const _0x41c736 of _0x6669c3){const _0x170ac4=_0x35018f[_0x5ee519(0x14c)]?.[_0x41c736]?.[_0x5ee519(0x17b)]||[];for(const _0x1690c1 of _0x170ac4){if((_0x1690c1[_0x5ee519(0x171)]||[])[_0x5ee519(0x1ef)])_0x502b0e[_0x5ee519(0x1f5)](_0x275c8b(_0x41c736,_0x1690c1));}}return _0x502b0e;}function ANRA_CopyCard(_0x549acd,_0x144f61){const _0x12bd53=_ANRA_buildPayloads(_0x549acd,_0x144f61);if(!_0x12bd53)return;APP_CopyText(JSON['stringify'](_0x12bd53,null,0x2));}function ANRA_AddCard(_0x1d1033,_0x1a67da){const _0x3d65f8=a0_0x23bf36,_0x3351ac=_ANRA_buildPayloads(_0x1d1033,_0x1a67da);if(!_0x3351ac)return;APP_CopyText(JSON['stringify'](_0x3351ac,null,0x2));if(typeof _RMON_Persist===_0x3d65f8(0x142))_0x3351ac['forEach'](_0x1dcb10=>_RMON_Persist(_0x1dcb10));}function _ANRA_openModal(_0x374537,_0x3ba7bd){const _0x5a604c=a0_0x23bf36,_0x329486=document[_0x5a604c(0x1a2)](_0x5a604c(0x1e3)),_0x286962=document[_0x5a604c(0x1a2)](_0x5a604c(0x153));if(!_0x329486||!_0x286962)return;_0x329486[_0x5a604c(0x1b2)]=_0x374537,_0x286962[_0x5a604c(0x1ee)]=_0x3ba7bd,Popup_open(_0x5a604c(0x1be));}
+// ── Route Analysis ────────────────────────────────────────────────────────────
+
+let ANRA_SelectedRoutes = new Set();
+let _ANRA_LastResults   = {};   // stored for action buttons
+
+const ANRA_ROUTES = {
+  R5: { label: 'R5', desc: () => `Filter [Column] where FP < [Value]` },
+  R6: { label: 'R6', desc: () => `Filter [Column] where FP < [Value] (excl. seen merchants)` },
+  R7: { label: 'R7', desc: () => `Filter [Column] where FP < [Value] and score above [Score]` },
+  R8: { label: 'R8', desc: () => `Filter [Column] where FP < [Value] (excl. seen merchants) and score above [Score]` },
+};
+
+function ANRA_toggleRoute(id) {
+  if (ANRA_SelectedRoutes.has(id)) ANRA_SelectedRoutes.delete(id);
+  else ANRA_SelectedRoutes.add(id);
+  ANRA_RefreshRouteBtns();
+  ANRA_RunAnalysis();
+}
+
+function ANRA_RefreshRouteBtns() {
+  const hasCol   = (ANRA_MiniNav_GetSelectedCols?.() || []).length > 0;
+  const hasScore = !!ANRA_SelectedScoreColumn;
+
+  const canRun = { R5: hasCol, R6: hasCol, R7: hasCol && hasScore, R8: hasCol && hasScore };
+
+  Object.keys(ANRA_ROUTES).forEach(id => {
+    const btn = document.getElementById(`ANRA_RouteBtn_${id}`);
+    if (!btn) return;
+    const ok = canRun[id];
+    btn.disabled = !ok;
+    if (!ok && ANRA_SelectedRoutes.has(id)) ANRA_SelectedRoutes.delete(id);
+    btn.classList.toggle('active', ANRA_SelectedRoutes.has(id));
+  });
+
+  const count = ANRA_SelectedRoutes.size;
+  const badge = document.getElementById('ANRA_SelectedRoutesLabel');
+  if (badge) badge.textContent = count ? `${count} selected` : '';
+}
+
+function ANRA_UpdateRouteDescriptions() {
+  const col   = ANRA_SelectedScoreColumn || '[Column]';
+  const fp    = document.getElementById('ANRA_MiniNav_VolumeFP')?.value || '[Value]';
+  const score = document.getElementById('ANRA_MiniNav_ScoreVal')?.value || '[Score]';
+  const descs = {
+    R5: `Filter ${col} where FP < ${fp}`,
+    R6: `Filter ${col} where FP < ${fp} (excl. seen merchants)`,
+    R7: `Filter ${col} where FP < ${fp} and score above ${score}`,
+    R8: `Filter ${col} where FP < ${fp} (excl. seen merchants) and score above ${score}`,
+  };
+  Object.entries(descs).forEach(([id, text]) => {
+    const el = document.getElementById(`ANRA_${id}Desc`);
+    if (el) el.textContent = text;
+  });
+}
+
+// ── SQL operator map ──────────────────────────────────────────────────────────
+const _ANRA_SQL_OPS = {
+  equal:                 (col, val) => `CAST("${col}" AS DOUBLE) = ${val}`,
+  greater_than:          (col, val) => `CAST("${col}" AS DOUBLE) > ${val}`,
+  less_than:             (col, val) => `CAST("${col}" AS DOUBLE) < ${val}`,
+  greater_than_or_equal: (col, val) => `CAST("${col}" AS DOUBLE) >= ${val}`,
+  less_than_or_equal:    (col, val) => `CAST("${col}" AS DOUBLE) <= ${val}`,
+  not_equal:             (col, val) => `CAST("${col}" AS DOUBLE) != ${val}`,
+};
+const _ANRA_OP_SYM = { equal: '=', greater_than: '>', less_than: '<', greater_than_or_equal: '>=', less_than_or_equal: '<=', not_equal: '!=' };
+
+// ── Main entry point ──────────────────────────────────────────────────────────
+let _ANRA_running = false;
+
+async function ANRA_RunAnalysis() {
+  const conn = window.LD_getConn?.();
+  const src  = window.LD_getSource?.();
+  const area = document.getElementById('ANRA_ResultsArea');
+  if (!area) return;
+
+  const selectedRoutes = [...ANRA_SelectedRoutes];
+  if (!selectedRoutes.length) { area.innerHTML = ''; return; }
+
+  if (!conn || !src) { _ANRA_showError(area, 'Load data first.'); return; }
+
+  const sp = window.SP_getParams?.();
+  if (!sp?.col1 || !sp?.values?.length || !sp?.numeric || !sp?.object) {
+    _ANRA_showError(area, 'Apply parameters first (fraud column, values, amount column, card dimension).');
+    return;
+  }
+
+  const selectCols = ANRA_MiniNav_GetSelectedCols?.() || [];
+  if (!selectCols.length) { _ANRA_showError(area, 'Select at least one column in Available Columns.'); return; }
+  if (!ANRA_AmountList.length) { _ANRA_showError(area, 'Add at least one amount filter.'); return; }
+
+  const needsScore = [...ANRA_SelectedRoutes].some(r => r === 'R7' || r === 'R8');
+  if (needsScore && !ANRA_SelectedScoreColumn) {
+    _ANRA_showError(area, 'R7 / R8 require a score column — select one in the Score section.');
+    return;
+  }
+
+  if (_ANRA_running) return;
+  _ANRA_running = true;
+  _ANRA_showLoading(area, selectedRoutes);
+
+  const fpThreshold = parseFloat(document.getElementById('ANRA_MiniNav_VolumeFP')?.value) || 10.0;
+  const scoreCol    = ANRA_SelectedScoreColumn;
+  const scoreVal    = parseFloat(document.getElementById('ANRA_MiniNav_ScoreVal')?.value) || 0;
+
+  try {
+    const results = {};
+    for (const route of selectedRoutes) {
+      results[route] = await _ANRA_computeRoute(route, {
+        conn, src,
+        fraudCol: sp.col1, fraudVals: sp.values,
+        amountCol: sp.numeric, cardCol: sp.object,
+        selectCols, fpThreshold, amountList: ANRA_AmountList, scoreCol, scoreVal,
+      });
+    }
+    _ANRA_LastResults = results;
+    _ANRA_renderResults(area, results, selectedRoutes);
+  } catch (err) {
+    _ANRA_showError(area, `Analysis error: ${err.message}`);
+  } finally {
+    _ANRA_running = false;
+  }
+}
+
+// ── Core computation ──────────────────────────────────────────────────────────
+async function _ANRA_computeRoute(route, p) {
+  const { conn, src, fraudCol, fraudVals, amountCol, cardCol, selectCols, fpThreshold, amountList, scoreCol, scoreVal } = p;
+  const useScore     = ['R7', 'R8'].includes(route);
+  const useExclusion = ['R6', 'R8'].includes(route);
+
+  const fraudValsSQL = fraudVals.map(v => `'${String(v).replace(/'/g, "''")}'`).join(',');
+  const isFraud      = `CAST("${fraudCol}" AS VARCHAR) IN (${fraudValsSQL})`;
+
+  const baseRow = (await conn.query(`
+    SELECT
+      COUNT(*) AS TotalVolume,
+      SUM(CAST("${amountCol}" AS DOUBLE)) AS TotalValue,
+      SUM(CASE WHEN ${isFraud} THEN 1 ELSE 0 END) AS FraudVolume,
+      SUM(CASE WHEN ${isFraud} THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS FraudValue
+    FROM "${src}"
+  `)).toArray()[0];
+
+  const TotalVolume = Number(baseRow.TotalVolume);
+  const TotalValue  = Number(baseRow.TotalValue);
+  const FraudVolume = Number(baseRow.FraudVolume);
+  const FraudValue  = Number(baseRow.FraudValue);
+
+  const colResults    = {};
+  const allTrigParts  = [];   // union across all cols → used for Final summary
+
+  for (const col of selectCols) {
+    const ec = col.replace(/"/g, '""');
+    let excluded     = [];
+    const filterSpecs = [];
+
+    for (const { op, val } of amountList) {
+      const sqlOp = _ANRA_SQL_OPS[op];
+      if (!sqlOp) continue;
+      const amtCond   = sqlOp(amountCol, val);
+      const excCond   = (useExclusion && excluded.length)
+        ? `AND CAST("${ec}" AS VARCHAR) NOT IN (${excluded.map(v => `'${String(v).replace(/'/g, "''")}'`).join(',')})`
+        : '';
+      const scoreCond = (useScore && scoreCol) ? `AND CAST("${scoreCol}" AS DOUBLE) >= ${scoreVal}` : '';
+
+      const rows = (await conn.query(`
+        WITH g AS (
+          SELECT CAST("${ec}" AS VARCHAR) AS cv,
+                 COUNT(*) AS vt,
+                 SUM(CASE WHEN ${isFraud} THEN 1 ELSE 0 END) AS vf
+          FROM "${src}"
+          WHERE ${amtCond} ${excCond} ${scoreCond}
+          GROUP BY "${ec}"
+        )
+        SELECT cv FROM g
+        WHERE vf > 0 AND CAST(vt AS DOUBLE) / CAST(vf AS DOUBLE) < ${fpThreshold}
+      `)).toArray();
+
+      const qualified = rows.map(r => String(r.cv));
+      filterSpecs.push({ op, val, qualified });
+
+      if (useExclusion && !(op === 'equal' && Number(val) === 0))
+        qualified.forEach(v => { if (!excluded.includes(v)) excluded.push(v); });
+    }
+
+    const parts = filterSpecs
+      .filter(f => f.qualified.length > 0)
+      .map(({ op, val, qualified }) => {
+        const inList    = qualified.map(v => `'${v.replace(/'/g, "''")}'`).join(',');
+        const scoreSnip = (useScore && scoreCol) ? ` AND CAST("${scoreCol}" AS DOUBLE) >= ${scoreVal}` : '';
+        return `(${_ANRA_SQL_OPS[op](amountCol, val)} AND CAST("${ec}" AS VARCHAR) IN (${inList})${scoreSnip})`;
+      });
+
+    if (!parts.length) {
+      colResults[col] = { ..._ANRA_zeroMetrics(useScore, scoreVal), filterSpecs };
+      continue;
+    }
+
+    allTrigParts.push(...parts);
+
+    const isTrig = `(${parts.join(' OR ')})`;
+
+    const uFraud = Number((await conn.query(`
+      SELECT COUNT(DISTINCT CAST("${ec}" AS VARCHAR)) AS n FROM "${src}" WHERE ${isFraud}
+    `)).toArray()[0].n);
+
+    const m = (await conn.query(`
+      SELECT
+        SUM(CASE WHEN ${isTrig} AND     (${isFraud}) THEN 1 ELSE 0 END) AS triggered,
+        SUM(CASE WHEN ${isTrig} AND     (${isFraud}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS tval,
+        SUM(CASE WHEN ${isTrig} AND NOT (${isFraud}) THEN 1 ELSE 0 END) AS nonfrd,
+        SUM(CASE WHEN ${isTrig} AND NOT (${isFraud}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
+        COUNT(DISTINCT CASE WHEN ${isTrig} AND (${isFraud}) THEN CAST("${ec}" AS VARCHAR) END) AS utrg
+      FROM "${src}"
+    `)).toArray()[0];
+
+    const triggered = Number(m.triggered), tval = Number(m.tval),
+          nonfrd    = Number(m.nonfrd),    nfval = Number(m.nfval),
+          utrg      = Number(m.utrg);
+
+    colResults[col] = {
+      triggered, value: tval,
+      fp:  triggered > 0 ? `${Math.round(nonfrd / triggered)}:1` : 'N/A',
+      unique: utrg,
+      fv:  _r2(FraudVolume > 0 ? triggered / FraudVolume * 100 : 0),
+      fvl: _r2(FraudValue  > 0 ? tval      / FraudValue  * 100 : 0),
+      iv:  _r2(TotalVolume > 0 ? nonfrd    / TotalVolume  * 100 : 0),
+      ivl: _r2(TotalValue  > 0 ? nfval     / TotalValue   * 100 : 0),
+      aa:  _r2(uFraud      > 0 ? utrg      / uFraud       * 100 : 0),
+      score: useScore ? String(scoreVal) : '0',
+      filterSpecs,
+    };
+  }
+
+  // ── Combined "Final" across all columns ───────────────────────────────────
+  let finalResult = _ANRA_zeroMetrics(useScore, scoreVal);
+  if (allTrigParts.length) {
+    const isAny  = `(${allTrigParts.join(' OR ')})`;
+    const lastEc = selectCols[selectCols.length - 1].replace(/"/g, '""');
+
+    const uFraudFinal = Number((await conn.query(`
+      SELECT COUNT(DISTINCT CAST("${lastEc}" AS VARCHAR)) AS n FROM "${src}" WHERE ${isFraud}
+    `)).toArray()[0].n);
+
+    const f = (await conn.query(`
+      SELECT
+        SUM(CASE WHEN ${isAny} AND     (${isFraud}) THEN 1 ELSE 0 END) AS triggered,
+        SUM(CASE WHEN ${isAny} AND     (${isFraud}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS tval,
+        SUM(CASE WHEN ${isAny} AND NOT (${isFraud}) THEN 1 ELSE 0 END) AS nonfrd,
+        SUM(CASE WHEN ${isAny} AND NOT (${isFraud}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
+        COUNT(DISTINCT CASE WHEN ${isAny} AND (${isFraud}) THEN CAST("${lastEc}" AS VARCHAR) END) AS utrg
+      FROM "${src}"
+    `)).toArray()[0];
+
+    const ft = Number(f.triggered), fv = Number(f.tval),
+          fn = Number(f.nonfrd),    fnv = Number(f.nfval),
+          fu = Number(f.utrg);
+
+    finalResult = {
+      triggered: ft, value: fv,
+      fp:  ft > 0 ? `${Math.round(fn / ft)}:1` : 'N/A',
+      unique: fu,
+      fv:  _r2(FraudVolume > 0 ? ft  / FraudVolume * 100 : 0),
+      fvl: _r2(FraudValue  > 0 ? fv  / FraudValue  * 100 : 0),
+      iv:  _r2(TotalVolume > 0 ? fn  / TotalVolume  * 100 : 0),
+      ivl: _r2(TotalValue  > 0 ? fnv / TotalValue   * 100 : 0),
+      aa:  _r2(uFraudFinal > 0 ? fu  / uFraudFinal  * 100 : 0),
+      score: useScore ? String(scoreVal) : '0',
+    };
+  }
+
+  return { colResults, finalResult, TotalVolume, TotalValue, FraudVolume, FraudValue,
+           routeMeta: { useScore, scoreCol, scoreVal } };
+}
+
+function _r2(n) { return Math.round(n * 100) / 100; }
+function _ANRA_zeroMetrics(useScore, scoreVal) {
+  return { triggered: 0, value: 0, fp: 'N/A', unique: 0, fv: 0, fvl: 0, iv: 0, ivl: 0, aa: 0, score: useScore ? String(scoreVal) : '0' };
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+const _ANRA_FMT_NUM = n => Number.isFinite(n) ? n.toLocaleString('en-GB') : '—';
+const _ANRA_FMT_VAL = n => Number.isFinite(n) ? n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+const _ANRA_SUB   = { R5: 'No score · No excl.', R6: 'No score · Cumul. excl.', R7: 'Score · No excl.', R8: 'Score · Cumul. excl.' };
+const _ANRA_TITLE = { R5: 'FP filter only', R6: 'FP filter only', R7: 'FP + score filter', R8: 'FP + score filter' };
+
+function _ANRA_barRow(label, pct, cls) {
+  const w = Math.min(Math.max(pct, 0), 100);
+  return `<div class="anra-route-bar-row">
+    <span class="anra-route-bar-label">${label}</span>
+    <div class="anra-route-bar-track"><div class="anra-route-bar-fill ${cls}" style="width:${w}%"></div></div>
+    <span class="anra-route-bar-pct">${pct}%</span>
+  </div>`;
+}
+
+function _ANRA_metrics(d) {
+  return `<div class="anra-route-metrics">
+    <div class="anra-route-metric"><span class="anra-route-metric-label">Triggered</span><span class="anra-route-metric-val">${_ANRA_FMT_NUM(d.triggered)}</span></div>
+    <div class="anra-route-metric"><span class="anra-route-metric-label">Value det.</span><span class="anra-route-metric-val">${_ANRA_FMT_VAL(d.value)}</span></div>
+    <div class="anra-route-metric"><span class="anra-route-metric-label">False pos.</span><span class="anra-route-metric-val">${d.fp}</span></div>
+    <div class="anra-route-metric"><span class="anra-route-metric-label">Score ≥</span><span class="anra-route-metric-val">${d.score}</span></div>
+  </div>`;
+}
+
+function _ANRA_cardShell(titleHtml, subtitleHtml, subLabel, actionsHtml, bodyHtml) {
+  return `<div class="pg-card anra-card">
+    <div class="pg-card-header" style="padding:12px 14px 10px;margin-bottom:0;align-items:flex-start;">
+      <div>
+        <div class="pg-card-title" style="font-size:0.88rem;">${titleHtml}</div>
+        <div class="pg-card-label" style="margin-top:3px;">${subtitleHtml}</div>
+      </div>
+      <span class="anra-route-card-sub">${subLabel}</span>
+    </div>
+    <div class="pg-card-divider"></div>
+    <div class="anra-route-card-actions">${actionsHtml}</div>
+    ${bodyHtml}
+  </div>`;
+}
+
+function _ANRA_makeSummaryCard(route, d) {
+  return _ANRA_cardShell(
+    _ANRA_TITLE[route] || route, 'Final', _ANRA_SUB[route] || '',
+    `<button class="pg-btn" onclick="ANRA_ShowStrategies('${route}','Final')">View Strategies</button>
+     <button class="pg-btn" onclick="ANRA_CopyCard('${route}','Final')">Copy</button>
+     <button class="pg-btn anra-like-btn" onclick="ANRA_AddCard('${route}','Final')">👍 Like it</button>`,
+    `${_ANRA_metrics(d)}
+     <div class="anra-route-bars">
+       ${_ANRA_barRow('Fraud volume', d.fv,  'anra-route-bar-fill-amber')}
+       ${_ANRA_barRow('Fraud value',  d.fvl, 'anra-route-bar-fill-amber')}
+       <div class="anra-route-bar-divider"></div>
+       ${_ANRA_barRow('Impact volume', d.iv,  'anra-route-bar-fill-blue')}
+       ${_ANRA_barRow('Impact value',  d.ivl, 'anra-route-bar-fill-blue')}
+       <div class="anra-route-bar-divider"></div>
+       ${_ANRA_barRow('Coverage', d.aa, 'anra-route-bar-fill-blue')}
+     </div>`
+  );
+}
+
+function _ANRA_makeRouteCard(route, col, d) {
+  const rCol = col.replace(/'/g, "\\'");
+  return _ANRA_cardShell(
+    col, _ANRA_TITLE[route] || route, _ANRA_SUB[route] || '',
+    `<button class="pg-btn" onclick="ANRA_ShowStrategies('${route}','${rCol}')">View Strategies</button>
+     <button class="pg-btn" onclick="ANRA_CopyCard('${route}','${rCol}')">Copy</button>
+     <button class="pg-btn anra-like-btn" onclick="ANRA_AddCard('${route}','${rCol}')">👍 Like it</button>`,
+    `${_ANRA_metrics(d)}
+     <div class="anra-route-bars">
+       ${_ANRA_barRow('Fraud volume', d.fv,  'anra-route-bar-fill-amber')}
+       ${_ANRA_barRow('Fraud value',  d.fvl, 'anra-route-bar-fill-amber')}
+       <div class="anra-route-bar-divider"></div>
+       ${_ANRA_barRow('Impact volume', d.iv,  'anra-route-bar-fill-blue')}
+       ${_ANRA_barRow('Impact value',  d.ivl, 'anra-route-bar-fill-blue')}
+     </div>`
+  );
+}
+
+function _ANRA_renderResults(area, results, routes) {
+  const summaryCards = routes.map(r => _ANRA_makeSummaryCard(r, results[r].finalResult)).join('');
+
+  const routeCards = [];
+  for (const route of routes)
+    for (const col of Object.keys(results[route].colResults))
+      routeCards.push(_ANRA_makeRouteCard(route, col, results[route].colResults[col]));
+
+  area.innerHTML = `
+    <div class="anra-routes-grid anra-summary-grid">${summaryCards}</div>
+    <div class="anra-routes-grid" style="margin-top:20px;">${routeCards.join('')}</div>`;
+}
+
+// ── Loading / error ───────────────────────────────────────────────────────────
+function _ANRA_showError(area, msg) {
+  area.innerHTML = `<div style="padding:16px;font-size:0.72rem;color:#ef4444;">${msg}</div>`;
+}
+function _ANRA_showLoading(area, routes) {
+  area.innerHTML = `
+    <div class="anra-routes-grid anra-summary-grid">
+      ${routes.map(r => `<div class="pg-card anra-card" style="min-height:120px;">
+        <div class="pg-card-header" style="padding:12px 14px 10px;margin-bottom:0;">
+          <div class="pg-card-title" style="font-size:0.88rem;">${r}</div>
+          <div class="pg-card-label" style="margin-top:3px;">Final</div>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div style="padding:16px;font-size:0.68rem;color:var(--color-text-dim);">Computing…</div>
+      </div>`).join('')}
+    </div>`;
+}
+
+// ── Action buttons ────────────────────────────────────────────────────────────
+function ANRA_ShowStrategies(route, col) {
+  const sp        = window.SP_getParams?.();
+  const amountCol = sp?.numeric || 'Amount';
+  const routeData = _ANRA_LastResults[route];
+  if (!routeData) return;
+
+  const { useScore, scoreCol, scoreVal } = routeData.routeMeta || {};
+
+  const thStyle = `padding:10px 14px;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--color-card-border);text-align:left;white-space:nowrap;`;
+  const td      = `padding:9px 14px;vertical-align:top;border-bottom:1px solid var(--color-card-border);border-right:1px solid var(--color-card-border);font-size:0.75rem;`;
+  const dim     = t => `<span style="color:var(--dml-label);font-style:italic;">${t}</span>`;
+
+  const scoreContent = useScore && scoreCol
+    ? `<strong style="display:block;font-size:0.78rem;color:var(--dml-text);">${scoreCol}</strong><span style="font-size:0.72rem;color:var(--dml-label);">≥ ${scoreVal}</span>`
+    : dim('None');
+
+  const buildTable = (filterSpecs, colLabel) => {
+    const n = filterSpecs.length;
+    const dataRows = filterSpecs.map(({ op, val, qualified }, i) => {
+      const sym   = _ANRA_OP_SYM[op] || op;
+      const list  = qualified.length
+        ? qualified.slice(0, 10).join(', ') + (qualified.length > 10 ? ` … +${qualified.length - 10} more` : '')
+        : '—';
+      const scoreCell = i === 0
+        ? `<td style="${td}" rowspan="${n}">${scoreContent}</td>`
+        : '';
+      return `<tr>
+        ${scoreCell}
+        <td style="${td}font-weight:600;color:var(--dml-text);">${sym} ${val}</td>
+        <td style="${td.replace('border-right:1px solid var(--color-card-border);','')}color:var(--dml-text);">${list}</td>
+      </tr>`;
+    }).join('');
+
+    return `
+      <table style="width:100%;border-collapse:collapse;table-layout:auto;">
+        <thead>
+          <tr style="background:var(--color-page-bg);">
+            <th style="${thStyle}color:#f59e0b;">Score Information</th>
+            <th style="${thStyle}color:#3b82f6;">${amountCol}</th>
+            <th style="${thStyle}color:#6366f1;border-right:none;">${colLabel || 'Merchant Information'}</th>
+          </tr>
+        </thead>
+        <tbody>${dataRows}</tbody>
+      </table>`;
+  };
+
+  let html = '';
+  if (col === 'Final') {
+    for (const [colName, colData] of Object.entries(routeData.colResults)) {
+      if (colData?.filterSpecs?.length)
+        html += buildTable(colData.filterSpecs, colName);
+    }
+  } else {
+    const colData = routeData.colResults?.[col];
+    if (colData?.filterSpecs?.length)
+      html = buildTable(colData.filterSpecs, null);
+  }
+
+  if (!html) return;
+  _ANRA_openModal(`${route} · ${col}`, html);
+}
+
+function _ANRA_buildPayloads(route, col) {
+  const routeData = _ANRA_LastResults[route];
+  if (!routeData) return null;
+  const { useScore, scoreCol, scoreVal } = routeData.routeMeta || {};
+  const sp = window.SP_getParams?.() || {};
+
+  const scoreInfo = {
+    FilterByScore: !!useScore,
+    ScoreMetric:   useScore ? (scoreCol || null) : null,
+    Conditions:    useScore ? [{ OperatorDescription: '>=', ScoreValue: scoreVal }] : [],
+  };
+
+  const _makeEntry = (colName, spec) => {
+    const id = 'Route_Analysis_' + Date.now() + '_' + (++_APP_IdSeq);
+    return {
+      AmountInformation: {
+        FilterByAmount: true,
+        AmountMetric: sp.numeric || '',
+        Conditions: [{ OperatorDescription: _ANRA_OP_SYM[spec.op] || spec.op, AmountValue: spec.val }],
+      },
+      MerchantInformation: {
+        SelectedColumn: '',
+        ColumnOperator: 'isin',
+        MerchantList:   [],
+      },
+      ScoreInformation: [scoreInfo],
+      AdditionalColumns: [{ Column: colName, Operator: 'isin', Values: spec.qualified }],
+      Source: 'Route Analysis',
+      ID: id,
+    };
+  };
+
+  const cols = col === 'Final' ? Object.keys(routeData.colResults || {}) : [col];
+  const entries = [];
+  for (const colName of cols) {
+    const specs = routeData.colResults?.[colName]?.filterSpecs || [];
+    for (const spec of specs) {
+      if ((spec.qualified || []).length) entries.push(_makeEntry(colName, spec));
+    }
+  }
+  return entries;
+}
+
+function ANRA_CopyCard(route, col) {
+  const output = _ANRA_buildPayloads(route, col);
+  if (!output) return;
+  APP_CopyText(JSON.stringify(output, null, 2));
+}
+
+function ANRA_AddCard(route, col) {
+  const payloads = _ANRA_buildPayloads(route, col);
+  if (!payloads) return;
+  APP_CopyText(JSON.stringify(payloads, null, 2));
+  if (typeof _RMON_Persist === 'function') payloads.forEach(p => _RMON_Persist(p));
+}
+
+// ── Modal — uses shared Popup system ─────────────────────────────────────────
+function _ANRA_openModal(title, bodyHtml) {
+  const titleEl = document.getElementById('ANRA_StrategyModalTitle');
+  const bodyEl  = document.getElementById('ANRA_StrategyModalBody');
+  if (!titleEl || !bodyEl) return;
+  titleEl.textContent = title;
+  bodyEl.innerHTML    = bodyHtml;
+  Popup_open('ANRA_StrategyModal');
+}
