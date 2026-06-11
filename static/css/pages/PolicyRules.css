@@ -1,0 +1,16 @@
+/* ── Policy Rules ── */
+
+#PRView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.pr-card::before { background: var(--brand-pr-light); }
+
+#PR_SumTable tr.pr-row-selected td {
+  background: var(--brand-pr-dim) !important;
+  outline: 1px solid var(--brand-pr-light);
+}

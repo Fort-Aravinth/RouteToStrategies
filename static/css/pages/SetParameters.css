@@ -1,44 +1,13 @@
 /* ── Set Parameters ── */
 
-/* Page header */
-.sp-view-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px 24px;
-  background: var(--color-card-bg);
-  border: 0.5px solid var(--color-card-border);
-  border-radius: var(--dml-radius);
-  border-left: 3px solid var(--brand-param);
-  box-shadow: 0 1px 4px var(--color-card-shadow);
-  width: 100%;
-}
-.sp-view-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-header-title);
-  letter-spacing: -0.01em;
-}
-.sp-view-subtitle {
+/* Currency input — matches segmented button size */
+#SP_Currency {
+  height: auto;
+  padding: 5px 8px;
   font-size: 0.72rem;
-  color: var(--color-text-muted);
-  margin-top: 3px;
-  line-height: 1.5;
-}
-.sp-view-badge {
-  flex-shrink: 0;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--brand-param);
-  background: var(--brand-param-dim);
-  border: 0.5px solid var(--brand-param);
   border-radius: 4px;
-  padding: 3px 8px;
-  white-space: nowrap;
 }
+
 
 /* Brand — teal */
 #SPView .pg-card::before              { background: var(--brand-param); }
@@ -61,6 +30,218 @@
 
 /* Scrollable chip row — SP only */
 #SPView .pg-chip-row.sp-scroll { max-height: 150px; overflow-y: auto; }
+
+
+/* ── SP Tutorial button — fully owned by SP ── */
+#SP_HelpBtn {
+  display:      none;
+  border-radius:6px;
+  padding:      5px 10px;
+  font-size:    11px;
+  font-weight:  600;
+  cursor:       pointer;
+  align-items:  center;
+  gap:          5px;
+  line-height:  1.4;
+  margin-left:  auto;
+  margin-right: 8px;
+  border:       1px solid transparent !important;
+  background:   transparent !important;
+  color:        var(--color-text-muted) !important;
+  transition:   background 0.12s, color 0.12s;
+}
+body.sp-active #SP_HelpBtn {
+  display:      flex !important;
+}
+#SP_HelpBtn:hover {
+  background:   var(--color-nav-hover) !important;
+  color:        var(--color-header-title) !important;
+}
+#SP_HelpBtn.tutorial-active {
+  background:   var(--brand-param) !important;
+  border-color: var(--brand-param) !important;
+  color:        #fff !important;
+}
+
+/* SP tour toast — override GS orange with SP teal */
+#SP_TourCard .gs-toast               { border-left-color: var(--brand-param); }
+#SP_TourCard .gs-toast-step          { color: var(--brand-param); }
+#SP_TourCard .gs-toast-btn-next      { background: var(--brand-param); }
+#SP_TourCard .gs-toast-btn-collapse  { background: var(--brand-param-dim); border-color: var(--brand-param); color: var(--brand-param); }
+#SP_TourCard .gs-toast-btn-collapse:hover { background: var(--brand-param); color: #fff; }
+
+/* Fraud Filter two-column layout */
+.sp-ff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 12px;
+  min-height: 120px;
+}
+.sp-ff-divider {
+  background: var(--dml-border);
+  align-self: stretch;
+}
+.sp-ff-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+.sp-ff-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 130px;
+  overflow-y: auto;
+}
+.sp-ff-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 0.72rem;
+  color: var(--dml-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-ff-row:hover { background: var(--brand-param-dim); }
+.sp-ff-row input[type="radio"],
+.sp-ff-row input[type="checkbox"] {
+  accent-color: var(--brand-param);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.sp-ff-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Vertical segmented control */
+.sp-seg-ctrl {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  gap: 2px;
+}
+.sp-seg-btn {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 8px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-family: var(--font-base);
+  cursor: pointer;
+  color: var(--dml-muted);
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-seg-ctrl .sp-seg-btn:nth-child(odd),
+.sp-seg-ctrl-h .sp-seg-btn:nth-child(odd),
+.sp-seg-ctrl-free .sp-seg-btn:nth-child(odd)  { background: rgba(0,0,0,0.03); }
+.sp-seg-ctrl .sp-seg-btn:nth-child(even),
+.sp-seg-ctrl-h .sp-seg-btn:nth-child(even),
+.sp-seg-ctrl-free .sp-seg-btn:nth-child(even) { background: rgba(0,0,0,0.07); }
+.sp-seg-ctrl .sp-seg-btn:hover:not(.active),
+.sp-seg-ctrl-h .sp-seg-btn:hover:not(.active),
+.sp-seg-ctrl-free .sp-seg-btn:hover:not(.active) { background: var(--brand-param-dim); color: var(--brand-param); }
+.sp-seg-ctrl .sp-seg-btn.active,
+.sp-seg-ctrl-h .sp-seg-btn.active,
+.sp-seg-ctrl-free .sp-seg-btn.active {
+  background: var(--brand-param);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(13,148,136,0.3);
+}
+
+/* Horizontal variant — 3-per-row grid, equal width */
+.sp-seg-ctrl-h {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* Free variant — no background, scrollable, ~4 items visible */
+.sp-seg-ctrl-free {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 116px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.sp-seg-ctrl-free::-webkit-scrollbar       { width: 3px; }
+.sp-seg-ctrl-free::-webkit-scrollbar-track { background: transparent; }
+.sp-seg-ctrl-free::-webkit-scrollbar-thumb { background: var(--brand-param); border-radius: 2px; }
+
+/* Select rest button */
+.sp-select-rest {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.65rem;
+  color: var(--brand-param);
+  white-space: nowrap;
+  opacity: 0.8;
+}
+.sp-select-rest:hover { opacity: 1; text-decoration: underline; }
+
+/* Decision Outcome — right column buckets */
+.sp-dm-right {
+  gap: 10px;
+}
+.sp-dm-bucket {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sp-dm-bucket-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.sp-dm-bucket-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-param);
+  padding: 2px 0 0;
+  white-space: nowrap;
+}
+.sp-dm-search {
+  flex: 1;
+  min-width: 0;
+  height: auto;
+  padding: 2px 5px;
+  font-size: 0.65rem;
+  border: 0.5px solid var(--dml-border);
+  border-radius: 3px;
+  background: var(--dml-surface);
+  color: var(--dml-text);
+  outline: none;
+}
+.sp-dm-search:focus {
+  border-color: var(--brand-param);
+  box-shadow: 0 0 0 2px var(--brand-param-dim);
+}
+.sp-dm-value-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 90px;
+  overflow-y: auto;
+}
+.sp-dm-value-list::-webkit-scrollbar       { width: 3px; }
+.sp-dm-value-list::-webkit-scrollbar-track { background: transparent; }
+.sp-dm-value-list::-webkit-scrollbar-thumb { background: var(--brand-param); border-radius: 2px; }
 
 /* pg-chip-sq brand overrides for SPView */
 #SPView .pg-chip-sq.active { background: var(--brand-param); border-color: var(--brand-param); color: #fff; }

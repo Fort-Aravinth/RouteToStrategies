@@ -1,0 +1,92 @@
+/* ── Landing Page — Topbar & Tutorial Button ── */
+
+/* Analysis Dashboard brand icon */
+.lp-brand-icon {
+  width: 24px; height: 24px;
+  background: #F0A500;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.lp-brand-icon svg { width: 13px; height: 13px; }
+
+/* Tutorial button — no border, playground style */
+#LP_HelpBtn {
+  border-radius: 6px;
+  padding:       5px 10px;
+  font-size:     11px;
+  font-weight:   600;
+  cursor:        pointer;
+  display:       flex;
+  align-items:   center;
+  gap:           5px;
+  line-height:   1.4;
+  margin-right:  8px;
+  border:        1px solid transparent !important;
+  background:    transparent !important;
+  color:         var(--color-text-muted) !important;
+  transition:    background 0.12s, color 0.12s;
+}
+
+#LP_HelpBtn:hover {
+  background: var(--color-nav-hover) !important;
+  color:      var(--color-header-title) !important;
+}
+
+#LP_HelpBtn.tutorial-active {
+  background:  var(--amber-500) !important;
+  border-color:var(--amber-500) !important;
+  color:       #fff !important;
+}
+
+body:not(.lp-active) #LP_HelpBtn { display: none !important; }
+
+/* ── Landing Page Tour Toast (lp-toast) ── */
+.lp-toast {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-left: 3px solid #F0A500;
+  border-radius: var(--dml-radius);
+  box-shadow: 0 4px 20px var(--color-card-shadow);
+  font-family: var(--font-base);
+  pointer-events: auto;
+  width: 420px;
+  overflow: hidden;
+  animation: lpToastIn 0.22s ease;
+}
+@keyframes lpToastIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+.lp-toast.lp-tabbed {
+  position: fixed; right: 0; width: auto;
+  border-radius: var(--dml-radius) 0 0 var(--dml-radius);
+  border-right: none;
+}
+.lp-toast.lp-tabbed     .lp-tab-strip  { display: flex; justify-content: center; }
+.lp-toast.lp-tabbed     .lp-toast-inner { display: none; }
+.lp-toast.lp-tabbed     .lp-tab-arrow  { transform: rotate(180deg); }
+.lp-toast:not(.lp-tabbed) .lp-tab-strip  { display: none; }
+.lp-toast:not(.lp-tabbed) .lp-toast-inner { display: block; padding: 10px 12px; }
+
+.lp-tab-strip { align-items: center; gap: 5px; writing-mode: vertical-rl; text-orientation: mixed; padding: 12px 6px; cursor: pointer; transition: background 0.12s; }
+.lp-tab-strip:hover { background: var(--color-nav-hover); }
+.lp-tab-arrow { font-size: 0.7rem; color: var(--color-text-dim); transition: transform 0.2s; }
+.lp-tab-label { font-size: 0.63rem; font-weight: 600; color: var(--color-header-title); white-space: nowrap; }
+
+.lp-toast-header  { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 5px; }
+.lp-toast-step    { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #F0A500; margin-bottom: 3px; }
+.lp-toast-title   { font-size: 0.7rem; font-weight: 700; color: var(--color-header-title); }
+.lp-toast-body    { font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.5; margin-top: 5px; }
+.lp-toast-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+.lp-toast-btn-collapse {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; padding: 0; flex-shrink: 0;
+  background: rgba(240,165,0,0.12); border: 0.5px solid rgba(240,165,0,0.25);
+  border-radius: 4px; cursor: pointer; color: #F0A500;
+}
+.lp-toast-btn-collapse:hover { background: #F0A500; color: #fff; }
+.lp-toast-btn-next { background: #F0A500; color: #fff; border: none; border-radius: 5px; padding: 4px 10px; font-size: 0.63rem; font-weight: 600; cursor: pointer; font-family: var(--font-base); }
+.lp-toast-btn-next:hover { opacity: 0.88; }
+.lp-toast-btn-back { background: none; border: none; cursor: pointer; font-size: 0.62rem; color: var(--color-text-dim); font-family: var(--font-base); padding: 0; }
+.lp-toast-btn-back:hover { color: var(--color-header-title); }
+

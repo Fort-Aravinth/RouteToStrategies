@@ -86,6 +86,115 @@ function PG_toggleChip(el) {
   el.classList.toggle('active');
 }
 
+// ── Extended component handlers ───────────────────────────────────────────────
+
+function PG_stepperAdj(btn, delta) {
+  const input = btn.parentElement.querySelector('.pg-stepper-input');
+  if (input) input.value = (parseInt(input.value) || 0) + delta;
+}
+
+function PG_togglePwd(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.type = el.type === 'password' ? 'text' : 'password';
+  btn.style.opacity = el.type === 'text' ? '1' : '0.5';
+}
+
+function PG_colorSync(inputId, valId) {
+  const v = document.getElementById(inputId)?.value;
+  const el = document.getElementById(valId);
+  if (el && v) el.textContent = v.toUpperCase();
+}
+
+function PG_sliderSync(input, valId) {
+  const el = document.getElementById(valId);
+  if (el) el.textContent = input.value;
+}
+
+function PG_multiPick(option, selectId) {
+  option.classList.toggle('cs-selected');
+  const selected = document.querySelectorAll(`#${selectId} .cs-option.cs-selected`);
+  const val = document.getElementById(selectId + '-val');
+  if (val) val.textContent = selected.length ? Array.from(selected).map(o => o.textContent.replace('✓ ','')).join(', ') : 'Choose options…';
+}
+
+function PG_segSwitch(groupId, btn) {
+  document.querySelectorAll(`#${groupId} .pg-seg-btn`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function PG_splitToggle(btn) {
+  btn.closest('.pg-split-btn').classList.toggle('open');
+}
+
+function PG_splitClose(option) {
+  option.closest('.pg-split-btn').classList.remove('open');
+}
+
+function PG_loadBtn(btn) {
+  btn.classList.add('loading');
+  btn.disabled = true;
+  setTimeout(() => { btn.classList.remove('loading'); btn.disabled = false; }, 2000);
+}
+
+function PG_progressSync(input, barId, valId) {
+  const bar = document.getElementById(barId);
+  const val = document.getElementById(valId);
+  if (bar) bar.style.width = input.value + '%';
+  if (val) val.textContent = input.value + '%';
+}
+
+function PG_starRate(id, n) {
+  const stars = document.querySelectorAll(`#${id} span`);
+  stars.forEach((s, i) => s.classList.toggle('lit', i < n));
+  stars.forEach((s, i) => s.textContent = i < n ? '★' : '☆');
+}
+
+function PG_tabSwitch(barId, btn) {
+  const bar = document.getElementById(barId);
+  if (!bar) return;
+  bar.querySelectorAll('.pg-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const idx = Array.from(bar.querySelectorAll('.pg-tab')).indexOf(btn);
+  document.querySelectorAll(`[id^="${barId}-"]`).forEach((p, i) => p.classList.toggle('active', i === idx));
+}
+
+function PG_pagePick(groupId, btn) {
+  document.querySelectorAll(`#${groupId} .pg-page-btn`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const pages = document.querySelectorAll(`#${groupId} .pg-page-btn:not(:first-child):not(:last-child)`);
+  const prev = document.querySelector(`#${groupId} .pg-page-btn:first-child`);
+  const next = document.querySelector(`#${groupId} .pg-page-btn:last-child`);
+  const idx = Array.from(pages).indexOf(btn);
+  if (prev) prev.disabled = idx === 0;
+  if (next) next.disabled = idx === pages.length - 1;
+}
+
+function PG_pagePrev(groupId) {
+  const active = document.querySelector(`#${groupId} .pg-page-btn.active`);
+  if (active?.previousElementSibling && !active.previousElementSibling.classList.contains('pg-page-btn') === false) {
+    const prev = active.previousElementSibling;
+    if (prev && !prev.disabled) PG_pagePick(groupId, prev);
+  }
+}
+
+function PG_pageNext(groupId) {
+  const active = document.querySelector(`#${groupId} .pg-page-btn.active`);
+  if (active?.nextElementSibling) {
+    const next = active.nextElementSibling;
+    if (next && !next.disabled) PG_pagePick(groupId, next);
+  }
+}
+
+function PG_accordionToggle(trigger) {
+  trigger.classList.toggle('open');
+}
+
+// Close split menus on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.pg-split-btn')) document.querySelectorAll('.pg-split-btn.open').forEach(b => b.classList.remove('open'));
+});
+
 function PG_toggleTableCol(th) {
   const table = th.closest('table');
   const index = Array.from(th.parentElement.children).indexOf(th);

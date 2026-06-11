@@ -19,14 +19,6 @@
   border-right: 0.5px solid var(--color-card-border);
   height: 100%;
 }
-.MN_brand_icon {
-  width: 24px; height: 24px;
-  background: var(--amber-500);
-  border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.MN_brand_icon svg { width: 13px; height: 13px; }
 .MN_brand_name { font-size: 0.78rem; font-weight: 700; letter-spacing: .01em; color: var(--color-header-title); }
 
 /* ── Shell Layout (sidebar grid) ── */
@@ -128,8 +120,10 @@
 }
 
 /* ── Nav Item Active — Brand Colours ── */
-#nav-load-data.active           { color: var(--brand-sp);       background: var(--brand-sp-dim); }
-#nav-load-data.active::before   { background: var(--brand-sp); }
+#nav-get-started.active           { color: var(--brand-dm);       background: var(--brand-dm-dim); }
+#nav-get-started.active::before   { background: var(--brand-dm); }
+#nav-load-data.active             { color: var(--brand-sp);       background: var(--brand-sp-dim); }
+#nav-load-data.active::before     { background: var(--brand-sp); }
 #nav-column-mgmt.active           { color: var(--brand-cm);       background: var(--brand-cm-dim); }
 #nav-column-mgmt.active::before   { background: var(--brand-cm); }
 #nav-parameters.active           { color: var(--brand-param);     background: var(--brand-param-dim); }
@@ -146,10 +140,12 @@
 #nav-policy-rules.active::before   { background: var(--brand-pr-light); }
 #nav-rmon-import.active           { color: var(--brand-irs-light); background: var(--brand-irs-dim); }
 #nav-rmon-import.active::before   { background: var(--brand-irs-light); }
-#nav-preview-data.active          { color: var(--brand-dm);       background: var(--brand-dm-dim); }
-#nav-preview-data.active::before  { background: var(--brand-dm); }
 #nav-playground.active            { color: var(--brand-sn);       background: var(--brand-sn-dim); }
 #nav-playground.active::before    { background: var(--brand-sn); }
+#nav-spike-report.active          { color: var(--brand-dm);       background: var(--brand-dm-dim); }
+#nav-spike-report.active::before  { background: var(--brand-dm); }
+#nav-spike-merchant.active         { color: var(--brand-sp);       background: var(--brand-sp-dim); }
+#nav-spike-merchant.active::before { background: var(--brand-sp); }
 #nav-score-comparison.active           { color: #0ea5e9;              background: rgba(14,165,233,0.08); }
 #nav-score-comparison.active::before   { background: #0ea5e9; }
 
@@ -223,3 +219,8 @@
 #CM_SidebarTemplate .cs-option.cs-selected { background: var(--brand-cm) !important; }
 #CM_SidebarTemplate .cs-trigger:hover      { border-color: var(--brand-cm); }
 #CM_SidebarTemplate.open .cs-trigger       { border-color: var(--brand-cm); box-shadow: 0 0 0 2px var(--brand-cm-dim); }
+
+#GS_SidebarConfig .cs-option:hover       { background: var(--brand-dm-dim); }
+#GS_SidebarConfig .cs-option.cs-selected { background: var(--brand-dm) !important; }
+#GS_SidebarConfig .cs-trigger:hover      { border-color: var(--brand-dm); }
+#GS_SidebarConfig.open .cs-trigger       { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }

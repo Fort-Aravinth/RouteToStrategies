@@ -1,5 +1,30 @@
 /* ── Nav_ScoreAnalysis — SA mini-nav brand + MN system ── */
 
+/* ── SA card info buttons — use SA brand colour ── */
+#SAView .pg-card-info-btn { border-color: var(--brand-sa) !important; color: var(--brand-sa) !important; background: var(--brand-sa-dim) !important; }
+#SAView .pg-card-info-btn:hover { background: var(--brand-sa) !important; color: #fff !important; }
+
+/* ── SA Tutorial button ── */
+#SA_HelpBtn {
+  display:      none;
+  border-radius:6px;
+  padding:      5px 10px;
+  font-size:    11px;
+  font-weight:  600;
+  cursor:       pointer;
+  align-items:  center;
+  gap:          5px;
+  line-height:  1.4;
+  margin-right: 8px;
+  border:       1px solid transparent !important;
+  background:   transparent !important;
+  color:        var(--color-text-muted) !important;
+  transition:   background 0.12s, color 0.12s;
+}
+body.sa-active #SA_HelpBtn        { display: flex !important; }
+#SA_HelpBtn:hover                  { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
+#SA_HelpBtn.tutorial-active        { background: var(--brand-sa) !important; border-color: var(--brand-sa) !important; color: #fff !important; }
+
 /* Brand — violet scope */
 #SAView, #SA_MiniNav {
   --gold:              var(--brand-sa);
@@ -39,7 +64,7 @@ html .MN_btn.active { background: var(--gold) !important; border-color: var(--go
 .MN_nav_title       { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-header-title); cursor: pointer; user-select: none; }
 .MN_divider         { margin: var(--MN_divider_mar); height: 0; border: none; border-top: 2px solid var(--MN_divider_col); opacity: 0.35; }
 .MN_section_body    { padding: var(--MN_section_pad); }
-.MN_section_hdr     { display: flex; align-items: center; justify-content: space-between; padding: 5px 12px 6px; cursor: pointer; user-select: none; }
+.MN_section_hdr     { display: flex; align-items: center; justify-content: space-between; padding: 5px 12px 16px; cursor: pointer; user-select: none; }
 .MN_section_hdr:hover .MN_title { color: var(--gold); }
 .MN_tab_bar         { display: flex; border: 1px solid var(--color-card-border); border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
 .MN_tab_bar .MN_btn { flex: 1; border: none !important; border-radius: 0 !important; border-left: 1px solid var(--color-card-border) !important; }
@@ -120,3 +145,19 @@ html .MN_btn.active { background: var(--gold) !important; border-color: var(--go
 #SA_MiniNav .custom-select { width: 100%; }
 #SA_MiniNav .cs-trigger    { height: 28px !important; font-size: 0.65rem !important; padding: 0 8px !important; }
 #SA_MiniNav .cs-option     { font-size: 0.65rem !important; padding: 5px 10px !important; }
+
+/* ── SA Nav Info Popup ── */
+#SA_InfoPopup .sa-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-sa);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#SA_InfoPopup .sa-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#SA_InfoPopup .sa-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-sa); }
+#SA_InfoPopup .sa-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#SA_InfoPopup .pg-info-list li::marker { color: var(--brand-sa); }

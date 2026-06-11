@@ -13,6 +13,8 @@
 
 /* ── RAView pg-* brand overrides ── */
 #RAView .anra-card::before           { background: var(--brand-ra); }
+#RAView .pg-card-info-btn            { border-color: var(--brand-ra) !important; color: var(--brand-ra) !important; background: var(--brand-ra-dim) !important; }
+#RAView .pg-card-info-btn:hover      { background: var(--brand-ra) !important; color: #fff !important; }
 
 /* Route buttons — standard playground base, brand-ra only on active */
 #RAView .anra-route-btn              { display:flex; flex-direction:column; align-items:flex-start; width:100%; height:auto !important; color: var(--color-header-title); }
@@ -171,4 +173,20 @@
   border-color: var(--brand-ra) !important;
   color: #fff !important;
 }
+
+/* ── RA Nav Info Popup ── */
+#RA_InfoPopup .ra-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-ra);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#RA_InfoPopup .ra-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#RA_InfoPopup .ra-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-ra); }
+#RA_InfoPopup .ra-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#RA_InfoPopup .pg-info-list li::marker { color: var(--brand-ra); }
 

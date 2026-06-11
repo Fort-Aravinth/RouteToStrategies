@@ -35,12 +35,13 @@
 }
 
 /* ── MiniNav Brand Colours ── */
-/* Each nav sets its own brand tokens — all brand-aware rules inherit from here */
-#SA_MiniNav { --MN_brand: var(--brand-sa); --MN_brand_dim: var(--brand-sa-dim); --MN_brand_light: var(--brand-sa-light); --MN_divider_col: var(--brand-sa); }
-#SC_MiniNav { --MN_brand: #0ea5e9;        --MN_brand_dim: rgba(14,165,233,0.10); --MN_brand_light: #38bdf8;              --MN_divider_col: #0ea5e9; }
-#PG_MiniNav { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
-#SR_MiniNav  { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
-#SRM_MiniNav { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); }
+/* Each nav sets --MN_brand AND --gold so the global html .MN_btn.active rule
+   in Nav_ScoreAnalysis.css (which uses var(--gold)) resolves correctly. */
+#SA_MiniNav  { --MN_brand: var(--brand-sa); --MN_brand_dim: var(--brand-sa-dim); --MN_brand_light: var(--brand-sa-light); --MN_divider_col: var(--brand-sa); --gold: var(--brand-sa); --gold-dim: var(--brand-sa-dim); }
+#SC_MiniNav  { --MN_brand: #0ea5e9;         --MN_brand_dim: rgba(14,165,233,0.10); --MN_brand_light: #38bdf8;             --MN_divider_col: #0ea5e9;         --gold: #0ea5e9;          --gold-dim: rgba(14,165,233,0.10); }
+#PG_MiniNav  { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); --gold: var(--brand-sn); --gold-dim: var(--brand-sn-dim); }
+#SR_MiniNav  { --MN_brand: var(--brand-dm); --MN_brand_dim: var(--brand-dm-dim); --MN_brand_light: var(--brand-dm-light); --MN_divider_col: var(--brand-dm); --gold: var(--brand-dm); --gold-dim: var(--brand-dm-dim); }
+#SRM_MiniNav { --MN_brand: var(--brand-sp); --MN_brand_dim: var(--brand-sp-dim); --MN_brand_light: var(--brand-sp-light); --MN_divider_col: var(--brand-sp); --gold: var(--brand-sp); --gold-dim: var(--brand-sp-dim); }
 
 /* ── PG scroll indicators ── */
 #PG_ScrollerDown,
@@ -120,9 +121,7 @@ html .MN_btn {
 html .MN_btn:hover  { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
 html .MN_btn.active { background: var(--MN_brand, var(--gold)) !important; border-color: var(--MN_brand, var(--gold)) !important; color: #fff !important; font-weight: 600; }
 /* Gold brand needs dark text — white-on-gold contrast is too low */
-#PG_MiniNav  .MN_btn.active,
-#SR_MiniNav  .MN_btn.active,
-#SRM_MiniNav .MN_btn.active { color: var(--color-header-title) !important; }
+#PG_MiniNav .MN_btn.active { color: var(--color-header-title) !important; }
 html .MN_btn.MN_run_btn { background: var(--MN_brand_dim) !important; border-color: var(--MN_brand_dim) !important; color: var(--MN_brand) !important; font-weight: 600; }
 html .MN_btn.MN_run_btn:hover { background: var(--MN_brand) !important; border-color: var(--MN_brand) !important; color: #fff !important; }
 
@@ -167,19 +166,13 @@ html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; co
 .MN_hint        { font-size: 0.68rem; color: var(--color-text-dim); padding: 0 12px 8px; }
 .MN_divider     { margin: var(--MN_divider_mar); border-top: 1.5px solid var(--MN_divider_col); opacity: 0.4; }
 .MN_section_body { padding: var(--MN_section_pad); }
-.MN_section_hdr { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 8px; cursor: pointer; user-select: none; }
+.MN_section_hdr { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 32px; cursor: pointer; user-select: none; }
+.MN_info_btn       { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; padding: 0; margin-left: auto; margin-right: 6px; background: var(--MN_brand_dim, rgba(240,165,0,0.10)); border: 0.5px solid var(--MN_brand, #F0A500); border-radius: 4px; cursor: pointer; color: var(--MN_brand, #F0A500); font-size: 0.58rem; font-weight: 700; font-family: var(--font-base); flex-shrink: 0; transition: background 0.12s; opacity: 0.7; }
+.MN_info_btn:hover  { background: var(--MN_brand, #F0A500); color: #fff; opacity: 1; }
 .MN_tab_bar     { display: flex; gap: 4px; margin-bottom: 8px; }
 .MN_chevron     { transition: transform 0.18s; flex-shrink: 0; }
 .MN_chevron polyline { color: var(--color-text-dim); }
 
-/* ── Params display ── */
-.MN_param_row        { padding: 3px 12px 0; }
-.MN_param_label      { font-size: 0.72rem; font-weight: 600; color: var(--color-header-title); margin-bottom: 1px; }
-.MN_param_value      { font-size: 0.67rem; font-weight: 400; color: var(--color-text-muted); margin-bottom: 0; }
-.MN_param_divider    { margin: 5px 12px; border-top: 0.5px solid var(--color-card-border); }
-.MN_param_tags       { padding: 1px 12px 2px; }
-.MN_param_tag        { font-size: 0.62rem; color: var(--MN_brand); }
-.MN_param_tag.secondary { color: var(--color-text-dim); }
 
 /* ── Scroll arrows ── */
 .MN_scroll_btn {
@@ -221,3 +214,44 @@ html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; co
 /* ── Tab bar: buttons fill the row equally ── */
 .MN_tab_bar .MN_btn        { flex: 1; width: auto; }
 .MN_tab_bar .MN_btn.active { color: #fff !important; }
+
+/* ── Info Popup ── */
+.mn-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid #F0A500;
+  border-radius: var(--dml-radius);
+  box-shadow: 0 4px 20px var(--color-card-shadow);
+  font-family: var(--font-base);
+  min-width: 200px;
+  max-width: 280px;
+  overflow: hidden;
+}
+.mn-info-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px 5px;
+  gap: 8px;
+}
+.mn-info-popup-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #F0A500;
+  letter-spacing: 0.02em;
+}
+.mn-info-popup-body {
+  padding: 0 10px 8px;
+  font-size: 0.62rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* ── SP Params display ── */
+.MN_param_row        { padding: 3px 12px 0; }
+.MN_param_label      { font-size: 0.72rem; font-weight: 600; color: var(--color-header-title); margin-bottom: 1px; }
+.MN_param_value      { font-size: 0.67rem; font-weight: 400; color: var(--color-text-muted); margin-bottom: 0; }
+.MN_param_divider    { margin: 5px 12px; border-top: 0.5px solid var(--color-card-border); }
+.MN_param_tags       { padding: 1px 12px 2px; }
+.MN_param_tag        { font-size: 0.62rem; color: var(--MN_brand); }
+.MN_param_tag.secondary { color: var(--color-text-dim); }

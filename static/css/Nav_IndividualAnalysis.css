@@ -29,3 +29,37 @@
 #IA_ScrollerUp:hover { color: var(--brand-ia-light); }
 #IA_ScrollerDown:hover .MN_ScrollBar,
 #IA_ScrollerUp:hover   .MN_ScrollBar { background: var(--brand-ia-light); opacity: 0.7; }
+
+/* ── IAView pg-btn brand overrides ── */
+#IAView .pg-btn {
+  width: auto;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 0.72rem;
+  background: transparent;
+  border-color: var(--brand-ia-light);
+  color: var(--brand-ia-light);
+}
+#IAView .pg-btn:hover {
+  background: var(--brand-ia-light);
+  border-color: var(--brand-ia-light);
+  color: #fff;
+}
+#IAView .pg-card-info-btn       { border-color: var(--brand-ia-light) !important; color: var(--brand-ia-light) !important; background: var(--brand-ia-dim) !important; }
+#IAView .pg-card-info-btn:hover { background: var(--brand-ia-light) !important; color: #fff !important; }
+
+/* ── IA Nav Info Popup ── */
+#IA_InfoPopup .ia-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-ia-light);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#IA_InfoPopup .ia-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#IA_InfoPopup .ia-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-ia-light); }
+#IA_InfoPopup .ia-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#IA_InfoPopup .pg-info-list li::marker { color: var(--brand-ia-light); }

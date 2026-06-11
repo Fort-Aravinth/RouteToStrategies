@@ -29,3 +29,43 @@
 #PR_ScrollerUp:hover { color: var(--brand-pr-light); }
 #PR_ScrollerDown:hover .MN_ScrollBar,
 #PR_ScrollerUp:hover   .MN_ScrollBar { background: var(--brand-pr-light); opacity: 0.7; }
+
+/* ── MN_btn active — brand-pr ── */
+#PR_MiniNav .MN_btn.active {
+  background: var(--brand-pr-dim) !important;
+  border-color: var(--brand-pr-light) !important;
+  color: var(--brand-pr-light) !important;
+  font-weight: 600;
+}
+
+/* ── PRView pg-btn brand overrides ── */
+#PRView .pg-btn {
+  width: auto;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.65rem;
+  background: transparent;
+  border-color: var(--brand-pr-light);
+  color: var(--brand-pr-light);
+}
+#PRView .pg-btn:hover {
+  background: var(--brand-pr-light);
+  border-color: var(--brand-pr-light);
+  color: #fff;
+}
+
+/* ── PR Nav Info Popup ── */
+#PR_InfoPopup .pr-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-pr-light);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#PR_InfoPopup .pr-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#PR_InfoPopup .pr-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-pr-light); }
+#PR_InfoPopup .pr-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#PR_InfoPopup .pg-info-list li::marker { color: var(--brand-pr-light); }

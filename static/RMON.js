@@ -291,3 +291,35 @@ function RMON_BuildResultsTable() {
     <tbody>${rows}</tbody>
   </table></div>`;
 }
+
+// ── RMON Info Popup ───────────────────────────────────────────────────────────
+function RMON_infoOpen(btn, title, text) {
+  const popup = document.getElementById('RMON_InfoPopup');
+  if (!popup) return;
+  document.getElementById('RMON_InfoTitle').textContent = title;
+  document.getElementById('RMON_InfoBody').innerHTML    = text;
+  popup.style.visibility = 'hidden';
+  popup.style.display    = 'block';
+  popup.style.top = popup.style.bottom = popup.style.left = popup.style.right = '';
+  const pH = popup.offsetHeight, pW = popup.offsetWidth;
+  popup.style.visibility = '';
+  const r = btn.getBoundingClientRect(), gap = 8;
+  const spaceBelow = window.innerHeight - r.bottom - gap, spaceAbove = r.top - gap;
+  const spaceRight = window.innerWidth - r.left,           spaceLeft  = r.right;
+  popup.style.top    = spaceBelow >= pH || spaceBelow >= spaceAbove ? (r.bottom + gap) + 'px' : '';
+  popup.style.bottom = spaceBelow >= pH || spaceBelow >= spaceAbove ? '' : (window.innerHeight - r.top + gap) + 'px';
+  popup.style.left   = spaceRight >= pW || spaceRight >= spaceLeft  ? r.left + 'px' : '';
+  popup.style.right  = spaceRight >= pW || spaceRight >= spaceLeft  ? '' : (window.innerWidth - r.right) + 'px';
+  setTimeout(() => document.addEventListener('click', _RMON_infoOutside), 0);
+  window.addEventListener('scroll', RMON_infoClose, { once: true, capture: true });
+}
+function _RMON_infoOutside(e) {
+  const popup = document.getElementById('RMON_InfoPopup');
+  if (popup && !popup.contains(e.target) && !e.target.classList.contains('pg-card-info-btn')) RMON_infoClose();
+}
+function RMON_infoClose() {
+  const popup = document.getElementById('RMON_InfoPopup');
+  if (popup) popup.style.display = 'none';
+  document.removeEventListener('click', _RMON_infoOutside);
+}
+

@@ -1,0 +1,201 @@
+/* ── Get Started ── */
+
+/* ── GS Tutorial button — fully owned by GS ── */
+#GS_HelpBtn {
+  display:      none;
+  border-radius:6px;
+  padding:      5px 10px;
+  font-size:    11px;
+  font-weight:  600;
+  cursor:       pointer;
+  align-items:  center;
+  gap:          5px;
+  line-height:  1.4;
+  margin-left:  auto;
+  margin-right: 8px;
+  border:       1px solid transparent !important;
+  background:   transparent !important;
+  color:        var(--color-text-muted) !important;
+  transition:   background 0.12s, color 0.12s;
+}
+body.gs-active #GS_HelpBtn {
+  display:      flex !important;
+}
+#GS_HelpBtn:hover {
+  background:   var(--color-nav-hover) !important;
+  color:        var(--color-header-title) !important;
+}
+#GS_HelpBtn.tutorial-active {
+  background:   var(--brand-dm) !important;
+  border-color: var(--brand-dm) !important;
+  color:        #fff !important;
+}
+
+
+.gs-type-chip      { border-radius: 4px; }
+.gs-type-chip:hover { filter: brightness(0.92); }
+
+/* ── Type chip colours — Fortify brand palette, match _GS_TYPE_COLORS ── */
+.gs-type-chip[onclick*="STRING"]    { color: #E8714A; background: rgba(232,113,74,0.10);  border-color: rgba(232,113,74,0.35);  }
+.gs-type-chip[onclick*="INTEGER"]   { color: #7B2D8B; background: rgba(123,45,139,0.10);  border-color: rgba(123,45,139,0.35);  }
+.gs-type-chip[onclick*="FLOAT"]     { color: #A82060; background: rgba(168,32,96,0.10);   border-color: rgba(168,32,96,0.35);   }
+.gs-type-chip[onclick*="'DATE'"]    { color: #7B68C8; background: rgba(123,104,200,0.10); border-color: rgba(123,104,200,0.35); }
+.gs-type-chip[onclick*="TIMESTAMP"] { color: #5A80C0; background: rgba(139,174,224,0.12); border-color: rgba(139,174,224,0.40); }
+.gs-type-chip[onclick*="'TIME'"]    { color: #0D9488; background: rgba(13,148,136,0.10);  border-color: rgba(13,148,136,0.35);  }
+.gs-type-chip[onclick*="BOOLEAN"]   { color: #1A9474; background: rgba(26,148,116,0.10);  border-color: rgba(26,148,116,0.35);  }
+
+.gs-type-chip[onclick*="STRING"]:hover    { background: rgba(232,113,74,0.18);  }
+.gs-type-chip[onclick*="INTEGER"]:hover   { background: rgba(123,45,139,0.18);  }
+.gs-type-chip[onclick*="FLOAT"]:hover     { background: rgba(168,32,96,0.18);   }
+.gs-type-chip[onclick*="'DATE'"]:hover    { background: rgba(123,104,200,0.18); }
+.gs-type-chip[onclick*="TIMESTAMP"]:hover { background: rgba(139,174,224,0.22); }
+.gs-type-chip[onclick*="'TIME'"]:hover    { background: rgba(13,148,136,0.18);  }
+.gs-type-chip[onclick*="BOOLEAN"]:hover   { background: rgba(26,148,116,0.18);  }
+
+.gs-transform-chip { border-radius: 4px; }
+
+/* ── Transform chip colours — Fortify brand palette ── */
+.gs-transform-chip[onclick*="remove_spaces"] { color: #E8714A; background: rgba(232,113,74,0.10);  border-color: rgba(232,113,74,0.35);  }
+.gs-transform-chip[onclick*="snake_case"]    { color: #7B2D8B; background: rgba(123,45,139,0.10);  border-color: rgba(123,45,139,0.35);  }
+.gs-transform-chip[onclick*="lowercase"]     { color: #7B68C8; background: rgba(123,104,200,0.10); border-color: rgba(123,104,200,0.35); }
+.gs-transform-chip[onclick*="uppercase"]     { color: #A82060; background: rgba(168,32,96,0.10);   border-color: rgba(168,32,96,0.35);   }
+.gs-transform-chip[onclick*="resetRenames"]  { color: #0D9488; background: rgba(13,148,136,0.10);  border-color: rgba(13,148,136,0.35);  }
+
+.gs-transform-chip[onclick*="remove_spaces"]:hover { background: rgba(232,113,74,0.18);  }
+.gs-transform-chip[onclick*="snake_case"]:hover    { background: rgba(123,45,139,0.18);  }
+.gs-transform-chip[onclick*="lowercase"]:hover     { background: rgba(123,104,200,0.18); }
+.gs-transform-chip[onclick*="uppercase"]:hover     { background: rgba(168,32,96,0.18);   }
+.gs-transform-chip[onclick*="resetRenames"]:hover  { background: rgba(13,148,136,0.18);  }
+
+#GSView .pg-input:focus              { border-color: var(--brand-dm); box-shadow: 0 0 0 3px var(--brand-dm-dim); }
+#GSView .pg-input:hover              { border-color: var(--brand-dm); }
+
+/* ── Card toggle buttons — match Get Started orange brand ── */
+#GSView .pg-card-comment-btn { background: rgba(232,113,74,0.08); border-color: rgba(232,113,74,0.25); color: var(--brand-dm); }
+#GSView .pg-card-comment-btn:hover, #GSView .pg-card-comment-btn.has-comment { background: var(--brand-dm); color: #fff; }
+#GSView .pg-card-info-btn    { background: rgba(232,113,74,0.08); border-color: rgba(232,113,74,0.25); color: var(--brand-dm); }
+#GSView .pg-card-info-btn:hover, #GSView .pg-card-info-btn.active { background: var(--brand-dm); color: #fff; }
+#GSView .pg-card                     { background: #fff; }
+#GSView .pg-card::before             { background: var(--brand-dm); }
+#GSView .pg-btn                      { border-color: var(--brand-dm-dim); background: var(--brand-dm-dim); color: var(--brand-dm); }
+#GSView .pg-btn:hover                { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#GSView .pg-btn.active               { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#GSView .pg-chip.active              { background: var(--brand-dm); border-color: var(--brand-dm); }
+#GSView .pg-chip:hover               { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#GSView .pg-chip-sq.active           { background: var(--brand-dm); border-color: var(--brand-dm); }
+#GSView .pg-chip-sq:hover            { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#GSView .pg-table th.pg-col-selected { background: rgba(232,113,74,0.15); color: #a84a28; border-bottom-color: rgba(232,113,74,0.4); }
+#GSView .pg-table td.pg-col-selected { background: rgba(232,113,74,0.07) !important; }
+#GSView .pg-table th:hover           { background: #EDE8E4; color: #555; }
+#GSView .pg-table th                 { text-transform: none; }
+#GSView .cs-trigger:hover            { border-color: var(--brand-dm); }
+#GSView .custom-select.open .cs-trigger { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }
+#GSView .cs-option:hover             { background: var(--brand-dm-dim); }
+#GSView .cs-option.cs-selected       { color: #fff; background: var(--brand-dm); }
+#GSView .pg-table-wrap               { max-height: 320px; overflow-y: auto; margin: 0 2px 2px; }
+
+/* ── Layout ── */
+#GSView .gs-top                { display: flex; gap: 12px; align-items: stretch; }
+#GSView .gs-top > .pg-card    { flex: 1; }
+#GSView .gs-mid                { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+#GSView .gs-bottom             { display: flex; gap: 12px; }
+#GSView .gs-bottom > .pg-card { flex: 1; }
+
+/* ════════════════════════════════════════════════════════════
+   GS Toast System — isolated from TT (Playground) toasts
+   ════════════════════════════════════════════════════════════ */
+#GS_ToastContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.gs-toast {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-left: 3px solid var(--brand-dm);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 4px 20px var(--color-card-shadow);
+  font-family: var(--font-base);
+  pointer-events: auto;
+  width: 420px;
+  overflow: hidden;
+  animation: gsToastIn 0.22s ease;
+}
+
+/* ── Tab mode ── */
+.gs-toast.gs-tabbed {
+  position: fixed;
+  right: 0;
+  width: auto;
+  border-radius: var(--dml-radius) 0 0 var(--dml-radius);
+  border-right: none;
+}
+.gs-toast.gs-tabbed    .gs-tab-strip  { display: flex; justify-content: center; }
+.gs-toast.gs-tabbed    .gs-toast-inner { display: none; }
+.gs-toast.gs-tabbed    .gs-tab-arrow  { transform: rotate(180deg); }
+.gs-toast:not(.gs-tabbed) .gs-tab-strip  { display: none; }
+.gs-toast:not(.gs-tabbed) .gs-toast-inner { display: block; padding: 10px 12px; }
+
+/* ── Tab strip ── */
+.gs-tab-strip {
+  align-items: center;
+  gap: 5px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.gs-tab-strip:hover    { background: var(--color-nav-hover); }
+.gs-tab-arrow          { font-size: 0.7rem; color: var(--color-text-dim); transition: transform 0.2s; }
+.gs-tab-label          { font-size: 0.63rem; font-weight: 600; color: var(--color-header-title); white-space: nowrap; }
+
+/* ── Inner content ── */
+.gs-toast-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 5px; }
+.gs-toast-step   { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-dm); margin-bottom: 3px; }
+.gs-toast-title  { font-size: 0.7rem; font-weight: 700; color: var(--color-header-title); }
+.gs-toast-body   { font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.5; margin-top: 5px; }
+.gs-toast-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+/* ── Buttons ── */
+.gs-toast-btn-collapse {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; padding: 0; flex-shrink: 0;
+  background: var(--brand-dm-dim); border: 0.5px solid rgba(232,113,74,0.25);
+  border-radius: 4px; cursor: pointer; color: var(--brand-dm);
+  transition: background 0.12s;
+}
+.gs-toast-btn-collapse:hover { background: var(--brand-dm); color: #fff; }
+.gs-toast-btn-next {
+  background: var(--brand-dm); color: #fff;
+  border: none; border-radius: 5px; padding: 4px 10px;
+  font-size: 0.63rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font-base);
+}
+.gs-toast-btn-next:hover { filter: brightness(0.93); }
+.gs-toast-btn-back {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.63rem; color: var(--color-text-dim);
+  font-family: var(--font-base); padding: 0;
+}
+.gs-toast-btn-primary {
+  background: var(--brand-dm); color: #fff;
+  border: none; border-radius: 5px; padding: 4px 10px;
+  font-size: 0.63rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font-base);
+}
+
+@keyframes gsToastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+#GSView .pg-dropzone:hover { border-color: var(--brand-dm); background: var(--brand-dm-dim); }
+
+/* ── GS Popups — brand-dm overrides ── */
+#GS_InfoPopup .pg-info-popup       { border-top-color: var(--brand-dm); }
+#GS_InfoPopup .pg-info-popup-title { color: var(--brand-dm); }
+#GS_CommentPopup .TT_btn.primary   { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }

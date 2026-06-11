@@ -77,7 +77,19 @@ function APP_FormatStrategyPayload(source, { amount, score, scores, additionalCo
   return APP_ApplyTemplate(source, payload);
 }
 
+const _App_TutorialHandlers = {};
+function App_RegisterTutorial(pageClass, fn) { _App_TutorialHandlers[pageClass] = fn; }
+function App_TutorialPrompt() {
+  for (const [cls, fn] of Object.entries(_App_TutorialHandlers)) {
+    if (document.body.classList.contains(cls)) { fn(); return; }
+  }
+}
+
 function App_HideAllViews() {
+  if (typeof TT_dismiss === 'function') TT_dismiss();
+  document.body.classList.remove('gs-active', 'sp-active');
+  if (typeof GS_tourDismiss === 'function') GS_tourDismiss();
+  if (typeof SP_tourDismiss === 'function') SP_tourDismiss();
   document.querySelectorAll('.main > *').forEach(el => {
     el.classList.remove('visible');
     el.style.setProperty('display', 'none', 'important');
@@ -97,6 +109,8 @@ function IA_Open() {
   document.getElementById('IA_MiniNav').style.display = 'flex';
   Sidebar_SetActive('nav-individual-analysis');
   IA_MiniNav_RenderParams();
+  if (typeof IA_MiniNav_PopulateCols === 'function') IA_MiniNav_PopulateCols();
+  if (typeof IA_InitView            === 'function') IA_InitView();
 }
 
 function PR_Open() {
@@ -106,6 +120,7 @@ function PR_Open() {
   document.getElementById('PR_MiniNav').style.display = 'flex';
   Sidebar_SetActive('nav-policy-rules');
   PR_MiniNav_RenderParams();
+  if (typeof PR_MiniNav_PopulateCols === 'function') PR_MiniNav_PopulateCols();
 }
 
 function RA_Open() {

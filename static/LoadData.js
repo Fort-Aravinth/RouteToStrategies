@@ -1,20 +1,6 @@
 // ── Load Data — DuckDB-WASM (no server required) ──────────────────────────────
 
-// ── Self-contained utilities ──────────────────────────────────────────────────
-function LD_showToast(message, type = 'success') {
-  let container = document.getElementById('LD_ToastContainer');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'LD_ToastContainer';
-    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;';
-    document.body.appendChild(container);
-  }
-  const toast = document.createElement('div');
-  toast.className = 'LD_Toast ' + type;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => { toast.classList.add('hide'); setTimeout(() => toast.remove(), 300); }, 10000);
-}
+
 
 // ── DuckDB shared instance ────────────────────────────────────────────────────
 // Reuses window.duckdb + window._LD_db so PD and LD share the same engine
@@ -119,7 +105,7 @@ window.LD_UnlockNav = function() {
 };
 
 window.LD_UnlockScoreAnalysis = function() {
-  ['nav-score-analysis', 'nav-score-comparison'].forEach(id => {
+  ['nav-score-analysis', 'nav-score-comparison', 'nav-individual-analysis', 'nav-policy-rules'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.classList.remove('ld-locked', 'sidebar-item-disabled');
@@ -155,7 +141,6 @@ function LD_ChooseFile() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Lock CM + CM template row + SP + everything after it by default on page load
   ['nav-column-mgmt', ..._LD_CM_LOCK_IDS, ..._LD_SP_LOCK_IDS, ..._LD_NAV_LOCK_IDS, ..._LD_ANALYSIS_LOCK_IDS].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.classList.add('ld-locked'); el.setAttribute('data-nav-locked','1'); }
@@ -208,8 +193,7 @@ function LD_SetDelimiter4(btn, val) {
 
 // ── Upload & Process ──────────────────────────────────────────────────────────
 async function LD_UploadFile() {
-  if (!LD_UploadedFile) { LD_showToast('No file selected', 'error'); return; }
-  LD_showToast('Loading file…', 'info');
+  if (!LD_UploadedFile) { return; }
   try {
     const conn   = await LD_getDB();
     const fname  = 'ld_' + LD_UploadedFile.name.replace(/[^a-zA-Z0-9._]/g, '_');
@@ -234,7 +218,6 @@ async function LD_UploadFile() {
     const pathVal = document.getElementById('LD_PathValue');
     if (pathVal) pathVal.textContent = LD_UploadedFile.name;
 
-    LD_showToast(`Building ld_raw table…`, 'info');
 
     // Step 2: materialise into ld_raw table (detaches from CSV file)
     await conn.query(`CREATE OR REPLACE TABLE ld_raw AS SELECT * FROM ${csvSrc}`);
@@ -244,20 +227,17 @@ async function LD_UploadFile() {
     LD_SetLockState('loaded');
     LD_LockNavToColumnMgmt();
     LD_UnlockColumnMgmt();
-    LD_showToast(`Ready: ${rows.toLocaleString()} rows · ${cols} cols`, 'success');
   } catch (e) {
-    LD_showToast('Load failed: ' + e.message, 'error');
   }
 }
 
 // ── Re-process ────────────────────────────────────────────────────────────────
 async function LD_ReprocessFile() {
-  if (!LD_UploadedFile) { LD_showToast('No file loaded yet', 'error'); return; }
+  if (!LD_UploadedFile) { return; }
   const delVal   = document.getElementById('LD_ReprocessDelimiter')?.value || 'auto';
   const hasHeader = document.getElementById('LD_ReprocessHeader')?.checked ?? true;
   LD_FileDelimiter = delVal;
   LD_FileHasHeader = hasHeader;
-  LD_showToast('Re-processing…', 'info');
   try {
     const conn   = await LD_getDB();
     const delim  = delVal === 'auto' ? '' : `, delim='${delVal}'`;
@@ -272,9 +252,7 @@ async function LD_ReprocessFile() {
 
     document.getElementById('LD_Rows').textContent = rows.toLocaleString();
     document.getElementById('LD_Cols').textContent = cols;
-    LD_showToast(`Re-processed: ${rows.toLocaleString()} rows · ${cols} cols`, 'success');
   } catch (e) {
-    LD_showToast('Re-process failed: ' + e.message, 'error');
   }
 }
 
@@ -317,7 +295,7 @@ function LD_csSelect(id, value, el) {
 
 function LD_SaveTemplate() {
   const name = document.getElementById('LD_SaveName')?.value.trim();
-  if (!name) { LD_showToast('Enter a template name', 'error'); return; }
+  if (!name) { return; }
   const templates = _LD_GetTemplates();
   templates[name] = {
     name,
@@ -327,15 +305,14 @@ function LD_SaveTemplate() {
   };
   localStorage.setItem(LD_TEMPLATES_KEY, JSON.stringify(templates));
   document.getElementById('LD_SaveName').value = '';
-  LD_showToast('Saved: ' + name, 'success');
   LD_LoadTemplates();
 }
 
 function LD_ApplyTemplate() {
   const name = document.getElementById('LD_LoadTemplate')?.dataset.value || '';
-  if (!name) { LD_showToast('Select a template', 'error'); return; }
+  if (!name) { return; }
   const data = _LD_GetTemplates()[name];
-  if (!data) { LD_showToast('Template not found', 'error'); return; }
+  if (!data) { return; }
 
   LD_FileDelimiter = data.delimiter || 'auto';
   LD_FileHasHeader = data.has_header !== false;
@@ -343,17 +320,15 @@ function LD_ApplyTemplate() {
   const hdrBox = document.getElementById('LD_HeaderCheckbox');
   if (hdrBox) hdrBox.checked = LD_FileHasHeader;
 
-  LD_showToast(`Template "${name}" applied — select the file then click Upload & Process`, 'info');
 }
 
 function LD_RemoveTemplate() {
   const name = document.getElementById('LD_RemoveTemplate')?.dataset.value || '';
-  if (!name) { LD_showToast('Select a template', 'error'); return; }
+  if (!name) { return; }
   if (!confirm(`Delete template "${name}"?`)) return;
   const templates = _LD_GetTemplates();
   delete templates[name];
   localStorage.setItem(LD_TEMPLATES_KEY, JSON.stringify(templates));
-  LD_showToast('Deleted: ' + name, 'success');
   LD_LoadTemplates();
 }
 
@@ -373,18 +348,17 @@ function LD_PopulateReviewedDropdown() {
 }
 
 async function LD_UploadReviewedFile() {
-  if (!LD_UploadedFile) { LD_showToast('No file selected', 'error'); return; }
+  if (!LD_UploadedFile) { return; }
   const name = document.getElementById('LD_ReviewedSelect')?.dataset.value || '';
-  if (!name) { LD_showToast('Select a column list first', 'error'); return; }
+  if (!name) { return; }
 
   let colIndices;
   try {
     const lists = JSON.parse(localStorage.getItem('PD_ColumnLists') || '{}');
     colIndices = lists[name]?.columns || [];
   } catch { colIndices = []; }
-  if (!colIndices.length) { LD_showToast('Column list is empty', 'error'); return; }
+  if (!colIndices.length) { return; }
 
-  LD_showToast('Loading with column filter…', 'info');
   try {
     const conn   = await LD_getDB();
     const fname  = 'ld_' + LD_UploadedFile.name.replace(/[^a-zA-Z0-9._]/g, '_');
@@ -402,7 +376,7 @@ async function LD_UploadReviewedFile() {
 
     // Map 1-based indices to column names
     const selectedCols = colIndices.map(i => allCols[i - 1]).filter(c => c !== undefined);
-    if (!selectedCols.length) { LD_showToast('No matching columns found', 'error'); return; }
+    if (!selectedCols.length) { return; }
 
     const colList = selectedCols.map(c => `"${c.replace(/"/g,'""')}"`).join(', ');
 
@@ -424,9 +398,7 @@ async function LD_UploadReviewedFile() {
     LD_SetLockState('loaded');
     LD_LockNavToColumnMgmt();
     LD_UnlockColumnMgmt();
-    LD_showToast(`Loaded: ${rows.toLocaleString()} rows · ${selectedCols.length} cols (filtered)`, 'success');
   } catch (e) {
-    LD_showToast('Load failed: ' + e.message, 'error');
   }
 }
 

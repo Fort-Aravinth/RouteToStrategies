@@ -34,6 +34,7 @@
 }
 .SA_StyleChip:hover  { border-color: var(--brand-sa); color: var(--brand-sa); }
 .SA_StyleChip.active { border-color: var(--brand-sa); background: var(--brand-sa-dim); color: var(--brand-sa); }
+#SA_RunByBtn_fraud.active { border-color: rgba(239,68,68,1); background: rgba(239,68,68,0.1); color: rgba(239,68,68,1); }
 
 /* ── Graph tabs ── */
 .sa-tabs { display: flex; gap: 4px; }

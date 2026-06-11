@@ -44,6 +44,7 @@ function CM_hideAllViews() {
 }
 
 function CM_setSidebarActive(navId) {
+  if (typeof Sidebar_SetActive === 'function') { Sidebar_SetActive(navId); return; }
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
   const active = document.getElementById(navId);
   if (active) active.classList.add('active');

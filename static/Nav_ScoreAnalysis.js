@@ -129,6 +129,7 @@ function NAV_SA_RefreshExtraCards() {
       <div id="NAV_SA_ExtraSection_${key}">
         <div onclick="NAV_SA_ToggleExtra('${key}')" class="MN_section_hdr">
           <span class="MN_title">${title}</span>
+          <button class="MN_info_btn" onclick="event.stopPropagation();SA_infoOpen(this,'${title}','<ul class=&quot;pg-info-list&quot;><li>Column loaded from Set Parameters</li><li>Tag score buckets by selecting <strong>${labelA}</strong> or <strong>${labelB}</strong> values</li><li>Click <strong>Run Analysis</strong> to apply the filter</li></ul>')" title="About this section">?</button>
           <svg id="NAV_SA_ExtraChevron_${key}" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
             <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-dim);"/>
           </svg>
@@ -346,4 +347,46 @@ function NAV_SA_AutoRun() {
   _NAV_SA_AutoRunTimer = setTimeout(() => {
     if (SA_getCSValue('SAScoreColCS')) SA_Run();
   }, 800);
+}
+
+// ── SA Nav Info Popup ─────────────────────────────────────────────────────────
+function SA_infoOpen(btn, title, text) {
+  const popup = document.getElementById('SA_InfoPopup');
+  if (!popup) return;
+  document.getElementById('SA_InfoTitle').textContent = title;
+  document.getElementById('SA_InfoBody').innerHTML    = text;
+  popup.style.visibility = 'hidden';
+  popup.style.display    = 'block';
+  popup.style.top = popup.style.bottom = popup.style.left = popup.style.right = '';
+  const pH = popup.offsetHeight;
+  const pW = popup.offsetWidth;
+  popup.style.visibility = '';
+  const r   = btn.getBoundingClientRect();
+  const gap = 8;
+  const spaceBelow = window.innerHeight - r.bottom - gap;
+  const spaceAbove = r.top - gap;
+  const spaceRight = window.innerWidth - r.left;
+  const spaceLeft  = r.right;
+  if (spaceBelow >= pH || spaceBelow >= spaceAbove) {
+    popup.style.top = (r.bottom + gap) + 'px'; popup.style.bottom = '';
+  } else {
+    popup.style.bottom = (window.innerHeight - r.top + gap) + 'px'; popup.style.top = '';
+  }
+  if (spaceRight >= pW || spaceRight >= spaceLeft) {
+    popup.style.left = r.left + 'px'; popup.style.right = '';
+  } else {
+    popup.style.right = (window.innerWidth - r.right) + 'px'; popup.style.left = '';
+  }
+  setTimeout(() => document.addEventListener('click', _SA_infoOutside), 0);
+  window.addEventListener('scroll', SA_infoClose, { once: true, capture: true });
+}
+function _SA_infoOutside(e) {
+  const popup = document.getElementById('SA_InfoPopup');
+  if (popup && !popup.contains(e.target) && !e.target.classList.contains('MN_info_btn'))
+    SA_infoClose();
+}
+function SA_infoClose() {
+  const popup = document.getElementById('SA_InfoPopup');
+  if (popup) popup.style.display = 'none';
+  document.removeEventListener('click', _SA_infoOutside);
 }

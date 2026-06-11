@@ -1,20 +1,42 @@
 // ── Preview Data — DuckDB-WASM (no server required) ──────────────────────────
+(function() {
+  const s = document.createElement('style');
+  s.textContent = `
+/* ── Preview Data ── */
+#PreDatView .pg-card::before        { background: var(--brand-dm); }
+#PreDatView .pg-btn,
+#PD_Modal .pg-btn                   { border-color: var(--brand-dm-dim); background: var(--brand-dm-dim); color: var(--brand-dm); }
+#PreDatView .pg-btn:hover,
+#PD_Modal .pg-btn:hover             { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#PreDatView .pg-btn.active,
+#PD_Modal .pg-btn.active            { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
+#PD_Modal .popup-header             { border-bottom-color: rgba(232,113,74,0.25); }
+#PD_Modal .popup-footer             { border-top-color: rgba(232,113,74,0.25); }
+#PD_Modal .popup-close:hover        { color: var(--brand-dm); }
+#PD_Modal .popup-title              { color: var(--brand-dm); }
+#PreDatView .pg-chip.active             { background: var(--brand-dm); border-color: var(--brand-dm); }
+#PreDatView .pg-chip:hover              { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#PreDatView .pg-chip-sq.active          { background: var(--brand-dm); border-color: var(--brand-dm); }
+#PreDatView .pg-chip-sq:hover           { background: var(--brand-dm-dim); border-color: var(--brand-dm); }
+#PreDatView .pg-table th.pg-col-selected   { background: rgba(232,113,74,0.15); color: #a84a28; border-bottom-color: rgba(232,113,74,0.4); }
+#PreDatView .pg-table td.pg-col-selected   { background: rgba(232,113,74,0.07) !important; }
+#PreDatView .pg-table th:hover             { background: #EDE8E4; color: #555; }
+#PreDatView .cs-trigger:hover                   { border-color: var(--brand-dm); }
+#PreDatView .custom-select.open .cs-trigger     { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }
+#PreDatView .cs-option:hover                    { background: var(--brand-dm-dim); }
+#PreDatView .cs-option.cs-selected              { color: #fff; background: var(--brand-dm); }
+#PreDatView .pg-chip-sq.pd-match { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); order: -1; }
+#PreDatView .pg-chip-sq.pd-match.active { box-shadow: 0 0 0 2px rgba(232,113,74,0.4); }
+#PD_PreviewCard .pg-table-wrap { margin: 0 2px 2px; }
+#PreDatView .pg-table th, #GSView .pg-table th { text-transform: none; }
+.pd-transform-chip { border-color: var(--color-card-border) !important; color: var(--color-text-muted) !important; background: var(--color-nav-hover) !important; }
+.pd-transform-chip:hover { border-color: #6366f1 !important; background: rgba(99,102,241,0.08) !important; color: #6366f1 !important; }
+.pg-chip-sq-input { border: 1px solid var(--brand-dm) !important; border-radius: 4px; padding: 2px 6px; font-size: 0.68rem; font-family: var(--font-base); outline: none; background: #fff; box-shadow: 0 0 0 2px var(--brand-dm-dim); }
 
-// ── Self-contained utilities (no Version01.js dependency) ────────────────────
-function PD_showToast(message, type = 'success') {
-  let container = document.getElementById('LD_ToastContainer');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'LD_ToastContainer';
-    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:8px;';
-    document.body.appendChild(container);
-  }
-  const toast = document.createElement('div');
-  toast.className = 'LD_Toast ' + type;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => { toast.classList.add('hide'); setTimeout(() => toast.remove(), 300); }, 10000);
-}
+
+`;
+  document.head.appendChild(s);
+})();
 
 function PD_hideAllViews() {
   if (typeof App_HideAllViews === 'function') { App_HideAllViews(); return; }
@@ -94,7 +116,6 @@ function PD_toggleCustomSelect(id) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Default: lock everything except Upload File and Save Column Selection > View tab
   PD_lock('PD_DelimCard');
   PD_lock('PD_HeaderCard');
   PD_lock('PD_SelectorCard');
@@ -102,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
   PD_lock('PD_Tab_Save');
   PD_lock('PD_Tab_Delete');
   PD_lock('PD_Tab_Load');
+
 });
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -109,6 +131,7 @@ let PD_AllColumns     = [];
 let PD_Selected       = new Set();
 let PD_PreviewData    = { columns: [], data: [] };
 let PD_HasHeader      = false;
+let PD_Aliases        = {};
 let PD_UploadedFile   = null;
 let PD_Delimiter      = null;
 let PD_RegisteredName = null;
@@ -137,9 +160,12 @@ function PD_onFilePicked(event) {
   if (!file) return;
   PD_UploadedFile = file;
   PD_RegisteredName = null;
+  PD_Aliases = {};
   _PD_setFileLabel(file);
   PD_unlock('PD_DelimCard');
+  if (typeof GS_unlock === 'function') GS_unlock('GS_DelimCard');
   event.target.value = '';
+  PD_loadFile();
 }
 
 function _PD_setFileLabel(file) {
@@ -158,8 +184,11 @@ function PD_HandleFileDrop(e) {
   if (!file) return;
   PD_UploadedFile = file;
   PD_RegisteredName = null;
+  PD_Aliases = {};
   _PD_setFileLabel(file);
   PD_unlock('PD_DelimCard');
+  if (typeof GS_unlock === 'function') GS_unlock('GS_DelimCard');
+  PD_loadFile();
 }
 
 // ── Delimiter toggle ──────────────────────────────────────────────────────────
@@ -168,6 +197,7 @@ function PD_setDelim(val, btn) {
   document.querySelectorAll('[id^="PD_Delim_"]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   PD_unlock('PD_HeaderCard');
+  if (typeof GS_unlock === 'function') GS_unlock('GS_HeaderCard');
   if (PD_UploadedFile) PD_loadFile();
 }
 
@@ -186,7 +216,7 @@ function PD_setHeader(val) {
 
 // ── Load file via DuckDB ──────────────────────────────────────────────────────
 async function PD_loadFile() {
-  if (!PD_UploadedFile) { PD_showToast('Select a file first', 'error'); return; }
+  if (!PD_UploadedFile) { return; }
   const tableEl = document.getElementById('PD_FullTable');
   if (tableEl) tableEl.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.75rem;padding:10px;">Loading…</p>';
 
@@ -200,12 +230,10 @@ async function PD_loadFile() {
 
     const delim  = (!PD_Delimiter || PD_Delimiter === 'auto') ? '' : `, delim='${PD_Delimiter}'`;
     const header = PD_HasHeader ? '' : ', header=false';
-    const src    = `read_csv_auto('${fname}'${delim}${header}, ignore_errors=true)`;
+    const srcVarchar = `read_csv_auto('${fname}'${delim}${header}, all_varchar=true, ignore_errors=true)`;
 
-    // Step 1: get columns + preview rows fast (no full scan)
-    const schema  = await conn.query(`DESCRIBE SELECT * FROM ${src} LIMIT 0`);
-    const cols    = schema.toArray().map(r => r.column_name);
-    const preview = await conn.query(`SELECT * FROM ${src} LIMIT 5`);
+    const preview = await conn.query(`SELECT * FROM ${srcVarchar} LIMIT 25`);
+    const cols    = preview.schema.fields.map(f => f.name);
     const rows    = preview.toArray().map(r => { const o = {}; cols.forEach(c => o[c] = r[c] ?? ''); return o; });
 
     PD_AllColumns  = cols;
@@ -223,19 +251,20 @@ async function PD_loadFile() {
         <span style="font-size:1rem;font-weight:700;color:var(--color-header-title);">${cols.length}</span>
       </div>`;
 
+    PD_unlock('PD_PreviewCard');
+    document.querySelectorAll('[id="PD_PreviewCard"]').forEach(el => el.classList.remove('ld-locked'));
     PD_Selected = new Set([...PD_Selected].filter(c => cols.includes(c)));
     PD_renderChips();
     PD_renderPreviewTable();
 
     // Step 2: count rows in background — doesn't block the UI
-    conn.query(`SELECT COUNT(*) AS n FROM ${src}`).then(res => {
+    conn.query(`SELECT COUNT(*) AS n FROM ${srcVarchar}`).then(res => {
       const rowCount = Number(res.toArray()[0].n);
       const el = document.getElementById('PD_RowCount');
       if (el) el.textContent = rowCount.toLocaleString();
     });
 
   } catch (e) {
-    PD_showToast('Unable to read file — try a different separator or check the file format.', 'error');
     if (tableEl) tableEl.innerHTML = '';
   }
 }
@@ -247,7 +276,7 @@ async function PD_previewSelected() {
     if (container) container.innerHTML = '<p style="color:#ef4444;font-size:0.75rem;padding:10px;">No columns selected.</p>';
     return;
   }
-  if (!PD_RegisteredName) { PD_showToast('Load a file first', 'error'); return; }
+  if (!PD_RegisteredName) { return; }
 
   const nrows   = parseInt(document.getElementById('PD_NRows').value) || 10;
   const ordered = PD_AllColumns.filter(c => PD_Selected.has(c));
@@ -271,15 +300,17 @@ async function PD_previewSelected() {
 // ── Table rendering ───────────────────────────────────────────────────────────
 function PD_renderPreviewTable() {
   const tableEl = document.getElementById('PD_FullTable');
-  if (!tableEl || !PD_PreviewData.columns.length) return;
-  tableEl.innerHTML = PD_buildTable(PD_PreviewData.columns, PD_PreviewData.data, PD_Selected);
+  if (!tableEl || !PD_AllColumns.length) return;
+  tableEl.innerHTML = PD_buildTable(PD_AllColumns, PD_PreviewData.data, PD_Selected);
 }
 
 function PD_buildTable(cols, rows, selected = new Set()) {
   if (!cols || !cols.length) return '<p style="color:var(--dml-muted);font-size:0.75rem;padding:10px;">No data.</p>';
   const ths = cols.map(c => {
-    const safe = c.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return `<th class="${selected.has(c) ? 'pg-col-selected' : ''}" onclick="PD_toggleColByName('${safe}')">${c}</th>`;
+    const safe  = c.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const label = PD_Aliases[c] || c;
+    const badge = PD_Types[c] ? `<span class="pd-type-badge">${PD_Types[c]}</span>` : '';
+    return `<th class="${selected.has(c) ? 'pg-col-selected' : ''}" onclick="PD_thClick('${safe}', this)" ondblclick="PD_thDblClick('${safe}', this)" title="${c}" style="cursor:pointer;">${label}${badge}</th>`;
   }).join('');
   const trs = rows.map(r => '<tr>' + cols.map(c =>
     `<td${selected.has(c) ? ' class="pg-col-selected"' : ''} title="${String(r[c]??'').replace(/"/g,'&quot;')}">${r[c]??''}</td>`
@@ -288,6 +319,82 @@ function PD_buildTable(cols, rows, selected = new Set()) {
 }
 
 // ── Column selection ──────────────────────────────────────────────────────────
+function PD_resetAliases() {
+  PD_Aliases = {};
+  PD_renderChips();
+  PD_renderPreviewTable();
+}
+
+function PD_applyAliasPreset(preset) {
+  PD_AllColumns.forEach(col => {
+    let n = PD_Aliases[col] || col;
+    if      (preset === 'remove_spaces') n = n.replace(/\s+/g, '')
+    else if (preset === 'spaces_to_underscore') n = n.replace(/\s+/g, '_');
+    else if (preset === 'snake_case')    n = n.replace(/\s+/g, '_').replace(/([A-Z])/g, m => '_' + m.toLowerCase()).replace(/^_/, '');
+    else if (preset === 'lowercase')     n = n.toLowerCase();
+    else if (preset === 'uppercase')     n = n.toUpperCase();
+    if (n !== col) PD_Aliases[col] = n; else delete PD_Aliases[col];
+  });
+  PD_renderChips();
+  PD_renderPreviewTable();
+}
+
+function PD_startAliasEdit(col, btn) {
+  const current = PD_Aliases[col] || col;
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = current;
+  inp.className = btn.className + ' pg-chip-sq-input';
+  inp.style.cssText = `width:${Math.max(60, current.length * 8)}px;`;
+  const finish = () => {
+    const val = inp.value.trim();
+    if (val && val !== col) PD_Aliases[col] = val;
+    else delete PD_Aliases[col];
+    if (inp.parentNode) inp.parentNode.replaceChild(btn, inp);
+    PD_renderChips();
+    PD_renderPreviewTable();
+  };
+  inp.addEventListener('blur', finish);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); inp.blur(); }
+    if (e.key === 'Escape') { if (inp.parentNode) inp.parentNode.replaceChild(btn, inp); }
+  });
+  btn.parentNode.replaceChild(inp, btn);
+  inp.focus(); inp.select();
+}
+
+let _PD_thClickTimer = null;
+function PD_thClick(col, th) {
+  if (_PD_thClickTimer) return;
+  _PD_thClickTimer = setTimeout(() => { _PD_thClickTimer = null; PD_toggleColByName(col); }, 220);
+}
+function PD_thDblClick(col, th) {
+  if (_PD_thClickTimer) { clearTimeout(_PD_thClickTimer); _PD_thClickTimer = null; }
+  PD_startAliasEditFromTable(col, th);
+}
+
+function PD_startAliasEditFromTable(col, th) {
+  const current = PD_Aliases[col] || col;
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = current;
+  inp.style.cssText = `width:${Math.max(60, current.length * 8)}px;font-size:inherit;font-family:var(--font-base);border:1px solid var(--brand-dm);border-radius:3px;padding:1px 4px;outline:none;background:#fff;color:var(--color-header-title);text-transform:none;`;
+  const finish = () => {
+    const val = inp.value.trim();
+    if (val && val !== col) PD_Aliases[col] = val; else delete PD_Aliases[col];
+    PD_renderChips();
+    PD_renderPreviewTable();
+  };
+  inp.addEventListener('blur', finish);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); inp.blur(); }
+    if (e.key === 'Escape') { PD_renderPreviewTable(); }
+  });
+  th.textContent = '';
+  th.appendChild(inp);
+  inp.focus(); inp.select();
+}
+
 function PD_toggleColByName(col) {
   if (PD_Selected.has(col)) { PD_Selected.delete(col); } else { PD_Selected.add(col); }
   PD_renderChips();
@@ -302,7 +409,6 @@ function PD_toggleCol(col, el) {
   PD_renderPreviewTable();
 }
 
-function PD_selectAll() { PD_Selected = new Set(PD_AllColumns); PD_renderChips(); PD_renderPreviewTable(); }
 function PD_clearAll()   { PD_Selected = new Set(); PD_renderChips(); PD_renderPreviewTable(); }
 
 let PD_SearchPattern = null; // compiled RegExp or null
@@ -334,7 +440,9 @@ function PD_renderChips() {
     const safeCol   = col.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     const highlight = PD_SearchPattern && PD_SearchPattern.test(col);
     const cls = ['pg-chip-sq', active ? 'active' : '', highlight ? 'pd-match' : ''].filter(Boolean).join(' ');
-    return `<button type="button" class="${cls}" onclick="PD_toggleCol('${safeCol}',this)">${col}</button>`;
+    const label = PD_Aliases[col] || col;
+    const title = PD_Aliases[col] ? `${PD_Aliases[col]} (${col})` : col;
+    return `<button type="button" class="${cls}" title="${title}" onclick="PD_toggleCol('${safeCol}',this)" ondblclick="PD_startAliasEdit('${safeCol}',this)">${label}</button>`;
   }).join('');
   const badge = document.getElementById('PD_SelCount');
   if (badge) badge.textContent = `${PD_Selected.size} selected`;
@@ -358,9 +466,9 @@ function PD_switchTab(tab) {
 
 function PD_applyTemplate() {
   const name = document.getElementById('PD_ApplySelect')?.dataset.value || '';
-  if (!name) { PD_showToast('Select a template', 'error'); return; }
+  if (!name) { return; }
   const data = PD_getLists()[name];
-  if (!data) { PD_showToast('Template not found', 'error'); return; }
+  if (!data) { return; }
   PD_PendingLoad = data;
 
   const savedNames = data.column_names || [];
@@ -378,7 +486,7 @@ function PD_applyTemplate() {
     PD_Selected = new Set(matched);
     PD_renderChips();
     PD_renderPreviewTable();
-    PD_showToast(`Applied: ${matched.length} cols matched`, 'success');
+    ;
     return;
   }
 
@@ -405,7 +513,6 @@ function PD_applyByNumber() {
   PD_renderChips();
   PD_renderPreviewTable();
   PD_closeModal();
-  PD_showToast(`Applied by number: ${PD_Selected.size} cols`, 'success');
 }
 
 
@@ -438,8 +545,8 @@ function PD_csSelect(id, value, el) {
 
 function PD_saveColumns() {
   const name = document.getElementById('PD_SaveName').value.trim();
-  if (!name)                 { PD_showToast('Enter a name', 'error'); return; }
-  if (!PD_Selected.size) { PD_showToast('No columns selected', 'error'); return; }
+  if (!name)                 { return; }
+  if (!PD_Selected.size) { return; }
   const colIndices = PD_AllColumns
     .map((c, i) => PD_Selected.has(c) ? i + 1 : null)
     .filter(n => n !== null);
@@ -448,7 +555,6 @@ function PD_saveColumns() {
   lists[name] = { name, file_header: PD_HasHeader, delimiter: PD_Delimiter, columns: colIndices, column_names: colNames };
   localStorage.setItem(PD_STORAGE_KEY, JSON.stringify(lists));
   document.getElementById('PD_SaveName').value = '';
-  PD_showToast('Saved: ' + name, 'success');
   PD_refreshListDropdowns();
 }
 
@@ -456,9 +562,9 @@ let PD_PendingLoad = null;
 
 function PD_loadColumns() {
   const name = document.getElementById('PD_LoadSelect').dataset.value || '';
-  if (!name) { PD_showToast('Select a list', 'error'); return; }
+  if (!name) { return; }
   const data = PD_getLists()[name];
-  if (!data) { PD_showToast('List not found', 'error'); return; }
+  if (!data) { return; }
 
   // View-only — just show the stored template data, no apply logic
   PD_PendingLoad = null;
@@ -489,7 +595,6 @@ function PD_applyLoadedColumns() {
   PD_renderChips();
   PD_renderPreviewTable();
   PD_closeModal();
-  PD_showToast('Applied: ' + PD_Selected.size + ' cols', 'success');
 }
 
 function PD_closeModal() {
@@ -504,7 +609,7 @@ function PD_closeModal() {
 
 function PD_deleteColumns() {
   const name = document.getElementById('PD_RemoveSelect').dataset.value || '';
-  if (!name) { PD_showToast('Select a list', 'error'); return; }
+  if (!name) { return; }
   if (!confirm('Delete column list "' + name + '"?')) return;
   const lists = PD_getLists();
   delete lists[name];
@@ -512,6 +617,8 @@ function PD_deleteColumns() {
   const cs = document.getElementById('PD_RemoveSelect');
   cs.dataset.value = '';
   cs.querySelector('.cs-value').textContent = '— select —';
-  PD_showToast('Deleted: ' + name, 'success');
   PD_refreshListDropdowns();
 }
+
+
+

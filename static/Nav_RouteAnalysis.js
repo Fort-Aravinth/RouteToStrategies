@@ -329,3 +329,45 @@ function ANRA_MiniNav_ToggleAll() {
   const btn = document.getElementById('ANRA_MiniNav_ExpandBtn');
   if (btn) btn.title = _anraMiniAllExpanded ? 'Collapse all' : 'Expand all';
 }
+
+// ── RA Info Popup ─────────────────────────────────────────────────────────────
+function RA_infoOpen(btn, title, text) {
+  const popup = document.getElementById('RA_InfoPopup');
+  if (!popup) return;
+  document.getElementById('RA_InfoTitle').textContent = title;
+  document.getElementById('RA_InfoBody').innerHTML    = text;
+  popup.style.visibility = 'hidden';
+  popup.style.display    = 'block';
+  popup.style.top = popup.style.bottom = popup.style.left = popup.style.right = '';
+  const pH = popup.offsetHeight;
+  const pW = popup.offsetWidth;
+  popup.style.visibility = '';
+  const r   = btn.getBoundingClientRect();
+  const gap = 8;
+  const spaceBelow = window.innerHeight - r.bottom - gap;
+  const spaceAbove = r.top - gap;
+  const spaceRight = window.innerWidth - r.left;
+  const spaceLeft  = r.right;
+  if (spaceBelow >= pH || spaceBelow >= spaceAbove) {
+    popup.style.top = (r.bottom + gap) + 'px'; popup.style.bottom = '';
+  } else {
+    popup.style.bottom = (window.innerHeight - r.top + gap) + 'px'; popup.style.top = '';
+  }
+  if (spaceRight >= pW || spaceRight >= spaceLeft) {
+    popup.style.left = r.left + 'px'; popup.style.right = '';
+  } else {
+    popup.style.right = (window.innerWidth - r.right) + 'px'; popup.style.left = '';
+  }
+  setTimeout(() => document.addEventListener('click', _RA_infoOutside), 0);
+  window.addEventListener('scroll', RA_infoClose, { once: true, capture: true });
+}
+function _RA_infoOutside(e) {
+  const popup = document.getElementById('RA_InfoPopup');
+  if (popup && !popup.contains(e.target) && !e.target.classList.contains('MN_info_btn'))
+    RA_infoClose();
+}
+function RA_infoClose() {
+  const popup = document.getElementById('RA_InfoPopup');
+  if (popup) popup.style.display = 'none';
+  document.removeEventListener('click', _RA_infoOutside);
+}

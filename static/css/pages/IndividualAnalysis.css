@@ -1,0 +1,142 @@
+/* ── Individual Analysis ── */
+
+#IAView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ── Top grid — Strategy Flow + Numeric Filters side by side ── */
+.ia-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 24px 24px 0;
+  align-items: start;
+}
+
+/* ── Cards ── */
+.ia-card::before { background: var(--brand-ia-light); }
+
+
+/* ── Strategy Flow chain ── */
+#IA_SF_Chain {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 36px;
+}
+
+.ia-chain-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--brand-ia-light);
+  color: #fff;
+  border-radius: 5px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  width: auto;
+}
+.ia-chain-node .ia-chain-remove {
+  cursor: pointer;
+  opacity: 0.8;
+  font-size: 0.78rem;
+  line-height: 1;
+  margin-left: 8px;
+}
+.ia-chain-arrow {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+  color: var(--color-text-dim);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.ia-chain-drop {
+  height: 28px;
+  min-width: 120px;
+  border: 1.5px dashed var(--color-card-border);
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+  cursor: default;
+  flex-shrink: 0;
+}
+.ia-chain-drop.drag-over { border-color: var(--brand-ia-light); }
+.ia-chain-drop span {
+  font-size: 0.65rem;
+  color: var(--color-text-dim);
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* ── Numeric slider block ── */
+.ia-slider-block {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.ia-slider-block.inactive { opacity: 0.45; }
+.ia-slider-block.active   { border-color: var(--brand-ia-light); }
+
+.ia-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.ia-slider-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.ia-slider-name.active { color: var(--brand-ia-light); }
+.ia-slider-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.ia-slider-badge.active { color: var(--brand-ia-light); }
+
+.ia-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.ia-slider-row:last-child { margin-bottom: 0; }
+.ia-slider-lbl {
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  width: 22px;
+}
+.ia-slider-row input[type="range"]  { flex: 1; accent-color: var(--brand-ia-light); cursor: pointer; }
+.ia-slider-row input[type="number"] {
+  width: 60px;
+  height: 22px;
+  font-size: 0.68rem;
+  padding: 0 4px;
+  border: 1px solid var(--color-card-border);
+  border-radius: 4px;
+  background: var(--color-page-bg);
+  color: var(--color-header-title);
+}
+
+/* ── Results area ── */
+#IA_ResultContainer {
+  padding: 14px 24px 24px;
+  font-size: 0.8rem;
+}

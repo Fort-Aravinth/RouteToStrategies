@@ -8,6 +8,24 @@
 #RMONView .pg-btn:hover         { background: var(--brand-dm); opacity: 0.85; border-color: var(--brand-dm); color: #fff; }
 #RMONView .pg-chip.active       { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
 #RMONView .pg-chip:hover        { border-color: var(--brand-dm); color: var(--brand-dm); background: var(--brand-dm-dim); }
+#RMONView .pg-card-info-btn     { border-color: var(--brand-dm) !important; color: var(--brand-dm) !important; background: var(--brand-dm-dim) !important; }
+#RMONView .pg-card-info-btn:hover { background: var(--brand-dm) !important; color: #fff !important; }
+
+/* ── RMON Info Popup ── */
+#RMON_InfoPopup .rmon-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-dm);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#RMON_InfoPopup .rmon-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#RMON_InfoPopup .rmon-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-dm); }
+#RMON_InfoPopup .rmon-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#RMON_InfoPopup .pg-info-list li::marker { color: var(--brand-dm); }
 
 /* ── Chips row ── */
 #RMON_Chips {

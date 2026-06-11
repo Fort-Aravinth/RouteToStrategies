@@ -313,6 +313,48 @@ function NAV_SC_ToggleAmt() {
 }
 
 
+// ── SC Info Popup ─────────────────────────────────────────────────────────────
+function SC_infoOpen(btn, title, text) {
+  const popup = document.getElementById('SC_InfoPopup');
+  if (!popup) return;
+  document.getElementById('SC_InfoTitle').textContent = title;
+  document.getElementById('SC_InfoBody').innerHTML    = text;
+  popup.style.visibility = 'hidden';
+  popup.style.display    = 'block';
+  popup.style.top = popup.style.bottom = popup.style.left = popup.style.right = '';
+  const pH = popup.offsetHeight;
+  const pW = popup.offsetWidth;
+  popup.style.visibility = '';
+  const r   = btn.getBoundingClientRect();
+  const gap = 8;
+  const spaceBelow = window.innerHeight - r.bottom - gap;
+  const spaceAbove = r.top - gap;
+  const spaceRight = window.innerWidth - r.left;
+  const spaceLeft  = r.right;
+  if (spaceBelow >= pH || spaceBelow >= spaceAbove) {
+    popup.style.top = (r.bottom + gap) + 'px'; popup.style.bottom = '';
+  } else {
+    popup.style.bottom = (window.innerHeight - r.top + gap) + 'px'; popup.style.top = '';
+  }
+  if (spaceRight >= pW || spaceRight >= spaceLeft) {
+    popup.style.left = r.left + 'px'; popup.style.right = '';
+  } else {
+    popup.style.right = (window.innerWidth - r.right) + 'px'; popup.style.left = '';
+  }
+  setTimeout(() => document.addEventListener('click', _SC_infoOutside), 0);
+  window.addEventListener('scroll', SC_infoClose, { once: true, capture: true });
+}
+function _SC_infoOutside(e) {
+  const popup = document.getElementById('SC_InfoPopup');
+  if (popup && !popup.contains(e.target) && !e.target.classList.contains('MN_info_btn'))
+    SC_infoClose();
+}
+function SC_infoClose() {
+  const popup = document.getElementById('SC_InfoPopup');
+  if (popup) popup.style.display = 'none';
+  document.removeEventListener('click', _SC_infoOutside);
+}
+
 // ── Auto-run debounce ─────────────────────────────────────────────────────────
 function NAV_SC_AutoRun() {
   if (window.SC_RefreshChips) SC_RefreshChips();

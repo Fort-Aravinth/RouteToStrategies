@@ -16,6 +16,7 @@ function Sidebar_SetActive(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('active');
   const accentMap = {
+    'nav-get-started':         'var(--brand-dm)',
     'nav-load-data':           'var(--brand-sp)',
     'nav-preview-data':        'var(--brand-dm)',
     'nav-column-mgmt':         'var(--brand-cm)',
@@ -33,7 +34,7 @@ function Sidebar_SetActive(id) {
   const accent = accentMap[id] || 'var(--amber-500)';
   const btn = document.getElementById('devAgentBtn');
   if (btn) btn.style.background = accent;
-  const icon = document.querySelector('.MN_brand_icon');
+  const icon = document.querySelector('.lp-brand-icon');
   if (icon) icon.style.background = accent;
 }
 

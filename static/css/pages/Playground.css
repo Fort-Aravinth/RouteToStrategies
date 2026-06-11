@@ -2,3 +2,9 @@
 #PlaygroundView {
   width: 100%;
 }
+
+/* ── Card toggle buttons — match Playground gold brand ── */
+#PlaygroundView .pg-card-comment-btn { background: var(--brand-sn-dim); border-color: rgba(240,165,0,0.25); color: var(--brand-sn); }
+#PlaygroundView .pg-card-comment-btn:hover, #PlaygroundView .pg-card-comment-btn.has-comment { background: var(--brand-sn); color: var(--color-header-title); }
+#PlaygroundView .pg-card-info-btn    { background: var(--brand-sn-dim); border-color: rgba(240,165,0,0.25); color: var(--brand-sn); }
+#PlaygroundView .pg-card-info-btn:hover, #PlaygroundView .pg-card-info-btn.active { background: var(--brand-sn); color: var(--color-header-title); }

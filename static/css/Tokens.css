@@ -96,23 +96,191 @@ body, input, button, select, textarea {
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   pointer-events: none;
 }
 .LD_Toast {
-  background: var(--toast-brand, var(--brand-sn));
-  color: #ffffff;
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  background: var(--color-card-bg);
+  color: var(--color-header-title);
+  padding: 10px 14px;
+  border-radius: var(--dml-radius);
+  border-left: 3px solid var(--toast-brand, var(--brand-sn));
+  border-top: 0.5px solid var(--color-card-border);
+  border-right: 0.5px solid var(--color-card-border);
+  border-bottom: 0.5px solid var(--color-card-border);
+  font-size: 0.72rem;
   font-weight: 500;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  animation: toastIn 0.3s ease;
+  box-shadow: 0 4px 12px var(--color-card-shadow);
+  animation: toastIn 0.22s ease;
   pointer-events: auto;
+  min-width: 220px;
+  max-width: 320px;
 }
-.LD_Toast.success { background: #22c55e; }
-.LD_Toast.error   { background: #ef4444; }
-.LD_Toast.info    { background: #3b82f6; }
-.LD_Toast.hide    { animation: toastOut 0.3s ease forwards; }
-@keyframes toastIn  { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes toastOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
+.LD_Toast.success { border-left-color: var(--brand-param); }
+.LD_Toast.error   { border-left-color: #DC2626; }
+.LD_Toast.info    { border-left-color: var(--brand-sa); }
+.LD_Toast.hide    { animation: toastOut 0.22s ease forwards; }
+@keyframes toastIn  { from { transform: translateX(24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(24px); opacity: 0; } }
+
+/* ── Tutorial Toast ── */
+#TT_Container {
+  position: fixed;
+  z-index: 9998;
+  pointer-events: none;
+}
+/* Style A — Simple: bottom-right card */
+#TT_Container.tt-simple { bottom: 20px; right: 20px; }
+/* Style B — Guided: bottom-right, wider */
+#TT_Container.tt-guided { bottom: 20px; right: 20px; }
+/* Style C — Banner: top full-width */
+#TT_Container.tt-banner { top: 0; left: 0; right: 0; }
+
+.TT_card {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 4px 20px var(--color-card-shadow);
+  font-family: var(--font-base);
+  pointer-events: auto;
+  animation: ttIn 0.22s ease;
+}
+.TT_card.tt-simple { width: 144px; padding: 7px 8px; border-left: 3px solid var(--brand-sn); }
+.TT_card.tt-guided { width: 164px; padding: 8px 9px; border-left: 3px solid var(--brand-sn); }
+/* ── Tab strip uses brand-sn ── */
+.TT_card.tt-banner { border-radius: 0; border-left: none; border-top: none; border-right: none; padding: 10px 20px; display: flex; align-items: center; gap: 12px; }
+
+.TT_header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.TT_icon { font-size: 1rem; flex-shrink: 0; }
+.TT_title { font-size: 0.72rem; font-weight: 700; color: var(--color-header-title); }
+.TT_body  { font-size: 0.68rem; color: var(--color-text-muted); line-height: 1.5; flex: 1; margin-top: 6px; }
+.TT_step  { font-size: 0.6rem; font-weight: 600; color: var(--brand-sn); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; }
+.TT_icon_btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; padding: 0; background: none;
+  border: 0.5px solid var(--color-card-border); border-radius: 4px;
+  cursor: pointer; color: var(--color-text-dim); transition: background 0.12s, color 0.12s;
+}
+.TT_icon_btn:hover { background: var(--color-nav-hover); color: var(--color-header-title); }
+.TT_actions { display: flex; gap: 6px; margin-top: 10px; justify-content: flex-end; }
+.TT_btn {
+  font-size: 0.65rem; font-weight: 600; padding: 4px 12px;
+  border-radius: 6px; cursor: pointer; border: 1px solid; transition: background 0.12s;
+}
+.TT_btn.primary { background: var(--brand-sn); border-color: var(--brand-sn); color: var(--color-header-title); }
+.TT_btn.primary:hover { filter: brightness(0.93); }
+.TT_btn.ghost   { background: none; border-color: var(--color-card-border); color: var(--color-text-muted); }
+.TT_btn.ghost:hover { background: var(--color-nav-hover); }
+
+/* ── Card tab-collapse mode ── */
+.TT_tab_strip {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid var(--brand-sn);
+}
+.TT_tab_strip:hover { background: var(--color-nav-hover); }
+.TT_tab_arrow { font-size: 0.7rem; color: var(--color-text-dim); transition: transform 0.2s; }
+.TT_tab_label { font-size: 0.65rem; font-weight: 600; color: var(--color-header-title); white-space: nowrap; }
+
+/* When tabbed: show only the strip, hide inner content, anchor to right edge */
+.TT_card.tt-tabbed {
+  position: fixed !important;
+  right: 0;
+  transform: none;
+  width: auto !important;
+  padding: 0 !important;
+  border-radius: var(--dml-radius) 0 0 var(--dml-radius) !important;
+  border-right: none !important;
+}
+.TT_card.tt-tabbed .TT_tab_strip  { display: flex; }
+.TT_card.tt-tabbed .TT_card_inner { display: none; }
+.TT_card.tt-tabbed .TT_tab_arrow  { transform: rotate(180deg); }
+
+/* Normal mode: hide strip, show inner */
+.TT_card:not(.tt-tabbed) .TT_tab_strip  { display: none; }
+.TT_card:not(.tt-tabbed) .TT_card_inner { display: block; padding: 7px 8px; }
+
+/* ── Peek (expandable) styles ── */
+#TT_Container.tt-peek {
+  bottom: 50%;
+  right: 0;
+  transform: translateY(50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.TT_peek_wrap {
+  display: flex;
+  align-items: stretch;
+  pointer-events: auto;
+  filter: drop-shadow(0 4px 12px var(--color-card-shadow));
+}
+
+/* The collapsed tab — always visible */
+.TT_peek_tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 12px 6px;
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-right: none;
+  border-radius: var(--dml-radius) 0 0 var(--dml-radius);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-header-title);
+  cursor: pointer;
+  gap: 6px;
+  white-space: nowrap;
+  transition: background 0.12s;
+  border-left: 3px solid var(--brand-sn);
+}
+.TT_peek_tab:hover { background: var(--color-nav-hover); }
+.TT_peek_tab .TT_peek_arrow {
+  font-style: normal;
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  transition: transform 0.2s;
+}
+
+/* The expanded panel — slides in from right */
+.TT_peek_panel {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.22s cubic-bezier(.4,0,.2,1);
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-radius: 0 0 0 0;
+  border-left: none;
+}
+.TT_peek_panel.open {
+  width: 260px;
+  border-radius: 0 var(--dml-radius) var(--dml-radius) 0;
+}
+.TT_peek_panel_inner {
+  width: 260px;
+  padding: 14px 14px 12px;
+}
+
+/* Pill variant — rounded tab */
+.TT_peek_wrap.tt-pill .TT_peek_tab {
+  border-radius: 99px 0 0 99px;
+  padding: 10px 8px;
+}
+.TT_peek_wrap.tt-pill .TT_peek_panel.open {
+  border-radius: 0 99px 99px 0;
+}
+
+@keyframes ttIn  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ttBannerIn { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: translateY(0); } }
+.TT_card.tt-banner { animation: ttBannerIn 0.22s ease; }

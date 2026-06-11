@@ -41,9 +41,27 @@
 }
 
 /* Brand — overview crimson */
-#OVView .pg-card::before { background: var(--brand-ov); }
-#OVView .pg-btn          { border-color: var(--brand-ov-dim); background: var(--brand-ov-dim); color: var(--brand-ov); }
-#OVView .pg-btn:hover    { background: var(--brand-ov); border-color: var(--brand-ov); color: #fff; }
+#OVView .pg-card::before   { background: var(--brand-ov); }
+#OVView .pg-btn            { border-color: var(--brand-ov-dim); background: var(--brand-ov-dim); color: var(--brand-ov); }
+#OVView .pg-btn:hover      { background: var(--brand-ov); border-color: var(--brand-ov); color: #fff; }
+#OVView .pg-card-info-btn  { border-color: var(--brand-ov) !important; color: var(--brand-ov) !important; background: var(--brand-ov-dim) !important; }
+#OVView .pg-card-info-btn:hover { background: var(--brand-ov) !important; color: #fff !important; }
+
+/* ── OV Info Popup ── */
+#OV_InfoPopup .ov-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-ov);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#OV_InfoPopup .ov-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#OV_InfoPopup .ov-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-ov); }
+#OV_InfoPopup .ov-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#OV_InfoPopup .pg-info-list li::marker { color: var(--brand-ov); }
 
 
 /* Metric boxes */

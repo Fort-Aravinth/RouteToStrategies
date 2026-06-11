@@ -1,16 +1,28 @@
 /* ── Nav_SpikeReport — Spike Report mini-nav ── */
-/* Brand tokens now live in Nav.css — no override needed here */
 
 .shell.sr-active #SR_MiniNav { display: flex; }
 
-/* ── Button active — gold brand, dark text (matches Playground) ── */
-/* Scoped overrides needed: Nav_ScoreAnalysis.css has a global html .MN_btn.active rule
-   using var(--gold) which is undefined, making backgrounds transparent. */
-#SR_MiniNav .MN_btn.active,
-#SRM_MiniNav .MN_btn.active {
-  background:   var(--MN_brand) !important;
-  border-color: var(--MN_brand) !important;
-  color: var(--color-header-title) !important;
+/* ── Brand scope — mirrors SA/SC pattern so global MN rules resolve correctly ── */
+/* Nav_ScoreAnalysis.css uses html .MN_btn.active { background: var(--gold) }.
+   Defining --gold here means SR/SRM inherit it like every other mini-nav. */
+#SR_MiniNav, #SRView {
+  --gold:          var(--brand-dm);
+  --gold-light:    var(--brand-dm-light);
+  --gold-dim:      var(--brand-dm-dim);
+  --amber-400:     var(--brand-dm-light);
+  --amber-500:     var(--brand-dm);
+  --amber-600:     #C85830;
+  --color-primary: var(--brand-dm);
+}
+
+#SRM_MiniNav, #SRMView {
+  --gold:          var(--brand-sp);
+  --gold-light:    var(--brand-sp-light);
+  --gold-dim:      var(--brand-sp-dim);
+  --amber-400:     var(--brand-sp-light);
+  --amber-500:     var(--brand-sp);
+  --amber-600:     #5A1F6B;
+  --color-primary: var(--brand-sp);
 }
 
 /* ── Tab bar inside flex-gap parent — remove double-spacing ── */
@@ -45,3 +57,35 @@
 #SRM_ScrollerDown:hover, #SRM_ScrollerUp:hover { color: var(--MN_brand); }
 #SR_ScrollerDown:hover .MN_ScrollBar,  #SR_ScrollerUp:hover .MN_ScrollBar,
 #SRM_ScrollerDown:hover .MN_ScrollBar, #SRM_ScrollerUp:hover .MN_ScrollBar { background: var(--MN_brand); opacity: 0.7; }
+
+/* ── SR Nav Info Popup ── */
+#SR_InfoPopup .sr-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-dm);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#SR_InfoPopup .sr-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#SR_InfoPopup .sr-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-dm); }
+#SR_InfoPopup .sr-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#SR_InfoPopup .pg-info-list li::marker { color: var(--brand-dm); }
+
+/* ── SRM Nav Info Popup ── */
+#SRM_InfoPopup .srm-info-popup {
+  background: var(--color-card-bg);
+  border: 0.5px solid var(--color-card-border);
+  border-top: 2px solid var(--brand-sp);
+  border-radius: var(--dml-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 240px;
+  font-family: var(--font-base);
+  overflow: hidden;
+}
+#SRM_InfoPopup .srm-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
+#SRM_InfoPopup .srm-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-sp); }
+#SRM_InfoPopup .srm-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
+#SRM_InfoPopup .pg-info-list li::marker { color: var(--brand-sp); }

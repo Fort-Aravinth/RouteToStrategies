@@ -1,1 +1,776 @@
-const a0_0x320733=a0_0x58cb;(function(_0x3cd6ab,_0x34432c){const _0x200320=a0_0x58cb,_0x2e1c24=_0x3cd6ab();while(!![]){try{const _0xa41bf9=parseInt(_0x200320(0x13a))/0x1+parseInt(_0x200320(0x13b))/0x2+parseInt(_0x200320(0x14b))/0x3*(parseInt(_0x200320(0x16c))/0x4)+parseInt(_0x200320(0x144))/0x5+parseInt(_0x200320(0x10d))/0x6*(-parseInt(_0x200320(0x151))/0x7)+-parseInt(_0x200320(0x155))/0x8+-parseInt(_0x200320(0x11b))/0x9;if(_0xa41bf9===_0x34432c)break;else _0x2e1c24['push'](_0x2e1c24['shift']());}catch(_0xf1a6db){_0x2e1c24['push'](_0x2e1c24['shift']());}}}(a0_0x30d0,0x40fdf),(function(){const _0x1bd743=a0_0x58cb,_0x1cb2b6=typeof App_HideAllViews===_0x1bd743(0xd9)?App_HideAllViews:null;window[_0x1bd743(0xeb)]=function(){const _0x3c7c52=_0x1bd743;if(_0x1cb2b6)_0x1cb2b6();document[_0x3c7c52(0x172)](_0x3c7c52(0x113))?.['classList']['remove'](_0x3c7c52(0x102)),[_0x3c7c52(0xf4),_0x3c7c52(0x140)][_0x3c7c52(0x111)](_0x14e1d6=>{const _0x3b57aa=_0x3c7c52,_0x1e1e0a=document[_0x3b57aa(0x168)](_0x14e1d6);if(_0x1e1e0a)_0x1e1e0a[_0x3b57aa(0x16e)]['display']=_0x3b57aa(0xcf);}),['SRView',_0x3c7c52(0x152)][_0x3c7c52(0x111)](_0x5f3881=>{const _0x1a933c=_0x3c7c52,_0x3bbe42=document[_0x1a933c(0x168)](_0x5f3881);if(_0x3bbe42)_0x3bbe42[_0x1a933c(0x16e)][_0x1a933c(0x120)]='none';});};}()));function SRM_OpenPanel(){const _0x39facf=a0_0x58cb;if(typeof App_HideAllViews===_0x39facf(0xd9))App_HideAllViews();document[_0x39facf(0x172)](_0x39facf(0x113))?.[_0x39facf(0x18d)][_0x39facf(0x13e)](_0x39facf(0x102));const _0x54838e=document[_0x39facf(0x168)]('SRM_MiniNav');_0x54838e&&(_0x54838e[_0x39facf(0x16e)]['removeProperty']('display'),_0x54838e[_0x39facf(0x16e)]['display']='flex');const _0x1fc674=document['getElementById']('SRMView');if(_0x1fc674)_0x1fc674[_0x39facf(0x16e)][_0x39facf(0x17c)](_0x39facf(0x120));Sidebar_SetActive(_0x39facf(0x177)),SRM_RenderEmpty(),SRM_RenderParams(),SRM_PopulateCols(),SRM_RefreshExtraCards(),MN_initScrollArrows('SRM_MiniNav');}function SRM_RenderEmpty(){const _0x5dcd62=a0_0x58cb,_0x43f1f9=document[_0x5dcd62(0x168)](_0x5dcd62(0x152));if(!_0x43f1f9)return;_0x43f1f9[_0x5dcd62(0x194)]=_0x5dcd62(0xe0);}async function SRM_RunAnalysis({cols:_0x40378c,winSize:_0x4f7f7a,offset:offset=0x0,metric:_0x11233c}){const _0x1b9df9=a0_0x58cb,_0x320f3f=window[_0x1b9df9(0x139)]?.()||window['_SR_demoConn'],_0x21be8c=window[_0x1b9df9(0x167)]?.()||window[_0x1b9df9(0x127)],_0x2b9a4a=document[_0x1b9df9(0x168)](_0x1b9df9(0x152));if(!_0x320f3f||!_0x21be8c||!_0x2b9a4a)return;const _0x114110=window['SP_getParams']?.()||{},_0x5bd8e0=_0x114110[_0x1b9df9(0x180)]||(window[_0x1b9df9(0x127)]?_0x1b9df9(0x18b):null),_0x3b8d2c=_0x114110[_0x1b9df9(0xfa)]||(window['_SR_demoSrc']?_0x1b9df9(0x195):''),_0x463821=_0x114110[_0x1b9df9(0x193)]||(window['_SR_demoSrc']?['1']:[]);if(!_0x5bd8e0){SRM_RenderEmpty();return;}if(!_0x40378c||!_0x40378c[_0x1b9df9(0x176)]){SRM_RenderEmpty();return;}SR_DestroyCharts();const _0x2b34d1=parseInt(_0x4f7f7a,0xa),_0x363e8e=_0x3b8d2c&&_0x463821[_0x1b9df9(0x176)]?'SUM(CASE\x20WHEN\x20CAST(\x22'+_0x3b8d2c+_0x1b9df9(0x183)+_0x463821['map'](_0x4dba51=>'\x27'+_0x4dba51[_0x1b9df9(0x164)](/'/g,'\x27\x27')+'\x27')[_0x1b9df9(0x189)](',')+_0x1b9df9(0x142):'0',_0x5ab78e='',_0x410c3c=[];for(const _0x36139e of _0x40378c){const _0x74695b=_0x36139e['replace'](/'/g,'\x27\x27'),_0x3f865a=_0x1b9df9(0x131)+_0x5bd8e0+_0x1b9df9(0x12a)+_0x21be8c+_0x1b9df9(0x185)+_0x74695b+_0x1b9df9(0xfc)+_0x363e8e+_0x1b9df9(0x170)+_0x363e8e+'\x20/\x20NULLIF(COUNT(*),\x200),\x201)\x20\x20\x20\x20\x20\x20AS\x20fraud_rate\x0a\x20\x20\x20\x20\x20\x20FROM\x20'+_0x21be8c+_0x1b9df9(0xd7)+_0x5bd8e0+_0x1b9df9(0x173)+(_0x2b34d1+offset)+_0x1b9df9(0x153)+_0x5bd8e0+_0x1b9df9(0x15b)+offset+_0x1b9df9(0x143)+(_0x11233c===_0x1b9df9(0x192)?_0x1b9df9(0x192):'total')+_0x1b9df9(0xe5);try{const _0x475d46=await _0x320f3f[_0x1b9df9(0x12d)](_0x3f865a),_0x3579d5=_0x475d46[_0x1b9df9(0x12f)]()[_0x1b9df9(0x13f)](_0x4c76aa=>({'grp':String(_0x4c76aa['grp']??'—'),'total':Number(_0x4c76aa[_0x1b9df9(0x124)]),'fraud':Number(_0x4c76aa[_0x1b9df9(0x192)]),'fraud_rate':Number(_0x4c76aa[_0x1b9df9(0x196)])}));if(!_0x3579d5['length'])continue;const _0x45d457=await SR_QueryBreakdown({'conn':_0x320f3f,'src':_0x21be8c,'dateCol':_0x5bd8e0,'col':_0x36139e,'winSize':_0x4f7f7a,'offset':offset,'fraudClause':_0x5ab78e,'addClause':''});_0x410c3c[_0x1b9df9(0x116)]({'col':_0x36139e,'rows':_0x3579d5,'tsRows':_0x45d457||[]});}catch(_0x3deb4f){console[_0x1b9df9(0x16b)](_0x1b9df9(0xdd),_0x36139e,_0x3deb4f[_0x1b9df9(0xe3)]);}}if(typeof SRM_UpdateWindowRange==='function')try{const _0x2eecc6=_0x1b9df9(0x150)+_0x5bd8e0+_0x1b9df9(0x12a)+_0x21be8c+_0x1b9df9(0x118)+(_0x2b34d1+offset)+_0x1b9df9(0x10c)+offset+_0x1b9df9(0x137),_0x43a0e5=(await _0x320f3f[_0x1b9df9(0x12d)](_0x2eecc6))['toArray']()[0x0];SRM_UpdateWindowRange(String(_0x43a0e5['start_d']),String(_0x43a0e5[_0x1b9df9(0xfb)]));}catch{}if(!_0x410c3c[_0x1b9df9(0x176)]){SRM_RenderEmpty();return;}const _0x1dc950=_0x4f7f7a+'d',_0x3e62ea=_0x11233c==='fraud'?_0x1b9df9(0x13d):_0x1b9df9(0x12c);_0x2b9a4a[_0x1b9df9(0x194)]=_0x410c3c['map'](({col:_0x259677,rows:_0x4556e6,tsRows:_0xc85446},_0x5a28ca)=>{const _0x82b3bc=_0x1b9df9,_0x1d66fc=new Set(_0xc85446['map'](_0x362c5c=>_0x362c5c['grp'])),_0x3b296f=_0xc85446[_0x82b3bc(0x176)]?_0x4556e6['filter'](_0x1e2ba0=>_0x1d66fc['has'](_0x1e2ba0[_0x82b3bc(0xd8)])):_0x4556e6,_0x570b4c=_0x3b296f[_0x82b3bc(0x13f)]((_0x595584,_0x405668)=>_0x82b3bc(0x188)+(_0x405668+0x1)+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<td>'+_0x595584['grp']+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<td>'+_0x595584[_0x82b3bc(0x124)][_0x82b3bc(0x19d)]()+_0x82b3bc(0x15e)+_0x595584[_0x82b3bc(0x192)][_0x82b3bc(0x19d)]()+_0x82b3bc(0x15e)+(_0x595584[_0x82b3bc(0x196)]>0x0?_0x595584[_0x82b3bc(0x196)][_0x82b3bc(0x17b)](0x1)+'%':'—')+_0x82b3bc(0x13c))[_0x82b3bc(0x189)]('');return _0x82b3bc(0xf0)+_0x259677+_0x82b3bc(0xd6)+_0x1dc950+_0x82b3bc(0x18f)+_0x3e62ea+_0x82b3bc(0x178)+_0x5a28ca+_0x82b3bc(0x186)+_0x570b4c+_0x82b3bc(0x175);})[_0x1b9df9(0x189)](''),_0x410c3c[_0x1b9df9(0x111)](({tsRows:_0xaa6d8f},_0xe37788)=>{const _0x426965=_0x1b9df9;if(_0xaa6d8f[_0x426965(0x176)])SR_DrawBreakdownChart(_0x426965(0x12e)+_0xe37788,_0xaa6d8f);});}let _SRM_ColsOpen=!![];function SRM_ToggleCols(){const _0x493e26=a0_0x58cb;_SRM_ColsOpen=!_SRM_ColsOpen;const _0x18065f=document['getElementById'](_0x493e26(0xea)),_0x5486fc=document[_0x493e26(0x168)]('SRM_ColsChevron');if(_0x18065f)_0x18065f[_0x493e26(0x16e)][_0x493e26(0x120)]=_SRM_ColsOpen?'block':_0x493e26(0xcf);if(_0x5486fc)_0x5486fc[_0x493e26(0x16e)]['transform']=_SRM_ColsOpen?'rotate(90deg)':_0x493e26(0xde);if(_SRM_ColsOpen)_navScrollOnExpand(document[_0x493e26(0x168)](_0x493e26(0xf2)),document[_0x493e26(0x168)]('SRM_MiniNav'));}async function SRM_PopulateCols(){const _0x2fc6c4=a0_0x58cb,_0x6ddee=window['LD_getConn']?.()||window['_SR_demoConn'],_0x7168e9=window[_0x2fc6c4(0x167)]?.()||window['_SR_demoSrc'],_0x4178b3=document['getElementById'](_0x2fc6c4(0x132));if(!_0x4178b3)return;if(!_0x6ddee||!_0x7168e9){MN_PopulateCols('SRM_ColsList');return;}try{const _0x36d11b=await _0x6ddee[_0x2fc6c4(0x12d)](_0x2fc6c4(0xef)+_0x7168e9),_0x4dfb18=/^(VARCHAR|TEXT|CHAR|STRING|BLOB|JSON|ENUM|HUGEVARCHAR)/i,_0x24886c=_0x36d11b[_0x2fc6c4(0x12f)]()['filter'](_0xb34b95=>_0x4dfb18[_0x2fc6c4(0x17f)](_0xb34b95[_0x2fc6c4(0x16a)]))[_0x2fc6c4(0x13f)](_0x58a5f1=>_0x58a5f1[_0x2fc6c4(0x15d)]);_0x4178b3[_0x2fc6c4(0x194)]=_0x24886c[_0x2fc6c4(0x13f)](_0x194548=>_0x2fc6c4(0x12b)+_0x194548+'\x22>'+_0x194548+'</button>\x0a\x20\x20\x20\x20')[_0x2fc6c4(0x189)]('');}catch{MN_PopulateCols(_0x2fc6c4(0x132));}}function SRM_SelectAllCols(){const _0x39f6e1=a0_0x58cb;MN_SelectAllCols(_0x39f6e1(0x132));}function SRM_ClearCols(){MN_ClearCols('SRM_ColsList');}function SRM_GetSelectedCols(){const _0x5805c8=a0_0x58cb;return MN_GetSelectedCols(_0x5805c8(0x132));}let _SRM_WindowOpen=!![];function SRM_ToggleWindow(){const _0x237960=a0_0x58cb;_SRM_WindowOpen=!_SRM_WindowOpen;const _0xf7f12b=document[_0x237960(0x168)](_0x237960(0x133)),_0x5e418d=document[_0x237960(0x168)]('SRM_WindowChevron');if(_0xf7f12b)_0xf7f12b[_0x237960(0x16e)][_0x237960(0x120)]=_SRM_WindowOpen?_0x237960(0x179):_0x237960(0xcf);if(_0x5e418d)_0x5e418d['style'][_0x237960(0xdb)]=_SRM_WindowOpen?_0x237960(0xf8):_0x237960(0xde);}let _SRM_Window='7',_SRM_Offset=0x0;function SRM_SetWindow(_0x1dd62a,_0x46c507){const _0x3a3392=a0_0x58cb;_SRM_Window=_0x1dd62a,_SRM_Offset=0x0,document[_0x3a3392(0x19c)]('#SRM_WindowBtns\x20.MN_btn')[_0x3a3392(0x111)](_0x5f434e=>_0x5f434e[_0x3a3392(0x18d)][_0x3a3392(0x148)]('active')),_0x46c507[_0x3a3392(0x18d)][_0x3a3392(0x13e)](_0x3a3392(0x110)),SRM_Run();}function SRM_ShiftWindow(_0x21d03f){const _0x51ac50=a0_0x58cb;_SRM_Offset=Math[_0x51ac50(0x11e)](0x0,_SRM_Offset-_0x21d03f);const _0x3dd0f1=document[_0x51ac50(0x168)]('SRM_WinNext');if(_0x3dd0f1)_0x3dd0f1[_0x51ac50(0xd0)]=_SRM_Offset===0x0;SRM_Run();}function SRM_UpdateWindowRange(_0x1f1040,_0x326168){const _0x235f22=a0_0x58cb,_0x1880a4=document['getElementById'](_0x235f22(0xe4));if(_0x1880a4)_0x1880a4[_0x235f22(0xd4)]=_0x1f1040&&_0x326168?_0x1f1040+'\x20→\x20'+_0x326168:'—';const _0x896984=document[_0x235f22(0x168)](_0x235f22(0x161));if(_0x896984)_0x896984[_0x235f22(0xd0)]=_SRM_Offset===0x0;}let _SRM_Metric=a0_0x320733(0x124);function SRM_SetMetric(_0x382f3a,_0x487512){const _0x11d7e3=a0_0x320733;_SRM_Metric=_0x382f3a,document[_0x11d7e3(0x19c)]('#SRM_MetricBtns\x20.MN_btn')[_0x11d7e3(0x111)](_0xc35305=>_0xc35305[_0x11d7e3(0x18d)]['remove'](_0x11d7e3(0x110))),_0x487512[_0x11d7e3(0x18d)][_0x11d7e3(0x13e)](_0x11d7e3(0x110)),SRM_Run();}function SRM_Run(){const _0x5f01bd=SRM_GetSelectedCols(),_0x1ca3c8=_SRM_Window,_0x30b4c7=_SRM_Offset,_0x531609=_SRM_Metric;if(typeof SRM_RunAnalysis==='function')SRM_RunAnalysis({'cols':_0x5f01bd,'winSize':_0x1ca3c8,'offset':_0x30b4c7,'metric':_0x531609});}let _SRM_ParamsOpen=![];function SRM_ToggleParams(){const _0x238893=a0_0x320733;_SRM_ParamsOpen=!_SRM_ParamsOpen;const _0x195202=document['getElementById'](_0x238893(0x149)),_0x1103d5=document[_0x238893(0x168)](_0x238893(0x19a));if(_0x195202)_0x195202[_0x238893(0x16e)][_0x238893(0x120)]=_SRM_ParamsOpen?_0x238893(0x179):'none';if(_0x1103d5)_0x1103d5[_0x238893(0x16e)][_0x238893(0xdb)]=_SRM_ParamsOpen?'rotate(90deg)':_0x238893(0xde);}function SRM_RenderParams(){const _0xfa8198=a0_0x320733;if(typeof SP_RenderParamsTo===_0xfa8198(0xd9))SP_RenderParamsTo(_0xfa8198(0x146),_0xfa8198(0x10f));}function SRM_RefreshExtraCards(){const _0x1e0515=a0_0x320733,_0x3e5d7f=window[_0x1e0515(0x147)]?window['SP_getParams']():{},_0x2f3223=document[_0x1e0515(0x168)](_0x1e0515(0x106));if(!_0x2f3223)return;const _0x58dfda=(_0x432e7f,_0xbef8c0,_0x6d4d8c,_0x108dcf,_0x1efa9c,_0x410759,_0xe866e3)=>{const _0x24bec7=_0x1e0515,_0x28df4d=(_0xc41cee,_0x2d8b57)=>_0x24bec7(0x15c)+_0x432e7f+_0x24bec7(0xec)+_0x2d8b57+_0x24bec7(0xec)+_0xc41cee+_0x24bec7(0xf5)+_0xc41cee+'</button>',_0x2dd016=_0x108dcf['map'](_0x43342b=>_0x28df4d(_0x43342b,'a'))[_0x24bec7(0x189)](''),_0x1e87c0=_0x1efa9c[_0x24bec7(0x13f)](_0x38ed7d=>_0x28df4d(_0x38ed7d,'b'))[_0x24bec7(0x189)](''),_0x10439a=_0x24bec7(0xf3);return _0x24bec7(0xdf)+_0x432e7f+_0x24bec7(0x104)+_0x432e7f+_0x24bec7(0x122)+_0xbef8c0+_0x24bec7(0xe2)+_0x432e7f+'\x22\x20viewBox=\x220\x200\x2016\x2016\x22\x20width=\x2211\x22\x20height=\x2211\x22\x20fill=\x22none\x22\x20style=\x22transition:transform\x200.18s;transform:rotate(90deg);flex-shrink:0;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<polyline\x20points=\x225\x203\x2011\x208\x205\x2013\x22\x20stroke=\x22currentColor\x22\x20stroke-width=\x221.6\x22\x20stroke-linecap=\x22round\x22\x20stroke-linejoin=\x22round\x22\x20style=\x22color:var(--color-text-dim);\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</svg>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22SRM_ExtraBody_'+_0x432e7f+'\x22\x20style=\x22display:block;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22MN_section_body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;\x22>Column</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:0.68rem;color:var(--color-text-dim);background:var(--color-card-bg);border:1px\x20solid\x20var(--color-card-border);border-radius:5px;padding:0\x208px;height:28px;display:flex;align-items:center;\x22>'+_0x6d4d8c+_0x24bec7(0x18e)+_0x410759+_0x24bec7(0x18c)+(_0x2dd016||_0x10439a)+_0x24bec7(0x18e)+_0xe866e3+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;gap:3px;\x22>'+(_0x1e87c0||_0x10439a)+_0x24bec7(0xf6);};let _0x17bb8c='';const _0x32918b=_0x3e5d7f[_0x1e0515(0x19b)];_0x32918b?.[_0x1e0515(0x159)]&&(_0x17bb8c+=_0x58dfda('dm','Decision\x20Mode',_0x32918b[_0x1e0515(0x159)],_0x32918b[_0x1e0515(0x117)]?.[_0x1e0515(0xe6)]||[],_0x32918b[_0x1e0515(0x117)]?.[_0x1e0515(0xee)]||[],_0x1e0515(0x166),_0x1e0515(0x158))),(_0x3e5d7f[_0x1e0515(0x145)]||[])['forEach']((_0x5273db,_0x80d96a)=>{const _0x2c860a=_0x1e0515;_0x17bb8c+=_0x58dfda(_0x2c860a(0xd1)+_0x80d96a,_0x5273db['name']||_0x2c860a(0x160),_0x5273db['col']||'—',_0x5273db[_0x2c860a(0x117)]?.['a']||[],_0x5273db['assigned']?.['b']||[],_0x5273db[_0x2c860a(0x19e)]||'A',_0x5273db['labelB']||'B');}),_0x2f3223[_0x1e0515(0x194)]=_0x17bb8c;}function SRM_ToggleParamVal(_0x5cfa45,_0x39d166,_0x5985a2,_0x3175f0){const _0x66b2ee=a0_0x320733;_0x3175f0[_0x66b2ee(0x18d)][_0x66b2ee(0x14e)](_0x66b2ee(0x110));}function SRM_ToggleExtra(_0x112c2b){const _0x282f88=a0_0x320733,_0x1de7c2=document[_0x282f88(0x168)](_0x282f88(0x11f)+_0x112c2b),_0x6bbdfe=document['getElementById'](_0x282f88(0x163)+_0x112c2b);if(!_0x1de7c2)return;const _0x330253=_0x1de7c2[_0x282f88(0x16e)][_0x282f88(0x120)]!=='none';_0x1de7c2[_0x282f88(0x16e)][_0x282f88(0x120)]=_0x330253?'none':_0x282f88(0x179);if(_0x6bbdfe)_0x6bbdfe[_0x282f88(0x16e)][_0x282f88(0xdb)]=_0x330253?_0x282f88(0xde):_0x282f88(0xf8);}function a0_0x58cb(_0x139340,_0x2a3899){_0x139340=_0x139340-0xcf;const _0x30d091=a0_0x30d0();let _0x58cbee=_0x30d091[_0x139340];if(a0_0x58cb['sYdinY']===undefined){var _0x4d9831=function(_0xdccba3){const _0x3216a0='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x1cb2b6='',_0x14e1d6='';for(let _0x1e1e0a=0x0,_0x5f3881,_0x3bbe42,_0x54838e=0x0;_0x3bbe42=_0xdccba3['charAt'](_0x54838e++);~_0x3bbe42&&(_0x5f3881=_0x1e1e0a%0x4?_0x5f3881*0x40+_0x3bbe42:_0x3bbe42,_0x1e1e0a++%0x4)?_0x1cb2b6+=String['fromCharCode'](0xff&_0x5f3881>>(-0x2*_0x1e1e0a&0x6)):0x0){_0x3bbe42=_0x3216a0['indexOf'](_0x3bbe42);}for(let _0x1fc674=0x0,_0x43f1f9=_0x1cb2b6['length'];_0x1fc674<_0x43f1f9;_0x1fc674++){_0x14e1d6+='%'+('00'+_0x1cb2b6['charCodeAt'](_0x1fc674)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x14e1d6);};a0_0x58cb['jrBeFn']=_0x4d9831,a0_0x58cb['SIMUIc']={},a0_0x58cb['sYdinY']=!![];}const _0x363e56=_0x30d091[0x0],_0x566217=_0x139340+_0x363e56,_0x43a029=a0_0x58cb['SIMUIc'][_0x566217];return!_0x43a029?(_0x58cbee=a0_0x58cb['jrBeFn'](_0x58cbee),a0_0x58cb['SIMUIc'][_0x566217]=_0x58cbee):_0x58cbee=_0x43a029,_0x58cbee;}let _OV_WD_ChartType=a0_0x320733(0x156),_OV_WD_Chart=null;;(function(){const _0x2e2dc7=a0_0x320733,_0x45ec5e=typeof window[_0x2e2dc7(0x190)]==='function'?window[_0x2e2dc7(0x190)]:null;window['OV_OpenPanel']=function(){if(_0x45ec5e)_0x45ec5e['apply'](this,arguments);OV_WD_Run();};}());function OV_WD_SetType(_0x255a4d,_0x4afdf2){const _0x129de2=a0_0x320733;_OV_WD_ChartType=_0x255a4d,document[_0x129de2(0x19c)](_0x129de2(0xfe))[_0x129de2(0x111)](_0x20591b=>_0x20591b['classList'][_0x129de2(0x148)](_0x129de2(0x110)));if(_0x4afdf2)_0x4afdf2['classList'][_0x129de2(0x13e)](_0x129de2(0x110));OV_WD_Run();}async function OV_WD_Run(){const _0x2012ca=a0_0x320733,_0x3b9c02=window[_0x2012ca(0x139)]?.(),_0x52a551=window[_0x2012ca(0x167)]?.();if(!_0x3b9c02||!_0x52a551)return;const _0x2d8bc1=window['SP_getParams']?.()||{},_0x34de3d=_0x2d8bc1[_0x2012ca(0x180)];if(!_0x34de3d)return;const _0x39bff1=_0x2d8bc1[_0x2012ca(0xfa)]||'',_0x25f137=_0x2d8bc1['values']||[],_0x26f999=(_0x5723d6='')=>'\x0a\x20\x20\x20\x20SELECT\x20DAYNAME(TRY_CAST(\x22'+_0x34de3d+_0x2012ca(0xd5)+_0x34de3d+_0x2012ca(0x130)+_0x52a551+_0x2012ca(0xe8)+_0x34de3d+'\x22\x20AS\x20DATE)\x20IS\x20NOT\x20NULL\x20'+_0x5723d6+_0x2012ca(0xff);let _0x2b2098=[],_0x31cee0=[];try{const _0x581ae1=await _0x3b9c02[_0x2012ca(0x12d)](_0x26f999());_0x2b2098=_0x581ae1[_0x2012ca(0x12f)]()[_0x2012ca(0x13f)](_0x486da4=>({'period':String(_0x486da4[_0x2012ca(0x199)]),'count':Number(_0x486da4['cnt'])}));}catch{return;}if(!_0x2b2098[_0x2012ca(0x176)])return;if(_0x39bff1&&_0x25f137[_0x2012ca(0x176)]){const _0x2499b=_0x25f137['map'](_0x331386=>'\x27'+_0x331386[_0x2012ca(0x164)](/'/g,'\x27\x27')+'\x27')['join'](',\x20');try{const _0x108e65=await _0x3b9c02['query'](_0x26f999(_0x2012ca(0x181)+_0x39bff1+_0x2012ca(0x197)+_0x2499b+')'));_0x31cee0=_0x108e65['toArray']()[_0x2012ca(0x13f)](_0x4d5e4c=>({'period':String(_0x4d5e4c[_0x2012ca(0x199)]),'count':Number(_0x4d5e4c[_0x2012ca(0x191)])}));}catch{}}_OV_WD_Chart&&(_OV_WD_Chart[_0x2012ca(0x14c)](),_OV_WD_Chart=null);const _0x69504c=document[_0x2012ca(0x168)](_0x2012ca(0x141))?.['getContext']('2d');if(!_0x69504c)return;const _0x40a1f4=_0x2b2098[_0x2012ca(0x13f)](_0x3a8924=>_0x3a8924[_0x2012ca(0x199)]),_0x425b59=_OV_WD_ChartType==='bar',_0x3c0248=(_0x5e64a2,_0x31965c,_0x116593)=>_0x425b59?{'label':_0x5e64a2,'data':_0x31965c,'backgroundColor':_0x116593,'borderRadius':0x4,'borderWidth':0x0}:{'label':_0x5e64a2,'data':_0x31965c,'borderColor':_0x116593,'backgroundColor':_0x2012ca(0x136),'borderWidth':0x2,'fill':![],'tension':0.35,'pointRadius':0x4,'pointHoverRadius':0x7},_0x9691fb=[_0x3c0248('Total',_0x2b2098['map'](_0x4cfa3d=>_0x4cfa3d[_0x2012ca(0x171)]),_0x425b59?_0x2012ca(0x154):_0x2012ca(0x17d))];if(_0x31cee0[_0x2012ca(0x176)]){const _0x14d06e={};_0x31cee0['forEach'](_0x14fc02=>{const _0x3fc602=_0x2012ca;_0x14d06e[_0x14fc02['period']]=_0x14fc02[_0x3fc602(0x171)];}),_0x9691fb['push'](_0x3c0248('Fraud',_0x40a1f4['map'](_0xdbc9b8=>_0x14d06e[_0xdbc9b8]||0x0),_0x425b59?_0x2012ca(0x174):'#DC2626'));}_OV_WD_Chart=new Chart(_0x69504c,{'type':_OV_WD_ChartType,'data':{'labels':_0x40a1f4,'datasets':_0x9691fb},'options':{'responsive':!![],'maintainAspectRatio':![],'plugins':{'legend':{'display':!![],'position':_0x2012ca(0x157),'labels':{'boxWidth':0xa,'font':{'size':0xb,'family':_0x2012ca(0x16d)}}},'tooltip':{'callbacks':{'label':_0x3407ce=>_0x3407ce[_0x2012ca(0x182)][_0x2012ca(0x162)]+':\x20'+_0x3407ce[_0x2012ca(0x15a)]['y'][_0x2012ca(0x19d)]()}}},'scales':{'x':{'grid':{'display':![]},'ticks':{'font':{'size':0xb,'family':_0x2012ca(0x16d)},'color':'#78716c'}},'y':{'grid':{'color':_0x2012ca(0x119)},'ticks':{'font':{'size':0xb,'family':'IBM\x20Plex\x20Sans'},'color':'#78716c'}}}}});}(function(){const _0x9d6afa=a0_0x320733,_0xa93c2c=typeof window[_0x9d6afa(0x187)]===_0x9d6afa(0xd9)?window[_0x9d6afa(0x187)]:null;window[_0x9d6afa(0x187)]=function(){const _0x1825a1=_0x9d6afa;if(_0xa93c2c)_0xa93c2c();['nav-spike-report','nav-spike-merchant'][_0x1825a1(0x111)](_0x334fa0=>{const _0x66a037=_0x1825a1,_0x486b22=document['getElementById'](_0x334fa0);_0x486b22&&(_0x486b22[_0x66a037(0x18d)][_0x66a037(0x148)](_0x66a037(0x10e),'sidebar-item-disabled'),_0x486b22[_0x66a037(0xd2)](_0x66a037(0x100)));});};}());function a0_0x30d0(){const _0x304371=['revtq1jjqKuG','cIaGicaGidXKAxyGy2XHC3m9iNbNlwXHEw91Dc1YB3CIpGOGicaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqIpGOGicaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1OzwfKzxiIpGOGicaGicaGicaGica8C3bHBIbJBgfZCZ0ICgCTy2fYzc10AxrSzsi+qNKG','iIbbuYbwqvjdsefsksbbuYbNCNakicaGicaGrLjptsa','u1jnx0nVBhntzwn0Aw9U','phnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOWlJyYCMvTo2nVBg9YoNzHCIGTlwnVBg9YlxrLEhqTzgLTktSIpK5VBMu8l3nWyw4+','u1jFtwLUAu5HDG','jYX0AgLZksikicaGicaGicbZDhLSzt0IzMXLEdOXo21PBI13Awr0AdOWo2HLAwDODdOYnhb4o3bHzgrPBMC6mca0ChG7zM9UDc1ZAxPLoJaUnJjYzw07yM9YzgvYlxjHzgL1CZO1ChG7B3zLCMzSB3C6AgLKzgvUo3rLEhqTB3zLCMzSB3C6zwXSAxbZAxm7D2HPDguTC3bHy2u6BM93CMfWoYi+','pc9KAxy+cIaGicaGicaGica8l2rPDJ4kicaGicaGica8l2rPDJ4kicaGicaGpc9KAxy+','iIbbuYbeqvrfksa+icaOu0vmrunuigqGrLjptsbFBwf4ksaTieLovevsvKfmicC','CM90yxrLkdKWzgvNkq','x1nsx2rLBw9dB25U','y29Smq','zw5Kx2q','iIbbuYbwqvjdsefsksaGicaGicaGicaGicaGicaGicaGicaGicaGicaGieftigDYCcWkicaGicaGicbdt1vovcGQksaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGieftihrVDgfSlaOGicaGicaGia','u1jFCM93ls1ZCgLRzq','i09wx1Dex1r5CgvcDg5Zic5WzY1IDg4','cIaGicbhuK9vucbcwsbWzxjPB2qSihnVCNrFA2v5ie9srevsiejzihnVCNrFA2v5','zgf0ys1UyxyTBg9JA2vK','kqOGicaGu0vmrunucIaGicaGienbu1qOvfjzx0nbu1qOiG','C3iTywn0AxzL','imk3iokAOca9iczNDdSXlJxdLYbHDMC8l3nWyw4+cIaGicaGicaGpc9KAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1KAxzPzgvYiJ48l2rPDJ4kicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwjVzhKIpGOGicaGicaGicaGpgrPDIbJBgfZCZ0ICgCTDgfIBguTD3jHCciGC3r5Bgu9iM1HEc1OzwLNAhq6nJqWChG7B3zLCMzSB3CTEtPHDxrVoYi+cIaGicaGicaGicaGidX0ywjSzsbJBgfZCZ0ICgCTDgfIBguIpGOGicaGicaGicaGicaGidX0AgvHzcbZDhLSzt0ICg9ZAxrPB246C3rPy2T5o3rVCdOWo3OTAw5KzxG6mtSIpJX0CJ4kicaGicaGicaGicaGicaGidX0Ad5qzxjPB2q8l3rOpGOGicaGicaGicaGicaGicaGphrOpLrYyw5Zywn0Aw9UCZWVDgG+cIaGicaGicaGicaGicaGica8DgG+DNmGqxzNpc90Ad4kicaGicaGicaGicaGicaGidX0Ad5gBgfNpc90Ad4kicaGicaGicaGicaGica8l3rYpJWVDgHLywq+cIaGicaGicaGicaGicaGphrIB2r5pG','iJ4kicaGicaGica8zgL2ig9Uy2XPy2S9iLnstv9uB2DNBgvfEhrYysGN','iZeWqJK4mq','u1jnx0v4DhjHq2fYzhm','phnWyw4Gy2XHC3m9iLnsx3nWAwTLx2jHzgDLiJ7IMQaGC3bPA2u8l3nWyw4+','iZC4nZe2yW','uxvLCNKGzMfPBgvKoIa','iIbbuYbeqvrfksbjuYbot1qGtLvmtca','i0y1ouuWqG','igrHExmNieftifzbuKniqviPieftihn0yxj0x2qScIaGicaGicaGicbdqvnukcHtruXfq1qGzcbguK9nif9TyxGPic0Gsu5urvjwquWGjW','mtKYnMXiAhPRrW','BgqTBg9JA2vK','C3jT','ywn0AxzL','zM9YrwfJAa','ihrYyw5Zywn0Aw9UCW','lNnOzwXS','i0rdmJyYnG','pc9ZCgfUpGOGicaGicaGidWVzgL2pGOGicaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqTzgL2AwrLCIi+pc9KAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1IB2r5iJ4kicaGicaGicaGidXKAxyGy2XHC3m9iLnsx2nOyxj0x3DYyxaIpJXJyw52yxmGAwq9iLnsx0nOyxj0q2fUDMfZiJ48l2nHBNzHCZ48l2rPDJ4kicaGicaGica8l2rPDJ4kicaGicaGpc9KAxy+cIaGica8l2rPDJ4kcIaGica8zgL2ignSyxnZpsjWzY1SyxLVDxqTCM93ihbNlwnVBhmTmYi+cIaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqIpGOGicaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqTAgvHzgvYiJ48C3bHBIbJBgfZCZ0ICgCTy2fYzc10AxrSzsi+ugvHAYbeyxK8l3nWyw4+pc9KAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1KAxzPzgvYiJ48l2rPDJ4kicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwjVzhKIpJXKAxyGy2XHC3m9iLnsx3n0yxqIpG','ChvZAa','yxnZAwDUzwq','kqOGicaGicaGifnftevdvaOGicaGicaGicaGq0ftvcGOu0vmrunuigqGrLjptsbFBwf4ksaTieLovevsvKfmicC','CMDIysGWldaSmcWWlJa1kq','zw50CMLLCW','ndy1mJa1nvnczwDowG','zMXLEa','cIaGicbxsvriif9TyxGGqvmGkfnftevdvcbnqvGOvfjzx0nbu1qOiG','Bwf4','u1jnx0v4DhjHqM9KEv8','zgLZCgXHEq','u1jwAwv3','jYKIignSyxnZpsjntL9Zzwn0Aw9Ux2HKCIi+cIaGicaGicaGica8C3bHBIbJBgfZCZ0Itu5FDgL0BguIpG','ls10B2fZDc1ICMfUza','Dg90ywW','pc90yM9KEt4kicaGicaGicaGicaGpc90ywjSzt4kicaGicaGicaGidWVzgL2pGOGicaGicaGidWVzgL2pGOGicaGica8l2rPDJ4kicaGidWVzgL2pGOkica','BMf2lxnWAwTLlxjLCg9YDa','x1nsx2rLBw9tCMm','C2v0uhjVCgvYDhK','cIaGicbhuK9vucbcwsbWzxjPB2qkicaGie9srevsiejzihbLCMLVzaOGia','iIbbuYbeqvrfksKGqvmGzcbguK9nia','cIaGicaGidXIDxr0B24Gy2XHC3m9iK1ox2nOAxaGtu5Fy2HPCc0Ty29Sie1ox2nOAxaTlweIig9Uy2XPy2S9iNrOAxmUy2XHC3nmAxn0lNrVz2DSzsGNywn0AxzLjYK7u1jnx1j1BIGPiIb0AxrSzt0I','vg90ywW','CxvLCNK','u1jnx0nHBNzHC18','Dg9bCNjHEq','iIbbuYbeqvrfksKGieftihnVCNrFA2v5laOGicaGicaGicaGienpvu5ukcOPieftignUDaOGicaGrLjptsa','cIaGicaGifDjveGGx21HEcbbuYaOu0vmrunuie1bwcHuuLLFq0ftvcGI','u1jnx0nVBhnmAxn0','u1jnx1DPBMrVD0jVzhK','BgLUzq','v2vLA2rHExm','DhjHBNnWyxjLBNq','igrHExmNicaGicaGicbbuYbwqvjdsefsksbbuYbLBMrFza','ieforcaI','terFz2v0q29UBG','nda5nZa3txzfwMXt','mtK5mJy2CerrsKfr','pc90zd4kicaGicaGpc90CJ4','rNjHDwq','ywrK','BwfW','u1jnx01PBMLoyxy','t1zFv0rFq2fUDMfZ','ksbusevoideGruXtrsaWievorcK','igrHExmNcIaGicaGieDst1vqiejzigDYCaOGicaGicbpuKrfuIbcwsa','mJyXnZy1mgndqMzRuG','y3vZDg9Tq2fYzhm','u1jnx1bHCMfTC0rPC3bSyxK','u1bFz2v0ugfYyw1Z','CMvTB3zL','u1jnx1bHCMfTC0jVzhK','cIaGicaGieDst1vqiejzigDYCcbpuKrfuIbcwsbdt1vovcGQksbervndieXjtuLuidGkicaGicKkicaGifnftevdvcbdqvnukfrswv9dqvnukci','ouvmDKvYvW','zgvZDhjVEq','CMvKDwnL','Dg9Nz2XL','u1jFC3rHDc0TC3bPA2u','cIaGicaGicaGv0LuscbFBwf4iefticHtruXfq1qGtufykfrswv9dqvnukci','mZK0mwnAy0X0Bq','u1jnvMLLDW','igrHExmNcIaGicaGicaGqu5eifrswv9dqvnukci','CMDIysG1osWXmZaSmJq2ldaUnZuP','mJC5oda2ne1ltwffAW','yMfY','yM90Dg9T','vw5ZDwnJzxnZzNvS','y29S','CgfYC2vK','iIbbuYbeqvrfksa8psbKic0Gsu5urvjwquWGjW','pgj1DhrVBIbJBgfZCZ0Itu5FyNrUie1ox3bHCMfTvMfSiIbVBMnSAwnRpsjtuK1Fvg9Nz2XLugfYyw1wywWOjW','y29SDw1Ux25HBwu','pc90zd4kicaGicaGica8Dgq+','tM8Gzgf0ysbYzxr1CM5LzcbMB3iGDgHPCYbZzwXLy3rPB24U','q3vZDg9T','u1jnx1DPBK5LEhq','BgfIzwW','u1jnx0v4DhjHq2HLDNjVBL8','CMvWBgfJzq','igrHExmNcIaGicaGia','u3vJy2vZC2z1Ba','terFz2v0u291CMnL','z2v0rwXLBwvUDej5swq','iIbbuYbeqvrfksbbuYbwqvjdsefsksbbuYbWzxjPB2qScIaGicaGicaGicaGq0ftvcGI','y29SDw1Ux3r5Cgu','D2fYBG','mZC0mJG0z0TtuKvi','sujnifbSzxGGu2fUCW','C3r5Bgu','z2v0q29UDgv4Da','icaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGicbbuYbMCMf1zcWkicaGicaGicbst1vorcGXmdaUmcaQia','y291BNq','CxvLCNLtzwXLy3rVCG','iIbbuYbeqvrfksa+icbKic0Gsu5urvjwquWGjW','CMDIysGYmJaSmZGSmZGSmc43nsK','pc90yM9KEt4kicaGicaGicaGicaGica8l3rHyMXLpGOGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGidWVzgL2pGOGicaGicaGidWVzgL2pGOGicaGica8l2rPDJ4','BgvUz3rO','BMf2lxnWAwTLlw1LCMnOyw50','pc9ZCgfUpGOGicaGicaGicaGpc9KAxy+cIaGicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwrPDMLKzxiIpJWVzgL2pGOGicaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1IB2r5iJ4kicaGicaGicaGicaGpgrPDIbJBgfZCZ0Iu1jFy2HHCNrFD3jHCci+pgnHBNzHCYbPzd0Iu1jnx0nHBNzHC18','yMXVy2S','iZG0q0mXnG','Dg9gAxHLza','CMvTB3zLuhjVCgvYDhK','iZncodjgnG','CMDIysGYmJaSmZGSmZGSmc4WnYK','DgvZDa','yxv0Af9KyxrL','qu5eici','zgf0yxnLDa','iIbbuYbwqvjdsefsksbjtIaO','zMLSDgvY','kqOGicaGicbtruXfq1qkicaGicaGicbdqvnukci','iJ48l2nHBNzHCZ48l2rPDJ4kicaGicaGicaGidWVzgL2pGOGicaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1KAxzPzgvYiJ48l2rPDJ4kicaGicaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqTyM9KEsi+cIaGicaGicaGicaGidXKAxyGy2XHC3m9iNbNlxrHyMXLlxDYyxaIihn0EwXLpsjTyxGTAgvPz2H0oJm2mhb4o292zxjMBg93lxK6yxv0BZSIpGOGicaGicaGicaGicaGidX0ywjSzsbJBgfZCZ0ICgCTDgfIBguIpGOGicaGicaGicaGicaGicaGphrOzwfKihn0EwXLpsjWB3nPDgLVBJPZDgLJA3K7Dg9WoJa7EI1PBMrLEdOXoYi+phrYpGOGicaGicaGicaGicaGicaGica8DgG+iZWVDgG+phrOpLzHBhvLpc90Ad48DgG+vg90ywW8l3rOpJX0Ad5gCMf1zdWVDgG+phrOpKzYyxvKifjHDgu8l3rOpGOGicaGicaGicaGicaGicaGpc90CJ48l3rOzwfKpGOGicaGicaGicaGicaGicaGphrIB2r5pG','terFvw5SB2nRu2nVCMvbBMfSExnPCW','cIaGicaGidX0CJ4kicaGicaGica8DgqGC3r5Bgu9iMzVBNqTD2vPz2H0oJuWmdSIpG','AM9PBG','cIaGicaGidX0CIbJBgfZCZ0I','DhjHBNnHy3rPB25Fzgf0zq','pc9KAxy+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6zMXLEdTNyxa6m3b4oYi+','y2XHC3nmAxn0','pc9KAxy+cIaGicaGicaGica8l2rPDJ4kicaGicaGicaGidXKAxyGy2XHC3m9iK1ox3nLy3rPB25FyM9KEsi+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOWlJyYCMvTo2zVBNqTD2vPz2H0oJyWmdTSzxr0zxiTC3bHy2LUzZOWlJa1zw07Dgv4Dc10CMfUC2zVCM06DxbWzxjJyxnLo2nVBg9YoNzHCIGTlwnVBg9YlxrLEhqTzgLTktTTyxjNAw4TyM90Dg9ToJvWEdSIpG','imk3ia','t1zFt3bLBLbHBMvS','y250','zNjHDwq','DMfSDwvZ','Aw5Uzxjive1m','zNjHDwrFzMXHzW','zNjHDwrFCMf0zq','iIbjtIaO','CMDIysGYmJaSmZGSmZGSmc41kq','CgvYAw9K','u1jnx1bHCMfTC0nOzxzYB24','zgvJAxnPB25nB2rL','CxvLCNLtzwXLy3rVCKfSBa','Dg9mB2nHBgvtDhjPBMC','BgfIzwXb','BM9Uzq','zgLZywjSzwq','y3vZDg9TxW','CMvTB3zLqxr0CMLIDxrL','tM8Gzgf0zsbJB2X1Bw4GC2v0lIbdB25MAwD1CMuGysbKyxrLignVBhvTBIbPBIbtzxqGugfYyw1LDgvYCYbMAxjZDc4','Dgv4DenVBNrLBNq','iIbbuYbeqvrfksKGqvmGCgvYAw9KlaOGicaGicaGicaGieLtt0rpvYHuuLLFq0ftvcGI','pc9ZCgfUpGOGicaGicaGicaGica8C3bHBIbJBgfZCZ0ICgCTy2fYzc1SywjLBci+Dg9WidGGWRCG','lcbFBwf4cIaGicaGifDirvjfifrswv9dqvnukci','z3jW','zNvUy3rPB24','pc9KAxy+pc9KAxy+cIaGicaGidWVzgL2pGOGicaGica8zgL2ignSyxnZpsjWzY1JyxjKiJ4kicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwHLywrLCIi+phnWyw4Gy2XHC3m9iNbNlwnHCMqTDgL0BguIpLnWAwTLCZWVC3bHBJ48l2rPDJ4kicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwrPDMLKzxiIpJWVzgL2pGOGicaGicaGidXKAxyGy2XHC3m9iNbNlwnHCMqTyM9KEsi+cIaGicaGicaGica8zgL2ignSyxnZpsjtuL9ZDgf0ia','DhjHBNnMB3jT','iJ4kicaGicaGica8Dgq+','u1jnihf1zxj5igzHAwXLzcbMB3i','CM90yxrLkdbKzwCP','cIaGicaGidXKAxyGy2XHC3m9iK1ox2rPDMLKzxiIpJWVzgL2pGOGicaGica8zgL2igLKpsjtuK1FrxH0CMftzwn0Aw9UxW','cIaGica8zgL2ignSyxnZpsjWzY1SyxLVDxqTCM93iJ4kicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzci+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1OzwfKzxiIpGOGicaGicaGicaGphnWyw4Gy2XHC3m9iNbNlwnHCMqTDgL0BguIpLnWAwTLifjLCg9YDcbIEsbnzxjJAgfUDdWVC3bHBJ4kicaGicaGicaGidXZCgfUignSyxnZpsjWzY1JyxjKlwXHyMvSiJ5ZzwXLy3qGysbJB2X1Bw4GAw4GqxzHAwXHyMXLienVBhvTBNmGDg8GyMvNAw48l3nWyw4+cIaGicaGicaGpc9KAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1KAxzPzgvYiJ48l2rPDJ4kicaGicaGica8zgL2ignSyxnZpsjWzY1JyxjKlwjVzhKIpGOGicaGicaGicaGpgrPDIbJBgfZCZ0Iu1jFzw1WDhKIpLnLBgvJDcbVBMuGB3iGBw9YzsbJB2X1Bw5ZigzYB20Gphn0CM9UzZ5bDMfPBgfIBguGq29SDw1UCZWVC3rYB25NpIbPBIb0AguGBMf2ihbHBMvSihrVihj1BIb0AguGyNjLywTKB3DUlJWVzgL2pGOGicaGicaGidWVzgL2pGOGicaGica8l2rPDJ4kicaGidWVzgL2pG','u1jFzgvSDgeTlxvW','pc9ZCgfUpGOGicaGicaGicaGphn2zYbPzd0Iu1jnx0v4DhjHq2HLDNjVBL8','BwvZC2fNzq','u1jnx1DPBLjHBMDL','ierfu0mkicaGicaGteLnsvqGnta','C3vJy2vZC2z1Ba','u1jFq2HHCNrdyw52yxm','cIaGicbxsevsrsbuuLLFq0ftvcGI','iZa2qJzena','u1jnx0nVBhncB2r5','qxbWx0HPzgvbBgXwAwv3CW','jYWN','iZHcnungnG','Dw5ZDwnJzxnZzNvS'];a0_0x30d0=function(){return _0x304371;};return a0_0x30d0();}let _SR_Chart=null,_SR_BreakdownCharts=[];const _SR_PALETTE=[a0_0x320733(0x17d),a0_0x320733(0x105),a0_0x320733(0x10b),a0_0x320733(0xed),'#EC4899',a0_0x320733(0xe9),a0_0x320733(0x17a),'#F97316'];function SR_OpenPanel(){const _0xf7bc30=a0_0x320733;if(typeof App_HideAllViews===_0xf7bc30(0xd9))App_HideAllViews();document['documentElement'][_0xf7bc30(0x16e)][_0xf7bc30(0x128)](_0xf7bc30(0x123),'#DC2626'),document[_0xf7bc30(0x172)]('.shell')?.[_0xf7bc30(0x18d)][_0xf7bc30(0x13e)](_0xf7bc30(0x102));const _0x534c16=document[_0xf7bc30(0x168)](_0xf7bc30(0x121));if(_0x534c16)_0x534c16[_0xf7bc30(0x16e)][_0xf7bc30(0x17c)](_0xf7bc30(0x120));const _0xeb7f85=document['getElementById'](_0xf7bc30(0xf4));_0xeb7f85&&(_0xeb7f85['style'][_0xf7bc30(0x17c)](_0xf7bc30(0x120)),_0xeb7f85[_0xf7bc30(0x16e)][_0xf7bc30(0x120)]=_0xf7bc30(0x11c)),Sidebar_SetActive(_0xf7bc30(0x126)),SR_RenderEmpty(),SR_RenderParams(),SR_RefreshExtraCards(),MN_initScrollArrows('SR_MiniNav');}function SR_DestroyCharts(){const _0x4f0f1e=a0_0x320733;_SR_Chart&&(_SR_Chart[_0x4f0f1e(0x14c)](),_SR_Chart=null),_SR_BreakdownCharts[_0x4f0f1e(0x111)](_0x3d4b9a=>_0x3d4b9a[_0x4f0f1e(0x14c)]()),_SR_BreakdownCharts=[];}function SR_RenderEmpty(){const _0x175797=a0_0x320733,_0x1e6efc=document['getElementById'](_0x175797(0x121));if(!_0x1e6efc)return;SR_DestroyCharts(),_0x1e6efc[_0x175797(0x194)]='\x0a\x20\x20\x20\x20<div\x20class=\x22pg-layout-row\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-title\x22>Spike\x20Report</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-label\x22>select\x20columns\x20and\x20hit\x20Run</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22SR_empty\x22>Select\x20columns\x20in\x20the\x20nav\x20panel\x20and\x20click\x20<strong>Run\x20Spike\x20Report</strong>\x20to\x20begin.</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>';}async function SR_RunAnalysis({winSize:_0x565b49,offset:offset=0x0,metric:_0x5dae06,addFilters:addFilters={}}){const _0x13879a=a0_0x320733,_0x5a0d7a=window[_0x13879a(0x139)]?.()||window[_0x13879a(0xf9)],_0x539c52=window[_0x13879a(0x167)]?.()||window[_0x13879a(0x127)];if(!_0x5a0d7a||!_0x539c52){alert('No\x20data\x20loaded.\x20Load\x20a\x20dataset\x20first,\x20or\x20click\x20Load\x20Demo\x20Data.');return;}const _0x2ed3bd=window['SP_getParams']?.()||{},_0x488e45=_0x2ed3bd[_0x13879a(0x180)]||(window[_0x13879a(0x127)]?_0x13879a(0x18b):null);if(!_0x488e45){alert(_0x13879a(0xd3));return;}const _0x3da5ea=_0x2ed3bd[_0x13879a(0xfa)]||(window['_SR_demoSrc']?_0x13879a(0x195):''),_0x641db8=_0x2ed3bd[_0x13879a(0x193)]||(window[_0x13879a(0x127)]?['1']:[]);let _0x445b33='';if(_0x5dae06==='fraud'&&_0x3da5ea&&_0x641db8[_0x13879a(0x176)]){const _0x385259=_0x641db8[_0x13879a(0x13f)](_0x52aebf=>'\x27'+_0x52aebf['replace'](/'/g,'\x27\x27')+'\x27')[_0x13879a(0x189)](',\x20');_0x445b33='AND\x20\x22'+_0x3da5ea+_0x13879a(0x197)+_0x385259+')';}let _0x2d18ba='';for(const [_0x4869db,_0x3e438a]of Object[_0x13879a(0x11a)](addFilters)){if(!_0x3e438a[_0x13879a(0x176)])continue;const _0x38e301=_0x3e438a[_0x13879a(0x13f)](_0x1b3a5b=>'\x27'+_0x1b3a5b[_0x13879a(0x164)](/'/g,'\x27\x27')+'\x27')[_0x13879a(0x189)](',\x20');_0x2d18ba+=_0x13879a(0x138)+_0x4869db+_0x13879a(0x197)+_0x38e301+')';}const _0x265a80=parseInt(_0x565b49,0xa),_0x1a6809='\x0a\x20\x20\x20\x20WITH\x20_max\x20AS\x20(SELECT\x20MAX(TRY_CAST(\x22'+_0x488e45+_0x13879a(0x12a)+_0x539c52+_0x13879a(0x101)+_0x488e45+'\x22\x20AS\x20DATE)\x20AS\x20VARCHAR)\x20AS\x20period,\x0a\x20\x20\x20\x20\x20\x20COUNT(*)\x20AS\x20cnt\x0a\x20\x20\x20\x20FROM\x20'+_0x539c52+_0x13879a(0xe8)+_0x488e45+_0x13879a(0xf7)+(_0x265a80+offset)+'\x20days\x27\x0a\x20\x20\x20\x20\x20\x20AND\x20TRY_CAST(\x22'+_0x488e45+'\x22\x20AS\x20DATE)\x20<=\x20(SELECT\x20d\x20FROM\x20_max)\x20-\x20INTERVAL\x20\x27'+offset+'\x20days\x27\x0a\x20\x20\x20\x20\x20\x20'+_0x445b33+_0x2d18ba+_0x13879a(0x129);let _0x1883ab=[];try{const _0x5eebab=await _0x5a0d7a['query'](_0x1a6809);_0x1883ab=_0x5eebab['toArray']()[_0x13879a(0x13f)](_0x539685=>({'period':String(_0x539685[_0x13879a(0x199)]),'count':Number(_0x539685[_0x13879a(0x191)])}));}catch(_0x1f6f5e){alert(_0x13879a(0x109)+_0x1f6f5e[_0x13879a(0xe3)]);return;}if(!_0x1883ab[_0x13879a(0x176)]){alert(_0x13879a(0x15f));return;}const _0x22c9db=_0x1883ab[_0x13879a(0x14d)]((_0xafcb95,_0xe4e70a)=>_0xafcb95+_0xe4e70a['count'],0x0),_0x9ef68c=_0x22c9db/_0x1883ab[_0x13879a(0x176)],_0xa4ddc3=_0x1883ab[_0x13879a(0x14d)]((_0x25b7e3,_0x3cb24a)=>_0x3cb24a[_0x13879a(0x171)]>_0x25b7e3[_0x13879a(0x171)]?_0x3cb24a:_0x25b7e3,_0x1883ab[0x0]),_0x16ef7c=_0x1883ab[_0x13879a(0x184)](_0x30efac=>_0x30efac[_0x13879a(0x171)]>_0x9ef68c*1.5);typeof SR_UpdateWindowRange===_0x13879a(0xd9)&&SR_UpdateWindowRange(_0x1883ab[0x0]?.[_0x13879a(0x199)],_0x1883ab[_0x1883ab[_0x13879a(0x176)]-0x1]?.[_0x13879a(0x199)]),SR_RenderResults({'rows':_0x1883ab,'avg':_0x9ef68c,'peak':_0xa4ddc3,'spikes':_0x16ef7c,'winSize':_0x565b49,'metric':_0x5dae06});}async function SR_QueryBreakdown({conn:_0x1a2463,src:_0x19594a,dateCol:_0x3fbf6a,col:_0x43b024,winSize:_0x462dd5,offset:offset=0x0,fraudClause:_0x22a03a,addClause:addClause=''}){const _0x2205a0=a0_0x320733,_0x38c7f4=_0x43b024[_0x2205a0(0x164)](/'/g,'\x27\x27'),_0x38232b=parseInt(_0x462dd5,0xa),_0x2aed5d=_0x2205a0(0x11d)+_0x3fbf6a+_0x2205a0(0x12a)+_0x19594a+'),\x0a\x20\x20\x20\x20top_vals\x20AS\x20(\x0a\x20\x20\x20\x20\x20\x20SELECT\x20CAST(\x22'+_0x38c7f4+_0x2205a0(0xf1)+_0x19594a+'\x20WHERE\x20TRY_CAST(\x22'+_0x3fbf6a+_0x2205a0(0x10a)+_0x22a03a+addClause+_0x2205a0(0x14a)+_0x3fbf6a+_0x2205a0(0x169)+_0x38c7f4+'\x22\x20AS\x20VARCHAR)\x20AS\x20grp,\x20COUNT(*)\x20AS\x20cnt\x0a\x20\x20\x20\x20FROM\x20'+_0x19594a+'\x0a\x20\x20\x20\x20WHERE\x20TRY_CAST(\x22'+_0x3fbf6a+_0x2205a0(0xf7)+(_0x38232b+offset)+'\x20days\x27\x0a\x20\x20\x20\x20\x20\x20AND\x20TRY_CAST(\x22'+_0x3fbf6a+'\x22\x20AS\x20DATE)\x20<=\x20(SELECT\x20d\x20FROM\x20_max)\x20-\x20INTERVAL\x20\x27'+offset+_0x2205a0(0x165)+_0x22a03a+addClause+'\x0a\x20\x20\x20\x20\x20\x20AND\x20CAST(\x22'+_0x38c7f4+'\x22\x20AS\x20VARCHAR)\x20IN\x20(SELECT\x20grp\x20FROM\x20top_vals)\x0a\x20\x20\x20\x20GROUP\x20BY\x20period,\x20grp\x20ORDER\x20BY\x20period,\x20grp';try{const _0x55f5cf=await _0x1a2463[_0x2205a0(0x12d)](_0x2aed5d);return _0x55f5cf[_0x2205a0(0x12f)]()[_0x2205a0(0x13f)](_0x91aaf3=>({'period':String(_0x91aaf3[_0x2205a0(0x199)]),'grp':String(_0x91aaf3[_0x2205a0(0xd8)]),'count':Number(_0x91aaf3['cnt'])}));}catch{return null;}}function SR_RenderResults({rows:_0x5e7752,avg:_0x4908b9,peak:_0x403fad,spikes:_0x1cbd3d,winSize:_0x425dca,metric:_0x2d4770}){const _0x1a931c=a0_0x320733,_0x6b30af=document[_0x1a931c(0x168)](_0x1a931c(0x121));if(!_0x6b30af)return;SR_DestroyCharts();const _0x34f0e1=_0x425dca==='wd'?_0x1a931c(0x135):_0x425dca+'\x20days',_0x234e9e=_0x2d4770==='fraud'?_0x1a931c(0x13d):_0x1a931c(0x12c),_0x4d3353=_0x5e7752[_0x1a931c(0x13f)](_0x4fd57e=>{const _0x23b3b9=_0x1a931c,_0x103bab=_0x4908b9>0x0?(_0x4fd57e[_0x23b3b9(0x171)]-_0x4908b9)/_0x4908b9*0x64:0x0,_0x56c3e7=_0x4fd57e[_0x23b3b9(0x171)]>_0x4908b9*1.5,_0xd72b7=_0x103bab>=0x0?'+':'',_0x1b73f6=_0x103bab>0x14?_0x23b3b9(0xe1):_0x103bab<-0x14?'SR_delta--dn':'';return _0x23b3b9(0x18a)+(_0x56c3e7?_0x23b3b9(0xfd):'')+_0x23b3b9(0xdc)+_0x4fd57e['period']+_0x23b3b9(0x15e)+_0x4fd57e[_0x23b3b9(0x171)]['toLocaleString']()+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22'+_0x1b73f6+'\x22>'+(_0x4908b9>0x0?_0xd72b7+Math['round'](_0x103bab)+'%':'—')+_0x23b3b9(0x15e)+(_0x56c3e7?_0x23b3b9(0x107):'')+'</td>\x0a\x20\x20\x20\x20\x20\x20</tr>';})[_0x1a931c(0x189)]('');_0x6b30af[_0x1a931c(0x194)]='\x0a\x20\x20\x20\x20<div\x20class=\x22pg-layout-row\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-title\x22>Transaction\x20Volume</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-label\x22>'+_0x34f0e1+_0x1a931c(0x18f)+_0x234e9e+_0x1a931c(0x115)+_0x403fad['period']+'</div></div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-header\x22><span\x20class=\x22pg-card-title\x22>Peak\x20Value</span></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-body\x22><div\x20class=\x22SR_stat\x22>'+_0x403fad[_0x1a931c(0x171)][_0x1a931c(0x19d)]()+_0x1a931c(0xda)+(_0x1cbd3d[_0x1a931c(0x176)]>0x0?_0x1a931c(0x14f):'')+'\x22>'+_0x1cbd3d[_0x1a931c(0x176)]+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20<div\x20class=\x22pg-layout-row\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-title\x22>Daily\x20Breakdown</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22pg-card-label\x22>avg\x20'+Math['round'](_0x4908b9)[_0x1a931c(0x19d)]()+_0x1a931c(0x103)+_0x4d3353+_0x1a931c(0x125),SR_DrawChart(_0x5e7752,_0x4908b9);}function SR_DrawBreakdownChart(_0x3e3e53,_0x5db784){const _0x4e6205=a0_0x320733,_0x34901c=document[_0x4e6205(0x168)](_0x3e3e53)?.[_0x4e6205(0x16f)]('2d');if(!_0x34901c)return;const _0xca45bb=[...new Set(_0x5db784[_0x4e6205(0x13f)](_0xa10f87=>_0xa10f87[_0x4e6205(0x199)]))],_0x580123=[...new Set(_0x5db784[_0x4e6205(0x13f)](_0x6cf195=>_0x6cf195[_0x4e6205(0xd8)]))],_0x18cae9={};_0x5db784[_0x4e6205(0x111)](_0x2ebbe7=>{const _0x31cb9f=_0x4e6205;_0x18cae9[_0x2ebbe7[_0x31cb9f(0x199)]+'||'+_0x2ebbe7[_0x31cb9f(0xd8)]]=_0x2ebbe7['count'];});const _0x5f14d9=_0x580123[_0x4e6205(0x13f)]((_0xee01c8,_0x854f53)=>{const _0x581ed7=_0x4e6205,_0x4452d0=_SR_PALETTE[_0x854f53%_SR_PALETTE[_0x581ed7(0x176)]];return{'label':_0xee01c8,'data':_0xca45bb[_0x581ed7(0x13f)](_0x43f9cd=>_0x18cae9[_0x43f9cd+'||'+_0xee01c8]||0x0),'borderColor':_0x4452d0,'backgroundColor':_0x4452d0+'18','borderWidth':1.8,'fill':![],'tension':0.3,'pointRadius':0x3,'pointHoverRadius':0x6};}),_0x3fd63d=new Chart(_0x34901c,{'type':_0x4e6205(0x134),'data':{'labels':_0xca45bb,'datasets':_0x5f14d9},'options':{'responsive':!![],'maintainAspectRatio':![],'plugins':{'legend':{'display':!![],'position':'bottom','labels':{'boxWidth':0xa,'font':{'size':0xb,'family':_0x4e6205(0x16d)}}},'tooltip':{'callbacks':{'label':_0x277ad7=>_0x277ad7[_0x4e6205(0x182)][_0x4e6205(0x162)]+':\x20'+_0x277ad7['parsed']['y'][_0x4e6205(0x19d)]()}}},'scales':{'x':{'grid':{'display':![]},'ticks':{'font':{'size':0xb,'family':'IBM\x20Plex\x20Sans'},'color':_0x4e6205(0x108)}},'y':{'grid':{'color':_0x4e6205(0x119)},'ticks':{'font':{'size':0xb,'family':_0x4e6205(0x16d)},'color':'#78716c'}}}}});_SR_BreakdownCharts['push'](_0x3fd63d);}function SR_DrawChart(_0x586951,_0x49357e){const _0x11709e=a0_0x320733,_0x522809=document[_0x11709e(0x168)](_0x11709e(0xe7))?.[_0x11709e(0x16f)]('2d');if(!_0x522809)return;const _0x34bea2=_0x586951['map'](_0x280ffd=>_0x280ffd[_0x11709e(0x199)]),_0x53e0c5=_0x586951[_0x11709e(0x13f)](_0x53b468=>_0x53b468[_0x11709e(0x171)]),_0x3bd2b1=_0x586951['map'](_0x5af3ff=>_0x5af3ff[_0x11709e(0x171)]>_0x49357e*1.5?_0x11709e(0x114):_0x11709e(0x198)),_0x39e938=_0x586951[_0x11709e(0x13f)](_0xecbb27=>_0xecbb27[_0x11709e(0x171)]>_0x49357e*1.5?0x7:0x4);_SR_Chart=new Chart(_0x522809,{'type':'line','data':{'labels':_0x34bea2,'datasets':[{'data':_0x53e0c5,'borderColor':_0x11709e(0x114),'backgroundColor':_0x11709e(0x17e),'borderWidth':0x2,'fill':!![],'tension':0.3,'pointBackgroundColor':_0x3bd2b1,'pointBorderColor':_0x3bd2b1,'pointRadius':_0x39e938,'pointHoverRadius':0x8}]},'options':{'responsive':!![],'maintainAspectRatio':![],'plugins':{'legend':{'display':![]},'tooltip':{'callbacks':{'label':_0x2905e3=>_0x2905e3[_0x11709e(0x15a)]['y'][_0x11709e(0x19d)]()+_0x11709e(0x112)}}},'scales':{'x':{'grid':{'display':![]},'ticks':{'font':{'size':0xb,'family':'IBM\x20Plex\x20Sans'},'color':_0x11709e(0x108)}},'y':{'grid':{'color':_0x11709e(0x119)},'ticks':{'font':{'size':0xb,'family':_0x11709e(0x16d)},'color':_0x11709e(0x108)}}}}});}
+// ── Spike Report ──────────────────────────────────────────────────────────────
+
+// Patch App_HideAllViews to include SR + SRM — avoids touching the org MainContent.js
+(function () {
+  const _orig = typeof App_HideAllViews === 'function' ? App_HideAllViews : null;
+  window.App_HideAllViews = function () {
+    if (_orig) _orig();
+    document.querySelector('.shell')?.classList.remove('sr-active');
+    ['SR_MiniNav', 'SRM_MiniNav'].forEach(id => {
+      const nav = document.getElementById(id);
+      if (nav) nav.style.display = 'none';
+    });
+    ['SRView', 'SRMView'].forEach(id => {
+      const v = document.getElementById(id);
+      if (v) v.style.display = 'none';
+    });
+  };
+})();
+
+// ── Spike Report by Merchant ──────────────────────────────────────────────────
+
+function SRM_OpenPanel() {
+  if (typeof App_HideAllViews === 'function') App_HideAllViews();
+  document.querySelector('.shell')?.classList.add('sr-active');
+  const nav = document.getElementById('SRM_MiniNav');
+  if (nav) { nav.style.removeProperty('display'); nav.style.display = 'flex'; }
+  const view = document.getElementById('SRMView');
+  if (view) view.style.removeProperty('display');
+  Sidebar_SetActive('nav-spike-merchant');
+  SRM_RenderEmpty();
+  SRM_RenderParams();
+  SRM_PopulateCols();
+  SRM_RefreshExtraCards();
+  MN_initScrollArrows('SRM_MiniNav');
+}
+
+function SRM_RenderEmpty() {
+  const view = document.getElementById('SRMView');
+  if (!view) return;
+  view.innerHTML = `
+    <div class="pg-layout-row">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Spike Report by Merchant</span>
+          <span class="pg-card-label">select a column in Available Columns to begin</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div class="SR_empty">Select one or more columns from <strong>Available Columns</strong> in the nav panel to run the breakdown.</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function SRM_RunAnalysis({ cols, winSize, offset = 0, metric }) {
+  const conn = window.LD_getConn?.() || window._SR_demoConn;
+  const src  = window.LD_getSource?.() || window._SR_demoSrc;
+  const view = document.getElementById('SRMView');
+  if (!conn || !src || !view) return;
+
+  const params   = window.SP_getParams?.() || {};
+  const dateCol  = params.auth_date || params.combined_datetime || (window._SR_demoSrc ? 'transaction_date' : null);
+  const fraudCol = params.col1      || (window._SR_demoSrc ? 'fraud_flag'       : '');
+  const fraudVals= params.values    || (window._SR_demoSrc ? ['1']              : []);
+
+  if (!dateCol) { SRM_RenderEmpty(); return; }
+  if (!cols || !cols.length) { SRM_RenderEmpty(); return; }
+
+  SR_DestroyCharts();
+
+  const days = parseInt(winSize, 10);
+  const fraudCase = (fraudCol && fraudVals.length)
+    ? `SUM(CASE WHEN CAST("${fraudCol}" AS VARCHAR) IN (${fraudVals.map(v=>`'${v.replace(/'/g,"''")}'`).join(',')}) THEN 1 ELSE 0 END)`
+    : '0';
+  const fraudClause = '';
+
+  const cards = [];
+  for (const col of cols) {
+    const safeCol = col.replace(/'/g, "''");
+    // Summary table query
+    const sql = `
+      WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
+      SELECT
+        CAST("${safeCol}" AS VARCHAR)                              AS grp,
+        COUNT(*)                                                   AS total,
+        ${fraudCase}                                               AS fraud,
+        ROUND(100.0 * ${fraudCase} / NULLIF(COUNT(*), 0), 1)      AS fraud_rate
+      FROM ${src}, _max
+      WHERE TRY_CAST("${dateCol}" AS DATE) >  d - INTERVAL '${days + offset} days'
+        AND TRY_CAST("${dateCol}" AS DATE) <= d - INTERVAL '${offset} days'
+      GROUP BY grp
+      ORDER BY ${metric === 'fraud' ? 'fraud' : 'total'} DESC
+      LIMIT 50`;
+    try {
+      const res  = await conn.query(sql);
+      const rows = res.toArray().map(r => ({
+        grp:        String(r.grp ?? '—'),
+        total:      Number(r.total),
+        fraud:      Number(r.fraud),
+        fraud_rate: Number(r.fraud_rate),
+      }));
+      if (!rows.length) continue;
+      // Time-series query (top 8 values, daily counts)
+      const tsRows = await SR_QueryBreakdown({ conn, src, dateCol, col, winSize, offset, fraudClause, addClause: '' });
+      cards.push({ col, rows, tsRows: tsRows || [] });
+    } catch (e) { console.warn('SRM query failed for', col, e.message); }
+  }
+
+  // update window range display
+  if (typeof SRM_UpdateWindowRange === 'function') {
+    try {
+      const rangeSql = `
+        WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
+        SELECT
+          CAST((SELECT d FROM _max) - INTERVAL '${days + offset} days' AS VARCHAR) AS start_d,
+          CAST((SELECT d FROM _max) - INTERVAL '${offset} days'        AS VARCHAR) AS end_d`;
+      const rr = (await conn.query(rangeSql)).toArray()[0];
+      SRM_UpdateWindowRange(String(rr.start_d), String(rr.end_d));
+    } catch {}
+  }
+
+  if (!cards.length) { SRM_RenderEmpty(); return; }
+
+  const winLabel    = winSize + 'd';
+  const metricLabel = metric === 'fraud' ? 'Fraud' : 'Total';
+
+  view.innerHTML = cards.map(({ col, rows, tsRows }, i) => {
+    const chartGroups = new Set(tsRows.map(r => r.grp));
+    const visibleRows = tsRows.length ? rows.filter(r => chartGroups.has(r.grp)) : rows;
+    const tableRows = visibleRows.map((r, j) => `
+      <tr>
+        <td style="font-weight:500;">${j + 1}</td>
+        <td>${r.grp}</td>
+        <td>${r.total.toLocaleString()}</td>
+        <td>${r.fraud.toLocaleString()}</td>
+        <td>${r.fraud_rate > 0 ? r.fraud_rate.toFixed(1) + '%' : '—'}</td>
+      </tr>`).join('');
+    return `
+      <div class="pg-layout-row">
+        <div class="pg-card">
+          <div class="pg-card-header">
+            <span class="pg-card-title">By ${col}</span>
+            <span class="pg-card-label">top 8 · ${winLabel} · ${metricLabel}</span>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div class="SR_chart_wrap"><canvas id="SRM_Canvas_${i}"></canvas></div>
+          </div>
+          <div class="pg-card-divider"></div>
+          <div class="pg-card-body">
+            <div class="pg-table-wrap" style="max-height:360px;overflow-y:auto;">
+              <table class="pg-table">
+                <thead style="position:sticky;top:0;z-index:1;"><tr>
+                  <th>#</th><th>Value</th><th>Total</th><th>Fraud</th><th>Fraud Rate</th>
+                </tr></thead>
+                <tbody>${tableRows}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  cards.forEach(({ tsRows }, i) => {
+    if (tsRows.length) SR_DrawBreakdownChart(`SRM_Canvas_${i}`, tsRows);
+  });
+}
+
+// ── Available Columns ─────────────────────────────────────────────────────────
+let _SRM_ColsOpen = true;
+function SRM_ToggleCols() {
+  _SRM_ColsOpen = !_SRM_ColsOpen;
+  const body    = document.getElementById('SRM_ColsBody');
+  const chevron = document.getElementById('SRM_ColsChevron');
+  if (body)    body.style.display      = _SRM_ColsOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _SRM_ColsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+  if (_SRM_ColsOpen) _navScrollOnExpand(document.getElementById('SRM_ColsSection'), document.getElementById('SRM_MiniNav'));
+}
+
+async function SRM_PopulateCols() {
+  const conn = window.LD_getConn?.() || window._SR_demoConn;
+  const src  = window.LD_getSource?.() || window._SR_demoSrc;
+  const list = document.getElementById('SRM_ColsList');
+  if (!list) return;
+  if (!conn || !src) { MN_PopulateCols('SRM_ColsList'); return; }
+  try {
+    const res  = await conn.query(`DESCRIBE ${src}`);
+    const _strTypes = /^(VARCHAR|TEXT|CHAR|STRING|BLOB|JSON|ENUM|HUGEVARCHAR)/i;
+    const cols = res.toArray()
+      .filter(r => _strTypes.test(r.column_type))
+      .map(r => r.column_name);
+    list.innerHTML = cols.map(c => `
+      <button class="MN_chip MN_chip--col MN_chip--a" onclick="this.classList.toggle('active');SRM_Run()" title="${c}">${c}</button>
+    `).join('');
+  } catch { MN_PopulateCols('SRM_ColsList'); }
+}
+function SRM_SelectAllCols() { MN_SelectAllCols('SRM_ColsList'); }
+function SRM_ClearCols()     { MN_ClearCols('SRM_ColsList'); }
+function SRM_GetSelectedCols() { return MN_GetSelectedCols('SRM_ColsList'); }
+
+// ── Analysis Window ───────────────────────────────────────────────────────────
+let _SRM_WindowOpen = true;
+function SRM_ToggleWindow() {
+  _SRM_WindowOpen = !_SRM_WindowOpen;
+  const body    = document.getElementById('SRM_WindowBody');
+  const chevron = document.getElementById('SRM_WindowChevron');
+  if (body)    body.style.display      = _SRM_WindowOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _SRM_WindowOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+
+let _SRM_Window = '7';
+let _SRM_Offset = 0;
+
+function SRM_SetWindow(val, btn) {
+  _SRM_Window = val;
+  _SRM_Offset = 0;
+  document.querySelectorAll('#SRM_WindowBtns .MN_btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  SRM_Run();
+}
+
+function SRM_ShiftWindow(dir) {
+  _SRM_Offset = Math.max(0, _SRM_Offset - dir);
+  const nextBtn = document.getElementById('SRM_WinNext');
+  if (nextBtn) nextBtn.disabled = _SRM_Offset === 0;
+  SRM_Run();
+}
+
+function SRM_UpdateWindowRange(start, end) {
+  const el = document.getElementById('SRM_WinRange');
+  if (el) el.textContent = start && end ? `${start} → ${end}` : '—';
+  const nextBtn = document.getElementById('SRM_WinNext');
+  if (nextBtn) nextBtn.disabled = _SRM_Offset === 0;
+}
+
+let _SRM_Metric = 'total';
+function SRM_SetMetric(val, btn) {
+  _SRM_Metric = val;
+  document.querySelectorAll('#SRM_MetricBtns .MN_btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  SRM_Run();
+}
+
+function SRM_Run() {
+  const cols    = SRM_GetSelectedCols();
+  const winSize = _SRM_Window;
+  const offset  = _SRM_Offset;
+  const metric  = _SRM_Metric;
+  if (typeof SRM_RunAnalysis === 'function') SRM_RunAnalysis({ cols, winSize, offset, metric });
+}
+
+let _SRM_ParamsOpen = false;
+function SRM_ToggleParams() {
+  _SRM_ParamsOpen = !_SRM_ParamsOpen;
+  const body    = document.getElementById('SRM_ParamsBody');
+  const chevron = document.getElementById('SRM_ParamsChevron');
+  if (body)    body.style.display      = _SRM_ParamsOpen ? 'block' : 'none';
+  if (chevron) chevron.style.transform = _SRM_ParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+
+function SRM_RenderParams() {
+  if (typeof SP_RenderParamsTo === 'function') SP_RenderParamsTo('SRM_ParamsDisplay', 'srm');
+}
+
+// ── Extra param cards (Decision Mode + custom cards) ─────────────────────────
+function SRM_RefreshExtraCards() {
+  const p  = window.SP_getParams ? window.SP_getParams() : {};
+  const el = document.getElementById('SRM_ExtraCards');
+  if (!el) return;
+
+  const makeCard = (key, title, col, aVals, bVals, labelA, labelB) => {
+    const btn = (v, group) =>
+      `<button class="MN_btn MN_paramVal" onclick="SRM_ToggleParamVal('${key}','${group}','${v}',this)"
+        style="flex:1;min-width:0;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
+    const aBtns = aVals.map(v => btn(v, 'a')).join('');
+    const bBtns = bVals.map(v => btn(v, 'b')).join('');
+    const none  = `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
+    return `
+      <div class="MN_divider"></div>
+      <div id="SRM_ExtraSection_${key}">
+        <div onclick="SRM_ToggleExtra('${key}')" class="MN_section_hdr">
+          <span class="MN_title">${title}</span>
+          <svg id="SRM_ExtraChevron_${key}" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+            <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-dim);"/>
+          </svg>
+        </div>
+        <div id="SRM_ExtraBody_${key}" style="display:block;">
+          <div class="MN_section_body">
+            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">Column</div>
+            <div style="font-size:0.68rem;color:var(--color-text-dim);background:var(--color-card-bg);border:1px solid var(--color-card-border);border-radius:5px;padding:0 8px;height:28px;display:flex;align-items:center;">${col}</div>
+          </div>
+          <div class="MN_section_body">
+            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelA}</div>
+            <div style="display:flex;gap:3px;">${aBtns || none}</div>
+          </div>
+          <div class="MN_section_body">
+            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelB}</div>
+            <div style="display:flex;gap:3px;">${bBtns || none}</div>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  let html = '';
+  const dm = p.decisionMode;
+  if (dm?.col) {
+    html += makeCard('dm', 'Decision Mode', dm.col,
+      dm.assigned?.successful   || [],
+      dm.assigned?.unsuccessful || [],
+      'Successful', 'Unsuccessful');
+  }
+  (p.customCards || []).forEach((card, i) => {
+    html += makeCard(`custom_${i}`, card.name || 'Custom', card.col || '—',
+      card.assigned?.a || [], card.assigned?.b || [],
+      card.labelA || 'A', card.labelB || 'B');
+  });
+
+  el.innerHTML = html;
+}
+
+function SRM_ToggleParamVal(key, group, val, btn) {
+  btn.classList.toggle('active');
+}
+
+function SRM_ToggleExtra(key) {
+  const body    = document.getElementById(`SRM_ExtraBody_${key}`);
+  const chevron = document.getElementById(`SRM_ExtraChevron_${key}`);
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display    = open ? 'none' : 'block';
+  if (chevron) chevron.style.transform = open ? 'rotate(0deg)' : 'rotate(90deg)';
+}
+
+// ── Overview: Weekday Pattern console ────────────────────────────────────────
+let _OV_WD_ChartType = 'bar';
+let _OV_WD_Chart     = null;
+
+;(function () {
+  const _orig = typeof window.OV_OpenPanel === 'function' ? window.OV_OpenPanel : null;
+  window.OV_OpenPanel = function () {
+    if (_orig) _orig.apply(this, arguments);
+    OV_WD_Run();
+  };
+})();
+
+function OV_WD_SetType(val, btn) {
+  _OV_WD_ChartType = val;
+  document.querySelectorAll('#OV_WD_TypeBtns .pg-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  OV_WD_Run();
+}
+
+async function OV_WD_Run() {
+  const conn = window.LD_getConn?.();
+  const src  = window.LD_getSource?.();
+  if (!conn || !src) return;
+
+  const params    = window.SP_getParams?.() || {};
+  const dateCol   = params.auth_date || params.combined_datetime;
+  if (!dateCol) return;
+
+  const fraudCol  = params.col1   || '';
+  const fraudVals = params.values || [];
+
+  const dayQuery = (extra = '') => `
+    SELECT DAYNAME(TRY_CAST("${dateCol}" AS DATE)) AS period,
+           ISODOW(TRY_CAST("${dateCol}" AS DATE))  AS sort_key,
+           COUNT(*) AS cnt
+    FROM ${src}
+    WHERE TRY_CAST("${dateCol}" AS DATE) IS NOT NULL ${extra}
+    GROUP BY period, sort_key ORDER BY sort_key`;
+
+  let totalRows = [], fraudRows = [];
+  try {
+    const res = await conn.query(dayQuery());
+    totalRows = res.toArray().map(r => ({ period: String(r.period), count: Number(r.cnt) }));
+  } catch { return; }
+  if (!totalRows.length) return;
+
+  if (fraudCol && fraudVals.length) {
+    const escaped = fraudVals.map(v => `'${v.replace(/'/g, "''")}'`).join(', ');
+    try {
+      const res = await conn.query(dayQuery(`AND "${fraudCol}" IN (${escaped})`));
+      fraudRows = res.toArray().map(r => ({ period: String(r.period), count: Number(r.cnt) }));
+    } catch {}
+  }
+
+  if (_OV_WD_Chart) { _OV_WD_Chart.destroy(); _OV_WD_Chart = null; }
+  const ctx = document.getElementById('OV_WD_Canvas')?.getContext('2d');
+  if (!ctx) return;
+
+  const labels = totalRows.map(r => r.period);
+  const isBar  = _OV_WD_ChartType === 'bar';
+
+  const mkDataset = (label, data, color) => isBar
+    ? { label, data, backgroundColor: color, borderRadius: 4, borderWidth: 0 }
+    : { label, data, borderColor: color, backgroundColor: 'transparent',
+        borderWidth: 2, fill: false, tension: 0.35, pointRadius: 4, pointHoverRadius: 7 };
+
+  const datasets = [
+    mkDataset('Total', totalRows.map(r => r.count), isBar ? 'rgba(59,130,246,0.75)' : '#3B82F6'),
+  ];
+
+  if (fraudRows.length) {
+    const fraudMap = {};
+    fraudRows.forEach(r => { fraudMap[r.period] = r.count; });
+    datasets.push(mkDataset('Fraud', labels.map(p => fraudMap[p] || 0), isBar ? 'rgba(220,38,38,0.75)' : '#DC2626'));
+  }
+
+  _OV_WD_Chart = new Chart(ctx, {
+    type: _OV_WD_ChartType,
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'IBM Plex Sans' } } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y.toLocaleString()}` } },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
+      },
+    },
+  });
+}
+
+// Unlock SR alongside SA/SC — avoids touching the org LoadData.js
+(function () {
+  const _origUnlock = typeof window.LD_UnlockScoreAnalysis === 'function' ? window.LD_UnlockScoreAnalysis : null;
+  window.LD_UnlockScoreAnalysis = function () {
+    if (_origUnlock) _origUnlock();
+    ['nav-spike-report', 'nav-spike-merchant'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.classList.remove('ld-locked', 'sidebar-item-disabled'); el.removeAttribute('data-nav-locked'); }
+    });
+  };
+})();
+
+let _SR_Chart = null;
+let _SR_BreakdownCharts = [];
+const _SR_PALETTE = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#06B6D4','#84CC16','#F97316'];
+
+// ── Open ──────────────────────────────────────────────────────────────────────
+function SR_OpenPanel() {
+  if (typeof App_HideAllViews === 'function') App_HideAllViews();
+  document.documentElement.style.setProperty('--toast-brand', '#DC2626');
+  document.querySelector('.shell')?.classList.add('sr-active');
+  const view = document.getElementById('SRView');
+  if (view) view.style.removeProperty('display');
+  // Set after tick — App_HideAllViews hardcoded list doesn't include SR_MiniNav
+  // but the shell class flip needs one frame to settle
+  const nav = document.getElementById('SR_MiniNav');
+  if (nav) { nav.style.removeProperty('display'); nav.style.display = 'flex'; }
+  Sidebar_SetActive('nav-spike-report');
+  SR_RenderEmpty();
+  SR_RenderParams();
+  SR_RefreshExtraCards();
+  MN_initScrollArrows('SR_MiniNav');
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+function SR_DestroyCharts() {
+  if (_SR_Chart) { _SR_Chart.destroy(); _SR_Chart = null; }
+  _SR_BreakdownCharts.forEach(c => c.destroy());
+  _SR_BreakdownCharts = [];
+}
+
+function SR_RenderEmpty() {
+  const view = document.getElementById('SRView');
+  if (!view) return;
+  SR_DestroyCharts();
+  view.innerHTML = `
+    <div class="pg-layout-row">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Spike Report</span>
+          <span class="pg-card-label">select columns and hit Run</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div class="SR_empty">Select columns in the nav panel and click <strong>Run Spike Report</strong> to begin.</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── Run Analysis ──────────────────────────────────────────────────────────────
+async function SR_RunAnalysis({ winSize, offset = 0, metric, addFilters = {} }) {
+  const conn = window.LD_getConn?.() || window._SR_demoConn;
+  const src  = window.LD_getSource?.() || window._SR_demoSrc;
+  if (!conn || !src) {
+    alert('No data loaded. Load a dataset first, or click Load Demo Data.');
+    return;
+  }
+
+  const params  = window.SP_getParams?.() || {};
+  const dateCol = params.auth_date || params.combined_datetime
+               || (window._SR_demoSrc ? 'transaction_date' : null);
+  if (!dateCol) {
+    alert('No date column set. Configure a date column in Set Parameters first.');
+    return;
+  }
+
+  const fraudCol  = params.col1   || (window._SR_demoSrc ? 'fraud_flag'  : '');
+  const fraudVals = params.values || (window._SR_demoSrc ? ['1']          : []);
+
+  // ── Build fraud filter clause ─────────────────────────────────────────────
+  let fraudClause = '';
+  if (metric === 'fraud' && fraudCol && fraudVals.length) {
+    const escaped = fraudVals.map(v => `'${v.replace(/'/g, "''")}'`).join(', ');
+    fraudClause = `AND "${fraudCol}" IN (${escaped})`;
+  }
+
+  // ── Build additional column filter clause ─────────────────────────────────
+  let addClause = '';
+  for (const [col, vals] of Object.entries(addFilters)) {
+    if (!vals.length) continue;
+    const escaped = vals.map(v => `'${v.replace(/'/g, "''")}'`).join(', ');
+    addClause += ` AND "${col}" IN (${escaped})`;
+  }
+
+  // ── Build query ───────────────────────────────────────────────────────────
+  const days = parseInt(winSize, 10);
+  const sql = `
+    WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
+    SELECT
+      CAST(TRY_CAST("${dateCol}" AS DATE) AS VARCHAR) AS period,
+      COUNT(*) AS cnt
+    FROM ${src}
+    WHERE TRY_CAST("${dateCol}" AS DATE) >  (SELECT d FROM _max) - INTERVAL '${days + offset} days'
+      AND TRY_CAST("${dateCol}" AS DATE) <= (SELECT d FROM _max) - INTERVAL '${offset} days'
+      ${fraudClause}${addClause}
+    GROUP BY period
+    ORDER BY period
+  `;
+
+  let rows = [];
+  try {
+    const result = await conn.query(sql);
+    rows = result.toArray().map(r => ({
+      period: String(r.period),
+      count:  Number(r.cnt),
+    }));
+  } catch (e) {
+    alert('Query failed: ' + e.message);
+    return;
+  }
+
+  if (!rows.length) {
+    alert('No data returned for this selection.');
+    return;
+  }
+
+  // ── Compute stats ─────────────────────────────────────────────────────────
+  const total  = rows.reduce((s, r) => s + r.count, 0);
+  const avg    = total / rows.length;
+  const peak   = rows.reduce((p, r) => r.count > p.count ? r : p, rows[0]);
+  const spikes = rows.filter(r => r.count > avg * 1.5);
+
+  if (typeof SR_UpdateWindowRange === 'function') {
+    SR_UpdateWindowRange(rows[0]?.period, rows[rows.length - 1]?.period);
+  }
+
+  SR_RenderResults({ rows, avg, peak, spikes, winSize, metric });
+}
+
+// ── Breakdown query ───────────────────────────────────────────────────────────
+async function SR_QueryBreakdown({ conn, src, dateCol, col, winSize, offset = 0, fraudClause, addClause = '' }) {
+  const safeCol = col.replace(/'/g, "''");
+  const days    = parseInt(winSize, 10);
+  const sql = `
+    WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src}),
+    top_vals AS (
+      SELECT CAST("${safeCol}" AS VARCHAR) AS grp
+      FROM ${src} WHERE TRY_CAST("${dateCol}" AS DATE) IS NOT NULL ${fraudClause}${addClause}
+      GROUP BY grp ORDER BY COUNT(*) DESC LIMIT 8
+    )
+    SELECT CAST(TRY_CAST("${dateCol}" AS DATE) AS VARCHAR) AS period,
+           CAST("${safeCol}" AS VARCHAR) AS grp, COUNT(*) AS cnt
+    FROM ${src}
+    WHERE TRY_CAST("${dateCol}" AS DATE) >  (SELECT d FROM _max) - INTERVAL '${days + offset} days'
+      AND TRY_CAST("${dateCol}" AS DATE) <= (SELECT d FROM _max) - INTERVAL '${offset} days'
+      ${fraudClause}${addClause}
+      AND CAST("${safeCol}" AS VARCHAR) IN (SELECT grp FROM top_vals)
+    GROUP BY period, grp ORDER BY period, grp`;
+  try {
+    const res = await conn.query(sql);
+    return res.toArray().map(r => ({
+      period: String(r.period),
+      grp:    String(r.grp),
+      count:  Number(r.cnt),
+    }));
+  } catch { return null; }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function SR_RenderResults({ rows, avg, peak, spikes, winSize, metric }) {
+  const view = document.getElementById('SRView');
+  if (!view) return;
+
+  SR_DestroyCharts();
+
+  const winLabel    = winSize === 'wd' ? 'Weekdays' : winSize + ' days';
+  const metricLabel = metric  === 'fraud' ? 'Fraud' : 'Total';
+
+  const tableRows = rows.map(r => {
+    const delta   = avg > 0 ? ((r.count - avg) / avg * 100) : 0;
+    const isSpike = r.count > avg * 1.5;
+    const sign    = delta >= 0 ? '+' : '';
+    const deltaClass = delta > 20 ? 'SR_delta--up' : delta < -20 ? 'SR_delta--dn' : '';
+    return `
+      <tr class="${isSpike ? 'SR_row--spike' : ''}">
+        <td>${r.period}</td>
+        <td>${r.count.toLocaleString()}</td>
+        <td class="${deltaClass}">${avg > 0 ? sign + Math.round(delta) + '%' : '—'}</td>
+        <td>${isSpike ? '<span class="SR_spike_badge">⚠ spike</span>' : ''}</td>
+      </tr>`;
+  }).join('');
+
+  view.innerHTML = `
+    <div class="pg-layout-row">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Transaction Volume</span>
+          <span class="pg-card-label">${winLabel} · ${metricLabel}</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div class="SR_chart_wrap"><canvas id="SR_ChartCanvas"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pg-layout-row pg-cols-3">
+      <div class="pg-card">
+        <div class="pg-card-header"><span class="pg-card-title">Peak Day</span></div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body"><div class="SR_stat">${peak.period}</div></div>
+      </div>
+      <div class="pg-card">
+        <div class="pg-card-header"><span class="pg-card-title">Peak Value</span></div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body"><div class="SR_stat">${peak.count.toLocaleString()}</div></div>
+      </div>
+      <div class="pg-card">
+        <div class="pg-card-header"><span class="pg-card-title">Spikes</span></div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div class="SR_stat ${spikes.length > 0 ? 'SR_stat--spike' : ''}">${spikes.length}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pg-layout-row">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <span class="pg-card-title">Daily Breakdown</span>
+          <span class="pg-card-label">avg ${Math.round(avg).toLocaleString()} · ⚠ = &gt;1.5× avg</span>
+        </div>
+        <div class="pg-card-divider"></div>
+        <div class="pg-card-body">
+          <div class="pg-table-wrap" style="max-height:640px;overflow-y:auto;">
+            <table class="pg-table">
+              <thead style="position:sticky;top:0;z-index:1;"><tr>
+                <th>Period</th>
+                <th>Transactions</th>
+                <th>vs Avg</th>
+                <th>Flag</th>
+              </tr></thead>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  `;
+
+  SR_DrawChart(rows, avg);
+}
+
+// ── Breakdown chart ───────────────────────────────────────────────────────────
+function SR_DrawBreakdownChart(canvasId, rows) {
+  const ctx = document.getElementById(canvasId)?.getContext('2d');
+  if (!ctx) return;
+
+  const periods = [...new Set(rows.map(r => r.period))];
+  const groups  = [...new Set(rows.map(r => r.grp))];
+  const lookup  = {};
+  rows.forEach(r => { lookup[`${r.period}||${r.grp}`] = r.count; });
+
+  const datasets = groups.map((grp, i) => {
+    const color = _SR_PALETTE[i % _SR_PALETTE.length];
+    return {
+      label: grp,
+      data:  periods.map(p => lookup[`${p}||${grp}`] || 0),
+      borderColor:     color,
+      backgroundColor: color + '18',
+      borderWidth: 1.8,
+      fill: false,
+      tension: 0.3,
+      pointRadius: 3,
+      pointHoverRadius: 6,
+    };
+  });
+
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: periods, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'IBM Plex Sans' } } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y.toLocaleString()}` } },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
+      },
+    },
+  });
+  _SR_BreakdownCharts.push(chart);
+}
+
+// ── Chart ─────────────────────────────────────────────────────────────────────
+function SR_DrawChart(rows, avg) {
+  const ctx = document.getElementById('SR_ChartCanvas')?.getContext('2d');
+  if (!ctx) return;
+
+  const labels       = rows.map(r => r.period);
+  const data         = rows.map(r => r.count);
+  const pointColors  = rows.map(r => r.count > avg * 1.5 ? '#DC2626' : 'rgba(220,38,38,0.5)');
+  const pointSizes   = rows.map(r => r.count > avg * 1.5 ? 7 : 4);
+
+  _SR_Chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: '#DC2626',
+        backgroundColor: 'rgba(220,38,38,0.07)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointBackgroundColor: pointColors,
+        pointBorderColor:     pointColors,
+        pointRadius:          pointSizes,
+        pointHoverRadius:     8,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => c.parsed.y.toLocaleString() + ' transactions',
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' },
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' },
+        },
+      },
+    },
+  });
+}
