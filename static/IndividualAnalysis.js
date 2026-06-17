@@ -65,8 +65,9 @@ let IA_NumericColumns = [];
 let IA_ActiveSliders  = {};
 
 async function IA_LoadNumericColumns() {
-  const conn = window.LD_getConn?.();
-  const src  = window.LD_getSource?.();
+  const conn    = window.LD_getConn?.();
+  const src     = window.LD_getSource?.();
+  const srcSamp = window.LD_getSampleSource ? window.LD_getSampleSource() : src;
   if (!conn || !src) return;
 
   try {
@@ -82,7 +83,7 @@ async function IA_LoadNumericColumns() {
     const cols = numericCols.filter(c => !excl.has(c));
 
     const stats = await Promise.all(cols.map(async c => {
-      const res = await conn.query(`SELECT MIN("${c}") AS lo, MAX("${c}") AS hi FROM "${src}"`);
+      const res = await conn.query(`SELECT MIN("${c}") AS lo, MAX("${c}") AS hi FROM "${srcSamp}"`);
       const row = res.toArray()[0];
       return { name: c, min: Number(row.lo ?? 0), max: Number(row.hi ?? 1) };
     }));

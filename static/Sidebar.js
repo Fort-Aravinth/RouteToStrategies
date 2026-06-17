@@ -3,7 +3,11 @@
 function Sidebar_Toggle() {
   const shell = document.querySelector('.shell');
   shell.classList.toggle('sidebar-hidden');
-  ANRA_UpdateMiniNav();
+  if (typeof RA_UpdateMiniNav === 'function') RA_UpdateMiniNav();
+}
+
+function Nav_Toggle() {
+  document.querySelector('.shell').classList.toggle('nav-hidden');
 }
 
 function Sidebar_ToggleSection(h) {
@@ -30,6 +34,8 @@ function Sidebar_SetActive(id) {
     'nav-rmon-import':         'var(--brand-irs-light)',
     'nav-playground':          'var(--brand-sn)',
     'nav-spike-report':        '#DC2626',
+    'nav-project-unnamed':     '#0891B2',
+    'nav-rule-declines':       '#f97316',
   };
   const accent = accentMap[id] || 'var(--amber-500)';
   const btn = document.getElementById('devAgentBtn');
@@ -38,17 +44,4 @@ function Sidebar_SetActive(id) {
   if (icon) icon.style.background = accent;
 }
 
-function Sidebar_EnableParameters(enable) {
-  const navParam = document.getElementById('nav-parameters');
-  if (!navParam) return;
-  if (enable) {
-    navParam.style.opacity = '1';
-    navParam.style.cursor = 'pointer';
-    navParam.style.pointerEvents = 'auto';
-  } else {
-    navParam.style.opacity = '0.5';
-    navParam.style.cursor = 'not-allowed';
-    navParam.style.pointerEvents = 'none';
-  }
-}
 

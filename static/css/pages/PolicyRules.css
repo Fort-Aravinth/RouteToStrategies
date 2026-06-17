@@ -1,5 +1,27 @@
 /* ── Policy Rules ── */
 
+/* ── PR Tutorial button ── */
+#PR_HelpBtn {
+  display:      none;
+  border-radius:6px;
+  padding:      5px 10px;
+  font-size:    11px;
+  font-weight:  600;
+  cursor:       pointer;
+  align-items:  center;
+  gap:          5px;
+  line-height:  1.4;
+  margin-right: 8px;
+  border:       1px solid transparent !important;
+  background:   transparent !important;
+  color:        var(--color-text-muted) !important;
+  transition:   background 0.12s, color 0.12s;
+}
+.shell.pr-active #PR_HelpBtn        { display: flex !important; }
+#PR_HelpBtn:hover                    { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
+#PR_HelpBtn.tutorial-active          { background: var(--brand-pr-light) !important; border-color: var(--brand-pr-light) !important; color: #fff !important; }
+
+
 #PRView {
   display: flex;
   flex-direction: column;

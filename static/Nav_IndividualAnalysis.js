@@ -89,15 +89,23 @@ async function IA_MiniNav_PopulateCols() {
   }
   try {
     const sp   = window.SP_getParams?.() || {};
-    const excl = new Set([sp.object, sp.col1].filter(Boolean));
+    const excl = new Set([sp.col1, sp.numeric, sp.object, sp.ruleSignal].filter(Boolean));
     const res  = await conn.query(`DESCRIBE "${src}"`);
-    const cols = res.toArray()
-      .filter(r => !_IA_NUMERIC_TYPES.test((r.column_type || '').toLowerCase()))
-      .map(r => r.column_name)
-      .filter(c => !excl.has(c));
-    list.innerHTML = cols.map(c => `
-      <button class="MN_chip MN_chip--col MN_chip--a" draggable="true" ondragstart="IA_SF_DragStart(event,'${c}')" title="${c}" style="cursor:grab;">${c}</button>
-    `).join('');
+    const candidates = res.toArray()
+      .filter(r => !_IA_NUMERIC_TYPES.test((r.column_type || '').toLowerCase()) && !excl.has(r.column_name))
+      .map(r => r.column_name);
+
+    const counts = await Promise.all(candidates.map(c =>
+      conn.query(`SELECT COUNT(DISTINCT "${c}") AS n FROM "${src}"`)
+          .then(r => Number(r.toArray()[0].n))
+    ));
+    const cols = candidates.filter((_, i) => counts[i] >= 10);
+
+    list.innerHTML = cols.length
+      ? cols.map(c => `
+          <button class="MN_chip MN_chip--col MN_chip--a" draggable="true" ondragstart="IA_SF_DragStart(event,'${c}')" title="${c}" style="cursor:grab;">${c}</button>
+        `).join('')
+      : '<span style="font-size:0.62rem;color:var(--color-text-dim);padding:2px 0;">— No suitable columns —</span>';
   } catch { return; }
 }
 

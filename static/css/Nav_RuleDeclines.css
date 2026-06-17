@@ -1,0 +1,62 @@
+/* ── Nav_RuleDeclines ── */
+
+/* ── RDView card brand ── */
+#RDView .pg-card::before   { background: #f97316; }
+#RDView .pg-card-info-btn  { border-color: #f97316 !important; color: #f97316 !important; background: rgba(249,115,22,0.10) !important; }
+#RDView .pg-card-info-btn:hover { background: #f97316 !important; color: #fff !important; }
+#RDView .pg-table tr:hover td   { background: rgba(249,115,22,0.05); }
+
+/* ── Rule summary card ── */
+.rd-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 20px;
+  cursor: pointer;
+  transition: background 0.12s;
+  user-select: none;
+}
+.rd-summary-row:hover           { background: rgba(249,115,22,0.05); }
+.rd-summary-label               { font-size: 0.72rem; font-weight: 500; color: var(--color-text); }
+.rd-summary-count               { font-size: 0.72rem; font-weight: 700; color: var(--color-header-title); min-width: 60px; text-align: right; }
+.rd-summary-divider             { height: 0.5px; background: var(--color-card-border); margin: 0; }
+.rd-summary-body                { padding: 4px 20px 10px 34px; display: flex; flex-direction: column; gap: 3px; }
+.rd-summary-rule-row            { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 3px 0; }
+.rd-summary-rule-name           { font-size: 0.68rem; font-weight: 600; color: var(--color-header-title); font-family: var(--font-mono); }
+.rd-summary-rule-meta           { font-size: 0.62rem; color: var(--color-text-dim); white-space: nowrap; }
+
+/* ── Rule table scroll after 15 rows ── */
+/* th row ~32px + 15 td rows ~29px each = 467px */
+.rd-rule-table-wrap           { max-height: 467px; overflow-y: auto; }
+.rd-rule-table-wrap thead th  { position: sticky; top: 0; z-index: 1; }
+
+#RD_MiniNav {
+  --MN_brand:       #f97316;
+  --MN_brand_dim:   rgba(249,115,22,0.10);
+  --MN_brand_light: #fb923c;
+  --MN_divider_col: #f97316;
+  --gold:           #f97316;
+  --gold-dim:       rgba(249,115,22,0.10);
+}
+
+/* ── Scroll indicators ── */
+#RD_ScrollerDown,
+#RD_ScrollerUp {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: color 0.15s;
+  z-index: 2;
+}
+#RD_ScrollerUp   { top: 0;    padding: 6px 0 6px;   background: linear-gradient(to top,    transparent, var(--color-card-bg) 55%); }
+#RD_ScrollerDown { bottom: 0; padding: 18px 0 10px; background: linear-gradient(to bottom, transparent, var(--color-card-bg) 55%); }
+#RD_ScrollerDown:hover,
+#RD_ScrollerUp:hover { color: #f97316; }
+#RD_ScrollerDown:hover .MN_ScrollBar,
+#RD_ScrollerUp:hover   .MN_ScrollBar { background: #f97316; opacity: 0.7; }

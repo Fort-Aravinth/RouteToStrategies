@@ -48,3 +48,24 @@
   background: #F0EDE8;
 }
 
+/* ── Action summary ── */
+#RMONView .rmon-summary-wrap {
+  margin-bottom: 14px;
+}
+
+/* ── Action dropdown ── */
+#RMONView .rmon-action-sel {
+  font-family: var(--font-base);
+  font-size: 0.68rem;
+  padding: 3px 6px;
+  border: 0.5px solid var(--color-card-border);
+  border-radius: 4px;
+  background: var(--color-card-bg);
+  color: var(--color-header-title);
+  cursor: pointer;
+  outline: none;
+}
+#RMONView .rmon-action-sel:focus {
+  border-color: var(--brand-dm);
+}
+

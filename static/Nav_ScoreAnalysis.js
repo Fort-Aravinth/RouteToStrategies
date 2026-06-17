@@ -1,12 +1,14 @@
 // ── Nav_ScoreAnalysis — SA mini-nav controls ──────────────────────────────────
 
 let _NAV_SA_AutoRunTimer = null;
+let _NAV_SA_MinMaxCache  = {};
 
 // ── Column population ─────────────────────────────────────────────────────────
 async function NAV_SA_PopulateColumns() {
   const conn = window.LD_getConn ? window.LD_getConn() : null;
   if (!conn) return;
-  const src = window.LD_getSource ? window.LD_getSource() : 'cm_data';
+  const src    = window.LD_getSource ? window.LD_getSource() : 'cm_data';
+  const params = window.SP_getParams ? window.SP_getParams() : {};
   let cols = [];
   try {
     const res = await conn.query(`DESCRIBE ${src}`);
@@ -16,36 +18,42 @@ async function NAV_SA_PopulateColumns() {
   const numTypes = ['INTEGER','BIGINT','DOUBLE','FLOAT','DECIMAL','REAL','HUGEINT','UBIGINT','UINTEGER','SMALLINT','TINYINT'];
   const numCols  = cols.filter(c => numTypes.some(t => c.type.startsWith(t))).map(c => c.name);
 
-  NAV_SA_FillScoreCS(numCols);
-  NAV_SA_FillSelect('SAAmountCol', numCols, '— Amount column —');
+  // Query unique counts for all numeric cols in one pass
+  let uniqueCounts = {};
+  try {
+    const countExprs = numCols.map(c => `COUNT(DISTINCT "${c}") AS "${c}"`).join(', ');
+    const row = (await conn.query(`SELECT ${countExprs} FROM ${src}`)).toArray()[0];
+    numCols.forEach(c => { uniqueCounts[c] = Number(row[c] ?? 0); });
+  } catch { numCols.forEach(c => { uniqueCounts[c] = 999; }); }
 
-  if (!SA_getCSValue('SAScoreColCS')) {
-    const guess = numCols.find(c => /score/i.test(c));
-    if (guess) NAV_SA_SetScoreCS(guess);
+  // Score cols: exclude the SP amount column and low-cardinality cols (< 10 unique)
+  const amtMetricCol = params.numeric || '';
+  const scoreCols = numCols.filter(c => c !== amtMetricCol && uniqueCounts[c] >= 10);
+
+  NAV_SA_FillScoreCS(scoreCols);
+
+  // Amount Filter dropdown — only the SP Amount Metric Column
+  const amtCS = document.getElementById('SAAmountColCS');
+  if (amtCS) {
+    const amtInData = amtMetricCol && numCols.includes(amtMetricCol);
+    amtCS.querySelector('.cs-options').innerHTML = amtInData
+      ? `<div class="cs-option cs-selected" data-value="${amtMetricCol}" onclick="SA_selectCS(this,'${amtMetricCol}','NAV_SA_OnAmountColChange')">${amtMetricCol}</div>`
+      : `<div class="cs-option" data-value="" style="color:var(--dml-label)">— No amount column set —</div>`;
+    if (amtInData && !SA_getCSValue('SAAmountColCS')) {
+      const opt = amtCS.querySelector(`.cs-option[data-value="${CSS.escape(amtMetricCol)}"]`);
+      if (opt) SA_selectCS(opt, amtMetricCol, null);
+      NAV_SA_OnAmountColChange();
+    }
   }
 
-  const params = window.SP_getParams ? window.SP_getParams() : {};
-  const amtEl  = document.getElementById('SAAmountCol');
-  if (!amtEl.value) {
-    if (params.amountCol && numCols.includes(params.amountCol)) {
-      amtEl.value = params.amountCol;
-    } else {
-      const guess = numCols.find(c => /amount|value|purchase|total|price|sum/i.test(c));
-      if (guess) amtEl.value = guess;
-    }
-    if (amtEl.value) NAV_SA_OnAmountColChange();
+  if (!SA_getCSValue('SAScoreColCS')) {
+    const guess = scoreCols.find(c => /score/i.test(c));
+    if (guess) NAV_SA_SetScoreCS(guess);
   }
 
   NAV_SA_OnScoreColChange();
 }
 
-function NAV_SA_FillSelect(id, options, placeholder) {
-  const sel = document.getElementById(id);
-  if (!sel) return;
-  const cur = sel.value;
-  sel.innerHTML = `<option value="">${placeholder}</option>` +
-    options.map(o => `<option value="${o}"${o === cur ? ' selected' : ''}>${o}</option>`).join('');
-}
 
 function NAV_SA_FillScoreCS(options) {
   const cs = document.getElementById('SAScoreColCS');
@@ -75,9 +83,16 @@ async function NAV_SA_OnScoreColChange() {
   const src  = window.LD_getSource ? window.LD_getSource() : 'cm_data';
   if (!conn) return;
   try {
-    const res = await conn.query(`SELECT MIN("${col}") AS mn, MAX("${col}") AS mx FROM ${src}`);
-    const row = res.toArray()[0];
-    const mn  = Number(row.mn), mx = Number(row.mx);
+    const cacheKey = `${src}|${col}`;
+    let mn, mx;
+    if (_NAV_SA_MinMaxCache[cacheKey]) {
+      ({ mn, mx } = _NAV_SA_MinMaxCache[cacheKey]);
+    } else {
+      const res = await conn.query(`SELECT MIN("${col}") AS mn, MAX("${col}") AS mx FROM ${src}`);
+      const row = res.toArray()[0];
+      mn = Number(row.mn); mx = Number(row.mx);
+      _NAV_SA_MinMaxCache[cacheKey] = { mn, mx };
+    }
     document.getElementById('SAMin').textContent = mn;
     document.getElementById('SAMax').textContent = mx;
     minMaxEl.style.display = 'block';
@@ -87,18 +102,25 @@ async function NAV_SA_OnScoreColChange() {
 }
 
 async function NAV_SA_OnAmountColChange() {
-  const col  = document.getElementById('SAAmountCol')?.value;
+  const col  = SA_getCSValue('SAAmountColCS');
   const conn = window.LD_getConn ? window.LD_getConn() : null;
   const src  = window.LD_getSource ? window.LD_getSource() : 'cm_data';
   if (col && conn) {
     try {
-      const res = await conn.query(`SELECT MIN("${col}") AS mn, MAX("${col}") AS mx FROM ${src}`);
-      const row = res.toArray()[0];
-      const mn  = Number(row.mn), mx = Number(row.mx);
+      const cacheKey = `${src}|${col}`;
+      let mn, mx;
+      if (_NAV_SA_MinMaxCache[cacheKey]) {
+        ({ mn, mx } = _NAV_SA_MinMaxCache[cacheKey]);
+      } else {
+        const res = await conn.query(`SELECT MIN("${col}") AS mn, MAX("${col}") AS mx FROM ${src}`);
+        const row = res.toArray()[0];
+        mn = Number(row.mn); mx = Number(row.mx);
+        _NAV_SA_MinMaxCache[cacheKey] = { mn, mx };
+      }
       const startEl = document.getElementById('SAAmountValStart');
       const endEl   = document.getElementById('SAAmountValEnd');
-      if (startEl) startEl.value = mn;
-      if (endEl)   endEl.value   = mx;
+      if (startEl) { startEl.placeholder = mn; startEl.value = ''; }
+      if (endEl)   { endEl.placeholder   = mx; endEl.value   = ''; }
     } catch {}
   }
   NAV_SA_AutoRun();
@@ -120,7 +142,17 @@ function NAV_SA_RefreshExtraCards() {
   const makeCard = (key, title, col, aVals, bVals, labelA, labelB) => {
     const btn = (v, group) =>
       `<button class="MN_btn MN_paramVal" onclick="NAV_SA_ToggleParamVal('${key}','${group}','${v}',this)"
-        style="flex:1;min-width:0;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
+        style="flex:0 0 auto;min-width:32px;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
+    const arrowBtn = (dir) =>
+      `<button onmousedown="MN_scrollStart(this.${dir==='left'?'nextElementSibling':'previousElementSibling'},${dir==='left'?-80:80})" onmouseup="MN_scrollStop()" onmouseleave="MN_scrollStop()"
+        style="flex-shrink:0;width:18px;height:24px;background:none;border:0.5px solid var(--color-card-border);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-dim);padding:0;">
+        <svg viewBox="0 0 10 10" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="${dir==='left'?'7 2 3 5 7 8':'3 2 7 5 3 8'}"/>
+        </svg>
+      </button>`;
+    const scrollRow = (btns) => btns
+      ? `<div style="display:flex;align-items:center;gap:3px;">${arrowBtn('left')}<div class="MN_chip_row" style="flex:1;">${btns}</div>${arrowBtn('right')}</div>`
+      : `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
     const aBtns = aVals.map(v => btn(v, 'a')).join('');
     const bBtns = bVals.map(v => btn(v, 'b')).join('');
     const none  = `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
@@ -141,11 +173,11 @@ function NAV_SA_RefreshExtraCards() {
           </div>
           <div class="MN_section_body">
             <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelA}</div>
-            <div style="display:flex;gap:3px;">${aBtns || none}</div>
+            ${scrollRow(aBtns)}
           </div>
           <div class="MN_section_body">
             <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelB}</div>
-            <div style="display:flex;gap:3px;">${bBtns || none}</div>
+            ${scrollRow(bBtns)}
           </div>
           <div class="MN_section_body">
             <button class="MN_btn active" style="width:100%;font-size:0.7rem;height:28px;" onclick="SA_RunColAnalysis('${col}','${key}')">Run Analysis</button>
@@ -175,9 +207,17 @@ function NAV_SA_RefreshExtraCards() {
   if (window.SA_RefreshChips) SA_RefreshChips();
 }
 
+let _NAV_SA_ParamTimer = null;
 function NAV_SA_ToggleParamVal(key, group, val, btn) {
   btn.classList.toggle('active');
   if (window.SA_RefreshChips) SA_RefreshChips();
+  if (!_SA_Bins?.length) return;
+  clearTimeout(_NAV_SA_ParamTimer);
+  _NAV_SA_ParamTimer = setTimeout(() => {
+    if (_SA_G001_Filters?.params?.[key]) SAG001_rerun();
+    if (_SA_G002_Filters?.params?.[key]) SAG002_rerun();
+    if (_SA_G003_Filters?.params?.[key]) SAG003_rerun();
+  }, 300);
 }
 
 function NAV_SA_ToggleParams() {
@@ -241,7 +281,7 @@ function NAV_SA_SavePreset() {
     start:       document.getElementById('SAStart')?.value,
     end:         document.getElementById('SAEnd')?.value,
     step:        document.getElementById('SAStep')?.value,
-    amtCol:      document.getElementById('SAAmountCol')?.value,
+    amtCol:      SA_getCSValue('SAAmountColCS'),
     amtOpStart:  document.getElementById('SAAmountOpStart')?.value,
     amtValStart: document.getElementById('SAAmountValStart')?.value,
     amtOpEnd:    document.getElementById('SAAmountOpEnd')?.value,
@@ -264,7 +304,13 @@ function NAV_SA_PresetsApply() {
     if (p.start)       document.getElementById('SAStart').value          = p.start;
     if (p.end)         document.getElementById('SAEnd').value            = p.end;
     if (p.step)        document.getElementById('SAStep').value           = p.step;
-    if (p.amtCol)      document.getElementById('SAAmountCol').value      = p.amtCol;
+    if (p.amtCol) {
+      const amtCS = document.getElementById('SAAmountColCS');
+      if (amtCS) {
+        const opt = amtCS.querySelector(`.cs-option[data-value="${CSS.escape(p.amtCol)}"]`);
+        if (opt) SA_selectCS(opt, p.amtCol, null);
+      }
+    }
     if (p.amtOpStart)  document.getElementById('SAAmountOpStart').value  = p.amtOpStart;
     if (p.amtValStart) document.getElementById('SAAmountValStart').value = p.amtValStart;
     if (p.amtOpEnd)    document.getElementById('SAAmountOpEnd').value    = p.amtOpEnd;
@@ -342,11 +388,24 @@ function NAV_SA_AutoRun() {
   // Refresh chips immediately so labels stay in sync with inputs
   if (window.SA_RefreshChips) SA_RefreshChips();
   // Only re-run graph query if a previous run has already produced results
-  if (!window._SA_Bins?.length) return;
+  if (!_SA_Bins?.length) return;
   clearTimeout(_NAV_SA_AutoRunTimer);
   _NAV_SA_AutoRunTimer = setTimeout(() => {
     if (SA_getCSValue('SAScoreColCS')) SA_Run();
   }, 800);
+}
+
+// ── Amount filter value changed — only re-query graphs where chip is ON ───────
+let _NAV_SA_AmtTimer = null;
+function NAV_SA_AmountChanged() {
+  if (window.SA_RefreshChips) SA_RefreshChips();
+  if (!_SA_Bins?.length) return;
+  clearTimeout(_NAV_SA_AmtTimer);
+  _NAV_SA_AmtTimer = setTimeout(() => {
+    if (_SA_G001_Filters?.amt) SAG001_rerun();
+    if (_SA_G002_Filters?.amt) SAG002_rerun();
+    if (_SA_G003_Filters?.amt) SAG003_rerun();
+  }, 300);
 }
 
 // ── SA Nav Info Popup ─────────────────────────────────────────────────────────

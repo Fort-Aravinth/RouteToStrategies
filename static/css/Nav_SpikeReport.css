@@ -1,5 +1,26 @@
 /* ── Nav_SpikeReport — Spike Report mini-nav ── */
 
+/* ── SR Tutorial button ── */
+#SR_HelpBtn {
+  display:      none;
+  border-radius:6px;
+  padding:      5px 10px;
+  font-size:    11px;
+  font-weight:  600;
+  cursor:       pointer;
+  align-items:  center;
+  gap:          5px;
+  line-height:  1.4;
+  margin-right: 8px;
+  border:       1px solid transparent !important;
+  background:   transparent !important;
+  color:        var(--color-text-muted) !important;
+  transition:   background 0.12s, color 0.12s;
+}
+.shell.sr-panel-active #SR_HelpBtn        { display: flex !important; }
+#SR_HelpBtn:hover                          { background: var(--color-nav-hover) !important; color: var(--color-header-title) !important; }
+#SR_HelpBtn.tutorial-active               { background: var(--brand-dm) !important; border-color: var(--brand-dm) !important; color: #fff !important; }
+
 .shell.sr-active #SR_MiniNav { display: flex; }
 
 /* ── Brand scope — mirrors SA/SC pattern so global MN rules resolve correctly ── */
@@ -13,16 +34,6 @@
   --amber-500:     var(--brand-dm);
   --amber-600:     #C85830;
   --color-primary: var(--brand-dm);
-}
-
-#SRM_MiniNav, #SRMView {
-  --gold:          var(--brand-sp);
-  --gold-light:    var(--brand-sp-light);
-  --gold-dim:      var(--brand-sp-dim);
-  --amber-400:     var(--brand-sp-light);
-  --amber-500:     var(--brand-sp);
-  --amber-600:     #5A1F6B;
-  --color-primary: var(--brand-sp);
 }
 
 /* ── Tab bar inside flex-gap parent — remove double-spacing ── */
@@ -74,18 +85,3 @@
 #SR_InfoPopup .sr-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
 #SR_InfoPopup .pg-info-list li::marker { color: var(--brand-dm); }
 
-/* ── SRM Nav Info Popup ── */
-#SRM_InfoPopup .srm-info-popup {
-  background: var(--color-card-bg);
-  border: 0.5px solid var(--color-card-border);
-  border-top: 2px solid var(--brand-sp);
-  border-radius: var(--dml-radius);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  width: 240px;
-  font-family: var(--font-base);
-  overflow: hidden;
-}
-#SRM_InfoPopup .srm-info-popup-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 6px; border-bottom: 0.5px solid var(--color-card-border); }
-#SRM_InfoPopup .srm-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-sp); }
-#SRM_InfoPopup .srm-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
-#SRM_InfoPopup .pg-info-list li::marker { color: var(--brand-sp); }

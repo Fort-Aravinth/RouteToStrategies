@@ -69,6 +69,10 @@ body.gs-active #GS_HelpBtn {
 
 #GSView .pg-input:focus              { border-color: var(--brand-dm); box-shadow: 0 0 0 3px var(--brand-dm-dim); }
 #GSView .pg-input:hover              { border-color: var(--brand-dm); }
+#GSView .cs-trigger:hover            { border-color: var(--brand-dm); }
+#GSView .custom-select.open .cs-trigger { border-color: var(--brand-dm); box-shadow: 0 0 0 2px var(--brand-dm-dim); }
+#GSView .cs-option:hover             { background: var(--brand-dm-dim); }
+#GSView .cs-option.cs-selected       { background: var(--brand-dm) !important; color: #fff !important; }
 
 /* ── Card toggle buttons — match Get Started orange brand ── */
 #GSView .pg-card-comment-btn { background: rgba(232,113,74,0.08); border-color: rgba(232,113,74,0.25); color: var(--brand-dm); }
@@ -192,6 +196,7 @@ body.gs-active #GS_HelpBtn {
 }
 
 @keyframes gsToastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes GS_spin    { from { transform: rotate(0deg); }               to   { transform: rotate(360deg); } }
 
 #GSView .pg-dropzone:hover { border-color: var(--brand-dm); background: var(--brand-dm-dim); }
 

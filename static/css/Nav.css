@@ -42,6 +42,7 @@
 #PG_MiniNav  { --MN_brand: var(--brand-sn); --MN_brand_dim: var(--brand-sn-dim); --MN_brand_light: var(--brand-sn-light); --MN_divider_col: var(--brand-sn); --gold: var(--brand-sn); --gold-dim: var(--brand-sn-dim); }
 #SR_MiniNav  { --MN_brand: var(--brand-dm); --MN_brand_dim: var(--brand-dm-dim); --MN_brand_light: var(--brand-dm-light); --MN_divider_col: var(--brand-dm); --gold: var(--brand-dm); --gold-dim: var(--brand-dm-dim); }
 #SRM_MiniNav { --MN_brand: var(--brand-sp); --MN_brand_dim: var(--brand-sp-dim); --MN_brand_light: var(--brand-sp-light); --MN_divider_col: var(--brand-sp); --gold: var(--brand-sp); --gold-dim: var(--brand-sp-dim); }
+#PU_MiniNav  { --MN_brand: #0891B2;         --MN_brand_dim: rgba(8,145,178,0.10);  --MN_brand_light: #22b8d4;              --MN_divider_col: #0891B2;          --gold: #0891B2;          --gold-dim: rgba(8,145,178,0.10); }
 
 /* ── PG scroll indicators ── */
 #PG_ScrollerDown,
@@ -255,3 +256,15 @@ html .MN_chip--b.active         { background: var(--MN_brand_dim) !important; co
 .MN_param_tags       { padding: 1px 12px 2px; }
 .MN_param_tag        { font-size: 0.62rem; color: var(--MN_brand); }
 .MN_param_tag.secondary { color: var(--color-text-dim); }
+
+/* ── Custom-select inside any MiniNav — match MN_ctrl sizing and brand colours ── */
+.MN_nav .cs-trigger {
+  height: 28px !important;
+  font-size: 0.65rem !important;
+  padding: 0 8.8px !important;
+  color: var(--dml-text) !important;
+}
+.MN_nav .cs-trigger:hover                  { border-color: var(--MN_brand) !important; }
+.MN_nav .custom-select.open .cs-trigger    { border-color: var(--MN_brand) !important; box-shadow: 0 0 0 3px var(--MN_brand_dim) !important; }
+.MN_nav .cs-option:hover                   { background: var(--MN_brand_dim) !important; }
+.MN_nav .cs-option.cs-selected             { background: var(--MN_brand) !important; color: #fff !important; }

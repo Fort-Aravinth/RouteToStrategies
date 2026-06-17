@@ -1,1 +1,671 @@
-const a0_0x27209c=a0_0x332a;(function(_0x206940,_0x6bce71){const _0x405a7d=a0_0x332a,_0x5648ee=_0x206940();while(!![]){try{const _0x689e3e=parseInt(_0x405a7d(0x276))/0x1*(parseInt(_0x405a7d(0x22b))/0x2)+-parseInt(_0x405a7d(0x22c))/0x3+parseInt(_0x405a7d(0x2a7))/0x4*(-parseInt(_0x405a7d(0x225))/0x5)+parseInt(_0x405a7d(0x201))/0x6+parseInt(_0x405a7d(0x270))/0x7+-parseInt(_0x405a7d(0x206))/0x8+-parseInt(_0x405a7d(0x200))/0x9*(-parseInt(_0x405a7d(0x28b))/0xa);if(_0x689e3e===_0x6bce71)break;else _0x5648ee['push'](_0x5648ee['shift']());}catch(_0x41630a){_0x5648ee['push'](_0x5648ee['shift']());}}}(a0_0x247f,0xdcbd8));let ANRA_SelectedRoutes=new Set(),_ANRA_LastResults={};const ANRA_ROUTES={'R5':{'label':'R5','desc':()=>a0_0x27209c(0x23d)},'R6':{'label':'R6','desc':()=>a0_0x27209c(0x28d)},'R7':{'label':'R7','desc':()=>a0_0x27209c(0x21e)},'R8':{'label':'R8','desc':()=>a0_0x27209c(0x251)}};function ANRA_toggleRoute(_0x421a61){const _0x2e68b9=a0_0x27209c;if(ANRA_SelectedRoutes[_0x2e68b9(0x26a)](_0x421a61))ANRA_SelectedRoutes[_0x2e68b9(0x215)](_0x421a61);else ANRA_SelectedRoutes['add'](_0x421a61);ANRA_RefreshRouteBtns(),ANRA_RunAnalysis();}function a0_0x247f(){const _0x3673cd=['A2v5CW','cIaGicaGicaGv0LuscbNiefticGkicaGicaGicaGifnftevdvcbdqvnukci','pc9KAxy+cIaGica','ieforcbot1qGka','tI9b','icHLEgnSlIbZzwvUig1LCMnOyw50CYKGyw5KihnJB3jLigfIB3zLia','cIaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLCY1NCMLKigfUCMeTC3vTBwfYEs1NCMLKiJ4','CgfKzgLUzZOXmhb4ide0ChG7zM9UDc1ZAxPLoJaUnJjYzw07zM9UDc13zwLNAhq6nZaWo3rLEhqTDhjHBNnMB3jToNvWCgvYy2fZztTSzxr0zxiTC3bHy2LUzZOWlJa4zw07yM9YzgvYlwjVDhrVBtOXChGGC29SAwqGDMfYkc0Ty29SB3iTy2fYzc1IB3jKzxiPo3rLEhqTywXPz246BgvMDdT3AgL0zs1ZCgfJztPUB3DYyxa7','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsaOzxHJBc4GC2vLBIbTzxjJAgfUDhmPigfUzcbZy29YzsbHyM92zsbBu2nVCMvD','BwLU','qu5sqv9nAw5PtMf2x1zVBhvTzuzq','u2nVCMuGWRCGtM8GzxHJBc4','jYKIpVcFKy0GtgLRzsbPDdWVyNv0Dg9UpG','yw5Yys1YB3v0zs1IyxiTzMLSBc1HBwjLCG','rLaGkYbZy29YzsbMAwX0zxi','pgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwnZiJ4kicaGidXKAxyGy2XHC3m9iMfUCMeTCM91DguTBwv0CMLJiJ48C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmTBgfIzwWIpLrYAwDNzxjLzdWVC3bHBJ48C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmTDMfSiJ4','pc9KAxy+','ksbusevoideGruXtrsaWievorcKGqvmGDhjPz2DLCMvKlaOGicaGicaGifnvtsHdqvnfifDiru4G','pgrPDIbZDhLSzt0ICgfKzgLUzZOXnNb4o2zVBNqTC2L6ztOWlJCYCMvTo2nVBg9YoInLzJq0ndq7iJ4','BgvUz3rO','ihDOzxjLiezqidWG','ieforcaGicaGka','BwfW','BNvTzxjPyW','rNjHDwqGDMfSDwu','pc90Ad4kicaGicaGicaGicaGphrOihn0EwXLpsi','qw5HBhLZAxmGzxjYB3i6ia','igfUzcbZy29YzsbHyM92zsa','y29Smq','pc9ZCgfUpJWVzgL2pGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmIpJXZCgfUignSyxnZpsjHBNjHlxjVDxrLlw1LDhjPyY1SywjLBci+rMfSC2uGCg9ZlJWVC3bHBJ48C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1TzxrYAwmTDMfSiJ4','tM8GC2nVCMuGWRCGq3vTDwWUigv4y2WU','sw1Wywn0ihzVBhvTzq','y2XHC3nmAxn0','AgfZ','rNjHDwqGDM9SDw1L','pc9KAxy+cIaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLCY1NCMLKiIbZDhLSzt0IBwfYz2LUlxrVCdOYmhb4oYi+','iIbxsevsrsa','zMLSDgvY','iIbbuYbet1vcteuPice9ia','mta5mJm3odDSBNzSyvO','w1nJB3jLxq','rNjHDwrwywX1zq','BM9UzNjK','Aw5Uzxjive1m','zw50CMLLCW','mJC0mdGXrKrgEM1s','y29SuMvZDwX0CW','terFz2v0q29UBG','zgLZywjSzwq','yw5Yys1YB3v0zs1IyxiTzMLSBc1IBhvL','Dg9bCNjHEq','rLaGzMLSDgvYig9UBhK','u2vSzwn0igf0igXLyxn0ig9UzsbJB2X1Bw4GAw4GqxzHAwXHyMXLienVBhvTBNmU','jYWNrMLUywWNksi+8j+rJsbmAwTLigL0pc9IDxr0B24+','qu5sqv9tDhjHDgvNEu1VzgfSvgL0Bgu','pc90Ad4kicaGicaGicaGidWVDhi+cIaGicaGicaGpc90AgvHzd4kicaGicaGica8DgjVzhK+','uM91DgvFqw5HBhLZAxnF','cIaGica','DhjPz2DLCMvK','u1bFz2v0ugfYyw1Z','Bwf4','cIaGicaGicaGicbhuK9vucbcwsaI','BMz2ywW','C2nVCMu','jtWVC3bHBJ4kica8l2rPDJ4','ksbusevoideGruXtrsaWievorcKGqvmGBM9UzNjKlaOGicaGicaGifnvtsHdqvnfifDiru4G','mZbKC0jUzfO','pc9ZCgfUpGOGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTDhjHy2SIpJXKAxyGy2XHC3m9iMfUCMeTCM91DguTyMfYlwzPBgWG','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsaOzxHJBc4GC2vLBIbTzxjJAgfUDhmP','AxngAw5PDgu','qu5sqv9tDhjHDgvNEu1VzgfS','twvYy2HHBNqGsw5MB3jTyxrPB24','jsi+pc9KAxy+pc9KAxy+cIaGica8C3bHBIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTCgn0iJ4','q0ftvcGI','cIaGicaGia','iIbbuYbet1vcteuPievmu0uGmcbftKqPieftihr2ywWScIaGicaGicaGu1vnkenbu0uGv0HftIa','iIbbuYbwqvjdsefsksbjtIaO','iIbbuYbwqvjdsefsksbot1qGsu4Gka','zM9YrwfJAa','uJCGlYbsocbYzxf1AxjLigeGC2nVCMuGy29SDw1UiokaLcbZzwXLy3qGB25LigLUihrOzsbty29YzsbZzwn0Aw9UlG','ksbusevoienbu1qOiG','rMLSDgvYia','ywn0AxzL','vg90ywXwB2X1Bwu','Dg9mB2nHBgvtDhjPBMC','qu5sqv9nAw5PtMf2x1nJB3jLvMfS','pgj1DhrVBIbJBgfZCZ0ICgCTyNrUiIbVBMnSAwnRpsjbtLjbx1nOB3DtDhjHDgvNAwvZkcC','jYKIpKnVChK8l2j1DhrVBJ4kicaGica8yNv0Dg9UignSyxnZpsjWzY1IDg4Gyw5Yys1SAwTLlwj0BIiGB25JBgLJAZ0Iqu5sqv9bzgrdyxjKkcC','iIbZDhLSzt0ID2LKDgG6','phn0CM9UzYbZDhLSzt0IzgLZCgXHEtPIBg9JAZTMB250lxnPEMu6mc43ohjLBtTJB2XVCJP2yxiOls1KBwWTDgv4DcK7iJ4','ieforcbdqvnukci','sw1Wywn0ihzHBhvL','rMLUywW','DMfSDwu','mZm4ndC2neLAC0HetW','pc90zd4kicaGicaGica8DgqGC3r5Bgu9iG','iIbbuYbet1vcteuPid4G','qxbWBhKGCgfYyw1LDgvYCYbMAxjZDcaOzNjHDwqGy29SDw1Ulcb2ywX1zxmSigfTB3vUDcbJB2X1Bw4SignHCMqGzgLTzw5ZAw9Uks4','Aw5JBhvKzxm','iIbbuYbwqvjdsefsksKGqvmGBIbguK9nici','CxvHBgLMAwvK','DhzHBa','jYKIpLzPzxCGu3rYyxrLz2LLCZWVyNv0Dg9UpGOGicaGidXIDxr0B24Gy2XHC3m9iNbNlwj0BIiGB25JBgLJAZ0Iqu5sqv9dB3b5q2fYzcGN','jYWNrMLUywWNksi+q29WEtWVyNv0Dg9UpGOGicaGidXIDxr0B24Gy2XHC3m9iNbNlwj0BIbHBNjHlwXPA2uTyNrUiIbVBMnSAwnRpsjbtLjbx0fKzenHCMqOjW','qu5eienbu1qOiG','cIaGicaGpgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxjZiJ4kicaGicaGia','zNzS','zw4Tr0i','iGOGicaGicaGicaGv0HfuKuG','ChvZAa','AxzS','y29SB3i6iZnIodjMnJSIpG','qu5sqv9tzwXLy3rLzfjVDxrLC0XHyMvS','otG4nJqXqMfOwLnS','mtmYnZu3mM9OwuTZza','zMLSDgvYu3bLy3m','rNjHDwrwB2X1Bwu','w1zHBhvLxq','AxnPBG','nJq1nti5nLLVqvLfBa','iokaPIaR','DMfSDwvZ','CM91BMq','ifriru4GmsbftfnfidaGru5eksbbuYbgCMf1zfzVBhvTzsWkicaGicaGu1vnkenbu0uGv0HftIa','vg90ywXwywX1zq','z2v0rwXLBwvUDej5swq','iIbbuYbet1vcteuPievmu0uGmcbftKqPieftig5MDMfSlaOGicaGicaGienpvu5ukerju1rjtKnuienbu0uGv0HftIa','qwrKigf0igXLyxn0ig9UzsbHBw91BNqGzMLSDgvYlG','AM9PBG','cIaGpc9KAxy+','cIaGica8l2rPDJ4','DxrYzW','rgvZyW','pc90zd4','zgvSzxrL','CxvLCNK','zMLUywXszxn1Bhq','zxf1ywW','Dg9Nz2XL','cIaGicaGica','ie9sia','cIaGicaGifnftevdvcbdt1vovcHesvnusu5dvcbdqvnukci','ieforcaO','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxsbHBMqGC2nVCMuGywjVDMuGw1nJB3jLxq','iIbbuYbet1vcteuPidW9ia','B2jQzwn0','jYWNrMLUywWNksi+vMLLDYbtDhjHDgvNAwvZpc9IDxr0B24+cIaGicaGpgj1DhrVBIbJBgfZCZ0ICgCTyNrUiIbVBMnSAwnRpsjbtLjbx0nVChLdyxjKkcC','Dgv4DenVBNrLBNq','cIaGicbtruXfq1qkicaGicaGq09vtLqOkIKGqvmGvg90ywXwB2X1BwuScIaGicaGifnvtsHdqvnukci','qu5sqv9tDhjHDgvNEu1VzgfSqM9KEq','nw1QtxnxCW','pgrPDIbJBgfZCZ0Iyw5Yys1YB3v0zs1IyxiTCM93iJ4kicaGidXZCgfUignSyxnZpsjHBNjHlxjVDxrLlwjHCI1SywjLBci+','phrKihn0EwXLpsi','C3rYAw5NAwz5','iIbbuYbet1vcteuPksbbuYbuB3rHBfzHBhvLlaOGicaGicbtvu0Oq0ftrsbxsevoia','yM9YzgvYlxjPz2H0oJfWEcbZB2XPzcb2yxiOls1JB2XVCI1JyxjKlwjVCMrLCIK7','neTXB3P5sq','mZa2nZCXtgv3DfLx','pc9ZCgfUpG','phnWyw4GC3r5Bgu9iMnVBg9YoNzHCIGTlwrTBc1SywjLBcK7zM9UDc1ZDhLSztPPDgfSAwm7iJ4','pc9ZDhjVBMC+phnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOWlJCYCMvTo2nVBg9YoNzHCIGTlwrTBc1SywjLBcK7iJ7IIAuG','C29Tzq','tM9Uzq','qu5sqv8','CMvWBgfJzq','terFz2v0u291CMnL','CM91DgvnzxrH','uM91DguGqw5HBhLZAxm','iIbbuYbwqvjdsefsksbftKqPieftihv0CMCkicaGicaGrLjptsaI','ihnLBgvJDgvK','cIaGicaGidX0ywjSzsbZDhLSzt0ID2LKDgG6mtaWjtTIB3jKzxiTy29SBgfWC2u6y29SBgfWC2u7DgfIBguTBgf5B3v0oMf1Dg87iJ4kicaGicaGica8DgHLywq+cIaGicaGicaGica8DhiGC3r5Bgu9iMjHy2TNCM91BMq6DMfYkc0Ty29SB3iTCgfNzs1IzYK7iJ4kicaGicaGicaGicaGphrOihn0EwXLpsi','tM8GC2nVCMuGWRCGtM8GzxHJBc4','DMfS','cIaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLCY1NCMLKigfUCMeTC3vTBwfYEs1NCMLKiJ4kicaGicaG','rMLSDgvYifTdB2X1Bw5DihDOzxjLiezqidWGw1zHBhvLxq','y29SB3i6i2y1owuWyJSIpLnJB3jLieLUzM9YBwf0Aw9Upc90Ad4kicaGicaGicaGicaGphrOihn0EwXLpsi','jYWN','y29SB3i6DMfYkc0Tzg1SlxrLEhqPoYi+','iGOGia','u2nVCMuGWRCGq3vTDwWUigv4y2WU','zM9UDc13zwLNAhq6nJaWo2nVBg9YoNzHCIGTlwrTBc10zxH0ktSIpG','qw1VDw50','icHLEgnSlIbZzwvUig1LCMnOyw50CYK','cIaGicaGica8zgL2ignSyxnZpsjHBNjHlxjVDxrLlwjHCI1KAxzPzgvYiJ48l2rPDJ4kicaGicaGia','pgrPDIbJBgfZCZ0ICgCTy2fYzcbHBNjHlwnHCMqIpGOGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc1OzwfKzxiIihn0EwXLpsjWywrKAw5NoJeYChGGmtrWEcaXmhb4o21HCMDPBI1IB3r0B206mdTHBgLNBI1PDgvTCZPMBgv4lxn0yxj0oYi+cIaGicaGidXKAxy+cIaGicaGicaGpgrPDIbJBgfZCZ0ICgCTy2fYzc10AxrSzsiGC3r5Bgu9iMzVBNqTC2L6ztOWlJG4CMvToYi+','cIaGicaGifnftevdvaOGicaGicaGifnvtsHdqvnfifDiru4G'];a0_0x247f=function(){return _0x3673cd;};return a0_0x247f();}function ANRA_RefreshRouteBtns(){const _0x5b2151=a0_0x27209c,_0x15437d=(ANRA_MiniNav_GetSelectedCols?.()||[])[_0x5b2151(0x25c)]>0x0,_0x39b3ef=!!ANRA_SelectedScoreColumn,_0x57abb5={'R5':_0x15437d,'R6':_0x15437d,'R7':_0x15437d&&_0x39b3ef,'R8':_0x15437d&&_0x39b3ef};Object[_0x5b2151(0x249)](ANRA_ROUTES)[_0x5b2151(0x297)](_0x118ab1=>{const _0x19ade3=_0x5b2151,_0xb81824=document['getElementById']('ANRA_RouteBtn_'+_0x118ab1);if(!_0xb81824)return;const _0x5c27ee=_0x57abb5[_0x118ab1];_0xb81824[_0x19ade3(0x279)]=!_0x5c27ee;if(!_0x5c27ee&&ANRA_SelectedRoutes[_0x19ade3(0x26a)](_0x118ab1))ANRA_SelectedRoutes[_0x19ade3(0x215)](_0x118ab1);_0xb81824[_0x19ade3(0x269)][_0x19ade3(0x219)](_0x19ade3(0x29b),ANRA_SelectedRoutes[_0x19ade3(0x26a)](_0x118ab1));});const _0x13bd49=ANRA_SelectedRoutes['size'],_0x5eb6cd=document[_0x5b2151(0x20c)](_0x5b2151(0x1ff));if(_0x5eb6cd)_0x5eb6cd['textContent']=_0x13bd49?_0x13bd49+_0x5b2151(0x238):'';}function ANRA_UpdateRouteDescriptions(){const _0x5cef48=a0_0x27209c,_0x547bc0=ANRA_SelectedScoreColumn||'[Column]',_0x1069f2=document[_0x5cef48(0x20c)](_0x5cef48(0x253))?.[_0x5cef48(0x2a6)]||_0x5cef48(0x204),_0x2d5a14=document[_0x5cef48(0x20c)]('ANRA_MiniNav_ScoreVal')?.[_0x5cef48(0x2a6)]||_0x5cef48(0x271),_0xe4c562={'R5':_0x5cef48(0x29a)+_0x547bc0+_0x5cef48(0x25d)+_0x1069f2,'R6':_0x5cef48(0x29a)+_0x547bc0+_0x5cef48(0x25d)+_0x1069f2+_0x5cef48(0x245),'R7':_0x5cef48(0x29a)+_0x547bc0+_0x5cef48(0x25d)+_0x1069f2+_0x5cef48(0x264)+_0x2d5a14,'R8':_0x5cef48(0x29a)+_0x547bc0+'\x20where\x20FP\x20<\x20'+_0x1069f2+_0x5cef48(0x24e)+_0x2d5a14};Object['entries'](_0xe4c562)['forEach'](([_0x5e64f8,_0x3a1125])=>{const _0x1225a5=_0x5cef48,_0x4c9101=document[_0x1225a5(0x20c)](_0x1225a5(0x232)+_0x5e64f8+_0x1225a5(0x213));if(_0x4c9101)_0x4c9101[_0x1225a5(0x222)]=_0x3a1125;});}const _ANRA_SQL_OPS={'equal':(_0x312e65,_0x3070eb)=>a0_0x27209c(0x292)+_0x312e65+'\x22\x20AS\x20DOUBLE)\x20=\x20'+_0x3070eb,'greater_than':(_0x3b93d9,_0x5808d8)=>'CAST(\x22'+_0x3b93d9+a0_0x27209c(0x2a9)+_0x5808d8,'less_than':(_0x634a8f,_0x32f146)=>a0_0x27209c(0x292)+_0x634a8f+'\x22\x20AS\x20DOUBLE)\x20<\x20'+_0x32f146,'greater_than_or_equal':(_0x2b228e,_0x50f8b5)=>a0_0x27209c(0x292)+_0x2b228e+'\x22\x20AS\x20DOUBLE)\x20>=\x20'+_0x50f8b5,'less_than_or_equal':(_0x4ef221,_0x16a6ed)=>a0_0x27209c(0x292)+_0x4ef221+a0_0x27209c(0x21f)+_0x16a6ed,'not_equal':(_0x417832,_0x36eca1)=>a0_0x27209c(0x292)+_0x417832+a0_0x27209c(0x26f)+_0x36eca1},_ANRA_OP_SYM={'equal':'=','greater_than':'>','less_than':'<','greater_than_or_equal':'>=','less_than_or_equal':'<=','not_equal':'!='};let _ANRA_running=![];async function ANRA_RunAnalysis(){const _0x5a13e1=a0_0x27209c,_0x4d3648=window[_0x5a13e1(0x278)]?.(),_0x2f0314=window[_0x5a13e1(0x234)]?.(),_0x48654d=document['getElementById']('ANRA_ResultsArea');if(!_0x48654d)return;const _0xe47f0c=[...ANRA_SelectedRoutes];if(!_0xe47f0c[_0x5a13e1(0x25c)]){_0x48654d['innerHTML']='';return;}if(!_0x4d3648||!_0x2f0314){_ANRA_showError(_0x48654d,'Load\x20data\x20first.');return;}const _0x99a5b2=window['SP_getParams']?.();if(!_0x99a5b2?.[_0x5a13e1(0x265)]||!_0x99a5b2?.[_0x5a13e1(0x208)]?.[_0x5a13e1(0x25c)]||!_0x99a5b2?.[_0x5a13e1(0x260)]||!_0x99a5b2?.[_0x5a13e1(0x220)]){_ANRA_showError(_0x48654d,_0x5a13e1(0x2aa));return;}const _0x50e7b2=ANRA_MiniNav_GetSelectedCols?.()||[];if(!_0x50e7b2['length']){_ANRA_showError(_0x48654d,_0x5a13e1(0x27d));return;}if(!ANRA_AmountList[_0x5a13e1(0x25c)]){_ANRA_showError(_0x48654d,_0x5a13e1(0x20e));return;}const _0x439d06=[...ANRA_SelectedRoutes][_0x5a13e1(0x230)](_0x4ce3d4=>_0x4ce3d4==='R7'||_0x4ce3d4==='R8');if(_0x439d06&&!ANRA_SelectedScoreColumn){_ANRA_showError(_0x48654d,_0x5a13e1(0x298));return;}if(_ANRA_running)return;_ANRA_running=!![],_ANRA_showLoading(_0x48654d,_0xe47f0c);const _0x1fddee=parseFloat(document[_0x5a13e1(0x20c)](_0x5a13e1(0x253))?.[_0x5a13e1(0x2a6)])||0xa,_0x139949=ANRA_SelectedScoreColumn,_0x5f36aa=parseFloat(document[_0x5a13e1(0x20c)](_0x5a13e1(0x29e))?.['value'])||0x0;try{const _0x52912c={};for(const _0x46ce4d of _0xe47f0c){_0x52912c[_0x46ce4d]=await _ANRA_computeRoute(_0x46ce4d,{'conn':_0x4d3648,'src':_0x2f0314,'fraudCol':_0x99a5b2[_0x5a13e1(0x265)],'fraudVals':_0x99a5b2[_0x5a13e1(0x208)],'amountCol':_0x99a5b2[_0x5a13e1(0x260)],'cardCol':_0x99a5b2[_0x5a13e1(0x220)],'selectCols':_0x50e7b2,'fpThreshold':_0x1fddee,'amountList':ANRA_AmountList,'scoreCol':_0x139949,'scoreVal':_0x5f36aa});}_ANRA_LastResults=_0x52912c,_ANRA_renderResults(_0x48654d,_0x52912c,_0xe47f0c);}catch(_0x17d4d5){_ANRA_showError(_0x48654d,_0x5a13e1(0x263)+_0x17d4d5['message']);}finally{_ANRA_running=![];}}async function _ANRA_computeRoute(_0x1805b2,_0xada56c){const _0x49fba7=a0_0x27209c,{conn:_0x576153,src:_0x97f365,fraudCol:_0x58840f,fraudVals:_0x513da3,amountCol:_0x41a404,cardCol:_0xaa64bc,selectCols:_0xa7d0b4,fpThreshold:_0x3ff8ce,amountList:_0xb843f,scoreCol:_0x3d683b,scoreVal:_0x29ebeb}=_0xada56c,_0x5bcd31=['R7','R8'][_0x49fba7(0x2ab)](_0x1805b2),_0x5c4fb4=['R6','R8'][_0x49fba7(0x2ab)](_0x1805b2),_0x1158e3=_0x513da3[_0x49fba7(0x25f)](_0x456d2c=>'\x27'+String(_0x456d2c)[_0x49fba7(0x233)](/'/g,'\x27\x27')+'\x27')[_0x49fba7(0x20f)](','),_0x346d37='CAST(\x22'+_0x58840f+_0x49fba7(0x295)+_0x1158e3+')',_0x1be741=(await _0x576153[_0x49fba7(0x216)](_0x49fba7(0x223)+_0x41a404+_0x49fba7(0x229)+_0x346d37+_0x49fba7(0x20a)+_0x346d37+'\x20THEN\x20CAST(\x22'+_0x41a404+'\x22\x20AS\x20DOUBLE)\x20ELSE\x200\x20END)\x20AS\x20FraudValue\x0a\x20\x20\x20\x20FROM\x20\x22'+_0x97f365+_0x49fba7(0x241)))[_0x49fba7(0x27b)]()[0x0],_0x527b39=Number(_0x1be741[_0x49fba7(0x29c)]),_0x37585e=Number(_0x1be741[_0x49fba7(0x20b)]),_0x42ae4a=Number(_0x1be741[_0x49fba7(0x203)]),_0x5664bf=Number(_0x1be741[_0x49fba7(0x272)]),_0x2e1087={},_0x2f12f5=[];for(const _0x1d3c7d of _0xa7d0b4){const _0x2854de=_0x1d3c7d[_0x49fba7(0x233)](/"/g,'\x22\x22');let _0x2cc63b=[];const _0x1f7d3f=[];for(const {op:_0x3b8350,val:_0x3e3696}of _0xb843f){const _0x12dde3=_ANRA_SQL_OPS[_0x3b8350];if(!_0x12dde3)continue;const _0x50665e=_0x12dde3(_0x41a404,_0x3e3696),_0x257c64=_0x5c4fb4&&_0x2cc63b[_0x49fba7(0x25c)]?_0x49fba7(0x1f7)+_0x2854de+_0x49fba7(0x296)+_0x2cc63b[_0x49fba7(0x25f)](_0x3ff43b=>'\x27'+String(_0x3ff43b)[_0x49fba7(0x233)](/'/g,'\x27\x27')+'\x27')[_0x49fba7(0x20f)](',')+')':'',_0x999ef3=_0x5bcd31&&_0x3d683b?_0x49fba7(0x1f7)+_0x3d683b+'\x22\x20AS\x20DOUBLE)\x20>=\x20'+_0x29ebeb:'',_0x1c0858=(await _0x576153['query'](_0x49fba7(0x24a)+_0x2854de+'\x22\x20AS\x20VARCHAR)\x20AS\x20cv,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20COUNT(*)\x20AS\x20vt,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x346d37+'\x20THEN\x201\x20ELSE\x200\x20END)\x20AS\x20vf\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20FROM\x20\x22'+_0x97f365+_0x49fba7(0x1fb)+_0x50665e+'\x20'+_0x257c64+'\x20'+_0x999ef3+_0x49fba7(0x286)+_0x2854de+'\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20)\x0a\x20\x20\x20\x20\x20\x20\x20\x20SELECT\x20cv\x20FROM\x20g\x0a\x20\x20\x20\x20\x20\x20\x20\x20WHERE\x20vf\x20>\x200\x20AND\x20CAST(vt\x20AS\x20DOUBLE)\x20/\x20CAST(vf\x20AS\x20DOUBLE)\x20<\x20'+_0x3ff8ce+_0x49fba7(0x293)))[_0x49fba7(0x27b)](),_0x47d84e=_0x1c0858[_0x49fba7(0x25f)](_0x12862a=>String(_0x12862a['cv']));_0x1f7d3f[_0x49fba7(0x1fc)]({'op':_0x3b8350,'val':_0x3e3696,'qualified':_0x47d84e});if(_0x5c4fb4&&!(_0x3b8350===_0x49fba7(0x218)&&Number(_0x3e3696)===0x0))_0x47d84e[_0x49fba7(0x297)](_0x1b6561=>{const _0x46bb20=_0x49fba7;if(!_0x2cc63b[_0x46bb20(0x2ab)](_0x1b6561))_0x2cc63b['push'](_0x1b6561);});}const _0x1da3ed=_0x1f7d3f[_0x49fba7(0x26e)](_0x391328=>_0x391328[_0x49fba7(0x1f3)][_0x49fba7(0x25c)]>0x0)['map'](({op:_0x2c46c7,val:_0x479eb2,qualified:_0x33cb93})=>{const _0xe70685=_0x49fba7,_0x95f2ef=_0x33cb93['map'](_0xac30d0=>'\x27'+_0xac30d0[_0xe70685(0x233)](/'/g,'\x27\x27')+'\x27')[_0xe70685(0x20f)](','),_0x28ac4a=_0x5bcd31&&_0x3d683b?_0xe70685(0x2a3)+_0x3d683b+'\x22\x20AS\x20DOUBLE)\x20>=\x20'+_0x29ebeb:'';return'('+_ANRA_SQL_OPS[_0x2c46c7](_0x41a404,_0x479eb2)+'\x20AND\x20CAST(\x22'+_0x2854de+_0xe70685(0x295)+_0x95f2ef+')'+_0x28ac4a+')';});if(!_0x1da3ed[_0x49fba7(0x25c)]){_0x2e1087[_0x1d3c7d]={..._ANRA_zeroMetrics(_0x5bcd31,_0x29ebeb),'filterSpecs':_0x1f7d3f};continue;}_0x2f12f5[_0x49fba7(0x1fc)](..._0x1da3ed);const _0x38f58c='('+_0x1da3ed[_0x49fba7(0x20f)](_0x49fba7(0x21b))+')',_0x1b58e6=Number((await _0x576153['query']('\x0a\x20\x20\x20\x20\x20\x20SELECT\x20COUNT(DISTINCT\x20CAST(\x22'+_0x2854de+_0x49fba7(0x2ac)+_0x97f365+_0x49fba7(0x26d)+_0x346d37+'\x0a\x20\x20\x20\x20'))[_0x49fba7(0x27b)]()[0x0]['n']),_0x49f873=(await _0x576153[_0x49fba7(0x216)](_0x49fba7(0x248)+_0x38f58c+_0x49fba7(0x25e)+_0x346d37+_0x49fba7(0x25a)+_0x38f58c+_0x49fba7(0x25e)+_0x346d37+_0x49fba7(0x299)+_0x41a404+_0x49fba7(0x294)+_0x38f58c+_0x49fba7(0x24c)+_0x346d37+')\x20THEN\x201\x20ELSE\x200\x20END)\x20AS\x20nonfrd,\x0a\x20\x20\x20\x20\x20\x20\x20\x20SUM(CASE\x20WHEN\x20'+_0x38f58c+_0x49fba7(0x24c)+_0x346d37+_0x49fba7(0x299)+_0x41a404+_0x49fba7(0x20d)+_0x38f58c+_0x49fba7(0x21d)+_0x346d37+')\x20THEN\x20CAST(\x22'+_0x2854de+_0x49fba7(0x237)+_0x97f365+'\x22\x0a\x20\x20\x20\x20'))['toArray']()[0x0],_0x4cded5=Number(_0x49f873[_0x49fba7(0x283)]),_0x39858b=Number(_0x49f873[_0x49fba7(0x1f4)]),_0x59fa30=Number(_0x49f873[_0x49fba7(0x273)]),_0x43c856=Number(_0x49f873[_0x49fba7(0x287)]),_0x2d331c=Number(_0x49f873[_0x49fba7(0x212)]);_0x2e1087[_0x1d3c7d]={'triggered':_0x4cded5,'value':_0x39858b,'fp':_0x4cded5>0x0?Math[_0x49fba7(0x209)](_0x59fa30/_0x4cded5)+':1':_0x49fba7(0x24d),'unique':_0x2d331c,'fv':_r2(_0x42ae4a>0x0?_0x4cded5/_0x42ae4a*0x64:0x0),'fvl':_r2(_0x5664bf>0x0?_0x39858b/_0x5664bf*0x64:0x0),'iv':_r2(_0x527b39>0x0?_0x59fa30/_0x527b39*0x64:0x0),'ivl':_r2(_0x37585e>0x0?_0x43c856/_0x37585e*0x64:0x0),'aa':_r2(_0x1b58e6>0x0?_0x2d331c/_0x1b58e6*0x64:0x0),'score':_0x5bcd31?String(_0x29ebeb):'0','filterSpecs':_0x1f7d3f};}let _0x3878f5=_ANRA_zeroMetrics(_0x5bcd31,_0x29ebeb);if(_0x2f12f5['length']){const _0x3385c5='('+_0x2f12f5[_0x49fba7(0x20f)](_0x49fba7(0x21b))+')',_0x5c6767=_0xa7d0b4[_0xa7d0b4[_0x49fba7(0x25c)]-0x1][_0x49fba7(0x233)](/"/g,'\x22\x22'),_0xf1e0e6=Number((await _0x576153['query'](_0x49fba7(0x21c)+_0x5c6767+'\x22\x20AS\x20VARCHAR))\x20AS\x20n\x20FROM\x20\x22'+_0x97f365+_0x49fba7(0x26d)+_0x346d37+_0x49fba7(0x282)))['toArray']()[0x0]['n']),_0x293e19=(await _0x576153['query'](_0x49fba7(0x248)+_0x3385c5+'\x20AND\x20\x20\x20\x20\x20('+_0x346d37+_0x49fba7(0x25a)+_0x3385c5+_0x49fba7(0x25e)+_0x346d37+')\x20THEN\x20CAST(\x22'+_0x41a404+_0x49fba7(0x294)+_0x3385c5+_0x49fba7(0x24c)+_0x346d37+_0x49fba7(0x28a)+_0x3385c5+_0x49fba7(0x24c)+_0x346d37+_0x49fba7(0x299)+_0x41a404+_0x49fba7(0x20d)+_0x3385c5+_0x49fba7(0x21d)+_0x346d37+')\x20THEN\x20CAST(\x22'+_0x5c6767+_0x49fba7(0x237)+_0x97f365+'\x22\x0a\x20\x20\x20\x20'))['toArray']()[0x0],_0x13fd14=Number(_0x293e19[_0x49fba7(0x283)]),_0x4ccd80=Number(_0x293e19[_0x49fba7(0x1f4)]),_0x47c9b7=Number(_0x293e19[_0x49fba7(0x273)]),_0x5dff25=Number(_0x293e19[_0x49fba7(0x287)]),_0x4ec341=Number(_0x293e19[_0x49fba7(0x212)]);_0x3878f5={'triggered':_0x13fd14,'value':_0x4ccd80,'fp':_0x13fd14>0x0?Math[_0x49fba7(0x209)](_0x47c9b7/_0x13fd14)+':1':'N/A','unique':_0x4ec341,'fv':_r2(_0x42ae4a>0x0?_0x13fd14/_0x42ae4a*0x64:0x0),'fvl':_r2(_0x5664bf>0x0?_0x4ccd80/_0x5664bf*0x64:0x0),'iv':_r2(_0x527b39>0x0?_0x47c9b7/_0x527b39*0x64:0x0),'ivl':_r2(_0x37585e>0x0?_0x5dff25/_0x37585e*0x64:0x0),'aa':_r2(_0xf1e0e6>0x0?_0x4ec341/_0xf1e0e6*0x64:0x0),'score':_0x5bcd31?String(_0x29ebeb):'0'};}return{'colResults':_0x2e1087,'finalResult':_0x3878f5,'TotalVolume':_0x527b39,'TotalValue':_0x37585e,'FraudVolume':_0x42ae4a,'FraudValue':_0x5664bf,'routeMeta':{'useScore':_0x5bcd31,'scoreCol':_0x3d683b,'scoreVal':_0x29ebeb}};}function _r2(_0x23db4c){const _0x26a943=a0_0x27209c;return Math[_0x26a943(0x209)](_0x23db4c*0x64)/0x64;}function _ANRA_zeroMetrics(_0x3a3b7d,_0x2970c6){return{'triggered':0x0,'value':0x0,'fp':'N/A','unique':0x0,'fv':0x0,'fvl':0x0,'iv':0x0,'ivl':0x0,'aa':0x0,'score':_0x3a3b7d?String(_0x2970c6):'0'};}const _ANRA_FMT_NUM=_0x2d997f=>Number[a0_0x27209c(0x28e)](_0x2d997f)?_0x2d997f[a0_0x27209c(0x29d)]('en-GB'):'—',_ANRA_FMT_VAL=_0x31686f=>Number['isFinite'](_0x31686f)?_0x31686f['toLocaleString'](a0_0x27209c(0x1fa),{'minimumFractionDigits':0x2,'maximumFractionDigits':0x2}):'—',_ANRA_SUB={'R5':a0_0x27209c(0x23a),'R6':a0_0x27209c(0x267),'R7':a0_0x27209c(0x254),'R8':a0_0x27209c(0x242)},_ANRA_TITLE={'R5':a0_0x27209c(0x27c),'R6':'FP\x20filter\x20only','R7':a0_0x27209c(0x257),'R8':a0_0x27209c(0x257)};function _ANRA_barRow(_0x4c1c78,_0x576ccb,_0x48131c){const _0x53d962=a0_0x27209c,_0x5d6bee=Math[_0x53d962(0x252)](Math[_0x53d962(0x285)](_0x576ccb,0x0),0x64);return _0x53d962(0x226)+_0x4c1c78+_0x53d962(0x28c)+_0x48131c+_0x53d962(0x2a1)+_0x5d6bee+_0x53d962(0x291)+_0x576ccb+_0x53d962(0x289);}function _ANRA_metrics(_0x4e0e5a){const _0x4544e3=a0_0x27209c;return _0x4544e3(0x258)+_ANRA_FMT_NUM(_0x4e0e5a[_0x4544e3(0x283)])+'</span></div>\x0a\x20\x20\x20\x20<div\x20class=\x22anra-route-metric\x22><span\x20class=\x22anra-route-metric-label\x22>Value\x20det.</span><span\x20class=\x22anra-route-metric-val\x22>'+_ANRA_FMT_VAL(_0x4e0e5a[_0x4544e3(0x2a6)])+_0x4544e3(0x266)+_0x4e0e5a['fp']+'</span></div>\x0a\x20\x20\x20\x20<div\x20class=\x22anra-route-metric\x22><span\x20class=\x22anra-route-metric-label\x22>Score\x20≥</span><span\x20class=\x22anra-route-metric-val\x22>'+_0x4e0e5a[_0x4544e3(0x288)]+'</span></div>\x0a\x20\x20</div>';}function _ANRA_cardShell(_0x28702b,_0xa6a94,_0x4a73e6,_0x208d99,_0x510bb9){const _0x388104=a0_0x27209c;return _0x388104(0x247)+_0x28702b+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-label\x22\x20style=\x22margin-top:3px;\x22>'+_0xa6a94+'</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22anra-route-card-sub\x22>'+_0x4a73e6+'</span>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22pg-card-divider\x22></div>\x0a\x20\x20\x20\x20<div\x20class=\x22anra-route-card-actions\x22>'+_0x208d99+_0x388104(0x24b)+_0x510bb9+_0x388104(0x210);}function _ANRA_makeSummaryCard(_0x402dc0,_0x31a746){const _0x277d50=a0_0x27209c;return _ANRA_cardShell(_ANRA_TITLE[_0x402dc0]||_0x402dc0,_0x277d50(0x2a5),_ANRA_SUB[_0x402dc0]||'','<button\x20class=\x22pg-btn\x22\x20onclick=\x22ANRA_ShowStrategies(\x27'+_0x402dc0+_0x277d50(0x221)+_0x402dc0+_0x277d50(0x1f6)+_0x402dc0+_0x277d50(0x27e),_ANRA_metrics(_0x31a746)+_0x277d50(0x1f8)+_ANRA_barRow(_0x277d50(0x26b),_0x31a746['fv'],_0x277d50(0x256))+_0x277d50(0x21a)+_ANRA_barRow(_0x277d50(0x261),_0x31a746[_0x277d50(0x1f9)],_0x277d50(0x256))+_0x277d50(0x246)+_ANRA_barRow(_0x277d50(0x268),_0x31a746['iv'],'anra-route-bar-fill-blue')+_0x277d50(0x21a)+_ANRA_barRow('Impact\x20value',_0x31a746[_0x277d50(0x1fd)],'anra-route-bar-fill-blue')+_0x277d50(0x246)+_ANRA_barRow('Coverage',_0x31a746['aa'],_0x277d50(0x27a))+'\x0a\x20\x20\x20\x20\x20</div>');}function _ANRA_makeRouteCard(_0x262ac6,_0x34736e,_0x51754f){const _0x240bf9=a0_0x27209c,_0x137ad9=_0x34736e['replace'](/'/g,'\x5c\x27');return _ANRA_cardShell(_0x34736e,_ANRA_TITLE[_0x262ac6]||_0x262ac6,_ANRA_SUB[_0x262ac6]||'',_0x240bf9(0x29f)+_0x262ac6+'\x27,\x27'+_0x137ad9+_0x240bf9(0x1f5)+_0x262ac6+_0x240bf9(0x23f)+_0x137ad9+_0x240bf9(0x2a0)+_0x262ac6+_0x240bf9(0x23f)+_0x137ad9+_0x240bf9(0x255),_ANRA_metrics(_0x51754f)+_0x240bf9(0x1f8)+_ANRA_barRow(_0x240bf9(0x26b),_0x51754f['fv'],_0x240bf9(0x256))+_0x240bf9(0x21a)+_ANRA_barRow(_0x240bf9(0x261),_0x51754f['fvl'],'anra-route-bar-fill-amber')+'\x0a\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22anra-route-bar-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20'+_ANRA_barRow(_0x240bf9(0x268),_0x51754f['iv'],'anra-route-bar-fill-blue')+_0x240bf9(0x21a)+_ANRA_barRow(_0x240bf9(0x2a4),_0x51754f[_0x240bf9(0x1fd)],_0x240bf9(0x27a))+'\x0a\x20\x20\x20\x20\x20</div>');}function _ANRA_renderResults(_0xcbac92,_0x3f5f48,_0x27de5e){const _0x559413=a0_0x27209c,_0x2c3ebe=_0x27de5e[_0x559413(0x25f)](_0x4f22ac=>_ANRA_makeSummaryCard(_0x4f22ac,_0x3f5f48[_0x4f22ac][_0x559413(0x217)]))[_0x559413(0x20f)](''),_0xba5df2=[];for(const _0x4f9fee of _0x27de5e)for(const _0x1bebfc of Object[_0x559413(0x249)](_0x3f5f48[_0x4f9fee][_0x559413(0x277)]))_0xba5df2['push'](_ANRA_makeRouteCard(_0x4f9fee,_0x1bebfc,_0x3f5f48[_0x4f9fee][_0x559413(0x277)][_0x1bebfc]));_0xcbac92[_0x559413(0x274)]=_0x559413(0x24f)+_0x2c3ebe+_0x559413(0x26c)+_0xba5df2[_0x559413(0x20f)]('')+_0x559413(0x259);}function _ANRA_showError(_0x312059,_0x1455d9){const _0x29feec=a0_0x27209c;_0x312059['innerHTML']=_0x29feec(0x25b)+_0x1455d9+_0x29feec(0x259);}function _ANRA_showLoading(_0x20f600,_0xc7e950){const _0x44877d=a0_0x27209c;_0x20f600[_0x44877d(0x274)]=_0x44877d(0x23c)+_0xc7e950[_0x44877d(0x25f)](_0x1494b6=>'<div\x20class=\x22pg-card\x20anra-card\x22\x20style=\x22min-height:120px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-header\x22\x20style=\x22padding:12px\x2014px\x2010px;margin-bottom:0;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-title\x22\x20style=\x22font-size:0.88rem;\x22>'+_0x1494b6+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-label\x22\x20style=\x22margin-top:3px;\x22>Final</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pg-card-divider\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22padding:16px;font-size:0.68rem;color:var(--color-text-dim);\x22>Computing…</div>\x0a\x20\x20\x20\x20\x20\x20</div>')[_0x44877d(0x20f)]('')+_0x44877d(0x211);}function ANRA_ShowStrategies(_0x238174,_0x46ed03){const _0x8d470b=a0_0x27209c,_0x264cc7=window[_0x8d470b(0x284)]?.(),_0x7c1eeb=_0x264cc7?.['numeric']||_0x8d470b(0x244),_0x29f285=_ANRA_LastResults[_0x238174];if(!_0x29f285)return;const {useScore:_0x16e423,scoreCol:_0x34c11e,scoreVal:_0x25bf37}=_0x29f285[_0x8d470b(0x235)]||{},_0x186369=_0x8d470b(0x250),_0x1be9bb='padding:9px\x2014px;vertical-align:top;border-bottom:1px\x20solid\x20var(--color-card-border);border-right:1px\x20solid\x20var(--color-card-border);font-size:0.75rem;',_0x3ee8b0=_0x4dec47=>_0x8d470b(0x22e)+_0x4dec47+_0x8d470b(0x22d),_0x399472=_0x16e423&&_0x34c11e?_0x8d470b(0x2a2)+_0x34c11e+_0x8d470b(0x22f)+_0x25bf37+_0x8d470b(0x22d):_0x3ee8b0(_0x8d470b(0x231)),_0x3f7f15=(_0xb99091,_0x57d323)=>{const _0x2e0c21=_0x8d470b,_0x9e6d16=_0xb99091['length'],_0x53f1f2=_0xb99091[_0x2e0c21(0x25f)](({op:_0x4d243c,val:_0x576a7a,qualified:_0x31625b},_0x3cd200)=>{const _0x574cda=_0x2e0c21,_0x55d62b=_ANRA_OP_SYM[_0x4d243c]||_0x4d243c,_0x8ab7c2=_0x31625b[_0x574cda(0x25c)]?_0x31625b['slice'](0x0,0xa)[_0x574cda(0x20f)](',\x20')+(_0x31625b[_0x574cda(0x25c)]>0xa?_0x574cda(0x207)+(_0x31625b[_0x574cda(0x25c)]-0xa)+'\x20more':''):'—',_0x567495=_0x3cd200===0x0?_0x574cda(0x227)+_0x1be9bb+'\x22\x20rowspan=\x22'+_0x9e6d16+'\x22>'+_0x399472+_0x574cda(0x214):'';return'<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+_0x567495+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22'+_0x1be9bb+_0x574cda(0x243)+_0x55d62b+'\x20'+_0x576a7a+_0x574cda(0x2a8)+_0x1be9bb[_0x574cda(0x233)](_0x574cda(0x22a),'')+_0x574cda(0x240)+_0x8ab7c2+'</td>\x0a\x20\x20\x20\x20\x20\x20</tr>';})['join']('');return _0x2e0c21(0x239)+_0x186369+_0x2e0c21(0x23e)+_0x186369+_0x2e0c21(0x1fe)+_0x7c1eeb+_0x2e0c21(0x262)+_0x186369+'color:#6366f1;border-right:none;\x22>'+(_0x57d323||_0x2e0c21(0x290))+_0x2e0c21(0x280)+_0x53f1f2+'</tbody>\x0a\x20\x20\x20\x20\x20\x20</table>';};let _0x474887='';if(_0x46ed03===_0x8d470b(0x2a5))for(const [_0x44827e,_0x3bc8ca]of Object[_0x8d470b(0x275)](_0x29f285[_0x8d470b(0x277)])){if(_0x3bc8ca?.['filterSpecs']?.[_0x8d470b(0x25c)])_0x474887+=_0x3f7f15(_0x3bc8ca[_0x8d470b(0x202)],_0x44827e);}else{const _0xdb9c4b=_0x29f285[_0x8d470b(0x277)]?.[_0x46ed03];if(_0xdb9c4b?.[_0x8d470b(0x202)]?.['length'])_0x474887=_0x3f7f15(_0xdb9c4b['filterSpecs'],null);}if(!_0x474887)return;_ANRA_openModal(_0x238174+'\x20·\x20'+_0x46ed03,_0x474887);}function _ANRA_buildPayloads(_0x37140a,_0x48d1f1){const _0x27d5e2=a0_0x27209c,_0x3ae9a8=_ANRA_LastResults[_0x37140a];if(!_0x3ae9a8)return null;const {useScore:_0x1b8601,scoreCol:_0x2758a1,scoreVal:_0x4041ae}=_0x3ae9a8[_0x27d5e2(0x235)]||{},_0x4296f2=window[_0x27d5e2(0x284)]?.()||{},_0x4afc32={'FilterByScore':!!_0x1b8601,'ScoreMetric':_0x1b8601?_0x2758a1||null:null,'Conditions':_0x1b8601?[{'OperatorDescription':'>=','ScoreValue':_0x4041ae}]:[]},_0x2fcf95=(_0x1286e6,_0x2eec7f)=>{const _0x5177c9=_0x27d5e2,_0xb94acb=_0x5177c9(0x281)+Date['now']()+'_'+ ++_APP_IdSeq;return{'AmountInformation':{'FilterByAmount':!![],'AmountMetric':_0x4296f2[_0x5177c9(0x260)]||'','Conditions':[{'OperatorDescription':_ANRA_OP_SYM[_0x2eec7f['op']]||_0x2eec7f['op'],'AmountValue':_0x2eec7f[_0x5177c9(0x23b)]}]},'MerchantInformation':{'SelectedColumn':'','ColumnOperator':_0x5177c9(0x205),'MerchantList':[]},'ScoreInformation':[_0x4afc32],'AdditionalColumns':[{'Column':_0x1286e6,'Operator':_0x5177c9(0x205),'Values':_0x2eec7f[_0x5177c9(0x1f3)]}],'Source':_0x5177c9(0x236),'ID':_0xb94acb};},_0x5b8766=_0x48d1f1===_0x27d5e2(0x2a5)?Object[_0x27d5e2(0x249)](_0x3ae9a8['colResults']||{}):[_0x48d1f1],_0x1a91cc=[];for(const _0x1f79c7 of _0x5b8766){const _0x24c5a1=_0x3ae9a8['colResults']?.[_0x1f79c7]?.[_0x27d5e2(0x202)]||[];for(const _0x120f2e of _0x24c5a1){if((_0x120f2e['qualified']||[])[_0x27d5e2(0x25c)])_0x1a91cc[_0x27d5e2(0x1fc)](_0x2fcf95(_0x1f79c7,_0x120f2e));}}return _0x1a91cc;}function ANRA_CopyCard(_0x353c27,_0x926413){const _0x549113=a0_0x27209c,_0x34bac4=_ANRA_buildPayloads(_0x353c27,_0x926413);if(!_0x34bac4)return;APP_CopyText(JSON[_0x549113(0x228)](_0x34bac4,null,0x2));}function ANRA_AddCard(_0x532a26,_0x1c734e){const _0x10a406=a0_0x27209c,_0x1c3af4=_ANRA_buildPayloads(_0x532a26,_0x1c734e);if(!_0x1c3af4)return;APP_CopyText(JSON[_0x10a406(0x228)](_0x1c3af4,null,0x2));if(typeof _RMON_Persist==='function')_0x1c3af4[_0x10a406(0x297)](_0x42473e=>_RMON_Persist(_0x42473e));}function a0_0x332a(_0x5d2f29,_0x5a01a9){_0x5d2f29=_0x5d2f29-0x1f3;const _0x247f14=a0_0x247f();let _0x332a44=_0x247f14[_0x5d2f29];if(a0_0x332a['kUQLYV']===undefined){var _0x346684=function(_0x145508){const _0x2939be='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x421a61='',_0x15437d='';for(let _0x39b3ef=0x0,_0x57abb5,_0x13bd49,_0x5eb6cd=0x0;_0x13bd49=_0x145508['charAt'](_0x5eb6cd++);~_0x13bd49&&(_0x57abb5=_0x39b3ef%0x4?_0x57abb5*0x40+_0x13bd49:_0x13bd49,_0x39b3ef++%0x4)?_0x421a61+=String['fromCharCode'](0xff&_0x57abb5>>(-0x2*_0x39b3ef&0x6)):0x0){_0x13bd49=_0x2939be['indexOf'](_0x13bd49);}for(let _0x118ab1=0x0,_0xb81824=_0x421a61['length'];_0x118ab1<_0xb81824;_0x118ab1++){_0x15437d+='%'+('00'+_0x421a61['charCodeAt'](_0x118ab1)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x15437d);};a0_0x332a['wzpJKc']=_0x346684,a0_0x332a['uXgbBM']={},a0_0x332a['kUQLYV']=!![];}const _0x22c4c6=_0x247f14[0x0],_0x403a3f=_0x5d2f29+_0x22c4c6,_0x4a921f=a0_0x332a['uXgbBM'][_0x403a3f];return!_0x4a921f?(_0x332a44=a0_0x332a['wzpJKc'](_0x332a44),a0_0x332a['uXgbBM'][_0x403a3f]=_0x332a44):_0x332a44=_0x4a921f,_0x332a44;}function _ANRA_openModal(_0x364887,_0x4ee8c5){const _0x2b8366=a0_0x27209c,_0xf17539=document['getElementById'](_0x2b8366(0x27f)),_0x3cc0d3=document[_0x2b8366(0x20c)](_0x2b8366(0x224));if(!_0xf17539||!_0x3cc0d3)return;_0xf17539['textContent']=_0x364887,_0x3cc0d3[_0x2b8366(0x274)]=_0x4ee8c5,Popup_open(_0x2b8366(0x28f));}
+// RouteAnalysis.js
+// Ported from Analysis_RouteAnalysis.py (analyze_step3_routes) with DuckDB-WASM queries.
+// Optimisations: parallel routes, parallel columns, merged COUNT DISTINCT, shared totals, parallel amountList for R5/R7.
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let RA_SelectedRoutes = new Set();
+let _RA_LastResults   = {};
+let _RA_running       = false;
+let _RA_SortMode      = null;
+if (typeof window._APP_IdSeq === 'undefined') window._APP_IdSeq = 0;
+
+const RA_ROUTES = {
+  R5: { label: 'R5', desc: () => 'Filter [Column] where FP < [Value]' },
+  R6: { label: 'R6', desc: () => 'Filter [Column] where FP < [Value] (excl. seen merchants)' },
+  R7: { label: 'R7', desc: () => 'Filter [Column] where FP < [Value] and score above [Score]' },
+  R8: { label: 'R8', desc: () => 'Filter [Column] where FP < [Value] (excl. seen merchants) and score above [Score]' },
+};
+
+const _RA_SQL_OPS = {
+  equal:                 (col, val) => `CAST("${col}" AS DOUBLE) = ${val}`,
+  greater_than:          (col, val) => `CAST("${col}" AS DOUBLE) > ${val}`,
+  less_than:             (col, val) => `CAST("${col}" AS DOUBLE) < ${val}`,
+  greater_than_or_equal: (col, val) => `CAST("${col}" AS DOUBLE) >= ${val}`,
+  less_than_or_equal:    (col, val) => `CAST("${col}" AS DOUBLE) <= ${val}`,
+  not_equal:             (col, val) => `CAST("${col}" AS DOUBLE) != ${val}`,
+};
+
+const _RA_OP_SYM = {
+  equal: '=', greater_than: '>', less_than: '<',
+  greater_than_or_equal: '>=', less_than_or_equal: '<=', not_equal: '!=',
+};
+
+// ── UI ────────────────────────────────────────────────────────────────────────
+
+function RA_toggleRoute(routeId) {
+  if (RA_SelectedRoutes.has(routeId)) RA_SelectedRoutes.delete(routeId);
+  else RA_SelectedRoutes.add(routeId);
+  RA_RefreshRouteBtns();
+}
+
+function RA_RefreshRouteBtns() {
+  const hasColumns = (RA_MiniNav_GetSelectedCols?.() || []).length > 0;
+  const hasScore   = !!RA_SelectedScoreColumn;
+  const enabledMap = { R5: hasColumns, R6: hasColumns, R7: hasColumns && hasScore, R8: hasColumns && hasScore };
+  Object.keys(RA_ROUTES).forEach(routeKey => {
+    const btn = document.getElementById('RA_RouteBtn_' + routeKey);
+    if (!btn) return;
+    const enabled = enabledMap[routeKey];
+    btn.disabled = !enabled;
+    if (!enabled && RA_SelectedRoutes.has(routeKey)) RA_SelectedRoutes.delete(routeKey);
+    btn.classList.toggle('active', RA_SelectedRoutes.has(routeKey));
+  });
+  const labelEl = document.getElementById('RA_SelectedRoutesLabel');
+  if (labelEl) labelEl.textContent = '';
+}
+
+function RA_SetSort(mode) {
+  _RA_SortMode = _RA_SortMode === mode ? null : mode;
+  ['Trans', 'DistinctCard', 'Amount'].forEach(m => {
+    const btn = document.getElementById('RA_SortBtn_' + m);
+    if (btn) btn.classList.toggle('active', m === _RA_SortMode);
+  });
+  const resultsEl = document.getElementById('RA_ResultsArea');
+  const routes = [...RA_SelectedRoutes];
+  if (resultsEl && routes.length && Object.keys(_RA_LastResults).length)
+    _RA_renderResults(resultsEl, _RA_LastResults, routes);
+}
+
+function RA_UpdateRouteDescriptions() {
+  const scoreColLabel = RA_SelectedScoreColumn || '[Column]';
+  const fpVal         = document.getElementById('RA_MiniNav_VolumeFP')?.value || '[Value]';
+  const scoreVal      = document.getElementById('RA_MiniNav_ScoreVal')?.value || '[Score]';
+  const descs = {
+    R5: `Filter ${scoreColLabel} where FP < ${fpVal}`,
+    R6: `Filter ${scoreColLabel} where FP < ${fpVal} (excl. seen merchants)`,
+    R7: `Filter ${scoreColLabel} where FP < ${fpVal} and score above ${scoreVal}`,
+    R8: `Filter ${scoreColLabel} where FP < ${fpVal} (excl. seen merchants) and score above ${scoreVal}`,
+  };
+  Object.entries(descs).forEach(([routeKey, desc]) => {
+    const el = document.getElementById(`RA_${routeKey}Desc`);
+    if (el) el.textContent = desc;
+  });
+}
+
+// ── Entry point ───────────────────────────────────────────────────────────────
+
+async function RA_RunAnalysis() {
+  const conn      = window.LD_getConn?.();
+  const src       = window.LD_getSource?.();
+  const resultsEl = document.getElementById('RA_ResultsArea');
+  if (!resultsEl) return;
+
+  const routes = [...RA_SelectedRoutes];
+  if (!routes.length) { resultsEl.innerHTML = ''; return; }
+  if (!conn || !src) { _RA_showError(resultsEl, 'Load data first.'); RA_showErrorBadge('Load data first.'); return; }
+
+  const params = window.SP_getParams?.();
+  if (!params?.col1 || !params?.values?.length || !params?.numeric || !params?.object) {
+    const msg = 'Apply parameters first.';
+    _RA_showError(resultsEl, msg); RA_showErrorBadge(msg); return;
+  }
+
+  const selectedCols = RA_MiniNav_GetSelectedCols?.() || [];
+  if (!selectedCols.length) { const msg = 'Select at least one column.'; _RA_showError(resultsEl, msg); RA_showErrorBadge(msg); return; }
+  if (!RA_AmountList.length) { const msg = 'Add at least one amount filter.'; _RA_showError(resultsEl, msg); RA_showErrorBadge(msg); return; }
+
+  const needsScore = routes.some(r => r === 'R7' || r === 'R8');
+  if (needsScore && !RA_SelectedScoreColumn) {
+    const msg = 'Score routes require a score column.';
+    _RA_showError(resultsEl, msg); RA_showErrorBadge(msg); return;
+  }
+
+  if (_RA_running) return;
+  _RA_running = true;
+
+  const fpThreshold = parseFloat(document.getElementById('RA_MiniNav_VolumeFP')?.value) || 10;
+  const scoreCol    = RA_SelectedScoreColumn;
+  const scoreVal    = parseFloat(document.getElementById('RA_MiniNav_ScoreVal')?.value) || 0;
+
+  try {
+    RA_showLoadingBadge('Computing totals…');
+    const _fraudValsSQL = params.values.map(v => "'" + String(v).replace(/'/g, "''") + "'").join(',');
+    const _isFraudBase  = `CAST("${params.col1}" AS VARCHAR) IN (${_fraudValsSQL})`;
+    const _totalsRow = (await conn.query(`
+      SELECT
+        COUNT(*) AS TotalVolume,
+        SUM(CAST("${params.numeric}" AS DOUBLE)) AS TotalValue,
+        SUM(CASE WHEN ${_isFraudBase} THEN 1 ELSE 0 END) AS FraudVolume,
+        SUM(CASE WHEN ${_isFraudBase} THEN CAST("${params.numeric}" AS DOUBLE) ELSE 0 END) AS FraudValue
+      FROM "${src}"
+    `)).toArray()[0];
+    const sharedTotals = {
+      totalVolume: Number(_totalsRow.TotalVolume),
+      totalValue:  Number(_totalsRow.TotalValue),
+      fraudVolume: Number(_totalsRow.FraudVolume),
+      fraudValue:  Number(_totalsRow.FraudValue),
+    };
+    const routeArgs = {
+      conn, src,
+      fraudCol:   params.col1,
+      fraudVals:  params.values,
+      amountCol:  params.numeric,
+      cardCol:    params.object,
+      selectCols: selectedCols,
+      fpThreshold,
+      amountList: RA_AmountList,
+      scoreCol,
+      scoreVal,
+      totals: sharedTotals,
+    };
+    RA_showLoadingBadge(`Running ${routes.length} route${routes.length > 1 ? 's' : ''}…`);
+    const arr = await Promise.all(routes.map(route => _RA_computeRoute(route, routeArgs)));
+    const results = {};
+    routes.forEach((route, i) => { results[route] = arr[i]; });
+    _RA_LastResults = results;
+    _RA_renderResults(resultsEl, results, routes);
+    RA_hideBadge();
+  } catch (err) {
+    const msg = 'Analysis error: ' + err.message;
+    _RA_showError(resultsEl, msg);
+    RA_showErrorBadge(msg);
+  } finally {
+    _RA_running = false;
+  }
+}
+
+// ── Core computation (ported from analyze_step3_routes) ───────────────────────
+
+async function _RA_computeRoute(routeType, opts) {
+  const { conn, src, fraudCol, fraudVals, amountCol, cardCol, selectCols, fpThreshold, amountList, scoreCol, scoreVal, totals } = opts;
+  const useScore     = ['R7', 'R8'].includes(routeType);
+  const useCumulExcl = ['R6', 'R8'].includes(routeType);
+
+  const fraudValsSQL = fraudVals.map(v => "'" + String(v).replace(/'/g, "''") + "'").join(',');
+  const isFraudExpr  = `CAST("${fraudCol}" AS VARCHAR) IN (${fraudValsSQL})`;
+
+  // Totals provided by caller — computed once, shared across all parallel routes
+  const { totalVolume, totalValue, fraudVolume, fraudValue } = totals;
+
+  // Optimisation 2: columns are independent — fan out in parallel.
+  // Inner amountList loop stays sequential (R6/R8 cumulative exclusion reads its own seenMerchants).
+  const colResultsArr = await Promise.all(selectCols.map(async colName => {
+    const colEsc = colName.replace(/"/g, '""');
+
+    const filterSpecs = [];
+
+    if (!useCumulExcl) {
+      // R5/R7: amount iterations are fully independent — fan out in parallel
+      const validItems = amountList.filter(({ op }) => _RA_SQL_OPS[op]);
+      const scoreWhere = useScore && scoreCol ? `AND CAST("${scoreCol}" AS DOUBLE) >= ${scoreVal}` : '';
+      const qualResults = await Promise.all(validItems.map(async ({ op, val }) => {
+        const qualRows = (await conn.query(`
+          WITH g AS (
+            SELECT CAST("${colEsc}" AS VARCHAR) AS cv,
+                   COUNT(*) AS vt,
+                   SUM(CASE WHEN ${isFraudExpr} THEN 1 ELSE 0 END) AS vf
+            FROM "${src}"
+            WHERE ${_RA_SQL_OPS[op](amountCol, val)} ${scoreWhere}
+            GROUP BY "${colEsc}"
+          )
+          SELECT cv FROM g
+          WHERE vf > 0 AND CAST(vt AS DOUBLE) / CAST(vf AS DOUBLE) < ${fpThreshold}
+        `)).toArray();
+        return { op, val, qualified: qualRows.map(r => String(r.cv)) };
+      }));
+      filterSpecs.push(...qualResults);
+    } else {
+      // R6/R8: sequential — each iteration excludes merchants qualified by previous iterations
+      let seenMerchants = [];
+      for (const { op, val } of amountList) {
+        const sqlOpFn = _RA_SQL_OPS[op];
+        if (!sqlOpFn) continue;
+        const amtWhere   = sqlOpFn(amountCol, val);
+        const seenExcl   = seenMerchants.length
+          ? `AND CAST("${colEsc}" AS VARCHAR) NOT IN (${seenMerchants.map(v => "'" + String(v).replace(/'/g, "''") + "'").join(',')})`
+          : '';
+        const scoreWhere = useScore && scoreCol ? `AND CAST("${scoreCol}" AS DOUBLE) >= ${scoreVal}` : '';
+        const qualRows = (await conn.query(`
+          WITH g AS (
+            SELECT CAST("${colEsc}" AS VARCHAR) AS cv,
+                   COUNT(*) AS vt,
+                   SUM(CASE WHEN ${isFraudExpr} THEN 1 ELSE 0 END) AS vf
+            FROM "${src}"
+            WHERE ${amtWhere} ${seenExcl} ${scoreWhere}
+            GROUP BY "${colEsc}"
+          )
+          SELECT cv FROM g
+          WHERE vf > 0 AND CAST(vt AS DOUBLE) / CAST(vf AS DOUBLE) < ${fpThreshold}
+        `)).toArray();
+        const qualified = qualRows.map(r => String(r.cv));
+        filterSpecs.push({ op, val, qualified });
+        if (!(op === 'equal' && Number(val) === 0)) {
+          qualified.forEach(mer => { if (!seenMerchants.includes(mer)) seenMerchants.push(mer); });
+        }
+      }
+    }
+
+    const colWheres = filterSpecs
+      .filter(fs => fs.qualified.length > 0)
+      .map(({ op, val, qualified }) => {
+        const qualValsSQL = qualified.map(v => "'" + v.replace(/'/g, "''") + "'").join(',');
+        const scoreFilter = useScore && scoreCol ? ` AND CAST("${scoreCol}" AS DOUBLE) >= ${scoreVal}` : '';
+        return `(${_RA_SQL_OPS[op](amountCol, val)} AND CAST("${colEsc}" AS VARCHAR) IN (${qualValsSQL})${scoreFilter})`;
+      });
+
+    if (!colWheres.length) {
+      return { colName, result: { ..._RA_zeroMetrics(useScore, scoreVal), filterSpecs }, colWheres: [] };
+    }
+
+    const colFilter = '(' + colWheres.join(' OR ') + ')';
+
+    // Optimisation 3: uniqueFraud merged into metrics query — 1 scan instead of 2
+    const cardColEsc = cardCol.replace(/"/g, '""');
+    const row = (await conn.query(`
+      SELECT
+        SUM(CASE WHEN ${colFilter} AND     (${isFraudExpr}) THEN 1 ELSE 0 END) AS triggered,
+        SUM(CASE WHEN ${colFilter} AND     (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS tval,
+        SUM(CASE WHEN ${colFilter} AND NOT (${isFraudExpr}) THEN 1 ELSE 0 END) AS nonfrd,
+        SUM(CASE WHEN ${colFilter} AND NOT (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
+        COUNT(DISTINCT CASE WHEN ${colFilter} AND (${isFraudExpr}) THEN CAST("${colEsc}" AS VARCHAR) END) AS utrg,
+        COUNT(DISTINCT CASE WHEN (${isFraudExpr}) THEN CAST("${colEsc}" AS VARCHAR) END) AS uniqueFraud,
+        COUNT(DISTINCT CASE WHEN ${colFilter} THEN CAST("${cardColEsc}" AS VARCHAR) END) AS distinctCards
+      FROM "${src}"
+    `)).toArray()[0];
+
+    const triggered     = Number(row.triggered);
+    const value         = Number(row.tval);
+    const nonfrd        = Number(row.nonfrd);
+    const nfval         = Number(row.nfval);
+    const utrg          = Number(row.utrg);
+    const uniqueFraud   = Number(row.uniqueFraud);
+    const distinctCards = Number(row.distinctCards);
+
+    return {
+      colName,
+      colWheres,
+      result: {
+        triggered, value, distinctCards,
+        fp:     triggered   > 0 ? Math.round(nonfrd / triggered) + ':1' : 'N/A',
+        unique: utrg,
+        fv:     _r2(fraudVolume > 0 ? triggered / fraudVolume * 100 : 0),
+        fvl:    _r2(fraudValue  > 0 ? value     / fraudValue  * 100 : 0),
+        iv:     _r2(totalVolume > 0 ? nonfrd    / totalVolume * 100 : 0),
+        ivl:    _r2(totalValue  > 0 ? nfval     / totalValue  * 100 : 0),
+        aa:     _r2(uniqueFraud > 0 ? utrg      / uniqueFraud * 100 : 0),
+        score:  useScore ? String(scoreVal) : '0',
+        filterSpecs,
+      },
+    };
+  }));
+
+  // Merge per-column results
+  const colResults = {};
+  const allWheres  = [];
+  for (const { colName, result, colWheres } of colResultsArr) {
+    colResults[colName] = result;
+    allWheres.push(...colWheres);
+  }
+
+  // Final combined metrics across all columns
+  let finalResult = _RA_zeroMetrics(useScore, scoreVal);
+  if (allWheres.length) {
+    const finalFilter = '(' + allWheres.join(' OR ') + ')';
+    const lastColEsc  = selectCols[selectCols.length - 1].replace(/"/g, '""');
+    const cardColEscF = cardCol.replace(/"/g, '""');
+    const row = (await conn.query(`
+      SELECT
+        SUM(CASE WHEN ${finalFilter} AND     (${isFraudExpr}) THEN 1 ELSE 0 END) AS triggered,
+        SUM(CASE WHEN ${finalFilter} AND     (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS tval,
+        SUM(CASE WHEN ${finalFilter} AND NOT (${isFraudExpr}) THEN 1 ELSE 0 END) AS nonfrd,
+        SUM(CASE WHEN ${finalFilter} AND NOT (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
+        COUNT(DISTINCT CASE WHEN ${finalFilter} AND (${isFraudExpr}) THEN CAST("${lastColEsc}" AS VARCHAR) END) AS utrg,
+        COUNT(DISTINCT CASE WHEN (${isFraudExpr}) THEN CAST("${lastColEsc}" AS VARCHAR) END) AS uniqueFraud,
+        COUNT(DISTINCT CASE WHEN ${finalFilter} THEN CAST("${cardColEscF}" AS VARCHAR) END) AS distinctCards
+      FROM "${src}"
+    `)).toArray()[0];
+    const triggered     = Number(row.triggered);
+    const value         = Number(row.tval);
+    const nonfrd        = Number(row.nonfrd);
+    const nfval         = Number(row.nfval);
+    const utrg          = Number(row.utrg);
+    const uniqueFraud   = Number(row.uniqueFraud);
+    const distinctCards = Number(row.distinctCards);
+    finalResult = {
+      triggered, value, distinctCards,
+      fp:     triggered   > 0 ? Math.round(nonfrd / triggered) + ':1' : 'N/A',
+      unique: utrg,
+      fv:     _r2(fraudVolume > 0 ? triggered / fraudVolume * 100 : 0),
+      fvl:    _r2(fraudValue  > 0 ? value     / fraudValue  * 100 : 0),
+      iv:     _r2(totalVolume > 0 ? nonfrd    / totalVolume * 100 : 0),
+      ivl:    _r2(totalValue  > 0 ? nfval     / totalValue  * 100 : 0),
+      aa:     _r2(uniqueFraud > 0 ? utrg      / uniqueFraud * 100 : 0),
+      score:  useScore ? String(scoreVal) : '0',
+    };
+  }
+
+  return {
+    colResults, finalResult,
+    TotalVolume: totalVolume, TotalValue: totalValue,
+    FraudVolume: fraudVolume, FraudValue: fraudValue,
+    routeMeta: { useScore, scoreCol, scoreVal },
+  };
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function _r2(n) { return Math.round(n * 100) / 100; }
+
+function _RA_zeroMetrics(useScore, scoreVal) {
+  return { triggered: 0, value: 0, distinctCards: 0, fp: 'N/A', unique: 0, fv: 0, fvl: 0, iv: 0, ivl: 0, aa: 0, score: useScore ? String(scoreVal) : '0' };
+}
+
+const _RA_FMT_NUM = n => Number.isFinite(n) ? n.toLocaleString('en-GB') : '—';
+const _RA_FMT_VAL = n => Number.isFinite(n) ? n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+
+const _RA_SUB = { R5: '', R6: '', R7: '', R8: '' };
+const _RA_TITLE = {
+  R5: 'Standard', R6: 'Progressive',
+  R7: 'Score Filter', R8: 'Score + Progressive',
+};
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function _RA_barRow(label, pct, fillClass) {
+  const clamped = Math.min(Math.max(pct, 0), 100);
+  return `<div class="ra-route-bar-row"><span class="ra-route-bar-label">${label}</span><div class="ra-route-bar-track"><div class="ra-route-bar-fill ${fillClass}" style="width:${clamped}%"></div></div><span class="ra-route-bar-pct">${pct}%</span></div>`;
+}
+
+function _RA_metrics(r) {
+  return `<div class="ra-route-metrics"><div class="ra-route-metric"><span class="ra-route-metric-label">Triggered</span><span class="ra-route-metric-val">${_RA_FMT_NUM(r.triggered)}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">Value det.</span><span class="ra-route-metric-val">${_RA_FMT_VAL(r.value)}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">False pos.</span><span class="ra-route-metric-val">${r.fp}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">Score ≥</span><span class="ra-route-metric-val">${r.score}</span></div></div>`;
+}
+
+function _RA_cardShell(title, subtitle, badge, actions, metricsHtml) {
+  return `<div class="pg-card ra-card"><div class="pg-card-header" style="padding:12px 14px 10px;margin-bottom:0;align-items:flex-start;"><div><div class="pg-card-title" style="font-size:0.88rem;">${title}</div><div class="pg-card-label" style="margin-top:3px;">${subtitle}</div></div><span class="ra-route-card-sub">${badge}</span></div><div class="pg-card-divider"></div><div class="ra-route-card-actions">${actions}</div>${metricsHtml}</div>`;
+}
+
+function _RA_makeSummaryCard(routeKey, result) {
+  const actions = `<button class="pg-btn" onclick="RA_ShowStrategies('${routeKey}','Final')">View Strategies</button>\n     <button class="pg-btn" onclick="RA_CopyCard('${routeKey}','Final')">Copy</button>\n     <button class="pg-btn ra-like-btn" onclick="RA_AddCard('${routeKey}','Final')">👍 Like it</button>`;
+  const bars = `\n     <div class="ra-route-bars">\n       ${_RA_barRow('Fraud volume', result.fv, 'ra-route-bar-fill-amber')}\n       ${_RA_barRow('Fraud value', result.fvl, 'ra-route-bar-fill-amber')}\n       <div class="ra-route-bar-divider"></div>\n       ${_RA_barRow('Impact volume', result.iv, 'ra-route-bar-fill-blue')}\n       ${_RA_barRow('Impact value', result.ivl, 'ra-route-bar-fill-blue')}\n       <div class="ra-route-bar-divider"></div>\n       ${_RA_barRow('Coverage', result.aa, 'ra-route-bar-fill-blue')}\n     </div>`;
+  return _RA_cardShell(_RA_TITLE[routeKey] || routeKey, '', '', actions, _RA_metrics(result) + bars);
+}
+
+function _RA_makeRouteCard(routeKey, colName, metrics) {
+  const colNameEsc = colName.replace(/'/g, "\\'");
+  const actions = `<button class="pg-btn" onclick="RA_ShowStrategies('${routeKey}','${colNameEsc}')">View Strategies</button>\n     <button class="pg-btn" onclick="RA_CopyCard('${routeKey}','${colNameEsc}')">Copy</button>\n     <button class="pg-btn ra-like-btn" onclick="RA_AddCard('${routeKey}','${colNameEsc}')">👍 Like it</button>`;
+  const bars = `\n     <div class="ra-route-bars">\n       ${_RA_barRow('Fraud volume', metrics.fv, 'ra-route-bar-fill-amber')}\n       ${_RA_barRow('Fraud value', metrics.fvl, 'ra-route-bar-fill-amber')}\n       <div class="ra-route-bar-divider"></div>\n       ${_RA_barRow('Impact volume', metrics.iv, 'ra-route-bar-fill-blue')}\n       ${_RA_barRow('Impact value', metrics.ivl, 'ra-route-bar-fill-blue')}\n     </div>`;
+  return _RA_cardShell(colName, _RA_TITLE[routeKey] || routeKey, _RA_SUB[routeKey] || '', actions, _RA_metrics(metrics) + bars);
+}
+
+function _RA_sortKey(metrics) {
+  if (_RA_SortMode === 'Amount')       return -(metrics.value    || 0);
+  if (_RA_SortMode === 'DistinctCard') return -(metrics.unique   || 0);
+  if (_RA_SortMode === 'Trans')        return -(metrics.triggered|| 0);
+  return 0;
+}
+
+function _RA_renderResults(container, results, routes) {
+  const summaryCards = routes.map(rk => _RA_makeSummaryCard(rk, results[rk].finalResult)).join('');
+  const routeCards   = [];
+  for (const rk of routes)
+    for (const col of Object.keys(results[rk].colResults))
+      routeCards.push({ rk, col, metrics: results[rk].colResults[col] });
+
+  routeCards.sort((a, b) => _RA_sortKey(a.metrics) - _RA_sortKey(b.metrics));
+
+  const routeHtml = routeCards.map(({ rk, col, metrics }) => _RA_makeRouteCard(rk, col, metrics)).join('');
+  container.innerHTML = `\n    <div class="ra-routes-grid ra-summary-grid">${summaryCards}</div>\n    <div class="ra-routes-grid" style="margin-top:20px;">${routeHtml}</div>`;
+}
+
+function _RA_showError(container, msg) {
+  container.innerHTML = `<div style="padding:16px;font-size:0.72rem;color:#ef4444;">${msg}</div>`;
+}
+
+function RA_ClearResults() {
+  _RA_LastResults = {};
+  const el = document.getElementById('RA_ResultsArea');
+  if (el) el.innerHTML = '';
+  RA_hideBadge();
+}
+
+// ── Badge (loading / error) ───────────────────────────────────────────────────
+
+function RA_showLoadingBadge(msg) {
+  let el = document.getElementById('RA_Badge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'RA_Badge';
+    el.className = 'App_badge';
+    el.style.setProperty('--toast-brand', 'var(--brand-ra)');
+    document.body.appendChild(el);
+  }
+  el.style.setProperty('--toast-brand', 'var(--brand-ra)');
+  el.innerHTML = `
+    <svg viewBox="0 0 16 16" width="14" height="14" style="flex-shrink:0;animation:RA_spin 1s linear infinite;color:var(--brand-ra)">
+      <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="22" stroke-dashoffset="8" fill="none"/>
+    </svg>
+    <span>${msg}</span>`;
+}
+
+function RA_showErrorBadge(msg) {
+  let el = document.getElementById('RA_Badge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'RA_Badge';
+    el.className = 'App_badge';
+    document.body.appendChild(el);
+  }
+  el.style.setProperty('--toast-brand', '#ef4444');
+  el.innerHTML = `
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" style="flex-shrink:0;color:#ef4444;">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span>${msg}</span>
+    <button onclick="document.getElementById('RA_Badge')?.remove()">✕</button>`;
+}
+
+function RA_hideBadge() {
+  document.getElementById('RA_Badge')?.remove();
+}
+
+
+// ── Strategy view / export ────────────────────────────────────────────────────
+
+function RA_ShowStrategies(routeKey, colOrAll) {
+  const spParams    = window.SP_getParams?.();
+  const amtCol      = spParams?.numeric || 'Amount';
+  const routeResult = _RA_LastResults[routeKey];
+  if (!routeResult) return;
+
+  const { useScore, scoreCol, scoreVal } = routeResult.routeMeta || {};
+  const thStyle = 'padding:10px 14px;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--color-card-border);text-align:left;white-space:nowrap;';
+  const tdStyle = 'padding:9px 14px;vertical-align:top;border-bottom:1px solid var(--color-card-border);border-right:1px solid var(--color-card-border);font-size:0.75rem;';
+  const scoreCell = useScore && scoreCol
+    ? `<strong style="display:block;font-size:0.78rem;color:var(--dml-text);">${scoreCol}</strong><span style="font-size:0.72rem;color:var(--dml-label);">≥ ${scoreVal}</span>`
+    : `<span style="color:var(--dml-label);font-style:italic;">None</span>`;
+
+  const makeTable = (filterSpecs, colLabel) => {
+    const rowCount  = filterSpecs.length;
+    const tableRows = filterSpecs.map(({ op, val, qualified }, i) => {
+      const opSym     = _RA_OP_SYM[op] || op;
+      const qualLabel = qualified.length
+        ? qualified.slice(0, 10).join(', ') + (qualified.length > 10 ? ` … +${qualified.length - 10} more` : '')
+        : '—';
+      const scoreTd = i === 0 ? `<td style="${tdStyle}" rowspan="${rowCount}">${scoreCell}</td>` : '';
+      return `<tr>${scoreTd}<td style="${tdStyle}font-weight:600;color:var(--dml-text);">${opSym} ${val}</td><td style="${tdStyle.replace('border-right:1px solid var(--color-card-border);', '')}color:var(--dml-text);">${qualLabel}</td></tr>`;
+    }).join('');
+    return `<table style="width:100%;border-collapse:collapse;table-layout:auto;"><thead><tr><th style="${thStyle}">Score Information</th><th style="${thStyle}">${amtCol}</th><th style="${thStyle}border-right:none;">${colLabel || 'Merchant Information'}</th></tr></thead><tbody>${tableRows}</tbody></table>`;
+  };
+
+  let tableHtml = '';
+  if (colOrAll === 'Final') {
+    for (const [colName, colResult] of Object.entries(routeResult.colResults)) {
+      if (colResult?.filterSpecs?.length) tableHtml += makeTable(colResult.filterSpecs, colName);
+    }
+  } else {
+    const colResult = routeResult.colResults?.[colOrAll];
+    if (colResult?.filterSpecs?.length) tableHtml = makeTable(colResult.filterSpecs, null);
+  }
+
+  if (!tableHtml) return;
+  const modalTitle = (_RA_TITLE[routeKey] || routeKey) + ' · ' + (_RA_SUB[routeKey] || '') + (colOrAll !== 'Final' ? ' · ' + colOrAll : '');
+  _RA_openModal(modalTitle, tableHtml);
+}
+
+function _RA_buildPayloads(routeKey, colOrAll) {
+  const routeResult = _RA_LastResults[routeKey];
+  if (!routeResult) return null;
+
+  const { useScore, scoreCol, scoreVal } = routeResult.routeMeta || {};
+  const spParams  = window.SP_getParams?.() || {};
+  const scoreInfo = {
+    FilterByScore: !!useScore,
+    ScoreMetric:   useScore ? scoreCol || null : null,
+    Conditions:    useScore ? [{ OperatorDescription: '>=', ScoreValue: scoreVal }] : [],
+  };
+
+  const makePayload = (colName, spec) => ({
+    AmountInformation: {
+      FilterByAmount: true,
+      AmountMetric:   spParams.numeric || '',
+      Conditions:     [{ OperatorDescription: _RA_OP_SYM[spec.op] || spec.op, AmountValue: spec.val }],
+    },
+    MerchantInformation: { SelectedColumn: '', ColumnOperator: 'isin', MerchantList: [] },
+    ScoreInformation:    [scoreInfo],
+    AdditionalColumns:   [{ Column: colName, Operator: 'isin', Values: spec.qualified }],
+    Source: 'Route Analysis',
+    ID:     'Route_Analysis_' + Date.now() + '_' + (++window._APP_IdSeq),
+  });
+
+  const targetCols = colOrAll === 'Final' ? Object.keys(routeResult.colResults || {}) : [colOrAll];
+  const payloads   = [];
+  for (const colName of targetCols)
+    for (const spec of (routeResult.colResults?.[colName]?.filterSpecs || []))
+      if (spec.qualified?.length) payloads.push(makePayload(colName, spec));
+  return payloads;
+}
+
+function RA_CopyCard(routeKey, colOrAll) {
+  const payloads = _RA_buildPayloads(routeKey, colOrAll);
+  if (!payloads) return;
+  APP_CopyText(JSON.stringify(payloads, null, 2));
+}
+
+function RA_AddCard(routeKey, colOrAll) {
+  const payloads = _RA_buildPayloads(routeKey, colOrAll);
+  if (!payloads) return;
+  APP_CopyText(JSON.stringify(payloads, null, 2));
+  if (typeof _RMON_Persist === 'function') payloads.forEach(p => _RMON_Persist(p));
+}
+
+function _RA_openModal(title, bodyHtml) {
+  const titleEl = document.getElementById('RA_StrategyModalTitle');
+  const bodyEl  = document.getElementById('RA_StrategyModalBody');
+  if (!titleEl || !bodyEl) return;
+  titleEl.textContent = title;
+  bodyEl.innerHTML    = bodyHtml;
+  Popup_open('RA_StrategyModal');
+}
+
+// ── Tutorial ──────────────────────────────────────────────────────────────────
+
+const _RA_TOUR_STEPS = [
+  {
+    title: 'Select Routes',
+    body:  'Choose one or more analysis types. <strong>FP filter only</strong> qualifies merchants purely by false-positive ratio. Add <strong>cumulative exclusion</strong> to remove previously qualified merchants from each tier. Add a <strong>score threshold</strong> to restrict analysis to high-score transactions. The score routes require a score column to be selected.',
+  },
+  {
+    title: 'Amount Filters',
+    body:  'Add one or more amount conditions (e.g. <strong>> 100</strong>, <strong>= 0</strong>). Each condition defines a transaction tier used to qualify merchants. The analysis runs all tiers and combines results.',
+  },
+  {
+    title: 'Available Columns',
+    body:  'Select the categorical columns to test as blocking dimensions — for example <strong>MerchantID</strong>, <strong>CardBin</strong>, or <strong>Channel</strong>. Each column gets its own result card.',
+  },
+  {
+    title: 'FP Threshold',
+    body:  'Set the maximum <strong>false-positive ratio</strong> a merchant group must meet to be included. For example, a threshold of <strong>10</strong> means the route only blocks groups where at least 1 in 10 transactions is fraud.',
+  },
+  {
+    title: 'Score Column',
+    body:  'For score-based routes, select a <strong>score column</strong> and a minimum score value. Only transactions at or above that score are considered when qualifying merchant groups.',
+  },
+  {
+    title: 'Reading Results',
+    body:  'Each result card shows <strong>Triggered</strong> (fraud caught), <strong>Value</strong> (amount detected), <strong>False positives</strong>, and bar charts for fraud coverage and good-transaction impact. The <strong>Final</strong> card combines all columns.',
+  },
+  {
+    title: 'Like it / Copy / Strategies',
+    body:  '<strong>View Strategies</strong> shows the exact merchant lists and amount conditions per column. <strong>Copy</strong> exports the rule as JSON. <strong>👍 Like it</strong> persists the rule to the Rules Monitor.',
+  },
+];
+
+let _RA_tourStep    = 0;
+let _RA_tourEnabled = false;
+
+function RA_tourShow(step) {
+  _RA_tourStep = step;
+  const s     = _RA_TOUR_STEPS[step];
+  if (!s) { RA_tourDismiss(); return; }
+  const total = _RA_TOUR_STEPS.length;
+  let el = document.getElementById('RA_TourCard');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'RA_TourCard';
+    el.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `
+    <div class="gs-toast" id="RA_TourInner" style="border-left-color:var(--brand-ra);">
+      <div class="gs-tab-strip" onclick="RA_tourTabExpand()" title="Expand">
+        <span class="gs-tab-arrow">›</span>
+        <span class="gs-tab-label">Step ${step+1} of ${total}</span>
+      </div>
+      <div class="gs-toast-inner">
+        <div class="gs-toast-header">
+          <div>
+            <div class="gs-toast-step" style="color:var(--brand-ra);">Step ${step+1} of ${total}</div>
+            <div class="gs-toast-title">${s.title}</div>
+          </div>
+          <button class="gs-toast-btn-collapse" onclick="RA_tourTabCollapse()" title="Collapse to tab" style="background:var(--brand-ra-dim);border-color:var(--brand-ra);color:var(--brand-ra);">
+            <svg viewBox="0 0 16 16" width="10" height="10" fill="none"><path d="M10 3H13V13H10M6 8H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="gs-toast-body">${s.body}</div>
+        <div class="gs-toast-actions">
+          <button class="gs-toast-btn-back" onclick="RA_tourShow(_RA_tourStep - 1)" style="${step === 0 ? 'visibility:hidden;' : ''}">← Back</button>
+          <button class="gs-toast-btn-next" onclick="RA_tourNext()" style="background:var(--brand-ra);">${step+1 < total ? 'Next →' : 'Finish ✓'}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function RA_tourTabCollapse() {
+  const el = document.getElementById('RA_TourInner');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  el.style.top    = '';
+  el.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+  el.classList.add('gs-tabbed');
+  const strip = el.querySelector('.gs-tab-strip');
+  if (strip) strip.style.height = rect.height + 'px';
+}
+
+function RA_tourTabExpand() {
+  const el = document.getElementById('RA_TourInner');
+  if (!el) return;
+  el.style.top = el.style.bottom = '';
+  el.classList.remove('gs-tabbed');
+}
+
+function RA_tourNext() { RA_tourShow(_RA_tourStep + 1); }
+
+function RA_tourDismiss() {
+  document.getElementById('RA_TourCard')?.remove();
+  _RA_tourEnabled = false;
+  document.getElementById('RA_HelpBtn')?.classList.remove('tutorial-active');
+}
+
+function RA_HelpPrompt() {
+  _RA_tourEnabled = !_RA_tourEnabled;
+  document.getElementById('RA_HelpBtn')?.classList.toggle('tutorial-active', _RA_tourEnabled);
+  if (_RA_tourEnabled) {
+    RA_tourShow(0);
+  } else {
+    RA_tourDismiss();
+  }
+}
+
+if (typeof App_RegisterTutorial === 'function') App_RegisterTutorial('ra-active', RA_HelpPrompt);

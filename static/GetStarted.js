@@ -54,25 +54,63 @@ function GS_toast_dismiss() {
   if (c) c.innerHTML = '';
 }
 
+// ── Error badge ───────────────────────────────────────────────────────────────
+function GS_showErrorBadge(msg) {
+  let el = document.getElementById('GS_DataReadyBadge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'GS_DataReadyBadge';
+    el.className = 'App_badge';
+    document.body.appendChild(el);
+  }
+  el.style.borderLeftColor = '#ef4444';
+  el.innerHTML = `
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" style="flex-shrink:0;color:#ef4444">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span style="color:#ef4444">${msg}</span>
+    <button onclick="document.getElementById('GS_DataReadyBadge').remove()">✕</button>`;
+}
+
+// ── Loading badge ─────────────────────────────────────────────────────────────
+function GS_showLoadingBadge(msg) {
+  let el = document.getElementById('GS_DataReadyBadge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'GS_DataReadyBadge';
+    el.className = 'App_badge';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `
+    <svg viewBox="0 0 16 16" width="14" height="14" style="flex-shrink:0;animation:GS_spin 1s linear infinite;color:var(--brand-pt,#0D9488)">
+      <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="22" stroke-dashoffset="8" fill="none"/>
+    </svg>
+    <span>${msg}</span>`;
+}
+
+// ── Data-ready badge (persists across all pages) ─────────────────────────────
+function GS_showDataReadyBadge(rows, cols, secs) {
+  let el = document.getElementById('GS_DataReadyBadge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'GS_DataReadyBadge';
+    el.className = 'App_badge';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" style="flex-shrink:0;color:var(--brand-pt,#0D9488)">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span><strong>Data ready</strong> &nbsp;·&nbsp; ${rows.toLocaleString()} rows &nbsp;·&nbsp; ${cols} cols &nbsp;·&nbsp; ${secs}s</span>
+    <button onclick="document.getElementById('GS_DataReadyBadge').remove()">✕</button>`;
+}
+
 // ── Browser console logger ────────────────────────────────────────────────────
-const _GS_LOG_STYLES = {
-  info:    'background:#E0F2FE;color:#0369A1;padding:2px 6px;border-radius:3px;font-weight:600;',
-  success: 'background:#DCFCE7;color:#15803D;padding:2px 6px;border-radius:3px;font-weight:600;',
-  warn:    'background:#FEF9C3;color:#A16207;padding:2px 6px;border-radius:3px;font-weight:600;',
-  error:   'background:#FEE2E2;color:#B91C1C;padding:2px 6px;border-radius:3px;font-weight:600;',
-  step:    'background:#E8714A;color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;',
-};
-
-function GS_log(msg, type = 'info') {
-  const style = _GS_LOG_STYLES[type] || _GS_LOG_STYLES.info;
-  const label = type === 'step' ? '▶ GS' : 'GS';
-  console.log(`%c${label}%c ${msg}`, style, 'color:inherit;');
-}
-
-function GS_logGroup(title) {
-  console.groupCollapsed(`%c▶ GS%c ${title}`, _GS_LOG_STYLES.step, 'color:inherit;font-weight:600;');
-}
-function GS_logGroupEnd() { console.groupEnd(); }
+function GS_log(msg)        { console.log('[GS]', msg); }
+function GS_logGroup(title) { console.groupCollapsed('[GS]', title); }
+function GS_logGroupEnd()   { console.groupEnd(); }
 
 let GS_ToastsEnabled = false;
 
@@ -240,13 +278,26 @@ function GS_onFilePicked(event) {
   GS_UploadedFile = file;
   _GS_setFileLabel(file);
   event.target.value = '';
+  GS_IsParquet = file.name.toLowerCase().endsWith('.parquet');
   GS_logGroup(`File uploaded: ${file.name} (${(file.size/1024).toFixed(1)} KB)`);
-  GS_log('Unlocking: DelimCard', 'info');
-  GS_logGroupEnd();
-  GS_unlock('GS_DelimCard');
-  GS_unlock('GS_BtnLoad');
-  GS_unlock('GS_BtnLoadLoad');
-  if (typeof GS_StepToast === 'function') GS_StepToast('📂 File loaded', 'Now choose how your columns are separated — try <strong>Auto</strong> if you\'re not sure.');
+  if (GS_IsParquet) {
+    GS_log('Parquet file — skipping delimiter/header', 'info');
+    GS_logGroupEnd();
+    GS_lock('GS_DelimCard');
+    GS_lock('GS_HeaderCard');
+    GS_unlock('GS_BtnLoad');
+    GS_unlock('GS_BtnLoadLoad');
+    GS_HasHeader = true;
+    GS_HeaderSet = true;
+    GS_loadFile();
+  } else {
+    GS_log('Unlocking: DelimCard', 'info');
+    GS_logGroupEnd();
+    GS_unlock('GS_DelimCard');
+    GS_unlock('GS_BtnLoad');
+    GS_unlock('GS_BtnLoadLoad');
+    if (typeof GS_StepToast === 'function') GS_StepToast('📂 File loaded', 'Now choose how your columns are separated — try <strong>Auto</strong> if you\'re not sure.');
+  }
 }
 
 function _GS_setFileLabel(file) {
@@ -264,11 +315,11 @@ async function GS_getDB() {
   if (_GS_db) return _GS_conn;
   GS_log('DuckDB — initialising WASM…', 'info');
   if (!window.duckdb) {
-    const mod = await import('https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm/+esm');
+    const mod = await import('https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.32.0/+esm');
     window.duckdb = mod;
   }
   const duck = window.duckdb;
-  const JSDELIVR = 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/';
+  const JSDELIVR = 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.32.0/dist/';
   const bundles = {
     mvp: { mainModule: JSDELIVR + 'duckdb-mvp.wasm', mainWorker: JSDELIVR + 'duckdb-browser-mvp.worker.js' },
     eh:  { mainModule: JSDELIVR + 'duckdb-eh.wasm',  mainWorker: JSDELIVR + 'duckdb-browser-eh.worker.js'  },
@@ -287,6 +338,7 @@ async function GS_getDB() {
 let GS_Delimiter      = null;
 let GS_HasHeader      = true;
 let GS_HeaderSet      = false;
+let GS_IsParquet      = false;
 let GS_RegisteredName = null;
 let GS_AllColumns     = [];
 let GS_PreviewRows    = [];
@@ -312,6 +364,8 @@ function GS_setHeader(val) {
 
 async function GS_loadFile() {
   if (!GS_UploadedFile) return;
+  const _gsLoadStart = performance.now();
+  GS_showLoadingBadge('Reading file…');
   try {
     const conn  = await GS_getDB();
     const fname = 'dataRaw';
@@ -320,33 +374,37 @@ async function GS_loadFile() {
       GS_RegisteredName = fname;
       GS_log('File registered as dataRaw', 'info');
     }
-    const delim  = (!GS_Delimiter || GS_Delimiter === 'auto') ? '' : `, delim='${GS_Delimiter}'`;
-    const header = GS_HasHeader ? ', header=true' : ', header=false';
-    const srcTypedFull = `read_csv_auto('${fname}'${delim}${header}, ignore_errors=true)`;
-    const srcVarchar   = `read_csv_auto('${fname}'${delim}${header}, all_varchar=true, ignore_errors=true)`;
+    let srcTypedFull, srcVarchar;
+    if (GS_IsParquet) {
+      srcTypedFull = `read_parquet('${fname}')`;
+      srcVarchar   = `read_parquet('${fname}')`;
+    } else {
+      const delim  = (!GS_Delimiter || GS_Delimiter === 'auto') ? '' : `, delim='${GS_Delimiter}'`;
+      const header = GS_HasHeader ? ', header=true' : ', header=false';
+      srcTypedFull = `read_csv_auto('${fname}'${delim}${header}, ignore_errors=true)`;
+      srcVarchar   = `read_csv_auto('${fname}'${delim}${header}, all_varchar=true, ignore_errors=true)`;
+    }
 
+    GS_showLoadingBadge('Loading data…');
     // Materialise as typed table so SP can query it
     await conn.query(`CREATE OR REPLACE TABLE data100 AS SELECT * FROM ${srcTypedFull} LIMIT 100`);
     GS_log('data100 created (100 rows, all columns)', 'success');
 
-    const preview = await conn.query(`SELECT * FROM ${srcVarchar} LIMIT 50`);
-    const cols    = preview.schema.fields.map(f => f.name);
-    const rows    = preview.toArray().map(r => { const o = {}; cols.forEach(c => o[c] = r[c] ?? ''); return o; });
+    // Schema + preview from data100 (already in memory — no second file scan)
+    const desc = await conn.query(`DESCRIBE data100`);
+    const descRows = desc.toArray();
+    const cols = descRows.map(r => String(r.column_name ?? ''));
+    GS_Types = {};
+    descRows.forEach(r => {
+      const typeStr = String(r.column_type ?? '').replace(/\(.*\)/, '').trim().toUpperCase();
+      GS_Types[String(r.column_name ?? '')] = typeStr;
+    });
+    const castSel  = cols.map(c => `CAST("${c.replace(/"/g, '""')}" AS VARCHAR) AS "${c.replace(/"/g, '""')}"`).join(', ');
+    const previewRes = await conn.query(`SELECT ${castSel} FROM data100 LIMIT 50`);
+    const rows = previewRes.toArray().map(r => { const o = {}; cols.forEach(c => o[c] = r[c] ?? ''); return o; });
 
     GS_AllColumns  = cols;
     GS_PreviewRows = rows;
-
-    // Infer types via DESCRIBE
-    try {
-      const desc = await conn.query(`DESCRIBE data100`);
-      const colsLower = cols.map(c => c.toLowerCase());
-      GS_Types = {};
-      desc.toArray().forEach(r => {
-        const typeStr = String(r.column_type ?? '').replace(/\(.*\)/, '').trim().toUpperCase();
-        const idx = colsLower.indexOf(String(r.column_name ?? '').toLowerCase());
-        if (idx !== -1) GS_Types[cols[idx]] = typeStr;
-      });
-    } catch(e) {}
 
     GS_renderChips(); GS_refreshJsonIfOpen();
     GS_renderPreviewTable(cols, rows);
@@ -357,8 +415,13 @@ async function GS_loadFile() {
     window.LD_getConn   = () => _GS_conn;
     window.LD_getSource = () => 'data100';
     GS_log('Ready → data100 exposed', 'success');
+    GS_log(`Upload took ${((performance.now() - _gsLoadStart) / 1000).toFixed(2)}s`);
     if (typeof GS_StepToast === 'function') GS_StepToast('✅ Data loaded', 'Select which columns to keep. You can rename them, change their type, and apply transforms before saving.');
-  } catch(e) { GS_log('Error loading file: ' + e.message, 'error'); console.error('[GS_loadFile]', e); }
+  } catch(e) {
+    GS_log(`Upload failed after ${((performance.now() - _gsLoadStart) / 1000).toFixed(2)}s`);
+    GS_log('Error loading file: ' + e.message, 'error');
+    console.error('[GS_loadFile]', e);
+  }
 }
 
 // ── Column renames ────────────────────────────────────────────────────────────
@@ -479,6 +542,35 @@ const _GS_DATE_TYPES = new Set(['DATE','TIMESTAMP','TIMESTAMPTZ','TIME']);
 const _GS_isDateType = t => _GS_DATE_TYPES.has((t||'').toUpperCase().replace(/\(.*\)/,'').trim());
 const _GS_isIntType  = t => /INT/.test((t||'').toUpperCase());
 
+const _GS_FMT_DATE = [
+  { v: '%Y%m%d',   l: '%Y%m%d · 20250115' },
+  { v: '%Y-%m-%d', l: '%Y-%m-%d · 2025-01-15' },
+  { v: '%Y/%m/%d', l: '%Y/%m/%d · 2025/01/15' },
+  { v: '%Y.%m.%d', l: '%Y.%m.%d · 2025.01.15' },
+  { v: '%d%m%Y',   l: '%d%m%Y · 15012025' },
+  { v: '%d-%m-%Y', l: '%d-%m-%Y · 15-01-2025' },
+  { v: '%d/%m/%Y', l: '%d/%m/%Y · 15/01/2025' },
+  { v: '%d.%m.%Y', l: '%d.%m.%Y · 15.01.2025' },
+  { v: '%m%d%Y',   l: '%m%d%Y · 01152025' },
+  { v: '%m-%d-%Y', l: '%m-%d-%Y · 01-15-2025' },
+  { v: '%m/%d/%Y', l: '%m/%d/%Y · 01/15/2025' },
+];
+const _GS_FMT_TIME = [
+  { v: '%H%M%S',   l: '%H%M%S · 143022' },
+  { v: '%H:%M:%S', l: '%H:%M:%S · 14:30:22' },
+  { v: '%H%M',     l: '%H%M · 1430' },
+  { v: '%H:%M',    l: '%H:%M · 14:30' },
+];
+const _GS_FMT_DATETIME = [
+  { v: '%Y-%m-%d %H:%M:%S',  l: '%Y-%m-%d %H:%M:%S · 2025-01-15 14:30:22' },
+  { v: '%Y%m%d%H%M%S',       l: '%Y%m%d%H%M%S · 20250115143022' },
+  { v: '%Y-%m-%dT%H:%M:%S',  l: '%Y-%m-%dT%H:%M:%S · ISO 8601' },
+  { v: '%d/%m/%Y %H:%M:%S',  l: '%d/%m/%Y %H:%M:%S · 15/01/2025 14:30:22' },
+  { v: '%m/%d/%Y %H:%M:%S',  l: '%m/%d/%Y %H:%M:%S · 01/15/2025 14:30:22' },
+  { v: '%Y/%m/%d %H:%M:%S',  l: '%Y/%m/%d %H:%M:%S · 2025/01/15 14:30:22' },
+  { v: '%d-%m-%Y %H:%M:%S',  l: '%d-%m-%Y %H:%M:%S · 15-01-2025 14:30:22' },
+];
+
 function _GS_normalizeFmt(fmt) {
   return fmt.replace(/YYYY/g,'%Y').replace(/MM/g,'%m').replace(/DD/g,'%d')
             .replace(/HH24/g,'%H').replace(/HH/g,'%H').replace(/MI/g,'%M').replace(/SS/g,'%S');
@@ -501,21 +593,43 @@ function GS_renderFormatPanel() {
   const activeCols   = (GS_SelectApplied || GS_SelectMode) && GS_KeepCols.size > 0 ? GS_AllColumns.filter(c => GS_KeepCols.has(c)) : GS_AllColumns;
   const relevantCols = activeCols.filter(c => _GS_isDateType(GS_Types[c]) || _GS_isIntType(GS_Types[c]) || _GS_isStrType(GS_Types[c]));
   if (!relevantCols.length) { grid.innerHTML = '<span style="font-size:0.7rem;color:var(--color-text-dim);">No date/time/integer columns detected.</span>'; return; }
-  const rows = relevantCols.map(col => {
-    const type   = GS_Types[col] || '';
-    const isDate = _GS_isDateType(type);
-    const fmt    = GS_Formats[col]?.fmt   || '';
-    const zfill  = GS_Formats[col]?.zfill || '';
-    const fmtPh  = isDate ? (type.toUpperCase() === 'TIME' ? '%H%M%S' : '%Y%m%d') : '';
-    const label  = GS_Renames[col] || col;
-    const safe   = col.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+  const rows = relevantCols.map((col, colIdx) => {
+    const type    = GS_Types[col] || '';
+    const isDate  = _GS_isDateType(type);
+    const fmt     = GS_Formats[col]?.fmt   || '';
+    const zfill   = GS_Formats[col]?.zfill || '';
+    const label   = GS_Renames[col] || col;
+    const safe    = col.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
+    let fmtCell;
+    if (!isDate) {
+      fmtCell = `<input type="text" class="pg-input" disabled style="opacity:0.35;width:120px;height:26px;font-size:0.65rem;" />`;
+    } else {
+      const tu       = type.toUpperCase().replace(/\(.*\)/,'').trim();
+      const presets  = tu === 'TIME' ? _GS_FMT_TIME : tu === 'DATE' ? _GS_FMT_DATE : _GS_FMT_DATETIME;
+      const isCustom = !!(fmt && !presets.some(p => p.v === fmt));
+      const selId    = `GS_FmtSel_${colIdx}`;
+      const curLabel = isCustom ? 'Custom…' : (presets.find(p => p.v === fmt)?.l || '— pick format —');
+      const allOpts  = [{ v: '', l: '— pick format —' }, ...presets, { v: '__custom__', l: 'Custom…' }];
+      const optHtml  = allOpts.map(p => {
+        const pv = p.v.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        return `<div class="cs-option${fmt === p.v ? ' cs-selected' : ''}" onclick="GS_onFormatSelect('${safe}','${selId}','${pv}',this)">${p.l}</div>`;
+      }).join('');
+      fmtCell = `<div style="display:flex;flex-direction:column;gap:2px;">
+        <div id="${selId}" class="custom-select">
+          <button class="cs-trigger" onclick="toggleCustomSelect('${selId}')" style="height:26px;font-size:0.65rem;padding:0 8px;">
+            <span class="cs-value" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${curLabel}</span>
+            <svg viewBox="0 0 12 12" width="10" height="10" fill="none" style="flex-shrink:0;"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cs-options">${optHtml}</div>
+        </div>
+        <input type="text" class="pg-input gs-fmt-custom" value="${isCustom ? fmt : ''}" placeholder="e.g. %Y%m%d" style="height:26px;font-size:0.65rem;${isCustom ? '' : 'display:none;'}" oninput="GS_setFormat('${safe}','fmt',this.value)" />
+      </div>`;
+    }
+
     return `<tr>
       <td style="padding:4px 8px 4px 0;font-size:0.72rem;color:var(--color-header-title);white-space:nowrap;">${label}</td>
-      <td style="padding:4px 4px;">
-        <input type="text" class="pg-input" placeholder="${fmtPh}" value="${fmt}"
-          style="width:120px;height:26px;font-size:0.65rem;" ${(!isDate || /VARCHAR|TEXT|CHAR|STRING/.test(type.toUpperCase())) ? 'disabled style="opacity:0.35;width:120px;height:26px;font-size:0.65rem;"' : ''}
-          oninput="GS_setFormat('${safe}','fmt',this.value)"/>
-      </td>
+      <td style="padding:4px 4px;">${fmtCell}</td>
       <td style="padding:4px 0 4px 4px;">
         <input type="number" class="pg-input" placeholder="0" value="${zfill}"
           style="width:60px;height:26px;font-size:0.65rem;" min="0" max="30"
@@ -539,6 +653,25 @@ function GS_renderFormatPanel() {
 function GS_setFormat(col, field, value) {
   if (!GS_Formats[col]) GS_Formats[col] = { fmt: '', zfill: 0 };
   GS_Formats[col][field] = value;
+}
+
+function GS_onFormatSelect(col, selId, v, optEl) {
+  const selEl  = document.getElementById(selId);
+  const custom = selEl?.closest('div[style]')?.querySelector('.gs-fmt-custom');
+  if (selEl) {
+    selEl.querySelectorAll('.cs-option').forEach(o => o.classList.remove('cs-selected'));
+    if (optEl) optEl.classList.add('cs-selected');
+    const lbl = selEl.querySelector('.cs-value');
+    if (lbl) lbl.textContent = optEl?.textContent?.trim() || v;
+    selEl.classList.remove('open');
+  }
+  if (v === '__custom__') {
+    if (custom) { custom.style.display = ''; custom.focus(); }
+    GS_setFormat(col, 'fmt', custom?.value || '');
+  } else {
+    if (custom) custom.style.display = 'none';
+    GS_setFormat(col, 'fmt', v);
+  }
 }
 
 function GS_deactivateAllModes() {
@@ -814,9 +947,20 @@ function GS_HandleFileDrop(e) {
   if (!file) return;
   GS_UploadedFile = file;
   _GS_setFileLabel(file);
-  GS_unlock('GS_DelimCard');
-  GS_unlock('GS_BtnLoad');
-  GS_unlock('GS_BtnLoadLoad');
+  GS_IsParquet = file.name.toLowerCase().endsWith('.parquet');
+  if (GS_IsParquet) {
+    GS_lock('GS_DelimCard');
+    GS_lock('GS_HeaderCard');
+    GS_unlock('GS_BtnLoad');
+    GS_unlock('GS_BtnLoadLoad');
+    GS_HasHeader = true;
+    GS_HeaderSet = true;
+    GS_loadFile();
+  } else {
+    GS_unlock('GS_DelimCard');
+    GS_unlock('GS_BtnLoad');
+    GS_unlock('GS_BtnLoadLoad');
+  }
 }
 
 // ── Save Column Selection ─────────────────────────────────────────────────────
@@ -923,20 +1067,44 @@ function GS_showNameSuggestions(val) {
     const store = JSON.parse(localStorage.getItem(GS_STORAGE_KEY) || '{}');
     const keys  = Object.keys(store).filter(k => !val || k.toLowerCase().includes(val.toLowerCase()));
     if (!keys.length) { box.style.display = 'none'; return; }
-    const inp = document.getElementById('GS_SaveName');
-    const r   = inp ? inp.getBoundingClientRect() : null;
-    if (r) { box.style.left = r.left + 'px'; box.style.top = (r.bottom + 2) + 'px'; box.style.width = r.width + 'px'; }
-    box.style.display = '';
     box.innerHTML = keys.map(k =>
-      `<div onclick="document.getElementById('GS_SaveName').value='${k.replace(/'/g,"\\'")}';document.getElementById('GS_NameSuggestions').style.display='none';if(_GS_loadSelectActive){_GS_loadSelectActive=false;document.getElementById('GS_LoadFileInput').click();}else{GS_loadConfig();}"
+      `<div onclick="document.getElementById('GS_SaveName').value='${k.replace(/'/g,"\\'")}';document.getElementById('GS_NameSuggestions').style.display='none';if(_GS_loadSelectActive){_GS_loadSelectActive=false;document.getElementById('GS_LoadFileInput').click();}"
         style="padding:7px 12px;cursor:pointer;font-size:0.72rem;color:var(--color-header-title);border-bottom:0.5px solid var(--color-card-border);"
         onmouseover="this.style.background='var(--color-nav-hover)'" onmouseout="this.style.background=''">
         ${k}
       </div>`
     ).join('');
+    function _pos() {
+      const inp = document.getElementById('GS_SaveName');
+      if (!inp || box.style.display === 'none') return;
+      const r      = inp.getBoundingClientRect();
+      const dropH  = Math.min(160, box.scrollHeight || 160);
+      const below  = window.innerHeight - r.bottom;
+      box.style.left  = r.left + 'px';
+      box.style.width = r.width + 'px';
+      if (below < dropH && r.top > dropH) {
+        box.style.top           = '';
+        box.style.bottom        = (window.innerHeight - r.top) + 'px';
+        box.style.borderTop     = '1px solid var(--brand-dm)';
+        box.style.borderBottom  = 'none';
+        box.style.borderRadius  = 'var(--dml-radius) var(--dml-radius) 0 0';
+      } else {
+        box.style.bottom        = '';
+        box.style.top           = r.bottom + 'px';
+        box.style.borderTop     = 'none';
+        box.style.borderBottom  = '1px solid var(--brand-dm)';
+        box.style.borderRadius  = '0 0 var(--dml-radius) var(--dml-radius)';
+      }
+    }
+    _pos();
+    box.style.display = '';
+    _pos(); // re-run after display so scrollHeight is accurate
+    window.addEventListener('scroll', _pos, { capture: true, passive: true });
     setTimeout(() => document.addEventListener('click', function _c(e) {
       if (!e.target.closest('#GS_NameSuggestions') && !e.target.closest('#GS_SaveName')) {
-        box.style.display = 'none'; document.removeEventListener('click', _c);
+        box.style.display = 'none';
+        document.removeEventListener('click', _c);
+        window.removeEventListener('scroll', _pos, { capture: true });
       }
     }), 0);
   } catch(e) {}
@@ -1000,8 +1168,16 @@ async function GS_onLoadFilePicked(event) {
   GS_UploadedFile = file;
   GS_RegisteredName = null;
   _GS_setFileLabel(file);
+  GS_IsParquet = file.name.toLowerCase().endsWith('.parquet');
   GS_log('File selected: ' + file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)', 'info');
-  GS_unlock('GS_DelimCard');
+  if (GS_IsParquet) {
+    GS_lock('GS_DelimCard');
+    GS_lock('GS_HeaderCard');
+    GS_HasHeader = true;
+    GS_HeaderSet = true;
+  } else {
+    GS_unlock('GS_DelimCard');
+  }
   GS_unlock('GS_BtnLoad');
   GS_unlock('GS_BtnLoadLoad');
   await GS_loadConfig();
@@ -1042,6 +1218,19 @@ async function GS_loadConfig() {
   GS_unlock('GS_HeaderCard');
   GS_log(`Delimiter: ${sep}, Header: ${hasHeader ? 'Yes' : 'No'}`, 'info');
   await GS_loadFile();
+
+  // Column mismatch check — selected config cols must exist in the file
+  const _selectedCols = Object.entries(config.Columns || {})
+    .filter(([, e]) => e['Select Columns']?.Status === 'Selected')
+    .map(([col]) => col);
+  const _missingCols = _selectedCols.filter(col => !GS_AllColumns.includes(col));
+  if (_missingCols.length) {
+    GS_showErrorBadge(`Column mismatch — not in file: ${_missingCols.join(', ')}`);
+    GS_log(`Column mismatch: ${_missingCols.join(', ')}`, 'error');
+    GS_logGroupEnd();
+    return;
+  }
+
   GS_applyConfig(config);
   await GS_buildConfigTables(config);
   GS_logGroupEnd();
@@ -1104,14 +1293,20 @@ function GS_applyConfig(config) {
 async function GS_buildConfigTables(config) {
   if (!config?.Columns) return;
   try {
+    const _gsBuildStart = performance.now();
     const conn    = await GS_getDB();
     const typeMap = { 'STRING':'VARCHAR','INTEGER':'BIGINT','INT':'BIGINT','BIGINT':'BIGINT','FLOAT':'DOUBLE','DOUBLE':'DOUBLE','DECIMAL':'DOUBLE','DATE':'DATE','TIMESTAMP':'TIMESTAMP','TIME':'TIME','BOOLEAN':'BOOLEAN','BOOL':'BOOLEAN','VARCHAR':'VARCHAR' };
 
     // Get actual columns in dataRaw
-    const delim  = (!GS_Delimiter || GS_Delimiter === 'auto') ? '' : `, delim='${GS_Delimiter}'`;
-    const header = GS_HasHeader ? ', header=true' : ', header=false';
-    const rawSrc = `read_csv_auto('dataRaw'${delim}${header}, ignore_errors=true)`;
-    const schema = await conn.query(`DESCRIBE SELECT * FROM ${rawSrc} LIMIT 0`);
+    let rawSrc;
+    if (GS_IsParquet) {
+      rawSrc = `read_parquet('dataRaw')`;
+    } else {
+      const delim  = (!GS_Delimiter || GS_Delimiter === 'auto') ? '' : `, delim='${GS_Delimiter}'`;
+      const header = GS_HasHeader ? ', header=true' : ', header=false';
+      rawSrc = `read_csv_auto('dataRaw'${delim}${header}, ignore_errors=true)`;
+    }
+    const schema = await conn.query(`DESCRIBE data100`);
     const fileCols = new Set(schema.toArray().map(r => String(r.column_name ?? '')));
 
     const exprs = [];
@@ -1138,15 +1333,28 @@ async function GS_buildConfigTables(config) {
     if (!exprs.length) return;
     const sel = exprs.join(', ');
     GS_log('Building data100 (100 rows, config columns)…', 'info');
+    GS_showLoadingBadge('Applying column config…');
     await conn.query(`CREATE OR REPLACE TABLE data100 AS SELECT ${sel} FROM ${rawSrc} LIMIT 100`);
     GS_log('data100 ready', 'success');
+    GS_log('Building data_sample (100K rows, config columns)…', 'info');
+    GS_showLoadingBadge('Building sample dataset…');
+    await conn.query(`CREATE OR REPLACE TABLE data_sample AS SELECT ${sel} FROM ${rawSrc} LIMIT 100000`);
+    GS_log('data_sample ready (100K rows in RAM — used by Set Parameters)', 'success');
     GS_log('Building data101 (full data, config columns)…', 'info');
-    await conn.query(`CREATE OR REPLACE TABLE data101 AS SELECT ${sel} FROM ${rawSrc}`);
-    GS_log('data101 ready', 'success');
-    window.LD_getConn   = () => _GS_conn;
-    window.LD_getSource = () => 'data101';
-    if (typeof window.LD_UnlockSP === 'function') window.LD_UnlockSP();
-    GS_log('data100 + data101 ready', 'success');
+    GS_showLoadingBadge('Creating dataset view…');
+    await conn.query(`CREATE OR REPLACE VIEW data101 AS SELECT ${sel} FROM ${rawSrc}`);
+    GS_log('data101 view ready (lazy — reads on query)', 'success');
+    const _gsRowRes  = await conn.query(`SELECT COUNT(*) AS n FROM ${rawSrc}`);
+    const _gsRows    = Number(_gsRowRes.toArray()[0].n);
+    const _gsCols    = exprs.length;
+    const _gsBuildMs = ((performance.now() - _gsBuildStart) / 1000).toFixed(2);
+    GS_log(`data101 — ${_gsRows.toLocaleString()} rows · ${_gsCols} cols · ${_gsBuildMs}s`);
+    GS_showDataReadyBadge(_gsRows, _gsCols, _gsBuildMs);
+    window.LD_getConn         = () => _GS_conn;
+    window.LD_getSource       = () => 'data101';
+    window.LD_getSampleSource = () => 'data_sample';
+    if (typeof window.NAV_UnlockSP === 'function') window.NAV_UnlockSP();
+    GS_log('data100 + data_sample + data101 ready', 'success');
   } catch(e) { GS_log('Error building tables: ' + e.message, 'error'); console.error('[GS_buildConfigTables]', e); }
 }
 

@@ -1,5 +1,48 @@
 // ── Playground ───────────────────────────────────────────────────────────────
 
+// ── Info popup (Playground-only) ─────────────────────────────────────────────
+function MN_infoOpen(btn, title, text) {
+  const popup = document.getElementById('MN_InfoPopup');
+  if (!popup) return;
+  document.getElementById('MN_InfoTitle').textContent = title;
+  document.getElementById('MN_InfoBody').innerHTML    = text;
+  const color = getComputedStyle(btn).color;
+  const inner = popup.querySelector('.mn-info-popup');
+  if (inner) inner.style.borderTopColor = color;
+  const titleEl = document.getElementById('MN_InfoTitle');
+  if (titleEl) titleEl.style.color = color;
+  popup.style.visibility = 'hidden';
+  popup.style.display    = 'block';
+  popup.style.top = popup.style.bottom = popup.style.left = popup.style.right = '';
+  const pH = popup.offsetHeight, pW = popup.offsetWidth;
+  popup.style.visibility = '';
+  const r = btn.getBoundingClientRect(), gap = 8;
+  const spaceBelow = window.innerHeight - r.bottom - gap, spaceAbove = r.top - gap;
+  const spaceRight = window.innerWidth - r.left,          spaceLeft  = r.right;
+  if (spaceBelow >= pH || spaceBelow >= spaceAbove) {
+    popup.style.top = (r.bottom + gap) + 'px'; popup.style.bottom = '';
+  } else {
+    popup.style.bottom = (window.innerHeight - r.top + gap) + 'px'; popup.style.top = '';
+  }
+  if (spaceRight >= pW || spaceRight >= spaceLeft) {
+    popup.style.left = r.left + 'px'; popup.style.right = '';
+  } else {
+    popup.style.right = (window.innerWidth - r.right) + 'px'; popup.style.left = '';
+  }
+  setTimeout(() => document.addEventListener('click', _MN_infoOutside), 0);
+  window.addEventListener('scroll', MN_infoClose, { once: true, capture: true });
+}
+function _MN_infoOutside(e) {
+  const popup = document.getElementById('MN_InfoPopup');
+  if (popup && !popup.contains(e.target) && !e.target.classList.contains('MN_info_btn'))
+    MN_infoClose();
+}
+function MN_infoClose() {
+  const popup = document.getElementById('MN_InfoPopup');
+  if (popup) popup.style.display = 'none';
+  document.removeEventListener('click', _MN_infoOutside);
+}
+
 // ── Nav scroll indicators ─────────────────────────────────────────────────────
 (function () {
   function _inject() {

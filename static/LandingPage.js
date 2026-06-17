@@ -1,21 +1,9 @@
 // ── Landing Page — Brand Colours, Tutorial Button & Tour ─────────────────────
+console.log('%c[LP] script loaded', 'color:#0D9488;font-weight:600;');
 
-const _LP_LOG_STYLES = {
-  info:    'background:#FEF3C7;color:#92400E;padding:2px 6px;border-radius:3px;font-weight:600;',
-  success: 'background:#DCFCE7;color:#15803D;padding:2px 6px;border-radius:3px;font-weight:600;',
-  warn:    'background:#FEF9C3;color:#A16207;padding:2px 6px;border-radius:3px;font-weight:600;',
-  error:   'background:#FEE2E2;color:#B91C1C;padding:2px 6px;border-radius:3px;font-weight:600;',
-  step:    'background:#F0A500;color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;',
-};
-function LP_log(msg, type = 'info') {
-  const style = _LP_LOG_STYLES[type] || _LP_LOG_STYLES.info;
-  const label = type === 'step' ? '▶ LP' : 'LP';
-  console.log(`%c${label}%c ${msg}`, style, 'color:inherit;');
-}
-function LP_logGroup(title) {
-  console.groupCollapsed(`%c▶ LP%c ${title}`, _LP_LOG_STYLES.step, 'color:inherit;font-weight:600;');
-}
-function LP_logGroupEnd() { console.groupEnd(); }
+function LP_log(msg)        { console.log('[LP]', msg); }
+function LP_logGroup(title) { console.groupCollapsed('[LP]', title); }
+function LP_logGroupEnd()   { console.groupEnd(); }
 
 const _LP_BRAND_COLORS = {
   'nav-get-started':         { color: '#E8714A', dim: 'rgba(232,113,74,0.12)', border: 'rgba(232,113,74,0.3)' },
@@ -43,6 +31,41 @@ function LP_setBrandColor(navId) {
 }
 
 LP_setBrandColor(null);
+
+window.addEventListener('load', function() {
+  const _LP_MODULES = [
+    { name: 'Sidebar',            fn: 'Sidebar_SetActive' },
+    { name: 'LoadData',           fn: 'LD_getConn' },
+    { name: 'GetStarted',         fn: 'GS_Open' },
+    { name: 'ColumnManagement',   fn: 'CM_Open' },
+    { name: 'SetParameters',      fn: 'SP_Open' },
+    { name: 'Overview',           fn: 'OV_Open' },
+    { name: 'ScoreAnalysis',      fn: 'SA_Open' },
+    { name: 'ScoreComparison',    fn: 'SC_Open' },
+    { name: 'IndividualAnalysis', fn: 'IA_Open' },
+    { name: 'RouteAnalysis',      fn: 'RA_Open' },
+    { name: 'PolicyRules',        fn: 'PR_Open' },
+    { name: 'SpikeReport',        fn: 'SR_Open' },
+    { name: 'Playground',         fn: 'PG_Open' },
+    { name: 'Chart.js',           fn: 'Chart' },
+    { name: 'MiniNav',            fn: 'MN_Open' },
+  ];
+  const results = _LP_MODULES.map(m => ({ ...m, ok: typeof window[m.fn] !== 'undefined' }));
+  const pass = results.filter(r => r.ok).length;
+  const fail = results.filter(r => !r.ok).length;
+  console.group(
+    `%c Fraud Strategy %c v2 June 2026 %c ${pass}/${results.length} ready${fail ? ' · ' + fail + ' missing' : ''}`,
+    'background:#0D9488;color:#fff;padding:2px 8px;border-radius:3px 0 0 3px;font-weight:700;font-size:11px;',
+    'background:#E8714A;color:#fff;padding:2px 8px;font-weight:600;font-size:11px;',
+    fail ? 'color:#ef4444;font-weight:600;font-size:11px;' : 'color:#22c55e;font-weight:600;font-size:11px;'
+  );
+  results.forEach(r => console.log(
+    '%c ' + (r.ok ? '✓' : '✗') + ' %c ' + r.name,
+    r.ok ? 'color:#22c55e;font-weight:700;' : 'color:#ef4444;font-weight:700;',
+    'color:inherit;'
+  ));
+  console.groupEnd();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   LP_log('DOMContentLoaded — patching Sidebar_SetActive', 'info');

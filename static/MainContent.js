@@ -88,15 +88,18 @@ function App_TutorialPrompt() {
 function App_HideAllViews() {
   if (typeof TT_dismiss === 'function') TT_dismiss();
   document.body.classList.remove('gs-active', 'sp-active');
-  if (typeof GS_tourDismiss === 'function') GS_tourDismiss();
-  if (typeof SP_tourDismiss === 'function') SP_tourDismiss();
+  if (typeof GS_tourDismiss   === 'function') GS_tourDismiss();
+  if (typeof SP_tourDismiss   === 'function') SP_tourDismiss();
+  if (typeof SA_tourDismiss   === 'function') SA_tourDismiss();
+  if (typeof SC_tourDismiss   === 'function') SC_tourDismiss();
+  if (typeof RA_tourDismiss === 'function') RA_tourDismiss();
   document.querySelectorAll('.main > *').forEach(el => {
     el.classList.remove('visible');
     el.style.setProperty('display', 'none', 'important');
   });
-  document.querySelector('.shell')?.classList.remove('anra-active', 'sa-active', 'sc-active', 'ia-active', 'pr-active');
+  document.querySelector('.shell')?.classList.remove('ra-active', 'sa-active', 'sc-active', 'ia-active', 'pr-active', 'pu-active', 'rd-active');
   document.querySelector('.shell')?.classList.remove('pg-active');
-  ['ANRA_MiniNav', 'IA_MiniNav', 'SA_MiniNav', 'SC_MiniNav', 'PR_MiniNav', 'PG_MiniNav'].forEach(id => {
+  ['RA_MiniNav', 'IA_MiniNav', 'SA_MiniNav', 'SC_MiniNav', 'PR_MiniNav', 'PG_MiniNav', 'PU_MiniNav', 'RD_MiniNav'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
@@ -119,20 +122,24 @@ function PR_Open() {
   document.getElementById('PRView').style.display = '';
   document.getElementById('PR_MiniNav').style.display = 'flex';
   Sidebar_SetActive('nav-policy-rules');
+  const shell = document.querySelector('.shell');
+  if (!shell.classList.contains('sidebar-hidden')) shell.classList.add('sidebar-hidden');
   PR_MiniNav_RenderParams();
   if (typeof PR_MiniNav_PopulateCols === 'function') PR_MiniNav_PopulateCols();
 }
 
 function RA_Open() {
   App_HideAllViews();
-  document.querySelector('.shell').classList.add('anra-active');
+  document.querySelector('.shell').classList.add('ra-active');
   document.getElementById('RAView').style.display = '';
-  document.getElementById('ANRA_MiniNav').style.display = 'flex';
+  document.getElementById('RA_MiniNav').style.display = 'flex';
   Sidebar_SetActive('nav-route-analysis');
-  ANRA_MiniNav_RenderParams();
-  ANRA_MiniNav_PopulateCols();
-  if (typeof ANRA_RefreshRouteBtns    === 'function') ANRA_RefreshRouteBtns();
-  if (typeof ANRA_MiniNav_OpenDefaults === 'function') ANRA_MiniNav_OpenDefaults();
+  const shell = document.querySelector('.shell');
+  if (!shell.classList.contains('sidebar-hidden')) shell.classList.add('sidebar-hidden');
+  RA_MiniNav_RenderParams();
+  RA_MiniNav_PopulateCols();
+  if (typeof RA_RefreshRouteBtns    === 'function') RA_RefreshRouteBtns();
+  if (typeof RA_MiniNav_OpenDefaults === 'function') RA_MiniNav_OpenDefaults();
 }
 
 function App_ShowLanding() {

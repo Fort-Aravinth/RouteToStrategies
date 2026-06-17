@@ -19,6 +19,10 @@ let _SA_G001_Filters = { amt: false, params: {} };
 let _SA_G002_Filters = { amt: false, params: {} };
 let _SA_G003_Filters = { amt: false, params: {} };
 
+let _SA_G001_LastBins = [];
+let _SA_G002_LastBins = [];
+let _SA_G003_LastBins = [];
+
 let _SA_FilterConns = ['AND', 'AND'];
 
 // Nav controls → Nav_ScoreAnalysis.js  /  Toggle functions → Nav.js
@@ -137,6 +141,8 @@ function SA_OnOpen() {
   NAV_SA_RefreshExtraCards();
   NAV_SA_RefreshPresetDropdowns();
   _SA_Bins = [];
+  _SA_G001_LastBins = []; _SA_G002_LastBins = []; _SA_G003_LastBins = [];
+  _NAV_SA_MinMaxCache = {};
   document.getElementById('SA_TopBarRow').style.display    = 'none';
   document.getElementById('SA_ChapterPanel').style.display = 'none';
 }
@@ -180,7 +186,14 @@ async function SA_Run() {
   document.getElementById('SA_TopBarRow').style.display    = 'grid';
   document.getElementById('SA_ChapterPanel').style.display = '';
   SA_SwitchTab(0);
-  SAG001_rerun();
+  const _hasG001Filters = _SA_G001_Filters.amt || Object.values(_SA_G001_Filters.params).some(v => v);
+  if (_hasG001Filters) {
+    SAG001_rerun();
+  } else {
+    _SA_G001_LastBins = _SA_Bins;
+    SA_RenderGraph('g001', 'SAG001_Canvas', _SA_Bins);
+    SAG001_renderSummary(_SA_Bins);
+  }
   SAG002_rerun();
   SAG003_rerun();
 }
@@ -225,7 +238,7 @@ function SA_SetSharedStyle(style) {
   _SA_SharedStyle = style;
   document.querySelectorAll('[id^="SA_StyleBtn_"]').forEach(b => b.classList.remove('active'));
   document.getElementById(`SA_StyleBtn_${style}`)?.classList.add('active');
-  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+  SAG001_renderOnly(); SAG002_renderOnly(); SAG003_renderOnly();
 }
 
 function SA_SetRunBy(mode) {
@@ -234,7 +247,7 @@ function SA_SetRunBy(mode) {
   if (!_SA_RunBy.total && !_SA_RunBy.fraud) _SA_RunBy[mode] = true;
   document.getElementById(`SA_RunByBtn_total`)?.classList.toggle('active', _SA_RunBy.total);
   document.getElementById(`SA_RunByBtn_fraud`)?.classList.toggle('active', _SA_RunBy.fraud);
-  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+  SAG001_renderOnly(); SAG002_renderOnly(); SAG003_renderOnly();
 }
 
 // ── Criteria / Calculate ──────────────────────────────────────────────────────
@@ -242,14 +255,14 @@ function SA_setCriteria(c) {
   _SA_Criteria = c;
   document.querySelectorAll('[id^="SACrit"]').forEach(b => b.classList.remove('active'));
   document.getElementById(`SACrit${c}`)?.classList.add('active');
-  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+  SAG001_renderOnly(); SAG002_renderOnly(); SAG003_renderOnly();
 }
 
 function SA_setCalc(c) {
   _SA_Calc = c;
   document.querySelectorAll('[id^="SACalc"]').forEach(b => b.classList.remove('active'));
   document.getElementById(`SACalc${c}`)?.classList.add('active');
-  SAG001_rerun(); SAG002_rerun(); SAG003_rerun();
+  SAG001_renderOnly(); SAG002_renderOnly(); SAG003_renderOnly();
 }
 
 // ── Per-graph filter toggles ──────────────────────────────────────────────────
@@ -302,6 +315,7 @@ _SA_Charts[key] = new Chart(canvas, {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
+      animation: false,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -349,15 +363,36 @@ _SA_Charts[key] = new Chart(canvas, {
 // ── Individual graph reruns (async — re-query with per-graph filters) ──────────
 async function SAG001_rerun() {
   const bins = await SA_queryBins(_SA_G001_Filters);
+  _SA_G001_LastBins = bins;
   SA_RenderGraph('g001', 'SAG001_Canvas', bins);
   SAG001_renderSummary(bins);
 }
 
 async function SAG002_rerun() {
   const bins     = await SA_queryBins(_SA_G002_Filters);
+  _SA_G002_LastBins = bins;
   const filtered = SA_applyG002Filters(bins);
   SA_RenderGraph('g002', 'SAG002_Canvas', filtered);
   SAG002_renderSummary();
+}
+
+function SAG001_renderOnly() {
+  if (!_SA_G001_LastBins.length) return;
+  SA_RenderGraph('g001', 'SAG001_Canvas', _SA_G001_LastBins);
+  SAG001_renderSummary(_SA_G001_LastBins);
+}
+
+function SAG002_renderOnly() {
+  if (!_SA_G002_LastBins.length) return;
+  const filtered = SA_applyG002Filters(_SA_G002_LastBins);
+  SA_RenderGraph('g002', 'SAG002_Canvas', filtered);
+  SAG002_renderSummary();
+}
+
+function SAG003_renderOnly() {
+  if (!_SA_G003_LastBins.length) return;
+  SA_RenderGraph('g003', 'SAG003_Canvas', _SA_G003_LastBins);
+  SAG003_renderSummary(_SA_G003_LastBins);
 }
 
 function SA_clampMyScore() {
@@ -374,6 +409,7 @@ async function SAG003_rerun() {
   const threshold = parseFloat(document.getElementById('SAMyScore')?.value) || 0;
   const extra     = threshold > 0 ? [`"${_SA_ScoreCol}" >= ${threshold}`] : [];
   const bins      = await SA_queryBins(_SA_G003_Filters, extra);
+  _SA_G003_LastBins = bins;
   SA_RenderGraph('g003', 'SAG003_Canvas', bins);
   SAG003_renderSummary(bins);
 }
@@ -503,7 +539,7 @@ function SA_buildFilterChips(gIdx) {
   }
 
   // Amount filter chip (clickable toggle)
-  const amtCol = g('SAAmountCol');
+  const amtCol = SA_getCSValue('SAAmountColCS');
   if (amtCol) {
     const valStart = g('SAAmountValStart');
     const valEnd   = g('SAAmountValEnd');
@@ -599,7 +635,7 @@ function SA_BuildStrategyJSON(graphIdx) {
   }
 
   // Amount filter
-  const amtCol    = g('SAAmountCol');
+  const amtCol    = SA_getCSValue('SAAmountColCS');
   const amtStart  = g('SAAmountValStart');
   const amtEnd    = g('SAAmountValEnd');
   const fState    = [_SA_G001_Filters, _SA_G002_Filters, _SA_G003_Filters][graphIdx];

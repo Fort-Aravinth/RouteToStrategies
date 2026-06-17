@@ -16,18 +16,32 @@ async function NAV_SC_PopulateColumns() {
   const numTypes = ['INTEGER','BIGINT','DOUBLE','FLOAT','DECIMAL','REAL','HUGEINT','UBIGINT','UINTEGER','SMALLINT','TINYINT'];
   window._NAV_SC_NumCols = cols.filter(c => numTypes.some(t => c.type.startsWith(t))).map(c => c.name);
 
-  NAV_SC_FillSelect('SCAmountCol', window._NAV_SC_NumCols, '— Amount column —');
-
   const params = window.SP_getParams ? window.SP_getParams() : {};
-  const amtEl  = document.getElementById('SCAmountCol');
-  if (amtEl && !amtEl.value) {
-    if (params.amountCol && window._NAV_SC_NumCols.includes(params.amountCol)) {
-      amtEl.value = params.amountCol;
-    } else {
-      const guess = window._NAV_SC_NumCols.find(c => /amount|value|purchase|total|price|sum/i.test(c));
-      if (guess) amtEl.value = guess;
+  const amtMetricCol = params.numeric || '';
+
+  // Query unique counts for all numeric cols in one pass
+  let uniqueCounts = {};
+  try {
+    const countExprs = window._NAV_SC_NumCols.map(c => `COUNT(DISTINCT "${c}") AS "${c}"`).join(', ');
+    const row = (await conn.query(`SELECT ${countExprs} FROM ${src}`)).toArray()[0];
+    window._NAV_SC_NumCols.forEach(c => { uniqueCounts[c] = Number(row[c] ?? 0); });
+  } catch { window._NAV_SC_NumCols.forEach(c => { uniqueCounts[c] = 999; }); }
+
+  // Score cols: exclude SP amount column and low-cardinality cols (< 10 unique)
+  window._NAV_SC_ScoreCols = window._NAV_SC_NumCols.filter(c => c !== amtMetricCol && uniqueCounts[c] >= 10);
+
+  // Amount Filter dropdown — only the SP Amount Metric Column
+  const cs = document.getElementById('SCAmountColCS');
+  if (cs) {
+    const amtInData = amtMetricCol && window._NAV_SC_NumCols.includes(amtMetricCol);
+    cs.querySelector('.cs-options').innerHTML = amtInData
+      ? `<div class="cs-option cs-selected" data-value="${amtMetricCol}" onclick="SC_selectCS(this,'${amtMetricCol}','NAV_SC_OnAmountColChange')">${amtMetricCol}</div>`
+      : `<div class="cs-option" data-value="" style="color:var(--dml-label)">— No amount column set —</div>`;
+    if (amtInData && !SC_getCSValue('SCAmountColCS')) {
+      const opt = cs.querySelector(`.cs-option[data-value="${CSS.escape(amtMetricCol)}"]`);
+      if (opt) SC_selectCS(opt, amtMetricCol, null);
+      NAV_SC_OnAmountColChange();
     }
-    if (amtEl.value) NAV_SC_OnAmountColChange();
   }
 
   // Seed one empty score row on first open
@@ -37,28 +51,25 @@ async function NAV_SC_PopulateColumns() {
   NAV_SC_RenderScoreRows();
 }
 
-function NAV_SC_FillSelect(id, options, placeholder) {
-  const sel = document.getElementById(id);
-  if (!sel) return;
-  const cur = sel.value;
-  sel.innerHTML = `<option value="">${placeholder}</option>` +
-    options.map(o => `<option value="${o}"${o === cur ? ' selected' : ''}>${o}</option>`).join('');
-}
-
 // ── Score row list ─────────────────────────────────────────────────────────────
-// Each row = colour dot + column dropdown + per-column Start/End/Step + remove
 function NAV_SC_RenderScoreRows() {
   const container = document.getElementById('SC_ScoreRows');
   if (!container) return;
-  const numCols = window._NAV_SC_NumCols || [];
+  const numCols = window._NAV_SC_ScoreCols || window._NAV_SC_NumCols || [];
 
   container.innerHTML = _SC_ScoreCols.map((s, i) => `
     <div class="SC_ScoreRow" id="SC_ScoreRow_${i}" style="margin-bottom:8px;">
       <div style="display:flex;gap:var(--MN_gap);align-items:center;margin-bottom:2px;">
-        <select class="MN_ctrl SC_ScoreSelect" style="flex:1;min-width:0;border-color:${s.color} !important;" onchange="NAV_SC_OnScoreChange(${i}, this.value)">
-          <option value="">— Select column —</option>
-          ${numCols.map(c => `<option value="${c}"${c === s.col ? ' selected' : ''}>${c}</option>`).join('')}
-        </select>
+        <div id="SC_ScoreColCS_${i}" class="custom-select" data-value="${s.col || ''}" style="flex:1;min-width:0;">
+          <button type="button" class="cs-trigger" onclick="SC_toggleCS('SC_ScoreColCS_${i}')" style="border-color:${s.color} !important;">
+            <span class="cs-value" style="${s.col ? '' : 'color:var(--dml-label)'}">${s.col || '— Select column —'}</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="cs-options">
+            <div class="cs-option${!s.col ? ' cs-selected' : ''}" data-value="" onclick="NAV_SC_SelectScoreCol(${i},'',this)" style="color:var(--dml-label)">— Select column —</div>
+            ${numCols.map(c => `<div class="cs-option${c === s.col ? ' cs-selected' : ''}" data-value="${c}" onclick="NAV_SC_SelectScoreCol(${i},'${c}',this)">${c}</div>`).join('')}
+          </div>
+        </div>
         ${_SC_ScoreCols.length > 1
           ? `<button class="MN_btn" onclick="NAV_SC_RemoveScore(${i})" title="Remove" style="width:28px !important;padding:0 !important;flex-shrink:0;">×</button>`
           : ''}
@@ -71,6 +82,11 @@ function NAV_SC_RenderScoreRows() {
       </div>
     </div>
   `).join('');
+}
+
+function NAV_SC_SelectScoreCol(i, col, el) {
+  SC_selectCS(el, col, null);
+  NAV_SC_OnScoreChange(i, col);
 }
 
 function NAV_SC_AddScore() {
@@ -141,7 +157,7 @@ async function NAV_SC_OnScoreChange(idx, col) {
 }
 
 async function NAV_SC_OnAmountColChange() {
-  const col  = document.getElementById('SCAmountCol')?.value;
+  const col  = SC_getCSValue('SCAmountColCS');
   const conn = window.LD_getConn ? window.LD_getConn() : null;
   const src  = window.LD_getSource ? window.LD_getSource() : 'cm_data';
   if (col && conn) {
@@ -151,8 +167,8 @@ async function NAV_SC_OnAmountColChange() {
       const mn  = Number(row.mn), mx = Number(row.mx);
       const startEl = document.getElementById('SCAmountValStart');
       const endEl   = document.getElementById('SCAmountValEnd');
-      if (startEl) startEl.value = mn;
-      if (endEl)   endEl.value   = mx;
+      if (startEl) { startEl.placeholder = mn; startEl.value = ''; }
+      if (endEl)   { endEl.placeholder   = mx; endEl.value   = ''; }
     } catch {}
   }
   NAV_SC_AutoRun();
@@ -174,7 +190,17 @@ function NAV_SC_RefreshExtraCards() {
   const makeCard = (key, title, col, aVals, bVals, labelA, labelB) => {
     const btn = (v, group) =>
       `<button class="MN_btn MN_paramVal" onclick="NAV_SC_ToggleParamVal('${key}','${group}','${v}',this)"
-        style="flex:1;min-width:0;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
+        style="flex:0 0 auto;min-width:32px;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
+    const arrowBtn = (dir) =>
+      `<button onmousedown="MN_scrollStart(this.${dir==='left'?'nextElementSibling':'previousElementSibling'},${dir==='left'?-80:80})" onmouseup="MN_scrollStop()" onmouseleave="MN_scrollStop()"
+        style="flex-shrink:0;width:18px;height:24px;background:none;border:0.5px solid var(--color-card-border);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-dim);padding:0;">
+        <svg viewBox="0 0 10 10" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="${dir==='left'?'7 2 3 5 7 8':'3 2 7 5 3 8'}"/>
+        </svg>
+      </button>`;
+    const scrollRow = (btns) => btns
+      ? `<div style="display:flex;align-items:center;gap:3px;">${arrowBtn('left')}<div class="MN_chip_row" style="flex:1;">${btns}</div>${arrowBtn('right')}</div>`
+      : `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
     const aBtns = aVals.map(v => btn(v, 'a')).join('');
     const bBtns = bVals.map(v => btn(v, 'b')).join('');
     const none  = `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
@@ -194,11 +220,11 @@ function NAV_SC_RefreshExtraCards() {
           </div>
           <div class="MN_section_body">
             <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelA}</div>
-            <div style="display:flex;gap:3px;">${aBtns || none}</div>
+            ${scrollRow(aBtns)}
           </div>
           <div class="MN_section_body">
             <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelB}</div>
-            <div style="display:flex;gap:3px;">${bBtns || none}</div>
+            ${scrollRow(bBtns)}
           </div>
         </div>
       </div>`;
@@ -222,9 +248,17 @@ function NAV_SC_RefreshExtraCards() {
   if (window.SC_RefreshChips) SC_RefreshChips();
 }
 
+let _NAV_SC_ParamTimer = null;
 function NAV_SC_ToggleParamVal(key, group, val, btn) {
   btn.classList.toggle('active');
   if (window.SC_RefreshChips) SC_RefreshChips();
+  if (!Object.keys(_SC_BinsMap).length) return;
+  clearTimeout(_NAV_SC_ParamTimer);
+  _NAV_SC_ParamTimer = setTimeout(() => {
+    if (_SC_G001_Filters?.params?.[key]) SCG001_rerun();
+    if (_SC_G002_Filters?.params?.[key]) SCG002_rerun();
+    if (_SC_G003_Filters?.params?.[key]) SCG003_rerun();
+  }, 300);
 }
 
 function NAV_SC_ToggleExtra(key) {
@@ -353,6 +387,19 @@ function SC_infoClose() {
   const popup = document.getElementById('SC_InfoPopup');
   if (popup) popup.style.display = 'none';
   document.removeEventListener('click', _SC_infoOutside);
+}
+
+// ── Amount filter value changed — only re-query graphs where chip is ON ───────
+let _NAV_SC_AmtTimer = null;
+function NAV_SC_AmountChanged() {
+  if (window.SC_RefreshChips) SC_RefreshChips();
+  if (!Object.keys(_SC_BinsMap).length) return;
+  clearTimeout(_NAV_SC_AmtTimer);
+  _NAV_SC_AmtTimer = setTimeout(() => {
+    if (_SC_G001_Filters?.amt) SCG001_rerun();
+    if (_SC_G002_Filters?.amt) SCG002_rerun();
+    if (_SC_G003_Filters?.amt) SCG003_rerun();
+  }, 300);
 }
 
 // ── Auto-run debounce ─────────────────────────────────────────────────────────

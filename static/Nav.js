@@ -1,5 +1,17 @@
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
+// ── Scroll row: press-and-hold ────────────────────────────────────────────────
+let _MN_scrollIv = null;
+function MN_scrollStart(el, delta) {
+  if (!el) return;
+  el.scrollBy({ left: delta, behavior: 'instant' });
+  _MN_scrollIv = setInterval(() => el.scrollBy({ left: delta, behavior: 'instant' }), 80);
+}
+function MN_scrollStop() {
+  clearInterval(_MN_scrollIv);
+  _MN_scrollIv = null;
+}
+
 // ── Available Columns — shared column picker ──────────────────────────────────
 async function MN_PopulateCols(listId) {
   const list = document.getElementById(listId);

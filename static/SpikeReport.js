@@ -14,427 +14,97 @@
       const v = document.getElementById(id);
       if (v) v.style.display = 'none';
     });
+    document.querySelector('.shell')?.classList.remove('sr-panel-active', 'srm-panel-active');
+    SR_tourDismiss();
+    SRM_tourDismiss();
   };
 })();
 
-// ── Spike Report by Merchant ──────────────────────────────────────────────────
+// ── Tutorial ──────────────────────────────────────────────────────────────────
+const _SR_TOUR_STEPS = [
+  { title: 'Load Your Data',     body: 'Load a dataset from the sidebar, then set a <strong>date column</strong> in Set Parameters. The Spike Report uses that column to plot daily transaction volume.' },
+  { title: 'Analysis Window',    body: 'Choose a rolling window — <strong>7, 14, 21 or 28 days</strong>. Use the <strong>← →</strong> arrows to shift the window to earlier periods and compare across time.' },
+  { title: 'Metric',             body: 'Switch between <strong>Total</strong> (all transactions) and <strong>Fraud</strong> (flagged rows only) to see how each metric\'s daily pattern differs.' },
+  { title: 'Reading the Chart',  body: 'Days with more than <strong>1.5× the average</strong> volume are flagged as spikes (⚠) in the table and highlighted in the chart. The peak day and spike count are shown in the summary cards.' },
+];
+let _SR_tourStep    = 0;
+let _SR_tourEnabled = false;
 
-function SRM_OpenPanel() {
-  if (typeof App_HideAllViews === 'function') App_HideAllViews();
-  document.querySelector('.shell')?.classList.add('sr-active');
-  const nav = document.getElementById('SRM_MiniNav');
-  if (nav) { nav.style.removeProperty('display'); nav.style.display = 'flex'; }
-  const view = document.getElementById('SRMView');
-  if (view) view.style.removeProperty('display');
-  Sidebar_SetActive('nav-spike-merchant');
-  SRM_RenderEmpty();
-  SRM_RenderParams();
-  SRM_PopulateCols();
-  SRM_RefreshExtraCards();
-  MN_initScrollArrows('SRM_MiniNav');
-}
-
-function SRM_RenderEmpty() {
-  const view = document.getElementById('SRMView');
-  if (!view) return;
-  view.innerHTML = `
-    <div class="pg-layout-row">
-      <div class="pg-card">
-        <div class="pg-card-header">
-          <span class="pg-card-title">Spike Report by Merchant</span>
-          <span class="pg-card-label">select a column in Available Columns to begin</span>
+function SR_tourShow(step) {
+  _SR_tourStep = step;
+  const s = _SR_TOUR_STEPS[step];
+  if (!s) { SR_tourDismiss(); return; }
+  const total = _SR_TOUR_STEPS.length;
+  let el = document.getElementById('SR_TourCard');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'SR_TourCard';
+    el.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `
+    <div class="gs-toast" id="SR_TourInner" style="border-left-color:var(--brand-dm);">
+      <div class="gs-tab-strip" onclick="SR_tourTabExpand()" title="Expand">
+        <span class="gs-tab-arrow">›</span>
+        <span class="gs-tab-label">Step ${step+1} of ${total}</span>
+      </div>
+      <div class="gs-toast-inner">
+        <div class="gs-toast-header">
+          <div>
+            <div class="gs-toast-step" style="color:var(--brand-dm);">Step ${step+1} of ${total}</div>
+            <div class="gs-toast-title">${s.title}</div>
+          </div>
+          <button class="gs-toast-btn-collapse" onclick="SR_tourTabCollapse()" title="Collapse to tab" style="background:var(--brand-dm-dim);border-color:var(--brand-dm);color:var(--brand-dm);">
+            <svg viewBox="0 0 16 16" width="10" height="10" fill="none"><path d="M10 3H13V13H10M6 8H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-        <div class="pg-card-divider"></div>
-        <div class="pg-card-body">
-          <div class="SR_empty">Select one or more columns from <strong>Available Columns</strong> in the nav panel to run the breakdown.</div>
+        <div class="gs-toast-body">${s.body}</div>
+        <div class="gs-toast-actions">
+          <button class="gs-toast-btn-back" onclick="SR_tourShow(_SR_tourStep - 1)" style="${step === 0 ? 'visibility:hidden;' : ''}">← Back</button>
+          <button class="gs-toast-btn-next" onclick="SR_tourNext()" style="background:var(--brand-dm);">${step+1 < total ? 'Next →' : 'Finish ✓'}</button>
         </div>
       </div>
     </div>`;
 }
 
-async function SRM_RunAnalysis({ cols, winSize, offset = 0, metric }) {
-  const conn = window.LD_getConn?.() || window._SR_demoConn;
-  const src  = window.LD_getSource?.() || window._SR_demoSrc;
-  const view = document.getElementById('SRMView');
-  if (!conn || !src || !view) return;
-
-  const params   = window.SP_getParams?.() || {};
-  const dateCol  = params.auth_date || params.combined_datetime || (window._SR_demoSrc ? 'transaction_date' : null);
-  const fraudCol = params.col1      || (window._SR_demoSrc ? 'fraud_flag'       : '');
-  const fraudVals= params.values    || (window._SR_demoSrc ? ['1']              : []);
-
-  if (!dateCol) { SRM_RenderEmpty(); return; }
-  if (!cols || !cols.length) { SRM_RenderEmpty(); return; }
-
-  SR_DestroyCharts();
-
-  const days = parseInt(winSize, 10);
-  const fraudCase = (fraudCol && fraudVals.length)
-    ? `SUM(CASE WHEN CAST("${fraudCol}" AS VARCHAR) IN (${fraudVals.map(v=>`'${v.replace(/'/g,"''")}'`).join(',')}) THEN 1 ELSE 0 END)`
-    : '0';
-  const fraudClause = '';
-
-  const cards = [];
-  for (const col of cols) {
-    const safeCol = col.replace(/'/g, "''");
-    // Summary table query
-    const sql = `
-      WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
-      SELECT
-        CAST("${safeCol}" AS VARCHAR)                              AS grp,
-        COUNT(*)                                                   AS total,
-        ${fraudCase}                                               AS fraud,
-        ROUND(100.0 * ${fraudCase} / NULLIF(COUNT(*), 0), 1)      AS fraud_rate
-      FROM ${src}, _max
-      WHERE TRY_CAST("${dateCol}" AS DATE) >  d - INTERVAL '${days + offset} days'
-        AND TRY_CAST("${dateCol}" AS DATE) <= d - INTERVAL '${offset} days'
-      GROUP BY grp
-      ORDER BY ${metric === 'fraud' ? 'fraud' : 'total'} DESC
-      LIMIT 50`;
-    try {
-      const res  = await conn.query(sql);
-      const rows = res.toArray().map(r => ({
-        grp:        String(r.grp ?? '—'),
-        total:      Number(r.total),
-        fraud:      Number(r.fraud),
-        fraud_rate: Number(r.fraud_rate),
-      }));
-      if (!rows.length) continue;
-      // Time-series query (top 8 values, daily counts)
-      const tsRows = await SR_QueryBreakdown({ conn, src, dateCol, col, winSize, offset, fraudClause, addClause: '' });
-      cards.push({ col, rows, tsRows: tsRows || [] });
-    } catch (e) { console.warn('SRM query failed for', col, e.message); }
-  }
-
-  // update window range display
-  if (typeof SRM_UpdateWindowRange === 'function') {
-    try {
-      const rangeSql = `
-        WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
-        SELECT
-          CAST((SELECT d FROM _max) - INTERVAL '${days + offset} days' AS VARCHAR) AS start_d,
-          CAST((SELECT d FROM _max) - INTERVAL '${offset} days'        AS VARCHAR) AS end_d`;
-      const rr = (await conn.query(rangeSql)).toArray()[0];
-      SRM_UpdateWindowRange(String(rr.start_d), String(rr.end_d));
-    } catch {}
-  }
-
-  if (!cards.length) { SRM_RenderEmpty(); return; }
-
-  const winLabel    = winSize + 'd';
-  const metricLabel = metric === 'fraud' ? 'Fraud' : 'Total';
-
-  view.innerHTML = cards.map(({ col, rows, tsRows }, i) => {
-    const chartGroups = new Set(tsRows.map(r => r.grp));
-    const visibleRows = tsRows.length ? rows.filter(r => chartGroups.has(r.grp)) : rows;
-    const tableRows = visibleRows.map((r, j) => `
-      <tr>
-        <td style="font-weight:500;">${j + 1}</td>
-        <td>${r.grp}</td>
-        <td>${r.total.toLocaleString()}</td>
-        <td>${r.fraud.toLocaleString()}</td>
-        <td>${r.fraud_rate > 0 ? r.fraud_rate.toFixed(1) + '%' : '—'}</td>
-      </tr>`).join('');
-    return `
-      <div class="pg-layout-row">
-        <div class="pg-card">
-          <div class="pg-card-header">
-            <span class="pg-card-title">By ${col}</span>
-            <span class="pg-card-label">top 8 · ${winLabel} · ${metricLabel}</span>
-          </div>
-          <div class="pg-card-divider"></div>
-          <div class="pg-card-body">
-            <div class="SR_chart_wrap"><canvas id="SRM_Canvas_${i}"></canvas></div>
-          </div>
-          <div class="pg-card-divider"></div>
-          <div class="pg-card-body">
-            <div class="pg-table-wrap" style="max-height:360px;overflow-y:auto;">
-              <table class="pg-table">
-                <thead style="position:sticky;top:0;z-index:1;"><tr>
-                  <th>#</th><th>Value</th><th>Total</th><th>Fraud</th><th>Fraud Rate</th>
-                </tr></thead>
-                <tbody>${tableRows}</tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-
-  cards.forEach(({ tsRows }, i) => {
-    if (tsRows.length) SR_DrawBreakdownChart(`SRM_Canvas_${i}`, tsRows);
-  });
-}
-
-// ── Available Columns ─────────────────────────────────────────────────────────
-let _SRM_ColsOpen = true;
-function SRM_ToggleCols() {
-  _SRM_ColsOpen = !_SRM_ColsOpen;
-  const body    = document.getElementById('SRM_ColsBody');
-  const chevron = document.getElementById('SRM_ColsChevron');
-  if (body)    body.style.display      = _SRM_ColsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _SRM_ColsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-  if (_SRM_ColsOpen) _navScrollOnExpand(document.getElementById('SRM_ColsSection'), document.getElementById('SRM_MiniNav'));
-}
-
-async function SRM_PopulateCols() {
-  const conn = window.LD_getConn?.() || window._SR_demoConn;
-  const src  = window.LD_getSource?.() || window._SR_demoSrc;
-  const list = document.getElementById('SRM_ColsList');
-  if (!list) return;
-  if (!conn || !src) { MN_PopulateCols('SRM_ColsList'); return; }
-  try {
-    const res  = await conn.query(`DESCRIBE ${src}`);
-    const _strTypes = /^(VARCHAR|TEXT|CHAR|STRING|BLOB|JSON|ENUM|HUGEVARCHAR)/i;
-    const cols = res.toArray()
-      .filter(r => _strTypes.test(r.column_type))
-      .map(r => r.column_name);
-    list.innerHTML = cols.map(c => `
-      <button class="MN_chip MN_chip--col MN_chip--a" onclick="this.classList.toggle('active');SRM_Run()" title="${c}">${c}</button>
-    `).join('');
-  } catch { MN_PopulateCols('SRM_ColsList'); }
-}
-function SRM_SelectAllCols() { MN_SelectAllCols('SRM_ColsList'); }
-function SRM_ClearCols()     { MN_ClearCols('SRM_ColsList'); }
-function SRM_GetSelectedCols() { return MN_GetSelectedCols('SRM_ColsList'); }
-
-// ── Analysis Window ───────────────────────────────────────────────────────────
-let _SRM_WindowOpen = true;
-function SRM_ToggleWindow() {
-  _SRM_WindowOpen = !_SRM_WindowOpen;
-  const body    = document.getElementById('SRM_WindowBody');
-  const chevron = document.getElementById('SRM_WindowChevron');
-  if (body)    body.style.display      = _SRM_WindowOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _SRM_WindowOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-
-let _SRM_Window = '7';
-let _SRM_Offset = 0;
-
-function SRM_SetWindow(val, btn) {
-  _SRM_Window = val;
-  _SRM_Offset = 0;
-  document.querySelectorAll('#SRM_WindowBtns .MN_btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  SRM_Run();
-}
-
-function SRM_ShiftWindow(dir) {
-  _SRM_Offset = Math.max(0, _SRM_Offset - dir);
-  const nextBtn = document.getElementById('SRM_WinNext');
-  if (nextBtn) nextBtn.disabled = _SRM_Offset === 0;
-  SRM_Run();
-}
-
-function SRM_UpdateWindowRange(start, end) {
-  const el = document.getElementById('SRM_WinRange');
-  if (el) el.textContent = start && end ? `${start} → ${end}` : '—';
-  const nextBtn = document.getElementById('SRM_WinNext');
-  if (nextBtn) nextBtn.disabled = _SRM_Offset === 0;
-}
-
-let _SRM_Metric = 'total';
-function SRM_SetMetric(val, btn) {
-  _SRM_Metric = val;
-  document.querySelectorAll('#SRM_MetricBtns .MN_btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  SRM_Run();
-}
-
-function SRM_Run() {
-  const cols    = SRM_GetSelectedCols();
-  const winSize = _SRM_Window;
-  const offset  = _SRM_Offset;
-  const metric  = _SRM_Metric;
-  if (typeof SRM_RunAnalysis === 'function') SRM_RunAnalysis({ cols, winSize, offset, metric });
-}
-
-let _SRM_ParamsOpen = false;
-function SRM_ToggleParams() {
-  _SRM_ParamsOpen = !_SRM_ParamsOpen;
-  const body    = document.getElementById('SRM_ParamsBody');
-  const chevron = document.getElementById('SRM_ParamsChevron');
-  if (body)    body.style.display      = _SRM_ParamsOpen ? 'block' : 'none';
-  if (chevron) chevron.style.transform = _SRM_ParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-
-function SRM_RenderParams() {
-  if (typeof SP_RenderParamsTo === 'function') SP_RenderParamsTo('SRM_ParamsDisplay', 'srm');
-}
-
-// ── Extra param cards (Decision Mode + custom cards) ─────────────────────────
-function SRM_RefreshExtraCards() {
-  const p  = window.SP_getParams ? window.SP_getParams() : {};
-  const el = document.getElementById('SRM_ExtraCards');
+function SR_tourTabCollapse() {
+  const el = document.getElementById('SR_TourInner');
   if (!el) return;
+  const rect = el.getBoundingClientRect();
+  el.style.top    = '';
+  el.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+  el.classList.add('gs-tabbed');
+  const strip = el.querySelector('.gs-tab-strip');
+  if (strip) strip.style.height = rect.height + 'px';
+}
 
-  const makeCard = (key, title, col, aVals, bVals, labelA, labelB) => {
-    const btn = (v, group) =>
-      `<button class="MN_btn MN_paramVal" onclick="SRM_ToggleParamVal('${key}','${group}','${v}',this)"
-        style="flex:1;min-width:0;height:24px;padding:0 4px;font-size:0.62rem;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v}</button>`;
-    const aBtns = aVals.map(v => btn(v, 'a')).join('');
-    const bBtns = bVals.map(v => btn(v, 'b')).join('');
-    const none  = `<span style="font-size:0.62rem;color:var(--color-text-dim);">None</span>`;
-    return `
-      <div class="MN_divider"></div>
-      <div id="SRM_ExtraSection_${key}">
-        <div onclick="SRM_ToggleExtra('${key}')" class="MN_section_hdr">
-          <span class="MN_title">${title}</span>
-          <svg id="SRM_ExtraChevron_${key}" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
-            <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-dim);"/>
-          </svg>
-        </div>
-        <div id="SRM_ExtraBody_${key}" style="display:block;">
-          <div class="MN_section_body">
-            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">Column</div>
-            <div style="font-size:0.68rem;color:var(--color-text-dim);background:var(--color-card-bg);border:1px solid var(--color-card-border);border-radius:5px;padding:0 8px;height:28px;display:flex;align-items:center;">${col}</div>
-          </div>
-          <div class="MN_section_body">
-            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelA}</div>
-            <div style="display:flex;gap:3px;">${aBtns || none}</div>
-          </div>
-          <div class="MN_section_body">
-            <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-dim);margin-bottom:5px;">${labelB}</div>
-            <div style="display:flex;gap:3px;">${bBtns || none}</div>
-          </div>
-        </div>
-      </div>`;
-  };
+function SR_tourTabExpand() {
+  const el = document.getElementById('SR_TourInner');
+  if (!el) return;
+  el.style.top = el.style.bottom = '';
+  el.classList.remove('gs-tabbed');
+}
 
-  let html = '';
-  const dm = p.decisionMode;
-  if (dm?.col) {
-    html += makeCard('dm', 'Decision Mode', dm.col,
-      dm.assigned?.successful   || [],
-      dm.assigned?.unsuccessful || [],
-      'Successful', 'Unsuccessful');
+function SR_tourNext() { SR_tourShow(_SR_tourStep + 1); }
+
+function SR_tourDismiss() {
+  document.getElementById('SR_TourCard')?.remove();
+  _SR_tourEnabled = false;
+  document.getElementById('SR_HelpBtn')?.classList.remove('tutorial-active');
+}
+
+function SR_HelpPrompt() {
+  _SR_tourEnabled = !_SR_tourEnabled;
+  document.getElementById('SR_HelpBtn')?.classList.toggle('tutorial-active', _SR_tourEnabled);
+  if (_SR_tourEnabled) {
+    SR_tourShow(0);
+  } else {
+    SR_tourDismiss();
   }
-  (p.customCards || []).forEach((card, i) => {
-    html += makeCard(`custom_${i}`, card.name || 'Custom', card.col || '—',
-      card.assigned?.a || [], card.assigned?.b || [],
-      card.labelA || 'A', card.labelB || 'B');
-  });
-
-  el.innerHTML = html;
 }
 
-function SRM_ToggleParamVal(key, group, val, btn) {
-  btn.classList.toggle('active');
-}
+if (typeof App_RegisterTutorial === 'function') App_RegisterTutorial('sr-active', SR_HelpPrompt);
 
-function SRM_ToggleExtra(key) {
-  const body    = document.getElementById(`SRM_ExtraBody_${key}`);
-  const chevron = document.getElementById(`SRM_ExtraChevron_${key}`);
-  if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display    = open ? 'none' : 'block';
-  if (chevron) chevron.style.transform = open ? 'rotate(0deg)' : 'rotate(90deg)';
-}
-
-// ── Overview: Weekday Pattern console ────────────────────────────────────────
-let _OV_WD_ChartType = 'bar';
-let _OV_WD_Chart     = null;
-
-;(function () {
-  const _orig = typeof window.OV_OpenPanel === 'function' ? window.OV_OpenPanel : null;
-  window.OV_OpenPanel = function () {
-    if (_orig) _orig.apply(this, arguments);
-    OV_WD_Run();
-  };
-})();
-
-function OV_WD_SetType(val, btn) {
-  _OV_WD_ChartType = val;
-  document.querySelectorAll('#OV_WD_TypeBtns .pg-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  OV_WD_Run();
-}
-
-async function OV_WD_Run() {
-  const conn = window.LD_getConn?.();
-  const src  = window.LD_getSource?.();
-  if (!conn || !src) return;
-
-  const params    = window.SP_getParams?.() || {};
-  const dateCol   = params.auth_date || params.combined_datetime;
-  if (!dateCol) return;
-
-  const fraudCol  = params.col1   || '';
-  const fraudVals = params.values || [];
-
-  const dayQuery = (extra = '') => `
-    SELECT DAYNAME(TRY_CAST("${dateCol}" AS DATE)) AS period,
-           ISODOW(TRY_CAST("${dateCol}" AS DATE))  AS sort_key,
-           COUNT(*) AS cnt
-    FROM ${src}
-    WHERE TRY_CAST("${dateCol}" AS DATE) IS NOT NULL ${extra}
-    GROUP BY period, sort_key ORDER BY sort_key`;
-
-  let totalRows = [], fraudRows = [];
-  try {
-    const res = await conn.query(dayQuery());
-    totalRows = res.toArray().map(r => ({ period: String(r.period), count: Number(r.cnt) }));
-  } catch { return; }
-  if (!totalRows.length) return;
-
-  if (fraudCol && fraudVals.length) {
-    const escaped = fraudVals.map(v => `'${v.replace(/'/g, "''")}'`).join(', ');
-    try {
-      const res = await conn.query(dayQuery(`AND "${fraudCol}" IN (${escaped})`));
-      fraudRows = res.toArray().map(r => ({ period: String(r.period), count: Number(r.cnt) }));
-    } catch {}
-  }
-
-  if (_OV_WD_Chart) { _OV_WD_Chart.destroy(); _OV_WD_Chart = null; }
-  const ctx = document.getElementById('OV_WD_Canvas')?.getContext('2d');
-  if (!ctx) return;
-
-  const labels = totalRows.map(r => r.period);
-  const isBar  = _OV_WD_ChartType === 'bar';
-
-  const mkDataset = (label, data, color) => isBar
-    ? { label, data, backgroundColor: color, borderRadius: 4, borderWidth: 0 }
-    : { label, data, borderColor: color, backgroundColor: 'transparent',
-        borderWidth: 2, fill: false, tension: 0.35, pointRadius: 4, pointHoverRadius: 7 };
-
-  const datasets = [
-    mkDataset('Total', totalRows.map(r => r.count), isBar ? 'rgba(59,130,246,0.75)' : '#3B82F6'),
-  ];
-
-  if (fraudRows.length) {
-    const fraudMap = {};
-    fraudRows.forEach(r => { fraudMap[r.period] = r.count; });
-    datasets.push(mkDataset('Fraud', labels.map(p => fraudMap[p] || 0), isBar ? 'rgba(220,38,38,0.75)' : '#DC2626'));
-  }
-
-  _OV_WD_Chart = new Chart(ctx, {
-    type: _OV_WD_ChartType,
-    data: { labels, datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'IBM Plex Sans' } } },
-        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y.toLocaleString()}` } },
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
-        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11, family: 'IBM Plex Sans' }, color: '#78716c' } },
-      },
-    },
-  });
-}
-
-// Unlock SR alongside SA/SC — avoids touching the org LoadData.js
-(function () {
-  const _origUnlock = typeof window.LD_UnlockScoreAnalysis === 'function' ? window.LD_UnlockScoreAnalysis : null;
-  window.LD_UnlockScoreAnalysis = function () {
-    if (_origUnlock) _origUnlock();
-    ['nav-spike-report', 'nav-spike-merchant'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) { el.classList.remove('ld-locked', 'sidebar-item-disabled'); el.removeAttribute('data-nav-locked'); }
-    });
-  };
-})();
 
 let _SR_Chart = null;
 let _SR_BreakdownCharts = [];
@@ -444,7 +114,7 @@ const _SR_PALETTE = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#06B6D4'
 function SR_OpenPanel() {
   if (typeof App_HideAllViews === 'function') App_HideAllViews();
   document.documentElement.style.setProperty('--toast-brand', '#DC2626');
-  document.querySelector('.shell')?.classList.add('sr-active');
+  document.querySelector('.shell')?.classList.add('sr-active', 'sr-panel-active');
   const view = document.getElementById('SRView');
   if (view) view.style.removeProperty('display');
   // Set after tick — App_HideAllViews hardcoded list doesn't include SR_MiniNav
@@ -469,19 +139,7 @@ function SR_RenderEmpty() {
   const view = document.getElementById('SRView');
   if (!view) return;
   SR_DestroyCharts();
-  view.innerHTML = `
-    <div class="pg-layout-row">
-      <div class="pg-card">
-        <div class="pg-card-header">
-          <span class="pg-card-title">Spike Report</span>
-          <span class="pg-card-label">select columns and hit Run</span>
-        </div>
-        <div class="pg-card-divider"></div>
-        <div class="pg-card-body">
-          <div class="SR_empty">Select columns in the nav panel and click <strong>Run Spike Report</strong> to begin.</div>
-        </div>
-      </div>
-    </div>`;
+  view.innerHTML = '';
 }
 
 // ── Run Analysis ──────────────────────────────────────────────────────────────
@@ -520,6 +178,8 @@ async function SR_RunAnalysis({ winSize, offset = 0, metric, addFilters = {} }) 
   }
 
   // ── Build query ───────────────────────────────────────────────────────────
+  if (typeof SR_showBadge === 'function') SR_showBadge('loading', 'Running spike analysis…');
+  const _srStart = performance.now();
   const days = parseInt(winSize, 10);
   const sql = `
     WITH _max AS (SELECT MAX(TRY_CAST("${dateCol}" AS DATE)) AS d FROM ${src})
@@ -562,6 +222,11 @@ async function SR_RunAnalysis({ winSize, offset = 0, metric, addFilters = {} }) 
   }
 
   SR_RenderResults({ rows, avg, peak, spikes, winSize, metric });
+
+  if (typeof SR_showBadge === 'function') {
+    const _srSecs = ((performance.now() - _srStart) / 1000).toFixed(2);
+    SR_showBadge('ready', `<strong>Spike Report ready</strong> &nbsp;·&nbsp; ${total.toLocaleString()} txns &nbsp;·&nbsp; ${_srSecs}s`);
+  }
 }
 
 // ── Breakdown query ───────────────────────────────────────────────────────────

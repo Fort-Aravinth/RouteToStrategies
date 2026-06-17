@@ -123,6 +123,36 @@ body, input, button, select, textarea {
 @keyframes toastIn  { from { transform: translateX(24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes toastOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(24px); opacity: 0; } }
 
+/* ── Persistent badge — same look as LD_Toast but fixed-position ── */
+.App_badge {
+  position: fixed;
+  bottom: 18px;
+  left: 0;
+  width: 256px;
+  z-index: 99997;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-card-bg);
+  color: var(--color-header-title);
+  padding: 10px 14px;
+  border-radius: var(--dml-radius);
+  border-right: 3px solid var(--toast-brand, var(--brand-pt));
+  border-top: 0.5px solid var(--color-card-border);
+  border-left: 0.5px solid var(--color-card-border);
+  border-bottom: 0.5px solid var(--color-card-border);
+  font-size: 0.72rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px var(--color-card-shadow);
+  box-sizing: border-box;
+  animation: toastIn 0.22s ease;
+}
+.App_badge button {
+  background: none; border: none; cursor: pointer;
+  color: var(--color-text-dim); font-size: 12px;
+  padding: 0 0 0 6px; line-height: 1; flex-shrink: 0;
+}
+
 /* ── Tutorial Toast ── */
 #TT_Container {
   position: fixed;

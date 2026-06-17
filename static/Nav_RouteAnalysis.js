@@ -3,17 +3,17 @@
 // ── Nav scroll indicators ─────────────────────────────────────────────────────
 (function () {
   function _inject() {
-    const nav = document.getElementById('ANRA_MiniNav');
-    if (!nav || document.getElementById('ANRA_ScrollerDown')) return;
+    const nav = document.getElementById('RA_MiniNav');
+    if (!nav || document.getElementById('RA_ScrollerDown')) return;
     nav.insertAdjacentHTML('afterbegin', `
-      <div id="ANRA_ScrollerUp" onclick="ANRA_ScrollUp()" title="Scroll up">
+      <div id="RA_ScrollerUp" onclick="RA_ScrollUp()" title="Scroll up">
         <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
           <polyline points="1 7 8 1 15 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div class="MN_ScrollBar"></div>
       </div>`);
     nav.insertAdjacentHTML('beforeend', `
-      <div id="ANRA_ScrollerDown" onclick="ANRA_ScrollDown()" title="Scroll down">
+      <div id="RA_ScrollerDown" onclick="RA_ScrollDown()" title="Scroll down">
         <div class="MN_ScrollBar"></div>
         <svg viewBox="0 0 16 8" width="14" height="7" fill="none">
           <polyline points="1 1 8 7 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,38 +24,40 @@
   else _inject();
 })();
 
-function ANRA_ScrollDown() {
-  const nav = document.getElementById('ANRA_MiniNav');
+function RA_ScrollDown() {
+  const nav = document.getElementById('RA_MiniNav');
   if (nav) nav.scrollBy({ top: 150, behavior: 'smooth' });
 }
-function ANRA_ScrollUp() {
-  const nav = document.getElementById('ANRA_MiniNav');
+function RA_ScrollUp() {
+  const nav = document.getElementById('RA_MiniNav');
   if (nav) nav.scrollBy({ top: -150, behavior: 'smooth' });
 }
 
-function ANRA_MiniNav_RenderParams() { SP_RenderParamsTo('ANRA_MiniNav_ParamsDisplay', 'ra'); }
+function RA_MiniNav_RenderParams() { SP_RenderParamsTo('RA_MiniNav_ParamsDisplay', 'ra'); }
 
 let _anraMiniParamsOpen = false;
-function ANRA_MiniNav_ToggleParams() {
+function RA_MiniNav_ToggleParams() {
   _anraMiniParamsOpen = !_anraMiniParamsOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ParamsBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ParamsChevron');
+  const body    = document.getElementById('RA_MiniNav_ParamsBody');
+  const chevron = document.getElementById('RA_MiniNav_ParamsChevron');
   if (body)    body.style.display      = _anraMiniParamsOpen ? 'block' : 'none';
   if (chevron) chevron.style.transform = _anraMiniParamsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
 // ── Available Columns ─────────────────────────────────────────────────────────
 let _anraMiniColsOpen = true;
-function ANRA_MiniNav_ToggleCols() {
+function RA_MiniNav_ToggleCols() {
   _anraMiniColsOpen = !_anraMiniColsOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ColBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ColChevron');
+  const body    = document.getElementById('RA_MiniNav_ColBody');
+  const chevron = document.getElementById('RA_MiniNav_ColChevron');
   if (body)    body.style.display      = _anraMiniColsOpen ? 'block' : 'none';
   if (chevron) chevron.style.transform = _anraMiniColsOpen ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-async function ANRA_MiniNav_PopulateCols() {
-  const list = document.getElementById('ANRA_MiniNav_ColumnsList');
+const _RA_DATETIME_TYPES = /date|time|timestamp|interval/;
+
+async function RA_MiniNav_PopulateCols() {
+  const list = document.getElementById('RA_MiniNav_ColumnsList');
   if (!list) return;
   const conn = window.LD_getConn?.();
   const src  = window.LD_getSource?.();
@@ -65,25 +67,41 @@ async function ANRA_MiniNav_PopulateCols() {
   }
   try {
     const res  = await conn.query(`DESCRIBE "${src}"`);
-    const cols = res.toArray()
-      .filter(r => !_ANRA_NUMERIC_TYPES.test((r.column_type || '').toLowerCase()))
+    const params = window.SP_getParams?.() || {};
+    const excludeSet = new Set([params.col1, params.numeric, params.object, params.ruleSignal].filter(Boolean));
+
+    const candidates = res.toArray()
+      .filter(r => {
+        const t = (r.column_type || '').toLowerCase();
+        return !_RA_NUMERIC_TYPES.test(t) && !_RA_DATETIME_TYPES.test(t) && !excludeSet.has(r.column_name);
+      })
       .map(r => r.column_name);
-    list.innerHTML = cols.map(c => `
-      <button class="MN_chip MN_chip--col MN_chip--a" onclick="this.classList.toggle('active');if(typeof ANRA_RefreshRouteBtns==='function')ANRA_RefreshRouteBtns();" title="${c}">${c}</button>
-    `).join('');
+
+    // Filter out columns with fewer than 10 unique values in parallel
+    const counts = await Promise.all(candidates.map(c =>
+      conn.query(`SELECT COUNT(DISTINCT "${c}") AS n FROM "${src}"`)
+          .then(r => Number(r.toArray()[0].n))
+    ));
+    const cols = candidates.filter((_, i) => counts[i] >= 10);
+
+    list.innerHTML = cols.length
+      ? cols.map(c => `
+          <button class="MN_chip MN_chip--col MN_chip--a" onclick="this.classList.toggle('active');if(typeof RA_RefreshRouteBtns==='function')RA_RefreshRouteBtns();if(typeof RA_ClearResults==='function')RA_ClearResults();" title="${c}">${c}</button>
+        `).join('')
+      : '<span style="font-size:0.62rem;color:var(--color-text-dim);padding:2px 0;">— No suitable columns —</span>';
   } catch { return; }
 }
-function ANRA_MiniNav_SelectAllCols()   { MN_SelectAllCols('ANRA_MiniNav_ColumnsList'); }
-function ANRA_MiniNav_ClearCols()       { MN_ClearCols('ANRA_MiniNav_ColumnsList'); }
-function ANRA_MiniNav_GetSelectedCols() { return MN_GetSelectedCols('ANRA_MiniNav_ColumnsList'); }
+function RA_MiniNav_SelectAllCols()   { MN_SelectAllCols('RA_MiniNav_ColumnsList'); }
+function RA_MiniNav_ClearCols()       { MN_ClearCols('RA_MiniNav_ColumnsList'); }
+function RA_MiniNav_GetSelectedCols() { return MN_GetSelectedCols('RA_MiniNav_ColumnsList'); }
 
 // ── Amount Filters ────────────────────────────────────────────────────────────
-let ANRA_AmountList = [];
-let _ANRA_ActiveTemplate = null;
+let RA_AmountList = [];
+let _RA_ActiveTemplate = null;
 
 // ── Seed built-in templates on first load ─────────────────────────────────────
 (function () {
-  const KEY = 'ANRA_AmountTemplates';
+  const KEY = 'RA_AmountTemplates';
   const existing = (() => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } })();
   const defaults = {
     'Template 1': [
@@ -116,61 +134,61 @@ let _ANRA_ActiveTemplate = null;
 
 // Load Template 1 as default (data only — DOM refreshed when section opens)
 (function () {
-  const saved = _ANRA_GetTemplates();
+  const saved = _RA_GetTemplates();
   if (saved['Template 1']) {
-    ANRA_AmountList = JSON.parse(JSON.stringify(saved['Template 1']));
-    _ANRA_ActiveTemplate = 'Template 1';
+    RA_AmountList = JSON.parse(JSON.stringify(saved['Template 1']));
+    _RA_ActiveTemplate = 'Template 1';
   }
 })();
 
-const _ANRA_OP_LABELS = { equal: '=', greater_than: '>', less_than: '<' };
+const _RA_OP_LABELS = { equal: '=', greater_than: '>', less_than: '<' };
 
 let _anraMiniAmtOpen = false;
-function ANRA_MiniNav_ToggleAmt() {
+function RA_MiniNav_ToggleAmt() {
   _anraMiniAmtOpen = !_anraMiniAmtOpen;
-  const body    = document.getElementById('ANRA_MiniNav_AmtBody');
-  const chevron = document.getElementById('ANRA_MiniNav_AmtChevron');
+  const body    = document.getElementById('RA_MiniNav_AmtBody');
+  const chevron = document.getElementById('RA_MiniNav_AmtChevron');
   if (body)    body.style.display      = _anraMiniAmtOpen ? 'block' : 'none';
   if (chevron) chevron.style.transform = _anraMiniAmtOpen ? 'rotate(90deg)' : 'rotate(0deg)';
   if (_anraMiniAmtOpen) {
-    ANRA_LoadSavedTemplatesList();
-    ANRA_RefreshAmountFilters();
-    _navScrollOnExpand(document.getElementById('ANRA_MiniNav_AmtSection'), document.getElementById('ANRA_MiniNav'));
+    RA_LoadSavedTemplatesList();
+    RA_RefreshAmountFilters();
+    _navScrollOnExpand(document.getElementById('RA_MiniNav_AmtSection'), document.getElementById('RA_MiniNav'));
   }
 }
 
 // Mini-nav proxies — read inputs from the nav then call core
-function ANRA_MiniNav_AddFilter() {
-  const op  = document.getElementById('ANRA_MiniNav_AmountOp')?.value;
-  const val = parseFloat(document.getElementById('ANRA_MiniNav_AmountVal')?.value);
+function RA_MiniNav_AddFilter() {
+  const op  = document.getElementById('RA_MiniNav_AmountOp')?.value;
+  const val = parseFloat(document.getElementById('RA_MiniNav_AmountVal')?.value);
   if (!op || isNaN(val)) return;
-  ANRA_AmountList.push({ op, val });
-  _ANRA_ActiveTemplate = null;
-  ANRA_RefreshAmountFilters();
-  ANRA_LoadSavedTemplatesList();
-  document.getElementById('ANRA_MiniNav_AmountVal').value = '';
+  RA_AmountList.push({ op, val });
+  _RA_ActiveTemplate = null;
+  RA_RefreshAmountFilters();
+  RA_LoadSavedTemplatesList();
+  document.getElementById('RA_MiniNav_AmountVal').value = '';
 }
 
-function ANRA_MiniNav_SaveTemplate() {
-  const input = document.getElementById('ANRA_MiniNav_TemplateNameInput');
+function RA_MiniNav_SaveTemplate() {
+  const input = document.getElementById('RA_MiniNav_TemplateNameInput');
   const name  = input?.value.trim();
-  if (!name || !ANRA_AmountList.length) return;
-  const saved = _ANRA_GetTemplates();
-  saved[name] = JSON.parse(JSON.stringify(ANRA_AmountList));
-  localStorage.setItem('ANRA_AmountTemplates', JSON.stringify(saved));
+  if (!name || !RA_AmountList.length) return;
+  const saved = _RA_GetTemplates();
+  saved[name] = JSON.parse(JSON.stringify(RA_AmountList));
+  localStorage.setItem('RA_AmountTemplates', JSON.stringify(saved));
   if (input) input.value = '';
-  ANRA_LoadSavedTemplatesList();
+  RA_LoadSavedTemplatesList();
 }
 
 // Core filter operations
-function ANRA_RemoveAmountFilter(index) {
-  ANRA_AmountList.splice(index, 1);
-  ANRA_RefreshAmountFilters();
+function RA_RemoveAmountFilter(index) {
+  RA_AmountList.splice(index, 1);
+  RA_RefreshAmountFilters();
 }
 
-function ANRA_ResetAmountFilters() {
-  _ANRA_ActiveTemplate = null;
-  ANRA_AmountList = [
+function RA_ResetAmountFilters() {
+  _RA_ActiveTemplate = null;
+  RA_AmountList = [
     { op: 'equal',        val: 0.00 },
     { op: 'greater_than', val: 0.00 },
     { op: 'greater_than', val: 1.00 },
@@ -180,67 +198,67 @@ function ANRA_ResetAmountFilters() {
     { op: 'greater_than', val: 250.00 },
     { op: 'greater_than', val: 1000.00 },
   ];
-  ANRA_RefreshAmountFilters();
+  RA_RefreshAmountFilters();
 }
 
-function ANRA_RefreshAmountFilters() {
-  const list = document.getElementById('ANRA_MiniNav_AmountFiltersList');
+function RA_RefreshAmountFilters() {
+  const list = document.getElementById('RA_MiniNav_AmountFiltersList');
   if (!list) return;
-  if (!ANRA_AmountList.length) {
+  if (!RA_AmountList.length) {
     list.innerHTML = '<span style="font-size:0.65rem;color:var(--color-text-dim);">No filters added.</span>';
     return;
   }
-  list.innerHTML = ANRA_AmountList.map((f, i) => `
+  list.innerHTML = RA_AmountList.map((f, i) => `
     <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--color-page-bg);border:0.5px solid var(--dml-border);border-radius:5px;font-size:0.65rem;">
-      <span style="font-weight:700;min-width:14px;color:var(--MN_brand);">${_ANRA_OP_LABELS[f.op] || f.op}</span>
+      <span style="font-weight:700;min-width:14px;color:var(--MN_brand);">${_RA_OP_LABELS[f.op] || f.op}</span>
       <span style="color:var(--color-header-title);">${f.val.toFixed(2)}</span>
-      <button onclick="ANRA_RemoveAmountFilter(${i})" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:0.65rem;color:#ef4444;padding:0;line-height:1;">✕</button>
+      <button onclick="RA_RemoveAmountFilter(${i})" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:0.65rem;color:#ef4444;padding:0;line-height:1;">✕</button>
     </div>`).join('');
 }
 
 // Template storage
-function _ANRA_GetTemplates() {
-  try { return JSON.parse(localStorage.getItem('ANRA_AmountTemplates') || '{}'); } catch { return {}; }
+function _RA_GetTemplates() {
+  try { return JSON.parse(localStorage.getItem('RA_AmountTemplates') || '{}'); } catch { return {}; }
 }
 
-function ANRA_LoadSavedTemplatesList() {
-  const el   = document.getElementById('ANRA_MiniNav_AmtTemplates');
+function RA_LoadSavedTemplatesList() {
+  const el   = document.getElementById('RA_MiniNav_AmtTemplates');
   if (!el) return;
-  const saved = _ANRA_GetTemplates();
+  const saved = _RA_GetTemplates();
   const names = Object.keys(saved);
   if (!names.length) { el.innerHTML = ''; return; }
   const PROTECTED = ['Template 1', 'Template 2'];
   el.innerHTML = names.map(name => `
     <div style="position:relative;display:inline-flex;align-items:center;">
-      <button class="MN_btn${_ANRA_ActiveTemplate === name ? ' active' : ''}" style="width:100%;${PROTECTED.includes(name) ? '' : 'padding-right:20px;'}overflow:hidden;text-overflow:ellipsis;" onclick="ANRA_LoadSavedAmountTemplate('${name}')">${name}</button>
-      ${PROTECTED.includes(name) ? '' : `<button onclick="ANRA_DeleteSavedAmountTemplate('${name}')" title="Delete"
+      <button class="MN_btn${_RA_ActiveTemplate === name ? ' active' : ''}" style="width:100%;${PROTECTED.includes(name) ? '' : 'padding-right:20px;'}overflow:hidden;text-overflow:ellipsis;" onclick="RA_LoadSavedAmountTemplate('${name}')">${name}</button>
+      ${PROTECTED.includes(name) ? '' : `<button onclick="RA_DeleteSavedAmountTemplate('${name}')" title="Delete"
         style="position:absolute;right:6px;background:none;border:none;cursor:pointer;font-size:0.55rem;color:#ef4444;padding:0;line-height:1;">✕</button>`}
     </div>`).join('');
 }
 
-function ANRA_LoadSavedAmountTemplate(name) {
-  const saved = _ANRA_GetTemplates();
+function RA_LoadSavedAmountTemplate(name) {
+  const saved = _RA_GetTemplates();
   if (!saved[name]) return;
-  ANRA_AmountList = JSON.parse(JSON.stringify(saved[name]));
-  _ANRA_ActiveTemplate = name;
-  ANRA_RefreshAmountFilters();
-  ANRA_LoadSavedTemplatesList();
+  RA_AmountList = JSON.parse(JSON.stringify(saved[name]));
+  _RA_ActiveTemplate = name;
+  RA_RefreshAmountFilters();
+  RA_LoadSavedTemplatesList();
 }
 
-function ANRA_DeleteSavedAmountTemplate(name) {
-  const saved = _ANRA_GetTemplates();
+function RA_DeleteSavedAmountTemplate(name) {
+  const saved = _RA_GetTemplates();
   delete saved[name];
-  localStorage.setItem('ANRA_AmountTemplates', JSON.stringify(saved));
-  ANRA_LoadSavedTemplatesList();
+  localStorage.setItem('RA_AmountTemplates', JSON.stringify(saved));
+  RA_LoadSavedTemplatesList();
 }
 
 // ── Score Column ──────────────────────────────────────────────────────────────
-let ANRA_SelectedScoreColumn = null;
+let RA_SelectedScoreColumn = null;
 
-const _ANRA_NUMERIC_TYPES = /int|float|double|decimal|numeric|real|bigint|smallint|tinyint|hugeint|ubigint|uinteger|usmallint|utinyint/;
+const _RA_NUMERIC_TYPES = /int|float|double|decimal|numeric|real|bigint|smallint|tinyint|hugeint|ubigint|uinteger|usmallint|utinyint/;
 
-async function ANRA_MiniNav_PopulateScoreCols() {
-  const list = document.getElementById('ANRA_MiniNav_ScoreColumnsList');
+async function RA_MiniNav_PopulateScoreCols() {
+  const list = document.getElementById('RA_MiniNav_ScoreColumnsList');
   if (!list) return;
   const conn = window.LD_getConn?.();
   const src  = window.LD_getSource?.();
@@ -249,40 +267,52 @@ async function ANRA_MiniNav_PopulateScoreCols() {
     return;
   }
   try {
-    const res  = await conn.query(`DESCRIBE "${src}"`);
-    const cols = res.toArray()
-      .filter(r => _ANRA_NUMERIC_TYPES.test((r.column_type || '').toLowerCase()))
+    const params     = window.SP_getParams?.() || {};
+    const amountCol  = params.numeric;
+
+    const res        = await conn.query(`DESCRIBE "${src}"`);
+    const candidates = res.toArray()
+      .filter(r => _RA_NUMERIC_TYPES.test((r.column_type || '').toLowerCase()) && r.column_name !== amountCol)
       .map(r => r.column_name);
-    list.innerHTML = cols.map(c => {
-      const sel = ANRA_SelectedScoreColumn === c;
-      return `<button onclick="ANRA_ToggleScoreColumn('${c}')" class="MN_chip MN_chip--col MN_chip--a${sel ? ' active' : ''}">${c}</button>`;
-    }).join('');
+
+    const counts = await Promise.all(candidates.map(c =>
+      conn.query(`SELECT COUNT(DISTINCT "${c}") AS n FROM "${src}"`)
+          .then(r => Number(r.toArray()[0].n))
+    ));
+    const cols = candidates.filter((_, i) => counts[i] >= 10);
+
+    list.innerHTML = cols.length
+      ? cols.map(c => {
+          const sel = RA_SelectedScoreColumn === c;
+          return `<button onclick="RA_ToggleScoreColumn('${c}')" class="MN_chip MN_chip--col MN_chip--a${sel ? ' active' : ''}">${c}</button>`;
+        }).join('')
+      : '<span style="font-size:0.65rem;color:var(--color-text-dim);">— No score columns —</span>';
   } catch { return; }
 }
 
-function ANRA_ToggleScoreColumn(col) {
-  ANRA_SelectedScoreColumn = ANRA_SelectedScoreColumn === col ? null : col;
-  document.querySelectorAll('#ANRA_MiniNav_ScoreColumnsList .MN_chip').forEach(btn => {
-    const active = btn.textContent === col && ANRA_SelectedScoreColumn === col;
+function RA_ToggleScoreColumn(col) {
+  RA_SelectedScoreColumn = RA_SelectedScoreColumn === col ? null : col;
+  document.querySelectorAll('#RA_MiniNav_ScoreColumnsList .MN_chip').forEach(btn => {
+    const active = btn.textContent === col && RA_SelectedScoreColumn === col;
     btn.classList.toggle('active', active);
   });
-  if (typeof ANRA_RefreshRouteBtns === 'function') ANRA_RefreshRouteBtns();
+  if (typeof RA_RefreshRouteBtns === 'function') RA_RefreshRouteBtns();
 }
 
 let _anraMiniScoreOpen = false;
-function ANRA_MiniNav_ToggleScore() {
+function RA_MiniNav_ToggleScore() {
   _anraMiniScoreOpen = !_anraMiniScoreOpen;
-  const body    = document.getElementById('ANRA_MiniNav_ScoreBody');
-  const chevron = document.getElementById('ANRA_MiniNav_ScoreChevron');
+  const body    = document.getElementById('RA_MiniNav_ScoreBody');
+  const chevron = document.getElementById('RA_MiniNav_ScoreChevron');
   if (body)    body.style.display      = _anraMiniScoreOpen ? 'block' : 'none';
   if (chevron) chevron.style.transform = _anraMiniScoreOpen ? 'rotate(90deg)' : 'rotate(0deg)';
   if (_anraMiniScoreOpen) {
-    ANRA_MiniNav_PopulateScoreCols();
-    _navScrollOnExpand(document.getElementById('ANRA_MiniNav_ScoreSection'), document.getElementById('ANRA_MiniNav'));
+    RA_MiniNav_PopulateScoreCols();
+    _navScrollOnExpand(document.getElementById('RA_MiniNav_ScoreSection'), document.getElementById('RA_MiniNav'));
   }
 }
 
-function ANRA_MiniNav_OpenDefaults() {
+function RA_MiniNav_OpenDefaults() {
   const openSilent = (bodyId, chevronId) => {
     const body    = document.getElementById(bodyId);
     const chevron = document.getElementById(chevronId);
@@ -291,30 +321,30 @@ function ANRA_MiniNav_OpenDefaults() {
   };
   if (!_anraMiniAmtOpen) {
     _anraMiniAmtOpen = true;
-    openSilent('ANRA_MiniNav_AmtBody', 'ANRA_MiniNav_AmtChevron');
-    ANRA_LoadSavedTemplatesList();
-    ANRA_RefreshAmountFilters();
+    openSilent('RA_MiniNav_AmtBody', 'RA_MiniNav_AmtChevron');
+    RA_LoadSavedTemplatesList();
+    RA_RefreshAmountFilters();
   }
   if (!_anraMiniScoreOpen) {
     _anraMiniScoreOpen = true;
-    openSilent('ANRA_MiniNav_ScoreBody', 'ANRA_MiniNav_ScoreChevron');
-    ANRA_MiniNav_PopulateScoreCols();
+    openSilent('RA_MiniNav_ScoreBody', 'RA_MiniNav_ScoreChevron');
+    RA_MiniNav_PopulateScoreCols();
   }
 }
 
 // ── Toggle All ────────────────────────────────────────────────────────────────
 let _anraMiniAllExpanded = true;
-function ANRA_MiniNav_ToggleAll() {
+function RA_MiniNav_ToggleAll() {
   _anraMiniAllExpanded = !_anraMiniAllExpanded;
   _anraMiniParamsOpen = _anraMiniAllExpanded;
   _anraMiniColsOpen   = _anraMiniAllExpanded;
   _anraMiniAmtOpen    = _anraMiniAllExpanded;
   _anraMiniScoreOpen  = _anraMiniAllExpanded;
   [
-    ['ANRA_MiniNav_ParamsBody', 'ANRA_MiniNav_ParamsChevron'],
-    ['ANRA_MiniNav_ColBody',    'ANRA_MiniNav_ColChevron'],
-    ['ANRA_MiniNav_AmtBody',    'ANRA_MiniNav_AmtChevron'],
-    ['ANRA_MiniNav_ScoreBody',  'ANRA_MiniNav_ScoreChevron'],
+    ['RA_MiniNav_ParamsBody', 'RA_MiniNav_ParamsChevron'],
+    ['RA_MiniNav_ColBody',    'RA_MiniNav_ColChevron'],
+    ['RA_MiniNav_AmtBody',    'RA_MiniNav_AmtChevron'],
+    ['RA_MiniNav_ScoreBody',  'RA_MiniNav_ScoreChevron'],
   ].forEach(([b, c]) => {
     const body    = document.getElementById(b);
     const chevron = document.getElementById(c);
@@ -322,11 +352,11 @@ function ANRA_MiniNav_ToggleAll() {
     if (chevron) chevron.style.transform = _anraMiniAllExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
   });
   if (_anraMiniAllExpanded) {
-    ANRA_LoadSavedTemplatesList();
-    ANRA_RefreshAmountFilters();
-    ANRA_MiniNav_PopulateScoreCols();
+    RA_LoadSavedTemplatesList();
+    RA_RefreshAmountFilters();
+    RA_MiniNav_PopulateScoreCols();
   }
-  const btn = document.getElementById('ANRA_MiniNav_ExpandBtn');
+  const btn = document.getElementById('RA_MiniNav_ExpandBtn');
   if (btn) btn.title = _anraMiniAllExpanded ? 'Collapse all' : 'Expand all';
 }
 

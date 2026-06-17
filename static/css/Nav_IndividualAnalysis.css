@@ -63,3 +63,5 @@
 #IA_InfoPopup .ia-info-popup-title  { font-size: 0.68rem; font-weight: 700; color: var(--brand-ia-light); }
 #IA_InfoPopup .ia-info-popup-body   { padding: 8px 10px 10px; font-size: 0.63rem; color: var(--color-text-muted); line-height: 1.6; }
 #IA_InfoPopup .pg-info-list li::marker { color: var(--brand-ia-light); }
+
+.ia-section-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-dim); padding: 0 16px 8px; }

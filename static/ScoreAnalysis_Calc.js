@@ -18,7 +18,7 @@ async function SA_queryBins(gFilters, extraWheres = []) {
 
   // Amount filter (per-graph toggle)
   if (gFilters?.amt) {
-    const amtCol   = document.getElementById('SAAmountCol')?.value;
+    const amtCol   = SA_getCSValue('SAAmountColCS');
     const opStart  = document.getElementById('SAAmountOpStart')?.value  || '>=';
     const valStart = document.getElementById('SAAmountValStart')?.value;
     const opEnd    = document.getElementById('SAAmountOpEnd')?.value    || '<=';
@@ -54,7 +54,7 @@ async function SA_queryBins(gFilters, extraWheres = []) {
     fraudExpr = `CASE WHEN "${params.col1}" IN (${fVals}) THEN 1 ELSE 0 END`;
   }
 
-  const amtCol  = document.getElementById('SAAmountCol')?.value;
+  const amtCol  = SA_getCSValue('SAAmountColCS');
   const amtExpr = amtCol ? `CAST("${amtCol}" AS DOUBLE)` : '0';
 
   const sql = `

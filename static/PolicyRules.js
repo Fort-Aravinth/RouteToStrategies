@@ -1,18 +1,8 @@
 // ── Policy Rules ─────────────────────────────────────────────────────────────
 
 // ── Logging ───────────────────────────────────────────────────────────────────
-const _PR_LOG_STYLES = {
-  info:    'background:#EFF6FF;color:#1D4ED8;padding:2px 6px;border-radius:3px;font-weight:600;',
-  success: 'background:#DCFCE7;color:#15803D;padding:2px 6px;border-radius:3px;font-weight:600;',
-  warn:    'background:#FEF9C3;color:#A16207;padding:2px 6px;border-radius:3px;font-weight:600;',
-  error:   'background:#FEE2E2;color:#B91C1C;padding:2px 6px;border-radius:3px;font-weight:600;',
-  step:    'background:#6366F1;color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;',
-};
-function PR_log(msg, type = 'info') {
-  const s = _PR_LOG_STYLES[type] || _PR_LOG_STYLES.info;
-  console.log('%c PR ', s, msg);
-}
-function PR_logGroup(title) { console.group('%c PR ', _PR_LOG_STYLES.step, title); }
+function PR_log(msg)        { console.log('[PR]', msg); }
+function PR_logGroup(title) { console.groupCollapsed('[PR]', title); }
 function PR_logGroupEnd()   { console.groupEnd(); }
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -31,12 +21,94 @@ function _prIsNum(col) {
   return typeof v === 'number' || (!isNaN(parseFloat(String(v))) && String(v).trim() !== '');
 }
 
+// ── Tutorial ──────────────────────────────────────────────────────────────────
+const _PR_TOUR_STEPS = [
+  { title: 'Analysis Columns',  body: 'Pick the categorical columns you want to segment by — e.g. MCC_Group, Region, card type. Use <strong>+ MCC_Group</strong> or <strong>+ Region</strong> shortcuts if your data has those columns.' },
+  { title: 'Run Options',       body: 'Choose a <strong>Type</strong> (Transaction, PAN, Amount), which series to <strong>Show</strong> (Total / Fraud), and a <strong>Run By</strong> granularity — Per Day, Per Hour, or Overall. Run Options unlock once a column is selected.' },
+  { title: 'Distribution Table', body: 'Results appear as a pivot table — one row per segment value. Filter and sort any column using the inputs in the header. Click a column header to sort.' },
+  { title: 'Summary Filter',    body: 'Add conditions in the <strong>Summary Filter</strong> panel to highlight segments that meet your fraud thresholds — then click <strong>Run Summary</strong> to apply.' },
+];
+let _PR_tourStep    = 0;
+let _PR_tourEnabled = false;
+
+function PR_tourShow(step) {
+  _PR_tourStep = step;
+  const s = _PR_TOUR_STEPS[step];
+  if (!s) { PR_tourDismiss(); return; }
+  const total = _PR_TOUR_STEPS.length;
+  let el = document.getElementById('PR_TourCard');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'PR_TourCard';
+    el.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `
+    <div class="gs-toast" id="PR_TourInner" style="border-left-color:var(--brand-pr-light);">
+      <div class="gs-tab-strip" onclick="PR_tourTabExpand()" title="Expand">
+        <span class="gs-tab-arrow">›</span>
+        <span class="gs-tab-label">Step ${step+1} of ${total}</span>
+      </div>
+      <div class="gs-toast-inner">
+        <div class="gs-toast-header">
+          <div>
+            <div class="gs-toast-step" style="color:var(--brand-pr-light);">Step ${step+1} of ${total}</div>
+            <div class="gs-toast-title">${s.title}</div>
+          </div>
+          <button class="gs-toast-btn-collapse" onclick="PR_tourTabCollapse()" title="Collapse to tab" style="background:var(--brand-pr-dim,rgba(139,92,246,0.12));border-color:var(--brand-pr-light);color:var(--brand-pr-light);">
+            <svg viewBox="0 0 16 16" width="10" height="10" fill="none"><path d="M10 3H13V13H10M6 8H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="gs-toast-body">${s.body}</div>
+        <div class="gs-toast-actions">
+          <button class="gs-toast-btn-back" onclick="PR_tourShow(_PR_tourStep - 1)" style="${step === 0 ? 'visibility:hidden;' : ''}">← Back</button>
+          <button class="gs-toast-btn-next" onclick="PR_tourNext()" style="background:var(--brand-pr-light);">${step+1 < total ? 'Next →' : 'Finish ✓'}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function PR_tourTabCollapse() {
+  const el = document.getElementById('PR_TourInner');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  el.style.top    = '';
+  el.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+  el.classList.add('gs-tabbed');
+  const strip = el.querySelector('.gs-tab-strip');
+  if (strip) strip.style.height = rect.height + 'px';
+}
+
+function PR_tourTabExpand() {
+  const el = document.getElementById('PR_TourInner');
+  if (!el) return;
+  el.style.top = el.style.bottom = '';
+  el.classList.remove('gs-tabbed');
+}
+
+function PR_tourNext() { PR_tourShow(_PR_tourStep + 1); }
+
+function PR_tourDismiss() {
+  document.getElementById('PR_TourCard')?.remove();
+  _PR_tourEnabled = false;
+  document.getElementById('PR_HelpBtn')?.classList.remove('tutorial-active');
+}
+
+function PR_HelpPrompt() {
+  _PR_tourEnabled = !_PR_tourEnabled;
+  document.getElementById('PR_HelpBtn')?.classList.toggle('tutorial-active', _PR_tourEnabled);
+  if (_PR_tourEnabled) PR_tourShow(0);
+  else PR_tourDismiss();
+}
+
+if (typeof App_RegisterTutorial === 'function') App_RegisterTutorial('pr-active', PR_HelpPrompt);
+
 // ── Run Analysis ──────────────────────────────────────────────────────────────
 window._PR_RunAnalysis = async function() {
   const out  = document.getElementById('PR_ResultContainer');
   const sp   = window.SP_getParams?.() || {};
   const conn = window.LD_getConn?.();
-  const src  = window.LD_getSource?.();
+  const src  = window._prActiveSrc || window.LD_getSource?.();
   const cols = typeof PR_MiniNav_GetSelectedCols === 'function' ? PR_MiniNav_GetSelectedCols() : [];
 
   if (!out) return;
@@ -46,6 +118,8 @@ window._PR_RunAnalysis = async function() {
 
   PR_logGroup('Run Analysis — ' + cols.length + ' col(s)  type=' + _prType + '  runBy=' + _prRunBy);
   out.innerHTML = _prMsg('Running…');
+  if (typeof PR_showRunningBadge === 'function') PR_showRunningBadge();
+  const _prT0 = performance.now();
 
   try {
     const cardDim = sp.object;
@@ -167,7 +241,7 @@ window._PR_RunAnalysis = async function() {
       const vals = [...new Set(results.map(r => r[c]))].filter(Boolean);
       if (!vals.length) return '';
       return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <span class="anra-section-label" style="padding:0;flex-shrink:0;">${c}:</span>
+        <span class="pr-section-label" style="padding:0;flex-shrink:0;">${c}:</span>
         ${vals.map(v => `<button class="MN_chip" data-col="${c}" data-val="${v}" data-active="0" onclick="PR_FilterByGroup(this)">${v}</button>`).join('')}
       </div>`;
     }).join('');
@@ -205,10 +279,14 @@ window._PR_RunAnalysis = async function() {
         </div>
       </div>`;
 
+    const secs = ((performance.now() - _prT0) / 1000).toFixed(1);
+    if (typeof PR_showDoneBadge === 'function') PR_showDoneBadge(secs);
+
   } catch(e) {
     PR_log('Error: ' + e.message, 'error');
     PR_logGroupEnd();
     out.innerHTML = _prMsg('Error: ' + e.message);
+    if (typeof PR_toast === 'function') PR_toast('Error: ' + e.message, 'error');
     console.error('PR run:', e);
   }
 };

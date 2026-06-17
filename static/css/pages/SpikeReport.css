@@ -7,13 +7,6 @@
 #SRView .pg-btn:hover,
 #SRView .pg-btn.active     { background: var(--brand-dm); border-color: var(--brand-dm); color: #fff; }
 
-/* ── Brand overrides for pg-* components — purple (Spike Report by Merchant) ── */
-/* --gold / --amber-* defined in Nav_SpikeReport.css alongside #SRM_MiniNav */
-#SRMView .pg-card::before   { background: var(--brand-sp); }
-#SRMView .pg-btn            { border-color: var(--brand-sp-dim); background: var(--brand-sp-dim); color: var(--brand-sp); }
-#SRMView .pg-btn:hover,
-#SRMView .pg-btn.active     { background: var(--brand-sp); border-color: var(--brand-sp); color: #fff; }
-
 /* ── Chart wrap ── */
 .SR_chart_wrap {
   position: relative;

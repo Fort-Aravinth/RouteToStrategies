@@ -38,6 +38,8 @@
 }
 .SC_StyleChip:hover  { border-color: var(--brand-sc); color: var(--brand-sc); }
 .SC_StyleChip.active { border-color: var(--brand-sc); background: var(--brand-sc-dim); color: var(--brand-sc); }
+#SC_RunByBtn_fraud:hover  { border-color: rgba(239,68,68,1); color: rgba(239,68,68,1); }
+#SC_RunByBtn_fraud.active { border-color: rgba(239,68,68,1); background: rgba(239,68,68,0.1); color: rgba(239,68,68,1); }
 
 /* ── Graph tabs ── */
 .sc-tabs { display: flex; gap: 4px; }
