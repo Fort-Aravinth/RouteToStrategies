@@ -24,7 +24,7 @@ const _SP_CB_builderExpanded = new Set();
 
 // ── Open ─────────────────────────────────────────────────────────────────────
 
-const _SP_LOCKABLE_CARDS = ['SP_Card_Amount','SP_Card_Dimension','SP_Card_Date','SP_Card_Decision','SP_Card_RuleSignal','SP_CB_CardEl','SP_Card_Presets'];
+const _SP_LOCKABLE_CARDS = ['SP_Card_Amount','SP_Card_Dimension','SP_Card_Date','SP_Card_Decision','SP_Card_RuleSignal','SP_CB_CardEl'];
 
 function SP_LockCards() {
   _SP_LOCKABLE_CARDS.forEach(id => {
