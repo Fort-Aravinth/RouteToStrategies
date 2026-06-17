@@ -56,15 +56,12 @@ function RA_RefreshRouteBtns() {
 }
 
 function RA_SetSort(mode) {
-  _RA_SortMode = _RA_SortMode === mode ? null : mode;
+  _RA_SortMode = mode;
   ['Trans', 'DistinctCard', 'Amount'].forEach(m => {
     const btn = document.getElementById('RA_SortBtn_' + m);
     if (btn) btn.classList.toggle('active', m === _RA_SortMode);
   });
-  const resultsEl = document.getElementById('RA_ResultsArea');
-  const routes = [...RA_SelectedRoutes];
-  if (resultsEl && routes.length && Object.keys(_RA_LastResults).length)
-    _RA_renderResults(resultsEl, _RA_LastResults, routes);
+  RA_RunAnalysis();
 }
 
 function RA_UpdateRouteDescriptions() {
@@ -260,7 +257,7 @@ async function _RA_computeRoute(routeType, opts) {
         SUM(CASE WHEN ${colFilter} AND NOT (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
         COUNT(DISTINCT CASE WHEN ${colFilter} AND (${isFraudExpr}) THEN CAST("${colEsc}" AS VARCHAR) END) AS utrg,
         COUNT(DISTINCT CASE WHEN (${isFraudExpr}) THEN CAST("${colEsc}" AS VARCHAR) END) AS uniqueFraud,
-        COUNT(DISTINCT CASE WHEN ${colFilter} THEN CAST("${cardColEsc}" AS VARCHAR) END) AS distinctCards
+        COUNT(DISTINCT CASE WHEN ${colFilter} AND (${isFraudExpr}) THEN CAST("${cardColEsc}" AS VARCHAR) END) AS distinctCards
       FROM "${src}"
     `)).toArray()[0];
 
@@ -312,7 +309,7 @@ async function _RA_computeRoute(routeType, opts) {
         SUM(CASE WHEN ${finalFilter} AND NOT (${isFraudExpr}) THEN CAST("${amountCol}" AS DOUBLE) ELSE 0 END) AS nfval,
         COUNT(DISTINCT CASE WHEN ${finalFilter} AND (${isFraudExpr}) THEN CAST("${lastColEsc}" AS VARCHAR) END) AS utrg,
         COUNT(DISTINCT CASE WHEN (${isFraudExpr}) THEN CAST("${lastColEsc}" AS VARCHAR) END) AS uniqueFraud,
-        COUNT(DISTINCT CASE WHEN ${finalFilter} THEN CAST("${cardColEscF}" AS VARCHAR) END) AS distinctCards
+        COUNT(DISTINCT CASE WHEN ${finalFilter} AND (${isFraudExpr}) THEN CAST("${cardColEscF}" AS VARCHAR) END) AS distinctCards
       FROM "${src}"
     `)).toArray()[0];
     const triggered     = Number(row.triggered);
@@ -368,7 +365,13 @@ function _RA_barRow(label, pct, fillClass) {
 }
 
 function _RA_metrics(r) {
-  return `<div class="ra-route-metrics"><div class="ra-route-metric"><span class="ra-route-metric-label">Triggered</span><span class="ra-route-metric-val">${_RA_FMT_NUM(r.triggered)}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">Value det.</span><span class="ra-route-metric-val">${_RA_FMT_VAL(r.value)}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">False pos.</span><span class="ra-route-metric-val">${r.fp}</span></div><div class="ra-route-metric"><span class="ra-route-metric-label">Score ≥</span><span class="ra-route-metric-val">${r.score}</span></div></div>`;
+  const hi = c => _RA_SortMode === c ? 'color:var(--brand-ra);' : '';
+  return `<div class="ra-route-metrics">
+    <div class="ra-route-metric"><span class="ra-route-metric-label">Triggered</span><span class="ra-route-metric-val" style="${hi('Trans')}">${_RA_FMT_NUM(r.triggered)}</span></div>
+    <div class="ra-route-metric"><span class="ra-route-metric-label">Distinct Cards</span><span class="ra-route-metric-val" style="${hi('DistinctCard')}">${_RA_FMT_NUM(r.distinctCards)}</span></div>
+    <div class="ra-route-metric"><span class="ra-route-metric-label">Value det.</span><span class="ra-route-metric-val" style="${hi('Amount')}">${_RA_FMT_VAL(r.value)}</span></div>
+    <div class="ra-route-metric"><span class="ra-route-metric-label">False pos.</span><span class="ra-route-metric-val">${r.fp}</span></div>
+  </div>`;
 }
 
 function _RA_cardShell(title, subtitle, badge, actions, metricsHtml) {
@@ -389,9 +392,9 @@ function _RA_makeRouteCard(routeKey, colName, metrics) {
 }
 
 function _RA_sortKey(metrics) {
-  if (_RA_SortMode === 'Amount')       return -(metrics.value    || 0);
-  if (_RA_SortMode === 'DistinctCard') return -(metrics.unique   || 0);
-  if (_RA_SortMode === 'Trans')        return -(metrics.triggered|| 0);
+  if (_RA_SortMode === 'Amount')       return -(metrics.value        || 0);
+  if (_RA_SortMode === 'DistinctCard') return -(metrics.distinctCards|| 0);
+  if (_RA_SortMode === 'Trans')        return -(metrics.triggered    || 0);
   return 0;
 }
 

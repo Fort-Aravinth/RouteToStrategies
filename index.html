@@ -716,6 +716,21 @@
     <div class="MN_section_body">
       <button class="MN_btn active" onclick="PU_NewTypologyRule()" style="width:100%;">+ New typology rule</button>
     </div>
+    <div class="MN_divider"></div>
+
+    <!-- Saved Rules -->
+    <div>
+      <div onclick="NAV_PU_ToggleSaved()" class="MN_section_hdr">
+        <span class="MN_title">Saved Rules</span>
+        <svg id="NAV_PU_SavedChevron" viewBox="0 0 16 16" width="11" height="11" fill="none" style="transition:transform 0.18s;transform:rotate(90deg);flex-shrink:0;">
+          <polyline points="5 3 11 8 5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="NAV_PU_SavedBody" style="display:block;">
+        <div id="NAV_PU_SavedRules" style="padding-bottom:6px;"></div>
+      </div>
+    </div>
+
     <!-- Extra cards — injected by NAV_PU_RefreshExtraCards() -->
     <div id="NAV_PU_ExtraCards"></div>
 
@@ -2776,16 +2791,11 @@
             </button>
           </div>
 
-          <!-- Sort buttons -->
+          <!-- Sort / Run buttons -->
           <div class="pg-card-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:0;">
             <button id="RA_SortBtn_Trans"        class="pg-btn ra-route-btn" onclick="RA_SetSort('Trans')" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;"><div style="font-size:11px;font-weight:600;line-height:1.4;">by Trans</div></button>
-            <button id="RA_SortBtn_DistinctCard" class="pg-btn ra-route-btn" onclick="RA_SetSort('DistinctCard')" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;"><div style="font-size:11px;font-weight:600;line-height:1.4;">by Distinct Card</div></button>
-            <button id="RA_SortBtn_Amount"       class="pg-btn ra-route-btn" onclick="RA_SetSort('Amount')" style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;"><div style="font-size:11px;font-weight:600;line-height:1.4;">by Amount</div></button>
-          </div>
-
-          <!-- Run -->
-          <div class="pg-card-body" style="padding-top:0;padding-bottom:18px;--MN_brand:var(--brand-ra);--MN_brand_dim:var(--brand-ra-dim);">
-            <button class="MN_btn MN_run_btn" onclick="RA_RunAnalysis()" style="width:100%;">Run Analysis</button>
+            <button id="RA_SortBtn_DistinctCard" class="pg-btn ra-route-btn" disabled style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;opacity:0.35;cursor:not-allowed;"><div style="font-size:11px;font-weight:600;line-height:1.4;">by Distinct Card</div></button>
+            <button id="RA_SortBtn_Amount"       class="pg-btn ra-route-btn" disabled style="height:auto;padding:10px 12px;text-align:left;line-height:1.4;opacity:0.35;cursor:not-allowed;"><div style="font-size:11px;font-weight:600;line-height:1.4;">by Amount</div></button>
           </div>
 
         </div>
@@ -3347,7 +3357,7 @@
     <div id="PUView" class="pg-layout" style="display:none;">
       <div class="pg-card">
         <div class="pg-card-header"><span class="pg-card-title">Parameters</span></div>
-        <div class="pg-card-body" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
+        <div class="pg-card-body" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding-bottom:20px;">
           <button class="pg-btn" id="PU_Btn_FraudFilter">Fraud Filter Column</button>
           <button class="pg-btn" id="PU_Btn_AmountMetric">Amount Metric</button>
           <button class="pg-btn" id="PU_Btn_Currency">Currency</button>
@@ -3366,25 +3376,31 @@
       </div>
       <div id="PU_NewRuleForm" class="pg-card" style="display:none;">
         <div class="pg-card-header"><span class="pg-card-title">New Rule</span></div>
-        <div class="pg-card-body" style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <label style="font-size:0.68rem;font-weight:600;color:var(--color-text-muted);">Rule Name</label>
-            <input id="PU_RuleName" class="pg-input" type="text" placeholder="Enter rule name…"/>
+        <div class="pg-card-body">
+          <div class="pg-row">
+            <div>
+              <div class="pg-field-label">Rule Name</div>
+              <input id="PU_RuleName" class="pg-input" type="text" placeholder="Enter rule name…"/>
+            </div>
+            <div>
+              <div class="pg-field-label">Typology Type</div>
+              <input id="PU_TypologyType" class="pg-input" type="text" placeholder="Enter typology type…"/>
+            </div>
+            <div></div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <label style="font-size:0.68rem;font-weight:600;color:var(--color-text-muted);">Typology Type</label>
-            <input id="PU_TypologyType" class="pg-input" type="text" placeholder="Enter typology type…"/>
+          <div class="pg-row">
+            <div>
+              <div class="pg-field-label">Card Dimension</div>
+              <input id="PU_CardDimension" class="pg-input" type="text" placeholder="Card dimension…"/>
+            </div>
+            <div>
+              <div class="pg-field-label">Amount Metric</div>
+              <input id="PU_AmountMetric" class="pg-input" type="text" placeholder="Amount metric…"/>
+            </div>
+            <div></div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <label style="font-size:0.68rem;font-weight:600;color:var(--color-text-muted);">Card Dimension</label>
-            <input id="PU_CardDimension" class="pg-input" type="text" placeholder="Card dimension…"/>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <label style="font-size:0.68rem;font-weight:600;color:var(--color-text-muted);">Amount Metric</label>
-            <input id="PU_AmountMetric" class="pg-input" type="text" placeholder="Amount metric…"/>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <label style="font-size:0.68rem;font-weight:600;color:var(--color-text-muted);">Run by</label>
+          <div>
+            <div class="pg-field-label">Run by <span style="text-transform:none;letter-spacing:normal;opacity:0.55;font-size:7px;">— optional</span></div>
             <div style="display:flex;gap:6px;align-items:center;">
               <div class="custom-select" id="PU_RunByCS" style="flex:1;min-width:0;">
                 <div class="cs-trigger" onclick="toggleCustomSelect('PU_RunByCS')">
@@ -3403,8 +3419,13 @@
               <input id="PU_RunByVal" class="pg-input" type="text" placeholder="Value…" style="display:none;width:90px;flex-shrink:0;"/>
             </div>
           </div>
+          <div style="display:flex;gap:8px;">
+            <button id="PU_RunBtn" class="pg-btn" style="background:#0891B2;border-color:#0891B2;color:#fff;" onclick="PU_Run()">Run</button>
+            <button id="PU_SaveBtn" class="pg-btn" onclick="PU_SaveRule()">Save</button>
+          </div>
         </div>
       </div>
+      <div id="PU_Results" style="display:none;"></div>
     </div>
 
     <!-- ══ Rule Declines ══ -->
